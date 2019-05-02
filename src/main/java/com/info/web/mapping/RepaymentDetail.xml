@@ -1,0 +1,1236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.web.dao.IRepaymentDetailDao" >
+    <resultMap id="BaseResultMap" type="com.info.web.pojo.RepaymentDetail" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="asset_order_id" property="assetOrderId" jdbcType="INTEGER" />
+        <result column="asset_repayment_id" property="assetRepaymentId" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="repayment_type" property="repaymentType" jdbcType="INTEGER" />
+        <result column="repayment_channel" property="repaymentChannel" jdbcType="INTEGER" />
+        <result column="true_repayment_money" property="trueRepaymentMoney" jdbcType="BIGINT" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+        <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+        <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+        <result column="card_id" property="cardId" jdbcType="INTEGER" />
+        <result column="admin_username" property="adminUsername" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+    </resultMap>
+    <resultMap id="ResultMap" type="com.info.web.pojo.RepaymentDetail" extends="BaseResultMap" >
+        <result column="realname" property="realname" jdbcType="VARCHAR" />
+        <result column="customer_type" property="customerType" jdbcType="INTEGER" />
+        <result column="repayment_principal" property="repaymentPrincipal" jdbcType="BIGINT" />
+        <result column="repayment_interest" property="repaymentInterest" jdbcType="BIGINT" />
+        <result column="repayment_amount" property="repaymentAmount" jdbcType="BIGINT" />
+        <result column="repaymented_amount" property="repaymentedAmount" jdbcType="BIGINT" />
+        <result column="credit_repayment_time" property="creditRepaymentTime" jdbcType="TIMESTAMP" />
+        <result column="repayment_time" property="repaymentTime" jdbcType="TIMESTAMP" />
+        <result column="repayment_real_time" property="repaymentRealTime" jdbcType="TIMESTAMP" />
+        <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.info.web.pojo.RepaymentDetail" extends="BaseResultMap" >
+        <result column="repayment_img" property="repaymentImg" jdbcType="LONGVARCHAR" />
+    </resultMap>
+    <!-- 对账列表 -->
+    <resultMap id="RepaymentCheckingMap" type="com.info.web.pojo.RepaymentChecking" >
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="realname" property="realname" jdbcType="VARCHAR" />
+        <result column="user_name" property="phone" jdbcType="VARCHAR" />
+        <result column="reapyment_id" property="reapymentId" jdbcType="INTEGER" />
+        <result column="repayment_amount" property="repaymentAmount" jdbcType="BIGINT" />
+        <result column="repaymented_amount" property="repaymentedAmount" jdbcType="BIGINT" />
+        <result column="repayment_interest" property="repaymentInterest" jdbcType="BIGINT" />
+        <result column="true_repayment_money" property="trueRepaymentMoney" jdbcType="BIGINT" />
+        <result column="repayment_time" property="repaymentTime" jdbcType="TIMESTAMP" />
+        <result column="old_repayment_time" property="oldRepaymentTime" jdbcType="TIMESTAMP" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+        <result column="reapyment_status" property="reapymentStatus" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+        <result column="renewal_day" property="renewalDay" jdbcType="INTEGER" />
+        <result column="renewal_type" property="renewalType" jdbcType="INTEGER" />
+        <result column="repayment_type" property="repaymentType" jdbcType="INTEGER" />
+        <result column="repayment_channel" property="repaymentChannel" jdbcType="INTEGER" />
+        <result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+        <result column="capital_type" property="capitalType" jdbcType="INTEGER" />
+        <result column="return_money" property="returnMoney" jdbcType="BIGINT" />
+        <result column="back_order_id" property="backOrderId" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+    id, asset_order_id, asset_repayment_id, user_id, repayment_type, repayment_channel, true_repayment_money,
+    remark, order_id, created_at, updated_at, card_id, admin_username, status
+  </sql>
+    <sql id="Blob_Column_List" >
+    repayment_img
+  </sql>
+    <sql id="selectSql">
+        from asset_repayment_detail
+        where 1 = 1 and `status` in (2,30)
+        <if test="assetRepaymentId != null and assetRepaymentId != ''">
+            and asset_repayment_id = #{assetRepaymentId}
+        </if>
+    </sql>
+    <select id="findParams" resultMap="BaseResultMap"
+            parameterType="map">
+        select
+        *
+        <include refid="selectSql"/>
+    </select>
+    <select id="getRenewalHistory" resultType="map" parameterType="Integer">
+      select abo.into_money as moneyAmount,abo.yurref as orderNo,arr.created_at as renewalTime,arr.repayment_time as repaymentTime,
+      case when o.`order_type`= 'YEEPAY' then '线上易宝支付续期' WHEN o.`order_type`= 'ALIPAY' THEN '线上支付宝续期' ELSE '线下销账员操作续期' end renewalType,
+      arr.sum_fee as sumFee
+      from asset_borrow_order abo
+      inner join (select ab.id from asset_borrow_order  ab  where ab.user_id = #{userId}  ORDER BY  ab.id  desc LIMIT 3) ab1 on abo.id  = ab1.id
+      left join asset_repayment ar on ar.asset_order_id = ab1.id
+	  left join asset_renewal_record arr on ar.id = arr.asset_repayment_id
+      left join out_orders o ON arr.`order_id` = o.`order_no`
+      where arr.status = 1
+      order by arr.created_at desc
+    </select>
+    <select id="getRepaymentDetailByUserId" resultType="map" parameterType="Integer">
+        select
+            abo.into_money as moneyAmount,
+            abo.yurref         as id,
+            abo.created_at as createTime,
+            abo.loan_time  as loanTime,
+            ard.created_at as repayTime,
+            ard.true_repayment_money as money,
+            ard.status,
+            CASE WHEN o.`order_type` = 'YEEPAY'
+                THEN '易宝支付'
+            WHEN o.`order_type` = 'UCFPAY'
+                THEN '先锋支付'
+            WHEN o.`order_type` = 'ALIPAY'
+                THEN '支付宝线上支付'
+            WHEN ard.`repayment_type` = '6'
+                THEN '线下协商免还款'
+            WHEN ard.`repayment_type` = '9'
+                THEN '线下支付宝转账'
+            WHEN ard.`repayment_type` = '10'
+                THEN '微信转账'
+            WHEN ard.`repayment_type` = '11'
+                THEN '银行卡转账'
+            ELSE '其他' END     repaymentType,
+            ard.remark     as remark
+        from asset_borrow_order abo
+        inner join (select ab.id from asset_borrow_order  ab  where ab.user_id = #{userId} and ab.status in (30,34,23,-11)  ORDER BY  ab.id  desc LIMIT 3) ab1 on abo.id  = ab1.id
+        left join asset_repayment_detail ard on abo.id = ard.asset_order_id
+        left join out_orders o ON ard.`order_id` = o.`order_no`
+        order by ard.created_at desc
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from asset_repayment_detail
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByOrderId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from asset_repayment_detail
+        where order_id = #{orderId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from asset_repayment_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.info.web.pojo.RepaymentDetail" >
+    insert into asset_repayment_detail (id, asset_order_id, asset_repayment_id,
+    user_id, repayment_type, repayment_channel, true_repayment_money,
+    remark, order_id, created_at,
+    updated_at, card_id, admin_username,
+    status, repayment_img)
+    values (#{id,jdbcType=INTEGER}, #{assetOrderId,jdbcType=INTEGER}, #{assetRepaymentId,jdbcType=INTEGER},
+    #{userId,jdbcType=INTEGER}, #{repaymentType,jdbcType=INTEGER}, #{repaymentChannel,jdbcType=INTEGER}, #{trueRepaymentMoney,jdbcType=BIGINT},
+    #{remark,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP},
+    #{updatedAt,jdbcType=TIMESTAMP}, #{cardId,jdbcType=INTEGER}, #{adminUsername,jdbcType=VARCHAR},
+    #{status,jdbcType=INTEGER}, #{repaymentImg,jdbcType=LONGVARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.info.web.pojo.RepaymentDetail" useGeneratedKeys="true" keyProperty="id" >
+        insert into asset_repayment_detail
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="assetOrderId != null" >
+                asset_order_id,
+            </if>
+            <if test="assetRepaymentId != null" >
+                asset_repayment_id,
+            </if>
+            <if test="userId != null" >
+                user_id,
+            </if>
+            <if test="repaymentType != null" >
+                repayment_type,
+            </if>
+            <if test="repaymentChannel != null" >
+                repayment_channel,
+            </if>
+            <if test="trueRepaymentMoney != null" >
+                true_repayment_money,
+            </if>
+            <if test="remark != null" >
+                remark,
+            </if>
+            <if test="orderId != null" >
+                order_id,
+            </if>
+            <if test="createdAt != null" >
+                created_at,
+            </if>
+            <if test="updatedAt != null" >
+                updated_at,
+            </if>
+            <if test="cardId != null" >
+                card_id,
+            </if>
+            <if test="adminUsername != null" >
+                admin_username,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+            <if test="repaymentImg != null" >
+                repayment_img,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="assetOrderId != null" >
+                #{assetOrderId,jdbcType=INTEGER},
+            </if>
+            <if test="assetRepaymentId != null" >
+                #{assetRepaymentId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null" >
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="repaymentType != null" >
+                #{repaymentType,jdbcType=INTEGER},
+            </if>
+            <if test="repaymentChannel != null" >
+                #{repaymentChannel,jdbcType=INTEGER},
+            </if>
+            <if test="trueRepaymentMoney != null" >
+                #{trueRepaymentMoney,jdbcType=BIGINT},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="orderId != null" >
+                #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="createdAt != null" >
+                #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedAt != null" >
+                #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cardId != null" >
+                #{cardId,jdbcType=INTEGER},
+            </if>
+            <if test="adminUsername != null" >
+                #{adminUsername,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="repaymentImg != null" >
+                #{repaymentImg,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.info.web.pojo.RepaymentDetail" >
+        update asset_repayment_detail
+        <set >
+            <if test="assetOrderId != null" >
+                asset_order_id = #{assetOrderId,jdbcType=INTEGER},
+            </if>
+            <if test="assetRepaymentId != null" >
+                asset_repayment_id = #{assetRepaymentId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null" >
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="repaymentType != null" >
+                repayment_type = #{repaymentType,jdbcType=INTEGER},
+            </if>
+            <if test="repaymentChannel != null" >
+                repayment_channel = #{repaymentChannel,jdbcType=INTEGER},
+            </if>
+            <if test="trueRepaymentMoney != null" >
+                true_repayment_money = #{trueRepaymentMoney,jdbcType=BIGINT},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="orderId != null" >
+                order_id = #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="createdAt != null" >
+                created_at = #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedAt != null" >
+                updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cardId != null" >
+                card_id = #{cardId,jdbcType=INTEGER},
+            </if>
+            <if test="adminUsername != null" >
+                admin_username = #{adminUsername,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="repaymentImg != null" >
+                repayment_img = #{repaymentImg,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="backOrderId != null" >
+                back_order_id = #{backOrderId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.info.web.pojo.RepaymentDetail" >
+    update asset_repayment_detail
+    set asset_order_id = #{assetOrderId,jdbcType=INTEGER},
+    asset_repayment_id = #{assetRepaymentId,jdbcType=INTEGER},
+    user_id = #{userId,jdbcType=INTEGER},
+    repayment_type = #{repaymentType,jdbcType=INTEGER},
+    repayment_channel = #{repaymentChannel,jdbcType=INTEGER},
+    true_repayment_money = #{trueRepaymentMoney,jdbcType=BIGINT},
+    remark = #{remark,jdbcType=VARCHAR},
+    order_id = #{orderId,jdbcType=VARCHAR},
+    created_at = #{createdAt,jdbcType=TIMESTAMP},
+    updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+    card_id = #{cardId,jdbcType=INTEGER},
+    admin_username = #{adminUsername,jdbcType=VARCHAR},
+    status = #{status,jdbcType=INTEGER},
+    repayment_img = #{repaymentImg,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.info.web.pojo.RepaymentDetail" >
+    update asset_repayment_detail
+    set asset_order_id = #{assetOrderId,jdbcType=INTEGER},
+      asset_repayment_id = #{assetRepaymentId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      repayment_type = #{repaymentType,jdbcType=INTEGER},
+      repayment_channel = #{repaymentChannel,jdbcType=INTEGER},
+      true_repayment_money = #{trueRepaymentMoney,jdbcType=BIGINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      card_id = #{cardId,jdbcType=INTEGER},
+      admin_username = #{adminUsername,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <!-- 对账列表 -->
+    <select id="checkRepayment" resultMap="RepaymentCheckingMap" parameterType="map">
+        SELECT
+        ui.id as user_id,
+        ui.realname,
+        ui.user_name,
+        r.id as reapyment_id,
+        r.repayment_amount,
+        r.repaymented_amount,
+        rd.true_repayment_money,
+        rd.repayment_type,
+        rd.remark,
+        rd.order_id,
+        r.`status` as reapyment_status,
+        rd.status,
+        rd.created_at,
+        o.capital_type,
+        rd.back_order_id
+        FROM
+        asset_repayment_detail rd,
+        user_info ui,
+        asset_repayment r,
+        asset_borrow_order o
+        WHERE
+        rd.user_id = ui.id
+        AND rd.asset_repayment_id = r.id
+        and rd.asset_order_id = o.id
+        AND rd.status IN (30, 2, 5,16,13)
+        <if test="phone != null and phone != ''">
+            and ui.user_name = #{phone}
+        </if>
+        <if test="createdAt != null">
+            AND DATE_FORMAT(rd.created_at, "%Y-%m-%d") >= DATE_FORMAT(#{createdAt}, "%Y-%m-%d")
+        </if>
+        <if test="createdAtEnd != null">
+            <![CDATA[and DATE_FORMAT(rd.created_at, "%Y-%m-%d") <= DATE_FORMAT(#{createdAtEnd}, "%Y-%m-%d") ]]>
+        </if>
+        <if test="repaymentType != null">
+            AND rd.repayment_type = #{repaymentType}
+        </if>
+        <if test="repaymentType != null">
+            AND rd.repayment_channel = #{repaymentChannel}
+        </if>
+        <if test="capitalType != null">
+            AND o.capital_type = #{capitalType}
+        </if>
+        <if test="orderId != null">
+            AND rd.order_id = #{orderId}
+        </if>
+    </select>
+    <select id="checkRenewal" resultMap="RepaymentCheckingMap" parameterType="map">
+        select
+        ui.id as user_id,
+        ui.realname,
+        ui.user_name,
+        r.id as reapyment_id,
+        r.repayment_amount,
+        r.repaymented_amount,
+        r.repayment_interest,
+        rr.old_repayment_time,
+        rr.repayment_time,
+        rr.renewal_day,
+        rr.sum_fee as true_repayment_money,
+        rr.renewal_type,
+        rr.order_time,
+        rr.order_id,
+        rr.remark,
+        rr.status,
+        o.capital_type,
+        rr.return_money
+        from
+        asset_renewal_record  rr,
+        user_info ui,
+        asset_repayment r,
+        asset_borrow_order o
+        where  rr.user_id = ui.id
+        and rr.asset_repayment_id = r.id
+        and r.asset_order_id = o.id
+        AND rr.status IN (1,5,16,13)
+        <if test="phone != null and phone != ''">
+            and ui.user_name = #{phone}
+        </if>
+        <if test="orderTime != null">
+            AND DATE_FORMAT(rr.order_time, "%Y-%m-%d") >= DATE_FORMAT(#{orderTime}, "%Y-%m-%d")
+        </if>
+        <if test="orderTimeEnd != null">
+            <![CDATA[and DATE_FORMAT(rr.order_time, "%Y-%m-%d") <= DATE_FORMAT(#{orderTimeEnd}, "%Y-%m-%d") ]]>
+        </if>
+        <if test="renewalType != null">
+            AND rr.renewal_type = #{renewalType}
+        </if>
+        <if test="capitalType != null">
+            AND o.capital_type = #{capitalType}
+        </if>
+        <if test="orderId != null">
+            AND rr.order_id = #{orderId}
+        </if>
+    </select>
+    <select id="checkRepaymentCount" resultType="java.lang.Integer" parameterType="map">
+        SELECT
+        count(1)
+        FROM
+        asset_repayment_detail rd,
+        user_info ui,
+        asset_repayment r,
+        asset_borrow_order o
+        WHERE
+        rd.user_id = ui.id
+        AND rd.asset_repayment_id = r.id
+        and rd.asset_order_id = o.id
+        AND rd.status IN (30, 2, 5,16,13)
+        <if test="phone != null and phone != ''">
+            and ui.user_name = #{phone}
+        </if>
+
+        <if test="createdAt != null">
+            AND DATE_FORMAT(rd.created_at, "%Y-%m-%d") >= DATE_FORMAT(#{createdAt}, "%Y-%m-%d")
+        </if>
+        <if test="createdAtEnd != null">
+            <![CDATA[and DATE_FORMAT(rd.created_at, "%Y-%m-%d") <= DATE_FORMAT(#{createdAtEnd}, "%Y-%m-%d") ]]>
+        </if>
+        <if test="repaymentType != null">
+            AND rd.repayment_type = #{repaymentType}
+        </if>
+        <if test="repaymentChannel != null">
+            AND rd.repayment_channel = #{repaymentChannel}
+        </if>
+        <if test="capitalType != null">
+            AND o.capital_type = #{capitalType}
+        </if>
+        <if test="orderId != null">
+            AND rd.order_id = #{orderId}
+        </if>
+    </select>
+    <select id="checkRenewalCount" resultType="java.lang.Integer" parameterType="map">
+        select count(1)
+        from
+        asset_renewal_record  rr,
+        user_info ui,
+        asset_repayment r,
+        asset_borrow_order o
+        where  rr.user_id = ui.id
+        and rr.asset_repayment_id = r.id
+        and r.asset_order_id = o.id
+        AND rr.status IN (1,5,16,13)
+        <if test="phone != null and phone != ''">
+            and ui.user_name = #{phone}
+        </if>
+
+        <if test="orderTime != null">
+            AND DATE_FORMAT(rr.order_time, "%Y-%m-%d") >= DATE_FORMAT(#{orderTime}, "%Y-%m-%d")
+        </if>
+        <if test="orderTimeEnd != null">
+            <![CDATA[and DATE_FORMAT(rr.order_time, "%Y-%m-%d") <= DATE_FORMAT(#{orderTimeEnd}, "%Y-%m-%d") ]]>
+        </if>
+        <if test="renewalType != null">
+            AND rr.renewal_type = #{renewalType}
+        </if>
+        <if test="capitalType != null">
+            AND o.capital_type = #{capitalType}
+        </if>
+        <if test="orderId != null">
+            AND rr.order_id = #{orderId}
+        </if>
+    </select>
+    <select id="repaymentDetilList" resultMap="ResultMap" parameterType="map">
+        select rd.id,
+        u.realname as realname,
+        u.user_phone as user_phone,
+        u.customer_type as customer_type,
+        r.repayment_principal,
+        r.repayment_interest,
+        r.repayment_amount,
+        r.repaymented_amount,
+        rd.true_repayment_money,
+        r.credit_repayment_time,
+        r.repayment_time,
+        r.repayment_real_time,
+        rd.repayment_type,
+        rd.repayment_channel,
+        rd.created_at
+        from asset_repayment_detail rd,
+        asset_repayment r ,
+        user_info u
+        where rd.asset_repayment_id = r.id  and rd.user_id = u.id  and rd.status in(2,30,5) and (rd.back_order_id is null or rd.back_order_id = '0')
+        <if test="statuses != null and statuses != '' and statuses.length > 0">
+            and r.status in
+            <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        <if test="phone != null and phone != ''">
+            and u.user_phone = #{phone}
+        </if>
+        <if test="createdAt != null">
+            and DATE_FORMAT(rd.created_at, "%Y-%m-%d") >= DATE_FORMAT(#{createdAt}, "%Y-%m-%d")
+        </if>
+        <if test="createdAtEnd != null">
+            <![CDATA[and DATE_FORMAT(rd.created_at, "%Y-%m-%d") <= DATE_FORMAT(#{createdAtEnd}, "%Y-%m-%d") ]]>
+        </if>
+        <if test="repaymentType != null">
+            and rd.repayment_type = #{repaymentType}
+        </if>
+        <if test="repaymentChannel != null">
+            and rd.repayment_channel = #{repaymentChannel}
+        </if>
+    </select>
+    <select id="repaymentDetilCount" resultType="java.lang.Integer" parameterType="map">
+        select count(1)
+        from asset_repayment_detail rd,
+        asset_repayment r ,
+        user_info u
+        where rd.asset_repayment_id = r.id  and rd.user_id = u.id  and rd.status in(2,30,5) and (rd.back_order_id is null or rd.back_order_id = '0')
+        <if test="statuses != null and statuses != '' and statuses.length > 0">
+            and r.status in
+            <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        <if test="phone != null and phone != ''">
+            and u.user_phone = #{phone}
+        </if>
+        <if test="createdAt != null">
+            and DATE_FORMAT(rd.created_at, "%Y-%m-%d") >= DATE_FORMAT(#{createdAt}, "%Y-%m-%d")
+        </if>
+        <if test="createdAtEnd != null">
+            <![CDATA[and DATE_FORMAT(rd.created_at, "%Y-%m-%d") <= DATE_FORMAT(#{createdAtEnd}, "%Y-%m-%d") ]]>
+        </if>
+        <if test="repaymentType != null">
+            and rd.repayment_type = #{repaymentType}
+        </if>
+        <if test="repaymentChannel != null">
+            and rd.repayment_channel = #{repaymentChannel}
+        </if>
+    </select>
+
+    <select id="queryOrderResult" resultMap="BaseResultMap" parameterType="map">
+        select *
+        from asset_repayment_detail rd
+        where 1=1
+        <if test="begDate != null">
+            and DATE_FORMAT(rd.created_at, "%Y-%m-%d %H-%i-%s") >= DATE_FORMAT(#{begDate}, "%Y-%m-%d %H-%i-%s")
+        </if>
+        <if test="endDate != null">
+            <![CDATA[and DATE_FORMAT(rd.created_at, "%Y-%m-%d %H-%i-%s") <= DATE_FORMAT(#{endDate}, "%Y-%m-%d %H-%i-%s") ]]>
+        </if>
+        <if test="status != null">
+            and 	rd.status = #{status}
+        </if>
+        <if test="repaymentType != null">
+            and	rd.repayment_type = #{repaymentType}
+        </if>
+        <if test="repaymentChannel != null">
+            and rd.repayment_channel = #{repaymentChannel}
+        </if>
+        <if test="baoFuAndRongBao != null">
+            and	rd.repayment_type IN (2,3)
+        </if>
+
+    </select>
+    <insert id="insertStatisticsDetail">
+        insert into asset_statistics_detail(create_date,job_id,create_time,end_time,assign_count,pay_back_count,assign_type,job_name)
+        values
+        <foreach collection="list" item="sd" separator=",">
+            (#{sd.createDate},#{sd.jobId},#{sd.createTime},#{sd.endTime},#{sd.assignCount},#{sd.payBackCount},#{sd.assignType},#{sd.jobName})
+        </foreach>
+    </insert>
+    <select id="assignBackMoneyStatisticsCount" resultType="int" parameterType="map">
+        SELECT COUNT(0) FROM
+        (select job_id as jobId,
+        job_name as jobName,
+        (
+        select sum(d1.assign_count)
+        from asset_statistics_detail d1
+        where d1.assign_type= '系统派单'
+        and d1.job_id= d.job_id
+        <if test="startDate!=null and startDate!=''">
+            and d1.create_date between str_to_date(#{startDate}, '%Y-%m-%d')and str_to_date(#{endDate}, '%Y-%m-%d')
+        </if>) as assignCount1,
+        (select sum(d2.assign_count)
+        from asset_statistics_detail d2
+        where d2.assign_type= '人工派单'
+        and d2.job_id= d.job_id
+        <if test="startDate!=null and startDate!=''">
+            and d2.create_date between str_to_date(#{startDate}, '%Y-%m-%d') and str_to_date(#{endDate}, '%Y-%m-%d')
+        </if>) as assignCount2,
+        (select sum(d3.pay_back_count)
+        from asset_statistics_detail d3
+        where d3.assign_type= '系统派单'
+        and d3.job_id= d.job_id
+        <if test="startDate!=null and startDate!=''">
+            and d3.create_date between str_to_date(#{startDate}, '%Y-%m-%d') and str_to_date(#{endDate}, '%Y-%m-%d')
+        </if>) as payBackCount1,
+        (select sum(d4.pay_back_count)
+        from asset_statistics_detail d4
+        where d4.assign_type= '人工派单'
+        and d4.job_id= d.job_id
+        <if test="startDate!=null and startDate!=''">
+            and d4.create_date between str_to_date(#{startDate}, '%Y-%m-%d') and str_to_date(#{endDate}, '%Y-%m-%d')
+        </if>) as payBackCount2
+        from asset_statistics_detail d where 1=1
+        <include refid="assignBackMoneyStatisticsCondition"/>
+        group by jobId
+        order by jobName
+        ) t
+    </select>
+
+    <select id="assignBackMoneyStatistics" resultType="Map" parameterType="map">
+
+        (select job_id as jobId,
+        job_name as jobName,
+        (select user_mobile from back_user where id = job_id limit 1)as phone,
+        (
+        select sum(d1.assign_count)
+        from asset_statistics_detail d1
+        where d1.assign_type= '系统派单'
+        and d1.job_id= d.job_id
+        <if test="startDate!=null and startDate!=''">
+            and d1.create_date between str_to_date(#{startDate}, '%Y-%m-%d')and str_to_date(#{endDate}, '%Y-%m-%d')
+        </if>) as assignCount1,
+        (select sum(d2.assign_count)
+        from asset_statistics_detail d2
+        where d2.assign_type= '人工派单'
+        and d2.job_id= d.job_id
+        <if test="startDate!=null and startDate!=''">
+            and d2.create_date between str_to_date(#{startDate}, '%Y-%m-%d') and str_to_date(#{endDate}, '%Y-%m-%d')
+        </if>) as assignCount2,
+        (select sum(d3.pay_back_count)
+        from asset_statistics_detail d3
+        where d3.assign_type= '系统派单'
+        and d3.job_id= d.job_id
+        <if test="startDate!=null and startDate!=''">
+            and d3.create_date between str_to_date(#{startDate}, '%Y-%m-%d') and str_to_date(#{endDate}, '%Y-%m-%d')
+        </if>) as payBackCount1,
+        (select sum(d4.pay_back_count)
+        from asset_statistics_detail d4
+        where d4.assign_type= '人工派单'
+        and d4.job_id= d.job_id
+        <if test="startDate!=null and startDate!=''">
+            and d4.create_date between str_to_date(#{startDate}, '%Y-%m-%d') and str_to_date(#{endDate}, '%Y-%m-%d')
+        </if>) as payBackCount2
+        from asset_statistics_detail d where 1=1
+        <include refid="assignBackMoneyStatisticsCondition"/>
+        group by jobId
+        order by jobName )
+
+    </select>
+    <sql id="assignBackMoneyStatisticsCondition">
+        <if test="startDate!=null and startDate!=''">
+            and d.create_date between str_to_date(#{startDate}, '%Y-%m-%d') and str_to_date(#{endDate}, '%Y-%m-%d')
+        </if>
+        <if test="jobName !=null and jobName !=''">
+            and d.job_name = #{jobName}
+        </if>
+        <if test="jobId !=null and jobId !=''">
+            and d.job_id = #{jobId}
+        </if>
+        <if test="jobIds!=null and jobIds!=''">
+            and d.job_id in
+            <foreach item="item" index="index" collection="jobIds"
+                     open="(" separator="," close=")">#{item}
+            </foreach>
+        </if>
+    </sql>
+    <select id="assignStatistics" resultType="map" parameterType="map">
+        (SELECT
+        job_id as jobId,
+
+        (select sum(d1.assign_count) from asset_statistics_detail d1
+        where d1.assign_type ='系统派单' and d1.create_date = d.create_date) as assignCount1,
+
+        (select sum(d2.assign_count) from asset_statistics_detail d2
+        where d2.assign_type ='人工派单' and d2.create_date = d.create_date) as assignCount2,
+        (select sum(d3.pay_back_count) from asset_statistics_detail d3
+        where d3.assign_type ='系统派单' and d3.create_date = d.create_date) as payBackCount1,
+        (select sum(d4.pay_back_count) from asset_statistics_detail d4
+        where d4.assign_type ='人工派单' and d4.create_date = d.create_date) as payBackCount2,
+
+
+        job_name as jobName,
+        create_date as createDate
+        FROM
+        asset_statistics_detail d
+        where 1=1
+        <include refid="assignCondition"/>
+        GROUP BY
+        create_date desc)
+        <if test="includeToday == 1">
+            <if test="artificialSend == null">
+                UNION ALL
+                (
+                SELECT
+                a.job_id AS jobId,
+                count( 0 ) AS assignCount1,
+                (SELECT
+                count( 0 )
+                FROM
+                asset_borrow_assign a1
+                LEFT JOIN asset_repayment b1 ON a1.borrow_order_id = b1.asset_order_id
+                WHERE
+                a1.assign_Type = '1'
+                and a1.create_time between CURDATE() and  date_add(CURDATE(), interval 1 day)
+                <include refid="assignConditionToday" />
+
+                GROUP BY
+                LEFT ( a1.create_time, 10 ))as assignCount2,
+
+                count(
+                b.STATUS = '30'
+                AND LEFT ( b.repayment_real_time, 10 ) = LEFT ( a.create_time, 10 )
+                AND b.repayment_real_time &lt; CONCAT( LEFT ( a.create_time, 10 ), ' 22:00:00' )
+                OR NULL
+                ) + count( b.STATUS != '30' AND LEFT ( b.repayment_time, 10 ) > date_format( a.create_time, '%Y-%m-%d' ) OR NULL ) AS payBackCount1,
+
+                (SELECT
+
+                count(
+                b2.STATUS = '30'
+                AND LEFT ( b2.repayment_real_time, 10 ) = LEFT ( a2.create_time, 10 )
+                AND b2.repayment_real_time &lt;  CONCAT( LEFT ( a2.create_time, 10 ), ' 22:00:00' )
+                OR NULL
+                ) + count( b2.STATUS != '30' AND LEFT ( b2.repayment_time, 10 ) > date_format( a2.create_time, '%Y-%m-%d' ) OR NULL )
+
+                FROM
+                asset_borrow_assign a2
+                LEFT JOIN asset_repayment b2 ON a2.borrow_order_id = b2.asset_order_id
+                WHERE
+                a2.assign_Type = '1'
+                and a2.create_time between CURDATE() and  date_add(CURDATE(), interval 1 day)
+                <include refid="assignConditionToday" />
+
+                GROUP BY
+                LEFT ( a2.create_time, 10 )) as payBackCount2,
+
+                a.job_name AS jobName,
+                LEFT ( a.create_time, 10 ) AS createDate
+                FROM
+                asset_borrow_assign a
+                LEFT JOIN asset_repayment b ON a.borrow_order_id = b.asset_order_id
+                WHERE
+                a.assign_Type = '0'
+                and a.create_time between CURDATE() and  date_add(CURDATE(), interval 1 day)
+                <include refid="assignConditionToday" />
+                GROUP BY
+                LEFT ( a.create_time, 10 )
+                )
+                ORDER BY
+                createDate DESC
+            </if>
+            <if test="artificialSend != null">
+                union all(
+                select jobId,assignCount1,sum(assignCount2),payBackCount1,sum(payBackCount2),jobName,createDate
+                from ((
+                SELECT
+                job_id as jobId,
+
+                (select sum(d1.assign_count) from asset_statistics_detail d1
+                where d1.assign_type ='系统派单' and d1.create_date = d.create_date) as assignCount1,
+
+                (select sum(d2.assign_count) from asset_statistics_detail d2
+                where d2.assign_type ='人工派单' and d2.create_date = d.create_date) as assignCount2,
+                (select sum(d3.pay_back_count) from asset_statistics_detail d3
+                where d3.assign_type ='系统派单' and d3.create_date = d.create_date) as payBackCount1,
+                (select sum(d4.pay_back_count) from asset_statistics_detail d4
+                where d4.assign_type ='人工派单' and d4.create_date = d.create_date) as payBackCount2,
+
+
+                job_name as jobName,
+                create_date as createDate
+                FROM
+                asset_statistics_detail d
+                where 1=1
+                and create_date = left(now(),10)
+                and assign_type = '系统派单'
+                GROUP BY
+                create_date desc
+                )
+                UNION all
+                (
+                SELECT
+                a.job_id AS jobId,
+                0 AS assignCount1,
+                count( 0 ) AS assignCount2,
+                0 AS payBackCount1,
+                count(
+                b.STATUS = '30'
+                AND LEFT ( b.repayment_real_time, 10 ) = LEFT ( a.create_time, 10 )
+                AND b.repayment_real_time &lt; CONCAT( LEFT ( a.create_time, 10 ), ' 22:00:00' )
+                OR NULL
+                ) + count( b.STATUS != '30' AND LEFT ( b.repayment_time, 10 ) > date_format( a.create_time, '%Y-%m-%d' )
+                OR NULL ) AS payBackCount2,
+                a.job_name AS jobName,
+                LEFT ( a.create_time, 10 ) AS createDate
+                FROM
+                asset_borrow_assign a
+                LEFT JOIN asset_repayment b ON a.borrow_order_id = b.asset_order_id
+                WHERE
+                a.assign_Type = '1'
+                and a.create_time between CURDATE() and date_add(CURDATE(), interval 1 day)
+                <include refid="assignConditionToday"/>
+                GROUP BY
+                LEFT ( a.create_time, 10 )
+                )) dd
+                )
+                ORDER BY
+                createDate DESC
+            </if>
+        </if>
+
+    </select>
+
+    <select id="assignStatisticsCount" resultType="int" parameterType="map">
+        select count(0) from ((SELECT
+        job_id as jobId,
+
+        (select sum(d1.assign_count) from asset_statistics_detail d1
+        where d1.assign_type ='系统派单' and d1.create_date = d.create_date) as assignCount1,
+
+        (select sum(d2.assign_count) from asset_statistics_detail d2
+        where d2.assign_type ='人工派单' and d2.create_date = d.create_date) as assignCount2,
+        (select sum(d3.pay_back_count) from asset_statistics_detail d3
+        where d3.assign_type ='系统派单' and d3.create_date = d.create_date) as payBackCount1,
+        (select sum(d4.pay_back_count) from asset_statistics_detail d4
+        where d4.assign_type ='人工派单' and d4.create_date = d.create_date) as payBackCount2,
+
+
+        job_name as jobName,
+        create_date as createDate
+        FROM
+        asset_statistics_detail d
+        where 1=1
+        <include refid="assignCondition"/>
+        GROUP BY
+        create_date desc)
+        <if test="includeToday == 1">
+            <if test="artificialSend == null">
+                UNION ALL
+                (
+                SELECT
+                a.job_id AS jobId,
+                count( 0 ) AS assignCount1,
+                (SELECT
+                count( 0 )
+                FROM
+                asset_borrow_assign a1
+                LEFT JOIN asset_repayment b1 ON a1.borrow_order_id = b1.asset_order_id
+                WHERE
+                a1.assign_Type = '1'
+                and a1.create_time between CURDATE() and  date_add(CURDATE(), interval 1 day)
+
+                <include refid="assignConditionToday" />
+
+                GROUP BY
+                LEFT ( a1.create_time, 10 ))as assignCount2,
+
+                count(
+                b.STATUS = '30'
+                AND LEFT ( b.repayment_real_time, 10 ) = LEFT ( a.create_time, 10 )
+                AND b.repayment_real_time &lt; CONCAT( LEFT ( a.create_time, 10 ), ' 22:00:00' )
+                OR NULL
+                ) + count( b.STATUS != '30' AND LEFT ( b.repayment_time, 10 ) > date_format( a.create_time, '%Y-%m-%d' ) OR NULL ) AS payBackCount1,
+
+                (SELECT
+
+                count(
+                b2.STATUS = '30'
+                AND LEFT ( b2.repayment_real_time, 10 ) = LEFT ( a2.create_time, 10 )
+                AND b2.repayment_real_time &lt;  CONCAT( LEFT ( a2.create_time, 10 ), ' 22:00:00' )
+                OR NULL
+                ) + count( b2.STATUS != '30' AND LEFT ( b2.repayment_time, 10 ) > date_format( a2.create_time, '%Y-%m-%d' ) OR NULL )
+
+                FROM
+                asset_borrow_assign a2
+                LEFT JOIN asset_repayment b2 ON a2.borrow_order_id = b2.asset_order_id
+                WHERE
+                a2.assign_Type = '1'
+                and a2.create_time between CURDATE() and  date_add(CURDATE(), interval 1 day)
+
+                <include refid="assignConditionToday" />
+
+                GROUP BY
+                LEFT ( a2.create_time, 10 )) as payBackCount2,
+
+                a.job_name AS jobName,
+                LEFT ( a.create_time, 10 ) AS createDate
+                FROM
+                asset_borrow_assign a
+                LEFT JOIN asset_repayment b ON a.borrow_order_id = b.asset_order_id
+                WHERE
+                a.assign_Type = '0'
+                and a.create_time between CURDATE() and  date_add(CURDATE(), interval 1 day)
+
+                <include refid="assignConditionToday" />
+                GROUP BY
+                LEFT ( a.create_time, 10 )
+                )
+                ORDER BY
+                createDate DESC
+            </if>
+            <if test="artificialSend != null">
+                union all(
+                SELECT
+                job_id as jobId,
+
+                (select sum(d1.assign_count) from asset_statistics_detail d1
+                where d1.assign_type ='系统派单' and d1.create_date = d.create_date) as assignCount1,
+
+                (select sum(d2.assign_count) from asset_statistics_detail d2
+                where d2.assign_type ='人工派单' and d2.create_date = d.create_date) as assignCount2,
+                (select sum(d3.pay_back_count) from asset_statistics_detail d3
+                where d3.assign_type ='系统派单' and d3.create_date = d.create_date) as payBackCount1,
+                (select sum(d4.pay_back_count) from asset_statistics_detail d4
+                where d4.assign_type ='人工派单' and d4.create_date = d.create_date) as payBackCount2,
+
+
+                job_name as jobName,
+                create_date as createDate
+                FROM
+                asset_statistics_detail d
+                where 1=1
+                and create_date = left(now(),10)
+                and assign_type = '系统派单'
+                GROUP BY
+                create_date desc
+                )
+
+                UNION ALL
+                (
+                SELECT
+                a.job_id AS jobId,
+                0 AS assignCount1,
+                count( 0 ) AS assignCount2,
+                0 AS payBackCount1,
+                count(
+                b.STATUS = '30'
+                AND LEFT ( b.repayment_real_time, 10 ) = LEFT ( a.create_time, 10 )
+                AND b.repayment_real_time &lt; CONCAT( LEFT ( a.create_time, 10 ), ' 22:00:00' )
+                OR NULL
+                ) + count( b.STATUS != '30' AND LEFT ( b.repayment_time, 10 ) > date_format( a.create_time, '%Y-%m-%d' ) OR NULL ) AS payBackCount2,
+                a.job_name AS jobName,
+                LEFT ( a.create_time, 10 ) AS createDate
+                FROM
+                asset_borrow_assign a
+                LEFT JOIN asset_repayment b ON a.borrow_order_id = b.asset_order_id
+                WHERE
+                a.assign_Type = '1'
+                and a.create_time between CURDATE() and  date_add(CURDATE(), interval 1 day)
+
+                <include refid="assignConditionToday" />
+                GROUP BY
+                LEFT ( a.create_time, 10 )
+                )
+                ORDER BY
+                createDate DESC
+            </if>
+        </if>) d
+    </select>
+    <select id="selectAssignStatisticsBackMoney" resultType="map" parameterType="map">
+        select sum(d.assign_count) as totalAssignCount,
+        sum(d.pay_back_count) as totalPayBackCount,
+        (select sum(d1.assign_count)
+        from asset_statistics_detail d1
+        where d1.assign_type= '系统派单'
+        <if test="startDate!=null and startDate !=''">
+            and d1.create_date between str_to_date(#{startDate}, '%Y-%m-%d')
+            and str_to_date(#{endDate}, '%Y-%m-%d')
+        </if>
+        <if test="jobId!=null and jobId!=''">
+            and d1.job_id =#{jobId}
+        </if>
+        <if test="jobName!=null and jobName!=''">
+            and d1.job_name =#{jobName}
+        </if>
+        ) as sysAssignCount,
+        (select sum(d2.assign_count)
+        from asset_statistics_detail d2
+        where d2.assign_type= '人工派单'
+        <if test="startDate!=null and startDate !=''">
+            and d2.create_date between str_to_date(#{startDate}, '%Y-%m-%d')
+            and str_to_date(#{endDate}, '%Y-%m-%d')
+        </if>
+        <if test="jobId!=null and jobId!=''">
+            and d2.job_id =#{jobId}
+        </if>
+        <if test="jobName!=null and jobName!=''">
+            and d2.job_name =#{jobName}
+        </if>
+        ) as userAssignCount,
+        (select sum(d3.pay_back_count)
+        from asset_statistics_detail d3
+        where d3.assign_type= '系统派单'
+        <if test="startDate!=null and startDate !=''">
+            and d3.create_date between str_to_date(#{startDate}, '%Y-%m-%d')
+            and str_to_date(#{endDate}, '%Y-%m-%d')
+        </if>
+        <if test="jobId!=null and jobId!=''">
+            and d3.job_id =#{jobId}
+        </if>
+        <if test="jobName!=null and jobName!=''">
+            and d3.job_name =#{jobName}
+        </if>
+        ) as sysPayBackCount,
+        (select sum(d4.pay_back_count)
+        from asset_statistics_detail d4
+        where d4.assign_type= '人工派单'
+        <if test="startDate!=null and startDate !=''">
+            and d4.create_date between str_to_date(#{startDate}, '%Y-%m-%d')
+            and str_to_date(#{endDate}, '%Y-%m-%d')
+        </if>
+        <if test="jobId!=null and jobId!=''">
+            and d4.job_id =#{jobId}
+        </if>
+        <if test="jobName!=null and jobName!=''">
+            and d4.job_name =#{jobName}
+        </if>
+        ) as userPayBackCount
+        from asset_statistics_detail d
+        where 1=1
+        <if test="startDate!=null and startDate !=''">
+            and d.create_date between str_to_date(#{startDate}, '%Y-%m-%d')
+            and str_to_date(#{endDate}, '%Y-%m-%d')
+        </if>
+        <if test="jobId!=null and jobId!=''">
+            and d.job_id =#{jobId}
+        </if>
+        <if test="jobName!=null and jobName!=''">
+            and d.job_name =#{jobName}
+        </if>
+    </select>
+    <select id="selectAssignStatisticsByCondition" resultType="map" parameterType="map">
+        <if test="isToday !=null">
+            <if test="artificialSend == null">
+                ( SELECT
+                a.job_id as jobId,
+                LEFT( a.create_time, 10 ) AS createDate,
+                '09:00:00' AS createTime,
+                '18:00:00' AS endTime,
+                count( 0 ) AS assignCount,
+                count( b.STATUS = '30' and left(b.repayment_real_time,10) = left(a.create_time,10) and b.repayment_real_time &lt; CONCAT(left(a.create_time,10),' 22:00:00') OR NULL ) + count(
+                b.STATUS != '30'
+                AND left(b.repayment_time,10) > date_format( a.create_time, '%Y-%m-%d' )
+                OR NULL
+                ) AS payBackCount,
+                '早班' AS assignType ,
+                job_name as jobName
+                FROM
+                asset_borrow_assign a
+                LEFT JOIN asset_repayment b ON a.borrow_order_id = b.asset_order_id
+                WHERE
+                a.assign_Type = '0'
+                and a.create_time between CURDATE() and  date_add(CURDATE(), interval 1 day)
+                <include refid="assignConditionToday"/>
+                GROUP BY
+                LEFT ( a.create_time, 10 ) ,a.job_id
+                ) UNION ALL
+                (
+                SELECT
+                a.job_id as jobId,
+                LEFT( a.create_time, 10 ) AS createDate,
+                RIGHT ( a.create_time, 9 ) AS createTime,
+                '22:00:00' AS endTime,
+                count( 0 ) AS assignCount,
+                count( b.STATUS = '30' and left(b.repayment_real_time,10) = left(a.create_time,10) and b.repayment_real_time &lt; CONCAT(left(a.create_time,10),' 22:00:00') OR NULL ) + count(
+                b.STATUS != '30'
+                AND left(b.repayment_time,10) > date_format( a.create_time, '%Y-%m-%d' )
+                OR NULL
+                ) AS payBackCount,
+                '晚班' AS assignType ,
+                job_name as jobName
+                FROM
+                asset_borrow_assign a
+                LEFT JOIN asset_repayment b ON a.borrow_order_id = b.asset_order_id
+                WHERE
+                a.assign_Type = '1'
+                and a.create_time between CURDATE() and  date_add(CURDATE(), interval 1 day)
+                <include refid="assignConditionToday"/>
+                GROUP BY
+                LEFT ( a.create_time, 10 ) ,a.job_id
+
+                )
+                ORDER BY
+                jobName,endTime
+            </if>
+            <if test="artificialSend != null">
+                (select
+                job_id as jobId,
+                create_date as createDate,
+                create_time as createTime,
+                end_time as endTime,
+                assign_count as assignCount,
+                pay_back_count as payBackCount,
+                CASE WHEN assign_type ='系统派单' then '早班'
+                else '晚班' end as assignType,
+                job_name as jobName
+                from asset_statistics_detail
+                where 1=1
+                <include refid="assignCondition"/>
+                order by id)
+                union ALL
+                (
+                SELECT
+                a.job_id as jobId,
+                LEFT( a.create_time, 10 ) AS createDate,
+                RIGHT ( a.create_time, 9 ) AS createTime,
+                '22:00:00' AS endTime,
+                count( 0 ) AS assignCount,
+                count( b.STATUS = '30' and left(b.repayment_real_time,10) = left(a.create_time,10) and b.repayment_real_time &lt; CONCAT(left(a.create_time,10),' 22:00:00') OR NULL ) + count(
+                b.STATUS != '30'
+                AND left(b.repayment_time,10) > date_format( a.create_time, '%Y-%m-%d' )
+                OR NULL
+                ) AS payBackCount,
+                '晚班' AS assignType ,
+                job_name as jobName
+                FROM
+                asset_borrow_assign a
+                LEFT JOIN asset_repayment b ON a.borrow_order_id = b.asset_order_id
+                WHERE
+                a.assign_Type = '1'
+                and a.create_time between CURDATE() and  date_add(CURDATE(), interval 1 day)
+                <include refid="assignConditionToday"/>
+                GROUP BY
+                LEFT ( a.create_time, 10 ) ,a.job_id
+                )
+                ORDER BY
+                jobName,endTime
+            </if>
+        </if>
+        <if test="isToday == null">
+            select
+            create_time as createTime,
+            end_time as endTime,
+            assign_count as assignCount,
+            pay_back_count as payBackCount,
+            CASE WHEN assign_type ='系统派单' then '早班'
+            else '晚班' end as assignType,
+            job_id as jobId,
+            job_name as jobName,
+            create_date as createDate
+            from asset_statistics_detail
+            where 1=1
+            <include refid="assignCondition"/>
+            order by id
+        </if>
+    </select>
+
+    <sql id="assignCondition">
+        <if test="dateBefore != null and dateBefore != ''">
+            and create_date &gt;= #{dateBefore}
+        </if>
+        <if test="dateEnd != null and dateEnd != '' and includeToday != 1">
+            AND create_date &lt;= #{dateEnd}
+        </if>
+        <if test="includeToday == 1">
+            and create_date &lt;= date_sub(CURDATE(),interval 1 day)
+        </if>
+        <if test="jobId != null and jobId != ''">
+            and job_id = #{jobId}
+        </if>
+        <if test="createDate != null and createDate != '' ">
+            and create_date = #{createDate}
+        </if>
+        <if test="jobName != null and jobName !='' ">
+            AND  job_name like '%${jobName}%'
+        </if>
+        <if test="className != null and className !='' ">
+            AND  assign_type = #{className}
+        </if>
+    </sql>
+
+    <sql id="assignConditionToday">
+        <if test="jobId != null and jobId != '' ">
+            and a.job_id = #{jobId}
+        </if>
+        <!--<if test="includeToday == 1 ">-->
+        <!--and left(a.create_time,10) = CURDATE()-->
+        <!--</if>-->
+        <if test="jobName != null and jobName !='' ">
+            AND  a.job_name like '%${jobName}%'
+        </if>
+        <if test="classId != null  ">
+            AND  assign_type = #{classId}
+        </if>
+    </sql>
+
+    <select id="getRepayFailRecords" resultType="com.info.back.pojo.DayRepayFailExcel">
+        SELECT d.`user_id` as userId, MAX(d.`created_at`) as createdAt, u.`realname` as realname, u.`user_name` as userName, u.`user_sex` as userSex, r.`repayment_time` as repaymentTime,
+        CASE o.`client_type` WHEN  2 THEN '苹果端' WHEN 1 THEN '安卓端' ELSE '其他' END as termType, d.`remark`
+        FROM `asset_repayment_detail` d
+        LEFT JOIN `asset_repayment` r ON d.`asset_repayment_id` = r.`id`
+        LEFT JOIN `asset_borrow_order` o ON d.`asset_order_id` = o.`id`
+        LEFT JOIN `user_info` u ON d.`user_id` = u.`id`
+        WHERE d.`status` != 2 and DATE_FORMAT(d.`created_at`,  '%Y-%m-%d %H') &gt;= #{startTime} AND  DATE_FORMAT(d.`created_at`,  '%Y-%m-%d %H') &lt;= #{endTime} and (r.`status` != 30 and r.`status` != 34)  and d.`remark` NOT LIKE '定时%'
+        GROUP BY d.`asset_repayment_id`
+    </select>
+</mapper>

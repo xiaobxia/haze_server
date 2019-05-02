@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.risk.dao.IRiskOrdersDao">
+	<resultMap id="BaseResultMap" type="RiskOrders">
+		<id column="id" property="id"/>
+		<result column="user_id" property="userId"/>
+		<result column="order_type" property="orderType"/>
+		<result column="order_no" property="orderNo" />
+		<result column="act" property="act" />
+		<result column="req_params" property="reqParams" />
+		<result column="return_params" property="returnParams" />
+		<result column="notify_time" property="notifyTime" />
+		<result column="notify_params" property="notifyParams" />
+		<result column="add_time" property="addTime" />
+		<result column="add_ip" property="addIp"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="status" property="status"/>
+		<result column="asset_borrow_id" property="assetBorrowId" />
+		<result column="auto_sjmh" property="autoSjmh" />
+	</resultMap>
+	<insert id="insert" parameterType="RiskOrders"  useGeneratedKeys="true" keyProperty="id">
+		insert into risk_orders (user_id,order_type,order_no,act,req_params,add_ip,return_params
+		)
+		values (#{userId},#{orderType},#{orderNo},#{act},#{reqParams},#{addIp},#{returnParams})
+	</insert>
+	<select id="findTypeCount" parameterType="RiskOrders" resultType="Integer">
+		select count(1) from risk_orders where  order_type=#{orderType} and act=#{act} and status=#{status} and  add_time between str_to_date(#{tmpDate},'%Y-%m-%d') and date_add(#{tmpDate}, interval 1 day)
+	</select>
+	<update id="update" parameterType="RiskOrders">
+		update risk_orders 
+		 <set >
+	      <if test="returnParams != null" >
+	      	return_params = #{returnParams},
+	      </if>
+	      <if test="status != null" >
+	      	status = #{status},
+	      </if>
+	      <if test="notifyParams != null" >
+	      	notify_params = #{notifyParams},
+	      </if>
+	      <if test="notifyTime != null" >
+	      	notify_time = #{notifyTime},
+	      </if>
+		</set>
+		where id=#{id}
+	</update>
+	<select id="findById" parameterType="RiskOrders" resultMap="BaseResultMap">
+		select * from risk_orders where id =#{id}
+	</select>
+	<sql id="whereYxSql">
+		where user_id = #{userId,jdbcType=INTEGER} and status = '2' and act = 'YX_BORROW'
+	</sql>
+	<select id="findYxReturnData" parameterType="HashMap" resultMap="BaseResultMap">
+		select * from risk_orders <include refid="whereYxSql"/> and update_time = (select max(update_time) from risk_orders <include refid="whereYxSql"/>)
+	</select>
+
+	<select id="selectCreditReportByBorrowId" parameterType="HashMap" resultMap="BaseResultMap">
+   SELECT * from risk_orders where asset_borrow_id=#{assetBorrowId} limit 1
+</select>
+
+
+	<insert id="insertCreditReport" parameterType="RiskOrders"  useGeneratedKeys="true" keyProperty="id">
+		insert into risk_orders (user_id,order_type,order_no,act,req_params,add_ip,return_params,asset_borrow_id)
+		values (#{userId},#{orderType},#{orderNo},#{act},#{reqParams},#{addIp},#{returnParams},#{assetBorrowId})
+	</insert>
+
+
+	<select id="selectAfterTbReport" resultMap="BaseResultMap" parameterType="HashMap">
+		select o.id,
+		o.`asset_borrow_id`,
+		o.`order_type`,
+		o.`return_params`,
+		o.`auto_sjmh`
+		from `asset_borrow_order` b,
+		`risk_orders` o
+		where b.id= o.`asset_borrow_id`
+		and b.`customer_type`= 0
+		AND
+		left(b.`created_at`, 10) >= #{tbOnlineTime}
+	</select>
+	<select id="selectRiskOrdersByStartTimeAndEndTime" resultMap="BaseResultMap" parameterType="HashMap">
+		SELECT
+		r.id,
+		r.asset_borrow_id,
+		r.add_time,
+		r.return_params,
+		r.auto_sjmh,
+		r.user_id
+		<include refid="selectRiskOrdersSql" />
+	</select>
+	<select id="selectRiskOrdersByStartTimeAndEndTimeCount" resultType="int" parameterType="HashMap">
+		SELECT COUNT(1) <include refid="selectRiskOrdersSql" />
+	</select>
+	<sql id="selectRiskOrdersSql">
+		FROM
+		risk_orders r
+		WHERE
+		(
+		r.order_type = 'AUTO_RISK'
+		OR r.order_type = 'AUTO_TISK'
+		) AND LEFT (r.add_time, 10) BETWEEN #{beginTime}
+		AND #{endTime}
+		<if test="pageNum != null and pageNum !='' ">
+			ORDER BY r.user_id
+			limit #{pageNum},#{pageSize}
+		</if>
+	</sql>
+
+</mapper>

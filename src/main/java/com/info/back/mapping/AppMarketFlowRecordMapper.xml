@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.info.back.dao.IAppMarketFlowRecordDao">
+    <resultMap id="BaseResultMap" type="com.info.back.pojo.AppMarketFlowRecord">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="app_market" jdbcType="VARCHAR" property="appMarket" />
+        <result column="install_time" jdbcType="TIMESTAMP" property="installTime" />
+        <result column="register_cunt" jdbcType="INTEGER" property="registerCunt" />
+        <result column="all_register_cunt" jdbcType="INTEGER" property="allRegisterCunt" />
+        <result column="register_trans_rate" jdbcType="DOUBLE" property="registerTransRate" />
+        <result column="realname_auth_cunt" jdbcType="INTEGER" property="realnameAuthCunt" />
+        <result column="bind_card_cunt" jdbcType="INTEGER" property="bindCardCunt" />
+        <result column="rely_loan_cunt" jdbcType="INTEGER" property="relyLoanCunt" />
+        <result column="yes_loan_cunt" jdbcType="INTEGER" property="yesLoanCunt" />
+        <result column="fail_loan_cunt" jdbcType="INTEGER" property="failLoanCunt" />
+        <result column="cross_rate" jdbcType="DOUBLE" property="crossRate" />
+        <result column="delay_cunt" jdbcType="INTEGER" property="delayCunt" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    </resultMap>
+    <sql id="findAllSql">
+        <where>
+            <if test="id != null and id != ''">
+                amfr.id = #{id}
+            </if>
+            <if test="appMarket != null and appMarket != ''">
+                and amfr.app_market  = #{appMarket}
+            </if>
+            <if test="beginTime !=null and beginTime !=''">
+                <![CDATA[	and DATE_FORMAT(amfr.install_time,'%Y-%m-%d') >=  #{beginTime}  ]]>
+            </if>
+            <if test="endTime !=null and endTime !=''">
+                <![CDATA[	and DATE_FORMAT(amfr.install_time,'%Y-%m-%d') <=  #{endTime}  ]]>
+            </if>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, app_market, install_time, register_cunt, all_register_cunt, register_trans_rate,
+        realname_auth_cunt, bind_card_cunt, rely_loan_cunt, yes_loan_cunt, fail_loan_cunt,
+        cross_rate, delay_cunt, update_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from app_market_flow_record
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from app_market_flow_record
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.info.back.pojo.AppMarketFlowRecord">
+        insert into app_market_flow_record (id, app_market, install_time,
+        register_cunt, all_register_cunt, register_trans_rate,
+        realname_auth_cunt, bind_card_cunt, rely_loan_cunt,
+        yes_loan_cunt, fail_loan_cunt, cross_rate,
+        delay_cunt)
+        values (#{id,jdbcType=BIGINT}, #{appMarket,jdbcType=VARCHAR}, #{installTime,jdbcType=TIMESTAMP},
+        #{registerCunt,jdbcType=INTEGER}, #{allRegisterCunt,jdbcType=INTEGER}, #{registerTransRate,jdbcType=DOUBLE},
+        #{realnameAuthCunt,jdbcType=INTEGER}, #{bindCardCunt,jdbcType=INTEGER}, #{relyLoanCunt,jdbcType=INTEGER},
+        #{yesLoanCunt,jdbcType=INTEGER}, #{failLoanCunt,jdbcType=INTEGER}, #{crossRate,jdbcType=DOUBLE},
+        #{delayCunt,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.info.back.pojo.AppMarketFlowRecord">
+        insert into app_market_flow_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="appMarket != null">
+                app_market,
+            </if>
+            <if test="installTime != null">
+                install_time,
+            </if>
+            <if test="registerCunt != null">
+                register_cunt,
+            </if>
+            <if test="allRegisterCunt != null">
+                all_register_cunt,
+            </if>
+            <if test="registerTransRate != null">
+                register_trans_rate,
+            </if>
+            <if test="realnameAuthCunt != null">
+                realname_auth_cunt,
+            </if>
+            <if test="bindCardCunt != null">
+                bind_card_cunt,
+            </if>
+            <if test="relyLoanCunt != null">
+                rely_loan_cunt,
+            </if>
+            <if test="yesLoanCunt != null">
+                yes_loan_cunt,
+            </if>
+            <if test="failLoanCunt != null">
+                fail_loan_cunt,
+            </if>
+            <if test="crossRate != null">
+                cross_rate,
+            </if>
+            <if test="delayCunt != null">
+                delay_cunt,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="appMarket != null">
+                #{appMarket,jdbcType=VARCHAR},
+            </if>
+            <if test="installTime != null">
+                #{installTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="registerCunt != null">
+                #{registerCunt,jdbcType=INTEGER},
+            </if>
+            <if test="allRegisterCunt != null">
+                #{allRegisterCunt,jdbcType=INTEGER},
+            </if>
+            <if test="registerTransRate != null">
+                #{registerTransRate,jdbcType=DOUBLE},
+            </if>
+            <if test="realnameAuthCunt != null">
+                #{realnameAuthCunt,jdbcType=INTEGER},
+            </if>
+            <if test="bindCardCunt != null">
+                #{bindCardCunt,jdbcType=INTEGER},
+            </if>
+            <if test="relyLoanCunt != null">
+                #{relyLoanCunt,jdbcType=INTEGER},
+            </if>
+            <if test="yesLoanCunt != null">
+                #{yesLoanCunt,jdbcType=INTEGER},
+            </if>
+            <if test="failLoanCunt != null">
+                #{failLoanCunt,jdbcType=INTEGER},
+            </if>
+            <if test="crossRate != null">
+                #{crossRate,jdbcType=DOUBLE},
+            </if>
+            <if test="delayCunt != null">
+                #{delayCunt,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.info.back.pojo.AppMarketFlowRecord">
+        update app_market_flow_record
+        <set>
+            <if test="appMarket != null">
+                app_market = #{appMarket,jdbcType=VARCHAR},
+            </if>
+            <if test="installTime != null">
+                install_time = #{installTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="registerCunt != null">
+                register_cunt = #{registerCunt,jdbcType=INTEGER},
+            </if>
+            <if test="allRegisterCunt != null">
+                all_register_cunt = #{allRegisterCunt,jdbcType=INTEGER},
+            </if>
+            <if test="registerTransRate != null">
+                register_trans_rate = #{registerTransRate,jdbcType=DOUBLE},
+            </if>
+            <if test="realnameAuthCunt != null">
+                realname_auth_cunt = #{realnameAuthCunt,jdbcType=INTEGER},
+            </if>
+            <if test="bindCardCunt != null">
+                bind_card_cunt = #{bindCardCunt,jdbcType=INTEGER},
+            </if>
+            <if test="relyLoanCunt != null">
+                rely_loan_cunt = #{relyLoanCunt,jdbcType=INTEGER},
+            </if>
+            <if test="yesLoanCunt != null">
+                yes_loan_cunt = #{yesLoanCunt,jdbcType=INTEGER},
+            </if>
+            <if test="failLoanCunt != null">
+                fail_loan_cunt = #{failLoanCunt,jdbcType=INTEGER},
+            </if>
+            <if test="crossRate != null">
+                cross_rate = #{crossRate,jdbcType=DOUBLE},
+            </if>
+            <if test="delayCunt != null">
+                delay_cunt = #{delayCunt,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.info.back.pojo.AppMarketFlowRecord">
+    update app_market_flow_record
+    set app_market = #{appMarket,jdbcType=VARCHAR},
+      install_time = #{installTime,jdbcType=TIMESTAMP},
+      register_cunt = #{registerCunt,jdbcType=INTEGER},
+      all_register_cunt = #{allRegisterCunt,jdbcType=INTEGER},
+      register_trans_rate = #{registerTransRate,jdbcType=DOUBLE},
+      realname_auth_cunt = #{realnameAuthCunt,jdbcType=INTEGER},
+      bind_card_cunt = #{bindCardCunt,jdbcType=INTEGER},
+      rely_loan_cunt = #{relyLoanCunt,jdbcType=INTEGER},
+      yes_loan_cunt = #{yesLoanCunt,jdbcType=INTEGER},
+      fail_loan_cunt = #{failLoanCunt,jdbcType=INTEGER},
+      cross_rate = #{crossRate,jdbcType=DOUBLE},
+        delay_cunt = #{delayCunt,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <!--查询当天多少用户做过实名认证-->
+    <select id="selectTheDayNameAuthCunt"  resultType="map" parameterType="map">
+        SELECT ui.user_id AS userId,ir.app_Market AS appMarket,MAX(ir.register_time) AS registerTime
+        FROM
+          info_index_info ui
+        JOIN info_report ir ON ir.uid = CONCAT('',ui.user_id)
+        WHERE
+            ui.auth_info_time &gt; #{nowdayStart}
+            AND ui.auth_info_time  &lt; #{nowdayEnd}
+            AND ui.auth_info = 1
+            GROUP BY ui.user_id
+    </select>
+
+    <!--查询当天多少用户做过绑卡-->
+    <select id="selectTheDayBindCardCunt"  resultType="map" parameterType="map">
+       SELECT ui.user_id AS userId,ir.app_Market AS appMarket,MAX(ir.register_time) AS registerTime
+        FROM
+          info_index_info ui
+        JOIN info_report ir ON ir.uid = CONCAT('',ui.user_id)
+        WHERE
+          ui.auth_bank_time &gt; #{nowdayStart}
+          AND ui.auth_bank_time  &lt; #{nowdayEnd}
+          AND ui.auth_bank=1
+          GROUP BY ui.user_id
+    </select>
+
+    <!--查询当天多少用户申请借款-->
+    <select id="selectTheDayRelyLoanCunt"  resultType="map" parameterType="map">
+      SELECT ui.user_id AS userId,ir.app_Market AS appMarket,MAX(ir.register_time) AS registerTime
+      FROM
+        asset_borrow_order abo,info_index_info ui
+      JOIN info_report ir ON ir.uid = CONCAT('',ui.user_id)
+      WHERE abo.user_id = ui.user_id
+        AND abo.created_at &gt; #{nowdayStart}
+        AND abo.created_at  &lt; #{nowdayEnd}
+      GROUP BY ui.user_id
+    </select>
+
+    <!--查询当天多少用户放款成功-->
+    <select id="selectTheDayyesLoanCunt" parameterType="map"  resultType="map">
+      SELECT ui.user_id AS userId,ir.app_Market AS appMarket,MAX(ir.register_time) AS registerTime
+      FROM
+        asset_borrow_order abo,info_index_info ui
+      JOIN info_report ir ON ir.uid = CONCAT('',ui.user_id)
+      WHERE abo.user_id = ui.user_id
+        AND abo.loan_time &gt; #{nowdayStart}
+        AND abo.loan_time  &lt; #{nowdayEnd}
+      GROUP BY ui.user_id
+    </select>
+
+    <!--查询当天多少用户放款失败-->
+    <select id="selectTheDayFailLoanCunt"  parameterType="map"  resultType="map">
+      SELECT ui.user_id AS userId,ir.app_Market AS appMarket,MAX(ir.register_time) AS registerTime
+      FROM
+        asset_borrow_order abo,info_index_info ui
+        JOIN info_report ir ON ir.uid = CONCAT('',ui.user_id)
+      WHERE abo.user_id = ui.user_id
+      AND abo.status in
+      <foreach item="item" index="index" collection="failStatus" open="("
+               separator="," close=")">
+        #{item}
+      </foreach>
+        AND abo.updated_at &gt; #{nowdayStart}
+        AND abo.updated_at  &lt; #{nowdayEnd}
+      GROUP BY ui.user_id
+    </select>
+
+    <!--查询当天的总申请订单数-->
+    <select id="selectTheDayAllOrdersCunt"  resultType="Integer" parameterType="map">
+        SELECT count(*)
+        FROM
+          info_index_info ui,asset_borrow_order abo
+        WHERE ui.user_id = abo.user_id
+            AND abo.created_at  &gt; #{nowdayStart}
+            AND abo.created_at &lt; #{nowdayEnd}
+    </select>
+
+    <!--查询当天逾期的用户数-->
+    <select id="selectTheDayDelayCunt"  resultType="map" parameterType="map">
+        SELECT ui.user_id AS userId,ir.app_Market AS appMarket,MAX(ir.register_time) AS registerTime
+        FROM
+          asset_repayment ar,info_index_info ui
+        JOIN info_report ir ON ir.uid = CONCAT('',ui.user_id)
+        WHERE ar.user_id = ui.user_id
+            AND ar.first_repayment_time &gt; #{nowdayEnd}
+            AND ar.first_repayment_time &lt; #{twodayEnd}
+            AND TO_DAYS(ar.repayment_time) = TO_DAYS(ar.first_repayment_time)
+        GROUP BY ui.user_id
+    </select>
+
+    <!--每日凌晨插入应用市场多条空记录-->
+    <insert id="insertList" parameterType="java.util.List">
+        insert into app_market_flow_record (app_market, install_time,
+        register_cunt, all_register_cunt, register_trans_rate,
+        realname_auth_cunt, bind_card_cunt, rely_loan_cunt,
+        yes_loan_cunt, fail_loan_cunt, cross_rate,
+        delay_cunt)
+        values
+        <foreach collection="list" item="record"  open="" close="" separator=",">
+            (#{record.appMarket,jdbcType=VARCHAR}, #{record.installTime,jdbcType=TIMESTAMP},
+            #{record.registerCunt,jdbcType=INTEGER}, #{record.allRegisterCunt,jdbcType=INTEGER}, #{record.registerTransRate,jdbcType=DOUBLE},
+            #{record.realnameAuthCunt,jdbcType=INTEGER}, #{record.bindCardCunt,jdbcType=INTEGER}, #{record.relyLoanCunt,jdbcType=INTEGER},
+            #{record.yesLoanCunt,jdbcType=INTEGER}, #{record.failLoanCunt,jdbcType=INTEGER}, #{record.crossRate,jdbcType=DOUBLE},
+            #{record.delayCunt,jdbcType=INTEGER})
+        </foreach>
+    </insert>
+
+    <!--定时器每隔一段时间更新或者插入数据-->
+    <insert id="insertAppmarket" parameterType="map">
+        insert into app_market_flow_record (app_market, install_time,
+        register_cunt, all_register_cunt, register_trans_rate,
+        realname_auth_cunt, bind_card_cunt, rely_loan_cunt,
+        yes_loan_cunt, fail_loan_cunt, cross_rate,
+        delay_cunt)
+        values
+        <foreach collection="list" item="item"  open="" close="" separator=",">
+            (#{item.appMarket,jdbcType=VARCHAR}, #{item.installTime,jdbcType=TIMESTAMP},
+            #{item.registerCunt,jdbcType=INTEGER}, #{item.allRegisterCunt,jdbcType=INTEGER}, #{item.registerTransRate,jdbcType=DOUBLE},
+            #{item.realnameAuthCunt,jdbcType=INTEGER}, #{item.bindCardCunt,jdbcType=INTEGER}, #{item.relyLoanCunt,jdbcType=INTEGER},
+            #{item.yesLoanCunt,jdbcType=INTEGER}, #{item.failLoanCunt,jdbcType=INTEGER}, #{item.crossRate,jdbcType=DOUBLE},
+            #{item.delayCunt,jdbcType=INTEGER})
+        </foreach>
+    </insert>
+
+    <!--定时器每隔一段时间更新或者插入数据-->
+    <update id="updateAppmarket" parameterType="map">
+        <foreach collection="list" item="item"  open="" close="" separator=";">
+        update app_market_flow_record
+            set app_market = #{item.appMarket,jdbcType=VARCHAR},
+            install_time = #{item.installTime,jdbcType=TIMESTAMP},
+            register_cunt = #{item.registerCunt,jdbcType=INTEGER},
+            all_register_cunt = #{item.allRegisterCunt,jdbcType=INTEGER},
+            register_trans_rate = #{item.registerTransRate,jdbcType=DOUBLE},
+            realname_auth_cunt = #{item.realnameAuthCunt,jdbcType=INTEGER},
+            bind_card_cunt = #{item.bindCardCunt,jdbcType=INTEGER},
+            rely_loan_cunt = #{item.relyLoanCunt,jdbcType=INTEGER},
+            yes_loan_cunt = #{item.yesLoanCunt,jdbcType=INTEGER},
+            fail_loan_cunt = #{item.failLoanCunt,jdbcType=INTEGER},
+            cross_rate = #{item.crossRate,jdbcType=DOUBLE},
+            delay_cunt = #{item.delayCunt,jdbcType=INTEGER}
+            WHERE id = #{item.id,jdbcType=BIGINT}
+        </foreach>
+    </update>
+
+
+    <!--分页查询应用市场流量-->
+    <select id="selectPageList" resultMap="BaseResultMap" parameterType="map">
+        select *
+        FROM app_market_flow_record amfr
+        <include refid="findAllSql"/>
+        ORDER BY install_time DESC
+        <if test="limitStart != null and limitStart>=0" >
+            LIMIT #{limitStart} , #{limitEnd}
+        </if>
+    </select>
+
+    <!--分页查询应用市场流量-->
+    <select id="selectPageCunt" resultType="java.lang.Integer" parameterType="map">
+        select COUNT(*)
+        FROM app_market_flow_record amfr
+        <include refid="findAllSql"/>
+    </select>
+
+    <!--查询统计汇总的数据-->
+    <select id="selectAllList" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+        app_market,
+        SUM(all_register_cunt) AS all_register_cunt,
+        SUM(register_cunt) AS register_cunt,
+        SUM(realname_auth_cunt) AS realname_auth_cunt,
+        SUM(bind_card_cunt) AS bind_card_cunt,
+        SUM(rely_loan_cunt) AS rely_loan_cunt,
+        SUM(yes_loan_cunt) AS yes_loan_cunt,
+        SUM(delay_cunt) AS delay_cunt,
+        SUM(fail_loan_cunt) AS fail_loan_cunt
+        FROM
+        `app_market_flow_record` amfr
+        <include refid="findAllSql"/>
+        GROUP BY app_market
+        <if test="limitStart != null and limitStart>=0" >
+            LIMIT #{limitStart} , #{limitEnd}
+        </if>
+    </select>
+
+    <!--查询统计汇总的数据数量-->
+    <select id="selectAllListCunt" resultType="java.lang.Integer" parameterType="map">
+      SELECT COUNT(t.counts)
+      FROM
+      (SELECT COUNT(app_market) AS counts FROM app_market_flow_record amfr
+        <include refid="findAllSql"/>
+      GROUP BY app_market) t
+    </select>
+
+    <select id="selectByMarketAndDate" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List" />
+        from app_market_flow_record
+        where app_market = #{appMarket,jdbcType=VARCHAR}
+        and install_time = #{installTime,jdbcType=TIMESTAMP}
+    </select>
+
+</mapper>

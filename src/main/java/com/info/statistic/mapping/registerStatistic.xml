@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.back.dao.IRegisterStatisticDao">
+
+	<select id="registerSumCount" resultType="long">
+		select count(1) from user_info 
+	</select>
+	
+	<select id="registerTodayCount" resultType="long">
+		SELECT COUNT(1) FROM user_info t WHERE  t.create_time >DATE_FORMAT(NOW(), '%Y-%m-%d')
+	</select>
+	
+		<select id="registerThisdayCount" resultType="long">
+		SELECT COUNT(1) FROM user_info t WHERE  t.create_time LIKE CONCAT(DATE_FORMAT(#{nowDate}, '%Y-%m-%d'),'%')
+	</select>
+	<select id="registerThisWeekCount" resultType="long">
+		SELECT COUNT(1) FROM user_info t WHERE  YEARWEEK(DATE_FORMAT(t.create_time,'%Y-%m-%d'))=YEARWEEK(#{nowDate})    
+	</select>
+	<select id="registerThisMonthCount" resultType="long">
+		SELECT COUNT(1) FROM user_info t WHERE  DATE_FORMAT(t.create_time,'%Y-%m')=DATE_FORMAT(#{nowDate},'%Y-%m')    
+	</select>
+	<select id="findAllApprove" resultType="long">
+		SELECT COUNT(1) FROM info_index_info t WHERE  auth_info=1 and auth_contacts=1 and  auth_bank=1  and auth_sesame=1  and auth_mobile=1
+	</select>
+	<select id="findOneApprove1" resultType="long">
+		SELECT COUNT(1) FROM info_index_info where auth_info=1
+	</select>
+	<select id="findOneApprove2" resultType="long">
+		SELECT COUNT(1) FROM info_index_info where auth_bank=1
+	</select>
+	<select id="findOneApprove3" resultType="long">
+		SELECT COUNT(1) FROM info_index_info where auth_sesame=1
+	</select>
+	<select id="findOneApprove4" resultType="long">
+		SELECT COUNT(1) FROM info_index_info where auth_mobile=1
+	</select>
+	<select id="findOneApprove5" resultType="long">
+		SELECT COUNT(1) FROM info_index_info where auth_contacts=1
+	</select>
+</mapper>

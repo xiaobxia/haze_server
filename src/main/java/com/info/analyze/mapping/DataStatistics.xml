@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.analyze.dao.IDataStatisticsDao">
+    <resultMap id="BaseResultDataStatisticsMap" type="com.info.analyze.pojo.DataStatistics">
+        <id column="id" property="id" />
+        <result column="statistics_time" property="statisticsTime" jdbcType="VARCHAR" />
+        <result column="apply_user_new_count" property="applyUserNewCount" jdbcType="INTEGER" />
+        <result column="apply_user_old_count" property="applyUserOldCount" jdbcType="INTEGER" />
+        <result column="apply_user_count" property="applyUserCount" jdbcType="INTEGER" />
+
+        <result column="loan_user_old_count" property="loanUserOldCount" jdbcType="INTEGER" />
+        <result column="loan_user_new_count" property="loanUserNewCount" jdbcType="INTEGER" />
+        <result column="loan_user_count" property="loanUserCount" jdbcType="INTEGER" />
+
+        <result column="loan_money_old_count" property="loanMoneyOldCount" jdbcType="INTEGER" />
+        <result column="loan_money_new_count" property="loanMoneyNewCount" jdbcType="INTEGER" />
+        <result column="loan_money_count" property="loanMoneyCount" jdbcType="INTEGER" />
+
+        <result column="regist_count" property="registCount" jdbcType="INTEGER" />
+        <result column="loan_blance" property="loanBlance" jdbcType="INTEGER" />
+        <result column="flag" property="flag" jdbcType="INTEGER" />
+        <result column="new_customer_check_rate" property="newCustomerCheckRate" jdbcType="VARCHAR" />
+        <result column="customer_check_rate" property="customerCheckRate" jdbcType="VARCHAR" />
+        <result column="old_customer_check_rate" property="oldCustomerCheckRate" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="selectSql">
+        id,statistics_time,apply_user_new_count,apply_user_old_count,loan_user_old_count,loan_money_old_count,loan_money_new_count,regist_count,
+        loan_blance,flag,create_time,update_time,new_customer_check_rate,customer_check_rate,old_customer_check_rate,loan_money_count,loan_user_count,apply_user_count,loan_user_new_count
+    </sql>
+
+    <insert id="insertDataStatics" parameterType="com.info.analyze.pojo.DataStatistics" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO risk_analyze_statistics (
+        statistics_time,
+        apply_user_new_count,
+        apply_user_old_count,
+        create_time,new_customer_check_rate,customer_check_rate,old_customer_check_rate,flag,loan_blance,
+        loan_user_old_count,loan_user_new_count,loan_money_old_count,loan_money_new_count,regist_count,
+        loan_money_count,loan_user_count,apply_user_count
+        )
+        VALUES
+        (#{statisticsTime}, #{applyUserNewCount}, #{applyUserOldCount},#{createTime},#{newCustomerCheckRate},#{customerCheckRate},#{oldCustomerCheckRate},#{flag},#{loanBlance},
+        #{loanUserOldCount},#{loanUserNewCount},#{loanMoneyOldCount},#{loanMoneyNewCount},#{registCount},
+        #{loanMoneyCount},#{loanUserCount},#{applyUserCount}
+        )
+    </insert>
+
+    <update id="updateDataStatics" parameterType="com.info.analyze.pojo.DataStatistics">
+        UPDATE risk_analyze_statistics
+        <set>
+            <if test="loanUserNewCount !=null and loanUserNewCount != '' ">
+                loan_user_new_count = #{loanUserNewCount},
+            </if>
+            <if test="loanUserOldCount !=null and loanUserOldCount != '' ">
+                loan_user_old_count = #{loanUserOldCount},
+            </if>
+            <if test="loanMoneyNewCount !=null and loanMoneyNewCount != '' ">
+                loan_money_new_count = #{loanMoneyNewCount},
+            </if>
+            <if test="loanMoneyOldCount !=null and loanMoneyOldCount != '' ">
+                loan_money_old_count = #{loanMoneyOldCount},
+            </if>
+            <if test="registCount !=null and registCount != '' ">
+                regist_count = #{registCount},
+            </if>
+            <if test="loanBlance !=null and loanBlance != '' ">
+                loan_blance = #{loanBlance},
+            </if>
+            <if test="flag !=null and flag != '' ">
+                flag = #{flag},
+            </if>
+            <if test="newCustomerCheckRate != null and newCustomerCheckRate != '' ">
+                new_customer_check_rate = #{newCustomerCheckRate},
+            </if>
+            <if test="customerCheckRate != null and customerCheckRate != '' ">
+                customer_check_rate = #{customerCheckRate},
+            </if>
+            <if test="oldCustomerCheckRate != null and oldCustomerCheckRate != '' ">
+                old_customer_check_rate = #{oldCustomerCheckRate},
+            </if>
+            <if test="loanMoneyCount != null and loanMoneyCount != '' ">
+                loan_money_count = #{loanMoneyCount},
+            </if>
+            <if test="loanUserCount != null and loanUserCount != '' ">
+                loan_user_count = #{loanUserCount},
+            </if>
+            <if test="applyUserCount != null and applyUserCount != '' ">
+                apply_user_count = #{applyUserCount},
+            </if>
+            <if  test="updateTime != null and updateTime != '' ">
+                update_time = #{updateTime}
+            </if>
+        </set>
+        where
+        1 = 1
+        <if test="id != null and id != '' ">
+            AND id = #{id}
+        </if>
+        <if test="statisticsTime != null and statisticsTime != '' ">
+            and  statistics_time = #{statisticsTime}
+        </if>
+    </update>
+
+
+    <select id="selectDataStatistics" resultMap="BaseResultDataStatisticsMap"  parameterType="HashMap">
+        SELECT <include refid="selectSql" /><include refid="conditionSql" />
+    </select>
+    <select id="selectDataStatisticsCount" parameterType="HashMap" resultType="Integer">
+      SELECT count(1) <include refid="conditionSql" />
+    </select>
+    <sql id="conditionSql">
+        from  risk_analyze_statistics
+        WHERE
+        1 = 1
+        <if test="statisticsTime != null and statisticsTime != '' ">
+            and  statistics_time = #{statisticsTime}
+        </if>
+        <if test="endWeekTime != null and startWeekTime != null">
+            AND  statistics_time BETWEEN #{startWeekTime} and #{endWeekTime}
+        </if>
+        <if test="beginMonthDay != null and endMonthDay != null">
+            <![CDATA[  and  statistics_time >= #{beginMonthDay} and statistics_time<= #{endMonthDay}  ]]>
+        </if>
+        <if test="flag != null and flag != '' ">
+            AND flag = #{flag}
+        </if>
+        ORDER by statistics_time desc
+    </sql>
+
+    <delete id="deleDataStatisticsAll" parameterType="INTEGER">
+        DELETE from risk_analyze_statistics
+    </delete>
+</mapper>

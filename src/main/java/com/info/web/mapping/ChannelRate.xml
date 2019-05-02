@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.web.dao.IChannelRateDao">
+	<resultMap id="BaseResultMap" type="com.info.web.pojo.ChannelRate">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="channel_rate_name" property="channelRateName" jdbcType="VARCHAR" />
+		<result column="channel_register_rate" property="channelRegisterRate" />
+		<result column="channel_newloan_rate" property="channelNewloanRate"/>
+		<result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+		<result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+		<result column="remark" property="remark"/>
+	</resultMap>
+ 
+	<sql id="findAllSql">
+		<where>
+<!-- 			<if test="id != null and id != ''"> -->
+<!-- 				and id  = #{id}  -->
+<!-- 			</if> -->
+			<if test="channelRateName != null and channelRateName != ''">
+				and channel_rate_name  = #{channelRateName} 
+			</if>
+			<if test="beginTime !=null and beginTime !=''">
+		    		<![CDATA[	and DATE_FORMAT(created_at,'%Y-%m-%d') >=  #{beginTime}  ]]>
+			</if>
+			<if test="endTime !=null and endTime !=''">
+			    	<![CDATA[	and DATE_FORMAT(created_at,'%Y-%m-%d') <=  #{endTime}  ]]>
+			</if>
+		</where>
+	</sql>
+	<select id="findAllCount" resultType="Integer" parameterType="HashMap">
+		select count(1)
+		FROM channel_rate
+		<include refid="findAllSql" />
+	</select>
+	<select id="findAll" resultMap="BaseResultMap" parameterType="HashMap">
+		SELECT
+		id,
+		channel_rate_name,
+		channel_register_rate,
+		channel_newloan_rate,
+		created_at,
+		updated_at,
+		remark
+		FROM channel_rate
+		<include refid="findAllSql" />
+		order by created_at DESC
+	</select>
+
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		SELECT
+		id,
+		channel_rate_name,
+		channel_register_rate,
+		channel_newloan_rate,
+		created_at,
+		updated_at,
+		remark
+		FROM channel_rate
+		where id = #{id}
+	</select>
+	<insert id="insert" parameterType="com.info.web.pojo.ChannelRate">
+		INSERT INTO channel_rate
+            (
+             channel_rate_name,
+             channel_register_rate,
+             channel_newloan_rate,
+             created_at,
+             updated_at,
+             remark)
+		VALUES (
+		        #{channelRateName},
+		        #{channelRegisterRate},
+		        #{channelNewloanRate},
+		         now(),
+		         NOW(),
+		        #{remark});
+	</insert>
+	 
+	<update id="updateById" parameterType="com.info.web.pojo.ChannelRate">
+		UPDATE channel_rate
+		SET 
+		channel_rate_name =#{channelRateName},
+		channel_register_rate =#{channelRegisterRate},
+		channel_newloan_rate =#{channelNewloanRate},
+		updated_at = now(),
+		remark = remark
+		WHERE id = #{id};
+	</update>
+</mapper>

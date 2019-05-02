@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.back.dao.IPlatformReportDao">
+	<resultMap id="BaseResultMap" type="PlatformReport">
+		<id column="id" property="id" />
+		<result column="report_date" property="reportDate" />
+		<result column="register_num" property="registerNum" />
+		<result column="real_person_num" property="realPersonNum" />
+		<result column="real_num" property="realNum" />
+		<result column="real_money" property="realMoney" />
+		<result column="yys_num" property="yysNum" />
+		<result column="yys_suc_num" property="yysSucNum" />
+		<result column="yys_money" property="yysMoney" />
+		<result column="bank_num" property="bankNum" />
+		<result column="zm_num" property="zmNum" />
+		<result column="zm_money" property="zmMoney" />
+		<result column="work_num" property="workNum" />
+		<result column="alipay_num" property="alipayNum" />
+		<result column="borrow_num" property="borrowNum" />
+		<result column="borrow_suc_num" property="borrowSucNum" />
+		<result column="borrow_rate" property="borrowRate" />
+		<result column="should_pay_money" property="shouldPayMoney" />
+		<result column="suc_pay_money" property="sucPayMoney" />
+		<result column="suc_pay_num" property="sucPayNum" />
+		<result column="no_pay_money" property="noPayMoney" />
+		<result column="no_pay_num" property="noPayNum" />
+		<result column="fail_pay_money" property="failPayMoney" />
+		<result column="fail_pay_num" property="failPayNum" />
+		<result column="wait_pay_money" property="waitPayMoney" />
+		<result column="wait_pay_num" property="waitPayNum" />
+		<result column="borrow_user_num" property="borrowUserNum" />
+		<result column="borrow_user_suc_num" property="borrowUserSucNum" />
+		<result column="borrow_user_rate" property="borrowUserRate" />
+		<result column="stop_num" property="stopNum" />
+		<result column="fqz" property="fqz" />
+		<result column="zr" property="zr" />
+		<result column="risk_num" property="riskNum" />
+		<result column="risk_suc_num" property="riskSucNum" />
+		<result column="risk_fail_num" property="riskFailNum" />
+		<result column="risk_to_review" property="riskToReview" />
+		<result column="risk_to_review_zx_err" property="riskToReviewZxErr" />
+		<result column="risk_to_review_err" property="riskToReviewErr" />
+		<result column="riks_to_review_real" property="riksToReviewReal" />
+		<result column="zm_score_suc" property="zmScoreSuc" />
+		<result column="zm_score_fail" property="zmScoreFail" />
+		<result column="zm_industy_suc" property="zmIndustySuc" />
+		<result column="zm_industy_fail" property="zmIndustyFail" />
+		<result column="td_suc" property="tdSuc" />
+		<result column="td_fail" property="tdFail" />
+		<result column="bqs_suc" property="bqsSuc" />
+		<result column="bqs_fail" property="bqsFail" />
+		<result column="zzc_suc" property="zzcSuc" />
+		<result column="zzc_fail" property="zzcFail" />
+		<result column="jyzx_suc" property="jyzxSuc" />
+		<result column="jyzx_fail" property="jyzxFail" />
+		<result column="jxl_mg_suc" property="jxlMgSuc" />
+		<result column="jxl_mg_fail" property="jxlMgFail" />
+		<result column="jxl_report_suc" property="jxlReportSuc" />
+		<result column="jxl_report_fail" property="jxlReportFail" />
+		<result column="yx_suc" property="yxSuc" />
+		<result column="yx_fail" property="yxFail" />
+		<result column="add_time" property="addTime"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="status" property="status" />
+	</resultMap>
+	<update id="update" parameterType="String">
+		update
+		platform_report set status = 2 where report_date = #{reportDate}
+  </update>
+	<insert id="insert" parameterType="PlatformReport">
+		insert into platform_report
+		(report_date, register_num,real_person_num, real_num, real_money,yys_num, yys_suc_num, yys_money,bank_num, zm_num, zm_money,
+		work_num,alipay_num, borrow_num,borrow_suc_num, borrow_rate, should_pay_money,suc_pay_money, suc_pay_num, no_pay_money,
+		no_pay_num, fail_pay_money,fail_pay_num,wait_pay_money, wait_pay_num, borrow_user_num,borrow_user_suc_num, borrow_user_rate, stop_num,
+		fqz, zr, risk_num,risk_suc_num,risk_fail_num, risk_to_review, risk_to_review_zx_err,risk_to_review_err, riks_to_review_real
+		,zm_score_suc,zm_score_fail,zm_industy_suc,zm_industy_fail,td_suc,td_fail,bqs_suc,bqs_fail,zzc_suc,zzc_fail,jyzx_suc,jyzx_fail,jxl_mg_suc,jxl_mg_fail
+		,jxl_report_suc,jxl_report_fail,yx_suc,yx_fail)
+		values(#{reportDate,jdbcType=VARCHAR}, #{registerNum},#{realPersonNum},#{realNum}, #{realMoney},#{yysNum}, #{yysSucNum}, #{yysMoney},
+		#{bankNum}, #{zmNum}, #{zmMoney},#{workNum}, #{alipayNum},#{borrowNum},#{borrowSucNum}, #{borrowRate}, #{shouldPayMoney},
+		#{sucPayMoney}, #{sucPayNum},#{noPayMoney},#{noPayNum},	#{failPayMoney}, #{failPayNum},#{waitPayMoney}, #{waitPayNum},
+		#{borrowUserNum},#{borrowUserSucNum}, #{borrowUserRate}, #{stopNum},#{fqz}, #{zr}, #{riskNum}, #{riskSucNum},
+		#{riskFailNum},#{riskToReview}, #{riskToReviewZxErr},#{riskToReviewErr},#{riksToReviewReal}
+		,#{zmScoreSuc},#{zmScoreFail},#{zmIndustySuc},#{zmIndustyFail},#{tdSuc},#{tdFail},#{bqsSuc},#{bqsFail},#{zzcSuc},#{zzcFail},#{jyzxSuc}
+		,#{jyzxFail},#{jxlMgSuc},#{jxlMgFail},#{jxlReportSuc},#{jxlReportFail},#{yxSuc},#{yxFail})
+  </insert>
+<!--   某一天的注册用户 -->
+  	<select id="findRegisterCount" parameterType="String" resultType="Integer">
+  		SELECT COUNT(1) FROM user_info WHERE  create_time BETWEEN str_to_date(#{date},'%Y-%m-%d') and date_add(#{date}, interval 1 day)
+  	</select>
+<!--   某一天的实名认证用户数 -->
+  	<select id="findRealPersonCount" parameterType="String" resultType="Integer">
+  		SELECT COUNT(1) FROM info_index_info WHERE  auth_info_time BETWEEN str_to_date(#{date},'%Y-%m-%d') and date_add(#{date}, interval 1 day) and auth_info=1
+  	</select>
+<!--   某一天的实名认证次数 -->
+  	<select id="findRealCount" parameterType="String" resultType="Integer">
+  		SELECT IFNULL(sum(IFNULL(total_num,0)),0) FROM face_recognition WHERE  create_time BETWEEN str_to_date(#{date},'%Y-%m-%d') and date_add(#{date}, interval 1 day)
+  	</select>
+  	<!--   某一天的运营商认证数(获得token的数字) -->
+  	<select id="findYysCount" parameterType="String" resultType="Integer">
+  		SELECT COUNT(1) FROM user_info WHERE jxl_status =2 and   jxl_token_time BETWEEN str_to_date(#{date},'%Y-%m-%d') and date_add(#{date}, interval 1 day)
+  	</select>
+  	<!--   某一天的运营商认证成功数 -->
+  	<select id="findYysSucCount" parameterType="String" resultType="Integer">
+  		SELECT COUNT(1) FROM user_info WHERE jxl_detail_status =2 and   jxl_detail_time BETWEEN str_to_date(#{date},'%Y-%m-%d') and date_add(#{date}, interval 1 day)
+  	</select>
+  	<!--   某一天的绑卡用户数 -->
+  	<select id="findBankCount" parameterType="String" resultType="Integer">
+  		SELECT COUNT(1) FROM info_index_info WHERE  auth_bank_time BETWEEN str_to_date(#{date},'%Y-%m-%d') and date_add(#{date}, interval 1 day) and auth_bank=1
+  	</select>
+  	<!--   某一天的芝麻用户数 -->
+  	<select id="findZmCount" parameterType="String" resultType="Integer">
+  		SELECT COUNT(1) FROM info_index_info WHERE  auth_sesame_time BETWEEN str_to_date(#{date},'%Y-%m-%d') and date_add(#{date}, interval 1 day) and auth_sesame=1
+  	</select>
+  	<!--   某一天的工作信息用户数 -->
+<!--  	<select id="findZmCount" parameterType="String" resultType="Integer">-->
+<!--  		SELECT COUNT(1) FROM info_index_info WHERE  auth_sesame_time LIKE CONCAT(#{date},'%') and auth_sesame=1-->
+<!--  	</select>-->
+  	<!--   某一天的认证支付宝的用户数 -->
+  	<select id="findAlipayCount" parameterType="String" resultType="Integer">
+  		SELECT COUNT(1) FROM user_info WHERE  my_hb_time BETWEEN str_to_date(#{date},'%Y-%m-%d') and date_add(#{date}, interval 1 day)
+  	</select>
+  	<!--   某一天的申请借款数 -->
+  	<select id="findBorrowCount" parameterType="String" resultType="Integer">
+  		SELECT COUNT(1) FROM asset_borrow_order WHERE  created_at BETWEEN str_to_date(#{date},'%Y-%m-%d') and date_add(#{date}, interval 1 day)
+  	</select>
+  	<!--   某一天通过审核的借款数(放款审核通过时间是当天) -->
+  	<select id="findBorrowSucCountMoney" parameterType="String" resultType="Map">
+  		SELECT COUNT(1) borrowSucCount,CAST(IFNULL(SUM(IFNULL(money_amount,0)),0)/100.0 AS DECIMAL(20, 2)) borrowMoney
+  		FROM asset_borrow_order WHERE  verify_loan_time BETWEEN str_to_date(#{date},'%Y-%m-%d') and date_add(#{date}, interval 1 day) and status in(21,22,23,30,-20)
+  	</select>
+  	<!--   某一天放款成功的笔数和金额(可能会包括昨天放款失败或者未放款的记录) -->
+  	<select id="findPaySucCountMoney" parameterType="String" resultType="Map">
+  		SELECT COUNT(1) paySucCount,CAST(IFNULL(SUM(IFNULL(money_amount,0)),0)/100.0 AS DECIMAL(20, 2)) payMoney 
+  		FROM asset_borrow_order WHERE  loan_time LIKE CONCAT(#{date},'%') and status in(21,23,30,-20)
+  	</select>
+  	<!--   某一天应打款但未到账的笔数和金额(放款审核通过时间是当天，状态却是放款中) -->
+  	<select id="findNoPayCountMoney" parameterType="String" resultType="Map">
+  		SELECT COUNT(1) noPayCount,CAST(IFNULL(SUM(IFNULL(money_amount,0)),0)/100.0 AS DECIMAL(20, 2)) noPayMoney
+  		FROM asset_borrow_order WHERE  verify_loan_time BETWEEN str_to_date(#{date},'%Y-%m-%d') and date_add(#{date}, interval 1 day) and status =22
+  	</select>
+  	<!--   某一天应打款但打款失败的笔数和金额(放款审核通过时间是当天，状态却是打款失败,只是统计到当前运算时，可能之后又打款成功) -->
+  	<select id="findFailPayCountMoney" parameterType="String" resultType="Map">
+  		SELECT COUNT(1) failPayCount,CAST(IFNULL(SUM(IFNULL(money_amount,0)),0)/100.0 AS DECIMAL(20, 2)) failPayMoney
+  		FROM asset_borrow_order WHERE  verify_loan_time BETWEEN str_to_date(#{date},'%Y-%m-%d') and date_add(#{date}, interval 1 day)  and status =-10
+  	</select>
+  		<!--   某一天的申请借款的用户总数 -->
+  	<select id="findBorrowUserCount" parameterType="String" resultType="Integer">
+  		SELECT COUNT(1) FROM (select user_id from asset_borrow_order WHERE  created_at BETWEEN str_to_date(#{date},'%Y-%m-%d') and date_add(#{date}, interval 1 day) group by user_id)a
+  	</select>
+  	<!--   某一天通过借款审核的用户数 -->
+  	<select id="findBorrowSucUserCount" parameterType="String" resultType="Integer">
+  		SELECT COUNT(1)  from(select user_id FROM asset_borrow_order WHERE  created_at BETWEEN str_to_date(#{date},'%Y-%m-%d') and date_add(#{date}, interval 1 day) and status in(21,22,23,30,-20) group by user_id)a
+  	</select>
+<!--   	查询某一天禁止项用户数 -->
+	<select id="findStopCount" parameterType="HashMap" resultType="Integer">
+  		select count(1) from (select user_id  from risk_rule_cal${tbDate} 
+  		where add_time LIKE CONCAT(#{date},'%') AND rule_id=121 AND  status=1 and rule_value!=1 group by user_id)a
+  	</select>
+<!--   	当日风控审核订单和拒绝订单 -->
+  	 <select id="findRiskOrdersToday" resultType="Integer"  parameterType="String">
+     SELECT COUNT(1) FROM risk_credit_user WHERE risk_time  LIKE CONCAT(#{date},'%') AND risk_status IN(2,3,4,8,9)
+	 UNION ALL
+	 SELECT COUNT(1) FROM risk_credit_user WHERE risk_time  LIKE CONCAT(#{date},'%') AND  risk_status=2 
+	 UNION ALL
+	 SELECT COUNT(1) FROM risk_credit_user WHERE risk_time  LIKE CONCAT(#{date},'%') AND  risk_status IN(4,8,9)
+	 UNION ALL
+	 SELECT COUNT(1) FROM risk_credit_user WHERE risk_time  LIKE CONCAT(#{date},'%') AND  risk_status=4
+	  UNION ALL
+	 SELECT COUNT(1) FROM risk_credit_user WHERE risk_time  LIKE CONCAT(#{date},'%') AND  risk_status=8
+	  UNION ALL
+	 SELECT COUNT(1) FROM risk_credit_user WHERE risk_time  LIKE CONCAT(#{date},'%') AND  risk_status=9
+    </select>
+    
+    <select id="findAllCount" resultType="Integer"
+		parameterType="HashMap">
+		SELECT  COUNT(1)
+				FROM platform_report a
+		<where>
+			<if test="beginTime !=null and beginTime !=''">
+	    		<![CDATA[	and DATE_FORMAT(a.report_date,'%Y-%m-%d') >=  #{beginTime}  ]]>
+			</if>
+			<if test="endTime !=null and endTime !=''">
+		    	<![CDATA[	and DATE_FORMAT(a.report_date,'%Y-%m-%d') <=  #{endTime}  ]]>
+			</if>
+		</where>
+	</select>
+   <select id="findAll" resultMap="BaseResultMap"
+		parameterType="HashMap">
+		SELECT  *
+				FROM platform_report a
+		<where>
+			<if test="beginTime !=null and beginTime !=''">
+	    		<![CDATA[	and DATE_FORMAT(a.report_date,'%Y-%m-%d') >=  #{beginTime}  ]]>
+			</if>
+			<if test="endTime !=null and endTime !=''">
+		    	<![CDATA[	and DATE_FORMAT(a.report_date,'%Y-%m-%d') <=  #{endTime}  ]]>
+			</if>
+		</where>
+		ORDER BY report_date DESC
+	</select>
+    <sql id="riskSql">
+    	 from risk_rule_cal${tbDate} as a
+		left join user_info as b on a.user_id=b.id
+  		where  a.rule_id=${ruleId} AND  a.status=1  and ${sql} 
+  		group by a.`user_id`,a.user_id 
+    </sql>
+    <select id="findRiskCount" resultType="Integer" parameterType="HashMap">
+    	select count(1) from (select a.user_id <include refid="riskSql"/>) c
+    </select>
+    <select id="findRiskList" resultType="RiskBlackUser" parameterType="HashMap">
+    	select a.user_id as userId,b.realname as userName,b.id_number as cardNum,b.user_name as userPhone,
+    	 a.rule_value as blackDesc 
+    	 <if test="sql2 != null and sql2 !=''">
+    	 	,${sql2}
+    	 </if>
+    	<include refid="riskSql"/>
+    </select>
+    <insert id="batchInsert" parameterType="ArrayList">
+		insert into risk_black_user(user_id,user_name,card_num,user_phone,black_type,black_desc)
+		VALUES
+		<foreach collection="list" item="black"  open="" close="" separator=",">
+ 		 	(#{black.userId},#{black.userName},#{black.cardNum},#{black.userPhone},#{black.blackType},#{black.blackDesc})
+		</foreach>
+	</insert>
+	<delete id="batchDelete" parameterType="ArrayList">
+		delete from risk_black_user   where user_id in
+			<foreach collection="list" item="black"  open="(" close=")" separator=",">
+ 		 	#{black.userId}
+		</foreach>
+	</delete>
+</mapper>

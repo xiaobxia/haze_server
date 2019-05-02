@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.info.back.dao.IAppMarketTypeDao">
+  <resultMap id="BaseResultMap" type="com.info.back.pojo.AppMarketType">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="app_type" jdbcType="VARCHAR" property="appType" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, app_type, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from app_market_type
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from app_market_type
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.info.back.pojo.AppMarketType">
+    insert into app_market_type (id, app_type)
+    values (#{id,jdbcType=INTEGER}, #{appType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.info.back.pojo.AppMarketType">
+    insert into app_market_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="appType != null">
+        app_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="appType != null">
+        #{appType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.info.back.pojo.AppMarketType">
+    update app_market_type
+    <set>
+      <if test="appType != null">
+        app_type = #{appType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.info.back.pojo.AppMarketType">
+    update app_market_type
+    set app_type = #{appType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectAllType"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from app_market_type
+  </select>
+
+  <insert id="insertOrUpdate" parameterType="java.util.List">
+    insert into app_market_type (app_type)
+    values
+    <foreach collection="list" item="record"  open="" close="" separator=",">
+      (#{record.appType,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+</mapper>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.web.dao.IActiveStatisticsDao" >
+  <resultMap id="BaseResultMap" type="ActiveStatisticsInfo" >
+    <id column="id" property="id" />
+    <result column="active_type" property="activeType"/>
+    <result column="click_num" property="clickNum"/>
+    <result column="apply_num" property="applyNum"/>
+    <result column="borrow_num" property="borrowNum"/>
+    <result column="create_date" property="createDate" />
+    <result column="update_date" property="updateDate" />
+    <result column="is_del" property="isDel"/>
+    <result column="statistics_date" property="statisticsDate"/>
+  </resultMap>
+  
+  <sql id="Base_cloumn_sql">
+     id,active_type,click_num,apply_num,borrow_num,create_date,update_date,is_del,statistics_date
+  </sql>
+  
+  <insert id="activeInsertBySelective" parameterType="ActiveStatisticsInfo">
+     insert into active_statistics_res(
+     <if test="activeType!=null and activeType!=''">
+       active_type,
+     </if>
+     <if test="clickNum!=null and clickNum!=''">
+       click_num,
+     </if>
+     <if test="applyNum!=null and applyNum!=''">
+       apply_num,
+     </if>
+     <if test="borrowNum!=null and borrowNum!=''">
+       borrow_num,
+     </if>
+     <if test="createDate!=null and createDate!=''">
+       create_date,
+     </if>
+     <if test="updateDate!=null and updateDate!=''">
+       update_date,
+     </if>
+      <if test="isDel!=null and isDel!=''">
+       is_del,
+     </if>
+      <if test="statisticsDate!=null and statisticsDate!=''">
+       statistics_date
+     </if>
+     )values
+     (
+     <if test="activeType!=null and activeType!=''">
+         #{activeType},
+     </if>
+     <if test="clickNum!=null and clickNum!=''">
+       #{clickNum},
+     </if>
+     <if test="applyNum!=null and applyNum!=''">
+       #{applyNum},
+     </if>
+     <if test="borrowNum!=null and borrowNum!=''">
+       #{borrowNum},
+     </if>
+     <if test="createDate!=null and createDate!=''">
+       #{createDate},
+     </if>
+     <if test="updateDate!=null and updateDate!=''">
+       #{updateDate},
+     </if>
+      <if test="isDel!=null and isDel!=''">
+       #{isDel},
+     </if>
+      <if test="statisticsDate!=null and statisticsDate!=''">
+       #{statisticsDate}
+     </if>
+     )
+  </insert>
+  
+  <update id="activeUpdateSelective" parameterType="ActiveStatisticsInfo">
+     update active_statistics_res 
+     set update_date=now()
+     <if test="clickNum!=0">
+       ,click_num=#{clickNum}
+     </if>
+     <if test="applyNum!=0">
+       ,apply_num=#{applyNum}
+     </if>
+     <if test="borrowNum!=0">
+       ,borrow_num=#{borrowNum}
+     </if>
+     <if test="isDel!=null and isDel!=''">
+        ,is_del=#{isDel}
+     </if>
+     where 
+     statistics_date=#{statisticsDate}
+  </update>
+  
+  <select id="selectByStatisticsDate" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select <include refid="Base_cloumn_sql"/> from active_statistics_res 
+    where statistics_date=#{statisticsDate} and active_type=#{activeType}
+  </select>
+  
+   
+</mapper>

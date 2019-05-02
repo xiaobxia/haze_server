@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+    <!--对模型视图名称的解析，即在模型视图名称添加前后缀 -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/viewback/"/>
+        <property name="suffix" value=".jsp"/>
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+    </bean>
+    <!--文件上传配置 -->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+          p:defaultEncoding="utf-8">
+        <property name="maxUploadSize">
+            <value>104857600</value>
+        </property>
+        <property name="maxInMemorySize">
+            <value>4096</value>
+        </property>
+    </bean>
+    <bean
+            class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+        <property name="interceptors">
+            <list>
+                <ref bean="adminContextInterceptor"/>
+            </list>
+        </property>
+    </bean>
+    <bean id="adminContextInterceptor" class="com.info.back.interceptor.AdminContextInterceptor">
+        <property name="loginUrl" value="/back/login"/>
+        <property name="returnUrl" value="/back/indexBack"/>
+        <property name="noIp">
+            <list>
+                <value>/indexMain</value>
+                <value>/summary/summaryUser</value>
+                <value>/summary/summaryBorrow</value>
+                <value>/channel/toAppointChannelReport</value>
+                <value>/channel/getChannelReportData</value>
+                <value>/channel/channelCodesData</value>
+                <value>/channel/getRegisterUser</value>
+            </list>
+        </property>
+        <!--免session验证-->
+        <property name="excludeUrls">
+            <list>
+                <value>/indexMain</value>
+                <value>/repayment/alipayRepay</value>
+                <value>/login</value>
+                <value>/summary/summaryUser</value>
+                <value>/summary/summaryBorrow</value>
+                <value>/sendSmsBack</value>
+                <value>/logout</value>
+                <value>/indexBack</value>
+                <value>/rightSubList</value>
+                <value>/updateCache</value>
+                <value>/updateCache_otherUpdateMe</value>
+                <value>/user/updateUserPassword</value>
+                <value>/upload/uploadFiles</value>
+                <value>/removeImg</value>
+                <value>/indexManage/saveUpdateCv</value>
+                <value>/risk/viewTree</value>
+                <value>/risk/viewTree2</value>
+                <value>/backBorrowOrder/borrowCallBack</value>
+                <value>/backBorrowOrder/borrowCallBackSimgle</value>
+                <!--				66666666666测试使用-->
+                <value>/risk/test</value>
+                <value>/risk/test1</value>
+                <value>/risk/test2</value>
+                <value>/risk/restartAlarm</value>
+                <value>/test</value>
+                <value>/tdFqz</value>
+                <value>/feedback/zcaf</value>
+                <value>/overdue</value>
+                <value>/repayVoiceRemindTomorrow</value>
+                <value>/repayVoiceRemindTheDayAfterTomorrow</value>
+                <value>/repayVoiceRemindToday</value>
+                <value>/withhold</value>
+                <value>/report</value>
+                <value>/creditCount</value>
+                <value>/getProvinceStatistics</value>
+                <value>/getCityStatistics</value>
+                <value>/getProvinceStatisticsAll</value>
+                <value>/getCityStatisticsAll</value>
+                <value>/customService/testKefuJob</value>
+                <value>/customService/saveBorrowRemark</value>
+                <value>/customService/savePhoneCall</value>
+                <value>/customService/sendToOrder</value>
+                <value>/tbRefuseCount</value>
+                <value>/customService/test</value>
+                <value>/riskMessageStatistics</value>
+                <value>/excel/getRepaymentFailExcel</value>
+                <value>/dataAnalyze/analyzeDataInsert</value>
+                <value>/dataAnalyze/getLoanRate</value>
+                <value>/manual/appmarket</value>
+                <value>/backBorrowOrder/getOldBorrowDetailById</value>
+                <value>/backBorrowOrder/queryCity</value>
+                <value>/backBorrowOrder/getOverDueHistoryList</value>
+                <value>/review/view_dis_opr_record</value>
+                <value>/oss/upload/picture</value>
+                <value>/heartBeat</value>
+                <value>/task/syncMq</value>
+                <value>/customService/getLabels</value>
+                <value>/backBorrowOrder/getProductConfig</value>
+                <value>/customService/getLabelCountDetail</value>
+            </list>
+        </property>
+    </bean>
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/html; charset=UTF-8</value>
+                            <value>application/json;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/html; charset=UTF-8</value>
+                            <value>application/json;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    <context:component-scan base-package="com.info.back.controller">
+    </context:component-scan>
+    <context:component-scan base-package="com.info.analyze.controller">
+    </context:component-scan>
+</beans>

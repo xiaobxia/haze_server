@@ -1,0 +1,867 @@
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.info.web.dao.IUserDao">
+	<select id="getUserPhoneAndName" parameterType="int" resultType="User">
+		select realname as realname,user_phone as userPhone from user_info where id =#{id}
+	</select>
+	<select id="getCustomerClassForExcel" resultType="map" parameterType="String">
+		select class_date as classDate, class_mor_customers as classMorCustomers,class_nig_customers as classNigCustomers
+		from customer_class_arrange where id in
+		<foreach collection="array" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	<select id="getLastClassDate" resultType="String">
+		select class_date from customer_class_arrange order by class_date desc limit 1
+	</select>
+	<select id="getCustomerList" resultType="com.info.web.pojo.BackUser">
+		select b.id as id,b.user_name as userName from back_user b inner join back_user_role r on b.id = r.user_id where  b.status=1 and r.role_id =10044
+	</select>
+	<select id="getCustomerClass" parameterType="map" resultType="map">
+		select id as id,class_date as classDate, class_mor_customers as classMorCustomers,class_nig_customers as classNigCustomers,update_time as updateTime
+		 from customer_class_arrange
+		 where 1=1 
+		 <if test="startDate!=null and startDate!=''">
+			 <![CDATA[ and class_date >= #{startDate} ]]>
+		 </if>
+		<if test="endDate!=null and endDate!=''">
+			<![CDATA[ and class_date <= #{endDate} ]]>
+		</if>
+		order by class_date desc
+
+
+	</select>
+	<select id="getUserByChannelid" parameterType="java.util.Map" resultType="com.info.back.pojo.UserDetail">
+		select user_name as userName,create_time as createTime,brower_type as browerType
+		from user_info
+		where 1=1
+		<if test="channelid != null and channelid != ''">
+			and user_from = #{channelid}
+		</if>
+		and create_time >= #{dateTime}
+		and create_time &lt; date_add(#{dateTime},INTERVAL 1 DAY )
+
+	</select>
+	<select id="getCustomerClassCount" resultType="int" parameterType="map">
+		select count(1) from customer_class_arrange where 1=1
+		<if test="startDate!=null and startDate!=''">
+			<![CDATA[ and class_date >= #{startDate} ]]>
+		</if>
+		<if test="endDate!=null and endDate!=''">
+			<![CDATA[ and class_date <= #{endDate} ]]>
+		</if>
+	</select>
+	<update id="updateCustomerClass" parameterType="com.info.back.pojo.CustomerClassArrange" >
+		update customer_class_arrange
+		<set>
+			<if test="classMorCustomers!=null and classMorCustomers!=''">
+				class_mor_customers = #{classMorCustomers},
+			</if>
+			<if test="classNigCustomers!=null and classNigCustomers!=''">
+				class_nig_customers = #{classNigCustomers},
+			</if>
+			update_time = now()
+		</set>
+		where class_date = #{classDate}
+	</update>
+	<insert id="saveCustomerClass" parameterType="com.info.back.pojo.CustomerClassArrange">
+		insert into customer_class_arrange(class_date,class_mor_customers,class_nig_customers) values (#{classDate},#{classMorCustomers},#{classNigCustomers})
+	</insert>
+	<select id="getCustomerClassById" parameterType="String" resultType="com.info.back.pojo.CustomerClassArrange">
+		SELECT class_date classDate,
+		class_mor_customers classMorCustomers,
+		class_nig_customers classNigCustomers
+		 from customer_class_arrange
+		where id = #{id}
+	</select>
+	<select id="getCustomerClassByDate" parameterType="String" resultType="com.info.back.pojo.CustomerClassArrange">
+		SELECT class_date classDate,
+		class_mor_customers classMorCustomers,
+		class_nig_customers classNigCustomers
+		 from customer_class_arrange
+		where class_date = #{date}
+	</select>
+
+	<!-- 查询实名认证列表 -->
+	<select id="selectUserRealNamePage" parameterType="HashMap" resultType="HashMap" >
+		select 
+		uc.id userId,
+		uc.realname realname,
+		uc.id_number idNumber,
+		uc.create_time as createTime,
+		uc.update_time as updateTime
+		from user_info uc
+		<where>
+			uc.realname_status=1
+		 	<if test="userId !=null and userId !=''">
+		 		AND uc.id=#{userId}
+		 	</if>
+		 	<if test="realname !=null and realname !=''">
+		 		AND uc.realname=#{realname}
+		 	</if>
+		 	<if test="idNumber !=null and idNumber !=''">
+		 		AND uc.id_number=#{idNumber}
+		 	</if>
+		</where>
+  	</select>
+	<select id="selectUserReanlNameCount" resultType="Integer" parameterType="HashMap" >
+		select count(1) from user_info uc
+		<where>
+			uc.realname_status=1
+		 	<if test="userId !=null and userId !=''">
+		 		AND uc.id=#{userId}
+		 	</if>
+		 	<if test="realname !=null and realname !=''">
+		 		AND uc.realname=#{realname}
+		 	</if>
+		 	<if test="idNumber !=null and idNumber !=''">
+		 		AND uc.id_number=#{idNumber}
+		 	</if>
+		 </where>
+  	</select>
+  	
+  	
+  	<!-- 查询用户认证状态列表 -->
+	<select id="selectCertificationPage" parameterType="HashMap" resultType="HashMap" >
+		SELECT
+		uc.id userId,
+		uc.realname realname,
+		uc.id_number idNumber,
+		uc.user_phone userPhone,
+		uc.pay_password payPassWord,
+		uc.realname_status realNameStatus,
+		uc.taobao_account taobaoAccount,
+		uc.qq qq,
+		uc.email email,
+		uc.wechat_account,
+		uc.zm_status zmStatus,
+		uc.jxl_status jxlStatus,
+		uc.td_status tdStatus,
+		uc.my_hb_time myhbtime,
+		IF
+		( card.user_id is null, 0, 1 ) bankId,
+		IF
+		( company.id  is null, 0, 1 ) companyInfo,
+		IF
+		( emergency.id  is null, 0, 1 ) emergencyInfo
+		FROM
+		user_info uc
+		LEFT JOIN user_card_info card ON card.user_id = uc.id
+		LEFT JOIN user_info company ON uc.id = company.id
+		AND company.company_address IS NOT NULL
+		AND company.company_address_distinct IS NOT NULL
+		AND company.company_name IS NOT NULL
+		AND company.company_period IS NOT NULL
+		AND company.company_phone
+		IS NOT NULL LEFT JOIN user_info emergency ON uc.id = emergency.id
+		AND emergency.first_contact_name IS NOT NULL
+		AND emergency.first_contact_phone IS NOT NULL
+		AND emergency.second_contact_name IS NOT NULL
+		AND emergency.second_contact_phone IS NOT NULL
+		<where>
+		 	<if test="userId !=null and userId !=''">
+		 		uc.id=#{userId}
+		 	</if>
+		 	<if test="realname !=null and realname !=''">
+		 		AND uc.realname=#{realname}
+		 	</if>
+		 	<if test="userPhone !=null and userPhone !=''">
+		 		AND uc.user_phone=#{userPhone}
+		 	</if>
+		</where>
+		group by uc.id
+  	</select>
+	<select id="selectCertificationCount" resultType="Integer" parameterType="HashMap" >
+		select 
+		count(1)
+		FROM
+		user_info uc
+		LEFT JOIN user_info company ON uc.id = company.id
+		AND company.company_address IS NOT NULL
+		AND company.company_address_distinct IS NOT NULL
+		AND company.company_name IS NOT NULL
+		AND company.company_period IS NOT NULL
+		AND company.company_phone
+		IS NOT NULL LEFT JOIN user_info emergency ON uc.id = emergency.id
+		AND emergency.first_contact_name IS NOT NULL
+		AND emergency.first_contact_phone IS NOT NULL
+		AND emergency.second_contact_name IS NOT NULL
+		AND emergency.second_contact_phone IS NOT NULL
+		<where>
+		 	<if test="userId !=null and userId !=''">
+		 		uc.id=#{userId}
+		 	</if>
+		 	<if test="realname !=null and realname !=''">
+		 		AND uc.realname=#{realname}
+		 	</if>
+		 	<if test="userPhone !=null and userPhone !=''">
+		 		AND uc.user_phone=#{userPhone}
+		 	</if>
+		</where>
+  	</select>
+  	
+	<!-- 查询用户是否存在 -->
+	<select id="searchUserByCheckTel" resultType="User" parameterType="HashMap">
+		<![CDATA[
+			select
+				id as id,
+				user_phone as userPhone,
+				status as status
+			from user_info
+			where 
+				user_phone=#{userPhone}
+		]]>
+	</select> 
+	
+	<select id="selectByPrimaryKey" resultType="User" parameterType="java.lang.Integer">
+		select
+			 user_name as userName,
+			 realname as realname,
+			 customer_type as customerType,
+			 user_phone as userPhone,
+			 id_number as idNumber,
+			 status as status,
+			user_Phone as userPhone
+		from user_info 
+		where 
+			id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<!-- 催收需要的用户查询 全部字段 -->
+	<select id="selectCollectionByUserId" resultType="User" parameterType="java.lang.Integer">
+		select
+			id as id,
+			user_name as userName,
+			password as password,
+			pay_password as payPassword,
+			realname as realname,
+			realname_status as realnameStatus,
+			realname_time as realnameTime,
+			id_number as idNumber,
+			user_sex as userSex,
+			user_age as userAge,
+			qq as qq,
+			user_phone as userPhone,
+			taobao_account as taobaoAccount,
+			email as email,
+			wechat_account as wechatAccount,
+			education as education,
+			marital_status as maritalStatus,
+			present_address as presentAddress,
+			present_address_distinct as presentAddressDistinct,
+			present_latitude as presentLatitude,
+			present_longitude as presentLongitude,
+			present_period as presentPeriod,
+			company_name as companyName,
+			company_address as companyAddress,
+			company_address_distinct as companyAddressDistinct,
+			company_longitude as companyLongitude,
+			company_latitude as companyLatitude,
+			company_phone as companyPhone,
+			jxl_detail as jxlDetail,
+			company_period as companyPeriod,
+			first_contact_name as firstContactName,
+			first_contact_phone as firstContactPhone,
+			frist_contact_relation as fristContactRelation,
+			second_contact_name as secondContactName,
+			second_contact_phone as secondContactPhone,
+			second_contact_relation as secondContactRelation,
+			create_time as createTime,
+			create_ip as createIp,
+			update_time as updateTime,
+			status as status,
+			invite_userid as inviteUserid,
+			is_save as isSave,
+			head_portrait as headPortrait,
+			idcard_img_z as idcardImgZ,
+			idcard_img_f as idcardImgF,
+			customer_type as customerType,
+			amount_min as amountMin,
+			amount_max as amountMax,
+			amount_available as amountAvailable,
+			equipment_number as equipmentNumber,
+			zm_score as zmScore,
+			zm_score_time as zmScoreTime,
+			zm_industy_black as zmIndustyBlack,
+			zm_over as zmOver,
+			zm_no_pay_over as zmNoPayOver,
+			zm_industy_time as zmIndustyTime,
+			zm_status as zmStatus,
+			jxl_token as jxlToken,
+			jxl_token_time as jxlTokenTime,
+			jxl_status as jxlStatus,
+			jxl_detail_time as jxlDetailTime,
+			jxl_zj_dk_num as jxlZjDkNum,
+			jxl_bj_dk_num as jxlBjDkNum,
+			jxl_yj_hf as jxlYjHf,
+			jxl_link2_days as jxlLink2Days,
+			jxl_link1_days as jxlLink1Days,
+			jxl_link2_num as jxlLink2Num,
+			jxl_link1_num as jxlLink1Num,
+			jxl_link2_order as jxlLink2Order,
+			jxl_link1_order as jxlLink1Order,
+			jxl_gj_ts as jxlGjTs,
+			jxl_ht_phone_num as jxlHtPhoneNum,
+			jxl_amth_num as jxlAmthNum,
+			jxl_time as jxlTime,
+			user_contact_size as userContactSize,
+			history_over_num as historyOverNum,
+			last_over_days as lastOverDays,
+			csjy as csjy,
+			user_from as userFrom,
+			amount_addsum as amountAddsum,
+			td_status as tdStatus,
+			td_verify_time as tdVerifyTime,
+			td_verify_next_time as tdVerifyNextTime,
+			td_raw_data as tdRawData,
+			td_task_id as tdTaskId,
+			td_fqz_data as tdFqzData,
+			td_verify_time as tdVerifyTime
+		from user_info
+		where id = #{id}
+	</select>
+	<!-- 根据用户ID查询用户 -->
+	<select id="selectByUserId" resultType="User" parameterType="java.lang.Integer">
+		select
+			id as id,
+			user_name as userName,
+			password as password,
+			pay_password as payPassword,
+			realname as realname,
+			realname_status as realnameStatus,
+			id_number as idNumber,
+			user_phone as userPhone,
+			education as education,
+			status as status,
+			invite_userid as inviteUserid,
+			user_sex as userSex,
+			marital_status as maritalStatus,
+			present_address as presentAddress,
+			present_address_distinct as presentAddressDistinct,
+			present_period as presentPeriod,
+			present_longitude as presentLongitude,
+			present_latitude as presentLatitude,
+			company_name as companyName,
+			company_address as companyAddress,
+			company_address_distinct as companyAddressDistinct,
+			company_longitude as companyLongitude,
+			company_latitude as companyLatitude,
+			company_phone as companyPhone,
+			company_period as companyPeriod,
+			frist_contact_relation as fristContactRelation,
+			first_contact_name as firstContactName,
+			first_contact_phone as firstContactPhone,
+			second_contact_name as secondContactName,
+			second_contact_phone as secondContactPhone,
+			second_contact_relation as secondContactRelation,
+			head_portrait as headPortrait,
+			idcard_img_z as idcardImgZ,
+			idcard_img_f as idcardImgF,
+			amount_max as amountMax,
+			amount_addsum as amountAddsum,
+			amount_available as amountAvailable,
+			history_over_num as historyOverNum,
+			user_from as userFrom,
+			user_contact_size as userContactSize,
+			equipment_number as equipmentNumber,
+			new_flag as newFlag,
+			qq as qq,
+			user_phone as userPhone,
+			taobao_account as taobaoAccount,
+			email as email,
+			work_industry as workIndustry,
+			zm_score as zmScore,
+			zm_token as zmToken,
+			create_time as createTime,
+			wechat_account as wechatAccount,
+			jxl_token as jxlToken,
+			jxl_token_time as jxlTokenTime,
+			jxl_status as jxlStatus,
+			jxl_detail_time as jxlDetailTime,
+			jxl_zj_dk_num as jxlZjDkNum,
+			jxl_bj_dk_num as jxlBjDkNum,
+			jxl_yj_hf as jxlYjHf,
+			jxl_link2_days as jxlLink2Days,
+			jxl_link1_days as jxlLink1Days,
+			jxl_link2_num as jxlLink2Num,
+			jxl_link1_num as jxlLink1Num,
+			jxl_link2_order as jxlLink2Order,
+			jxl_link1_order as jxlLink1Order,
+			jxl_gj_ts as jxlGjTs,
+			jxl_ht_phone_num as jxlHtPhoneNum,
+			jxl_amth_num as jxlAmthNum,
+			jxl_time as jxlTime,
+			jxl_detail as jxlDetail,
+			jxl_detail_status as jxlDetailStatus,
+			jxl_total as jxlTotal,
+			jxl_gj_bl as jxlGjBl,
+			jxl_lx_gj_ts as jxlLxGjTs,
+			jxl_phone_reg_days as jxlPhoneRegDays,
+			jxl_realName as jxlRealName,
+			jxl_same_phone_card as jxlSamePhoneCard,
+			td_status as tdStatus,
+			td_verify_time as tdVerifyTime,
+			td_verify_next_time as tdVerifyNextTime,
+			td_raw_data as tdRawData,
+			td_task_id as tdTaskId,
+			td_fqz_data as tdFqzData,
+			td_verify_time as tdVerifyTime
+		from user_info
+		where id = #{id}
+	</select>
+		<!-- 根据用户ID查询用户 -->
+	<select id="selectByUserIdCard" resultType="User" parameterType="Map">
+		select
+			id as id,
+			user_name as userName,
+			password as password,
+			pay_password as payPassword,
+			user_phone as userPhone,
+			realname as realname,
+			realname_status as realnameStatus,
+			realname_time as realnameTime,
+			status as status,
+			id_number as idNumber,
+			user_sex as userSex,
+			user_age as userAge
+		from user_info
+		where id_number= #{idCard}
+	</select>
+	<!-- 根据用户ID查询用户是否存在 -->
+	<select id="selectByUserIds" resultType="User" parameterType="Map">
+		select
+			id as id,
+			user_name as userName,
+			user_phone as userPhone,
+			status as status,
+			id_number as idNumber,
+			realname as realName
+		from user_info
+		where id = #{id}
+	</select>
+	
+	<!-- 根据用户ID和用户账号等条件查询 -->
+	<select id="selectByUPhoneAndUid" resultType="User"	parameterType="Map">
+		select
+		user_Phone as userPhone,
+		id_number as idNumber
+		from user_info where 1=1
+		<if test="id != null and id != ''">
+			and id = #{id}
+		</if>
+		<if test="userPhone != null and userPhone != ''">
+			and user_phone=#{userPhone}
+		</if>
+		<if test="idNumber != null and idNumber != ''">
+			and id_number=#{idNumber}
+		</if>
+	</select>
+	
+	<!--用户注册 -->
+	<insert id="saveUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+		<![CDATA[
+			insert into user_info(
+				id,
+				user_name,
+				password,
+				user_phone,
+				create_time,
+				create_ip,
+				invite_userid,
+				equipment_number,
+				user_from,
+				realname,
+				user_sex,
+				qq
+			)
+			values(
+				#{id},
+				#{userName},
+				#{password},
+				#{userPhone},
+				NOW(),
+				#{createIp},
+				#{inviteUserid},
+				#{equipmentNumber},
+				#{userFrom},
+				#{realname},
+				#{userSex},
+				#{qq}
+			)
+		]]>
+	</insert>
+	
+	<!-- 用户登录 -->
+	<select id="searchUserByLogin" parameterType="HashMap" resultType="User">
+		<![CDATA[
+			select 
+				id as id,
+				user_name as userName,
+				password as password,
+				pay_password as payPassword,
+				user_phone as userPhone,
+				realname as realname,
+				realname_status as realnameStatus,
+				id_number as idNumber,
+				amount_max as amountMax,
+				status as status,
+				amount_available as amountAvailable
+			from user_info
+			where 
+				user_name=#{username}
+				and password=#{password} 
+		]]>
+	</select>
+
+	<!--用户申请借款成功后修改用户可借额度-->
+	<update id="updateAmountAvailableByUserId" parameterType="com.info.web.pojo.User">
+		update user_info
+		<set>
+			<if test="amountAvailable != null and amountAvailable !=''">
+				<![CDATA[amount_available = #{amountAvailable},]]>
+			</if>
+			<if test="customerType != null and customerType !=''">
+				customer_type=#{customerType},
+			</if>
+			update_time = now()
+		</set>
+		where id = #{id}
+	</update>
+	
+	<!-- 修改用户信息 -->
+	<update id="updateUser" parameterType="com.info.web.pojo.User">
+		update user_info
+		<set>
+			<if test="userName != null and userName !=''">
+			  <![CDATA[user_name = #{userName},]]>
+			</if>
+			<if test="password != null and password !=''">
+			  <![CDATA[password = #{password},]]>
+			</if>
+			<if test="payPassword != null and payPassword !=''">
+			  <![CDATA[pay_password = #{payPassword},]]>
+			</if>
+			<if test="realname != null and realname !=''">
+			  <![CDATA[realname = #{realname},]]>
+			</if>
+			<if test="realnameStatus != null and realnameStatus !=''">
+			  <![CDATA[realname_status = #{realnameStatus},]]>
+			</if>
+			<if test="realnameTime != null and realnameTime !=''">
+			  <![CDATA[realname_time = #{realnameTime},]]>
+			</if>
+			<if test="idNumber != null and idNumber !=''">
+			  <![CDATA[id_number = #{idNumber},]]>
+			</if>
+			<if test="province != null and province !=''">
+			  <![CDATA[province = #{province},]]>
+			</if>
+			<if test="userSex != null and userSex !=''">
+			  <![CDATA[user_sex = #{userSex},]]>
+			</if>
+			<if test="userAge != null and userAge !=''">
+			  <![CDATA[user_age = #{userAge},]]>
+			</if>
+			<if test="qq != null and qq !=''">
+			  <![CDATA[qq = #{qq},]]>
+			</if>
+			<if test="userPhone != null and userPhone !=''">
+			  <![CDATA[user_phone = #{userPhone},]]>
+			</if>
+			<if test="taobaoAccount != null and taobaoAccount !=''">
+			  <![CDATA[taobao_account = #{taobaoAccount},]]>
+			</if>
+			<if test="email != null and email !=''">
+			  <![CDATA[email = #{email},]]>
+			</if>
+			<if test="wechatAccount != null and wechatAccount !=''">
+			  <![CDATA[wechat_account = #{wechatAccount},]]>
+			</if>
+			<if test="education != null and education !=''">
+			  <![CDATA[education = #{education},]]>
+			</if>
+			<if test="maritalStatus != null and maritalStatus !=''">
+			  <![CDATA[marital_status = #{maritalStatus},]]>
+			</if>
+			<if test="presentAddress != null and presentAddress !=''">
+			  <![CDATA[present_address = #{presentAddress},]]>
+			</if>
+			<if test="presentAddressDistinct != null and presentAddressDistinct !=''">
+			  <![CDATA[present_address_distinct = #{presentAddressDistinct},]]>
+			</if>
+			<if test="presentLatitude != null and presentLatitude !=''">
+			  <![CDATA[present_latitude = #{presentLatitude},]]>
+			</if>
+			<if test="presentLongitude != null and presentLongitude !=''">
+			  <![CDATA[present_longitude = #{presentLongitude},]]>
+			</if>
+			<if test="presentPeriod != null and presentPeriod !=''">
+			  <![CDATA[present_period = #{presentPeriod},]]>
+			</if>
+			<if test="companyName != null and companyName !=''">
+			  <![CDATA[company_name = #{companyName},]]>
+			</if>
+			<if test="companyAddress != null and companyAddress !=''">
+			  <![CDATA[company_address = #{companyAddress},]]>
+			</if>
+			<if test="companyAddressDistinct != null and companyAddressDistinct !=''">
+			  <![CDATA[company_address_distinct = #{companyAddressDistinct},]]>
+			</if>
+			<if test="companyLongitude != null and companyLongitude !=''">
+			  <![CDATA[company_longitude = #{companyLongitude},]]>
+			</if>
+			<if test="companyLatitude != null and companyLatitude !=''">
+			  <![CDATA[company_latitude = #{companyLatitude},]]>
+			</if>
+			<if test="companyPhone != null and companyPhone !=''">
+			  <![CDATA[company_phone = #{companyPhone},]]>
+			</if>
+			<if test="companyPeriod != null and companyPeriod !=''">
+			  <![CDATA[company_period = #{companyPeriod},]]>
+			</if>
+			<if test="firstContactName != null and firstContactName !=''">
+			  <![CDATA[first_contact_name = #{firstContactName},]]>
+			</if>
+			<if test="firstContactPhone != null and firstContactPhone !=''">
+			  <![CDATA[first_contact_phone = #{firstContactPhone},]]>
+			</if>
+			<if test="fristContactRelation != null and fristContactRelation !=''">
+			  <![CDATA[frist_contact_relation = #{fristContactRelation},]]>
+			</if>
+			<if test="secondContactName != null and secondContactName !=''">
+			  <![CDATA[second_contact_name = #{secondContactName},]]>
+			</if>
+			<if test="secondContactPhone != null and secondContactPhone !=''">
+			  <![CDATA[second_contact_phone = #{secondContactPhone},]]>
+			</if>
+			<if test="secondContactRelation != null and secondContactRelation !=''">
+			  <![CDATA[second_contact_relation = #{secondContactRelation},]]>
+			</if>
+			<if test="status != null and status !=''">
+			  <![CDATA[status = #{status},]]>
+			</if>
+			<if test="inviteUserid != null and inviteUserid !=''">
+			  <![CDATA[invite_userid = #{inviteUserid},]]>
+			</if>		
+			<if test="headPortrait != null and headPortrait !=''">
+			  <![CDATA[head_portrait = #{headPortrait},]]>
+			</if>
+			<if test="idcardImgZ != null and idcardImgZ !=''">
+			  <![CDATA[idcard_img_z = #{idcardImgZ},]]>
+			</if>
+			<if test="idcardImgF != null and idcardImgF !=''">
+			  <![CDATA[idcard_img_f = #{idcardImgF},]]>
+			</if>
+			<if test="historyOverNum != null and historyOverNum !=''">
+				<![CDATA[history_over_num = #{historyOverNum},]]>
+			</if>
+			<if test="lastOverDays != null and lastOverDays !=''">
+				<![CDATA[last_over_days = #{lastOverDays},]]>
+			</if>
+			<if test="equipmentNumber != null and equipmentNumber !=''">
+			  <![CDATA[equipment_number = #{equipmentNumber},]]>
+			</if>
+			<if test="amountMax != null and amountMax !=''">
+			  <![CDATA[amount_max = #{amountMax},]]>
+			</if>
+			<if test="amountAvailable != null and amountAvailable !=''">
+			  <![CDATA[amount_available = #{amountAvailable},]]>
+			</if>
+			<if test="amountAddsum != null and amountAddsum !=''">
+			  <![CDATA[amount_addsum = #{amountAddsum},]]>
+			</if>
+			update_time = now()
+		</set>
+		where id = #{id}
+	</update>
+	
+	<!-- 后台 -->
+	<!-- 用户列表 -->
+	<select id="selectUserCount" resultType="int" parameterType="Map" fetchSize="200">
+		select count(*) from user_info where 1=1 
+		<if test="id != null and id !=''">
+		 and <![CDATA[id = #{id}]]>
+		</if>
+		<if test="realname != null and realname !=''">
+		 and <![CDATA[realname = #{realname}]]>
+		</if>
+		<if test="idNumber != null and idNumber !=''">
+		 and <![CDATA[id_number = #{idNumber}]]>
+		</if>
+		<if test="userPhone != null and userPhone !=''">
+		and <![CDATA[user_phone = #{userPhone}]]>
+		</if>
+		<if test="createTime !=null and createTime !='' and beginTime !=null and beginTime !='' " >
+		 and <![CDATA[create_time>=#{createTime} AND create_time<=#{beginTime}]]>
+		 </if>
+		 <if test="createTime !=null and createTime !='' " >
+		 and <![CDATA[create_time>=#{createTime}]]>
+		 </if>
+		 <if test="beginTime !=null and beginTime !=''" >
+		 and <![CDATA[create_time<=#{beginTime}]]>
+		</if>
+		<if test="status != null and status !=''">
+		 and <![CDATA[status=#{status}]]>
+		</if>
+		 and status not in (3)
+		order by create_time desc
+	</select>
+	
+	<!-- 用户列表 多条件查询 -->
+	<select id="selectUserPage" resultType="map" parameterType="HashMap">
+		select 
+			id,user_name,user_phone,realname,realname_status,id_number,status,create_time,user_sex,company_name
+		from user_info where 1=1 
+		<if test="id != null and id !=''">
+		 and <![CDATA[id = #{id}]]>
+		</if>
+		<if test="realname != null and realname !=''">
+		 and <![CDATA[realname = #{realname}]]>
+		</if>
+		<if test="idNumber != null and idNumber !=''">
+		 and <![CDATA[id_number = #{idNumber}]]>
+		</if>
+		<if test="userPhone != null and userPhone !=''">
+		and <![CDATA[user_phone = #{userPhone}]]>
+		</if>
+		<if test="createTime !=null and createTime !='' and beginTime !=null and beginTime !='' " >
+		 and <![CDATA[create_time>=#{createTime} AND create_time<=#{beginTime}]]>
+		 </if>
+		 <if test="createTime !=null and createTime !='' " >
+		 and <![CDATA[create_time>=#{createTime}]]>
+		 </if>
+		 <if test="beginTime !=null and beginTime !='' " >
+		 and <![CDATA[create_time<=#{beginTime}]]>
+		</if>
+		<if test="status != null and status !=''">
+		 and <![CDATA[status=#{status}]]>
+		</if>
+		 and status not in (3)
+		order by create_time desc
+	</select>
+	
+	
+	
+	
+	<!-- H5注册用户待审核用户-->
+	<select id="selectUserAuditPage" resultType="map" parameterType="HashMap">
+		select 
+		id,user_name,user_phone,realname,realname_status,id_number,status,create_time,user_sex,company_name
+		from user_info u where 1=1 
+		AND u.user_from='webH5'
+		AND u.realname IS NOT null and u.id_number IS NOT null AND u.education!=0 AND u.realname_status!=1
+		order by create_time asc
+	</select>
+	<select id="selectUserAuditCount" resultType="int" parameterType="Map" fetchSize="200">
+		select count(*) from user_info u where 1=1 
+		AND u.user_from='webH5'
+		AND u.realname IS NOT null and u.id_number IS NOT null AND u.education!=0 AND u.realname_status!=1
+		order by create_time asc
+	</select>
+	
+	
+	
+	
+	<sql id="findJxlWaitSql">
+		from user_info as a
+		where 1=1
+		 <if test="userPhone != null and userPhone != ''">
+		 	and user_phone=#{userPhone}
+		 </if>
+		and a.jxl_status=2   
+		<![CDATA[AND (TIMESTAMPDIFF(SECOND, a.jxl_token_time, NOW()) >= 60 * ${interval}) ]]>
+		and jxl_detail_status=1
+		and zm_status=2
+	</sql>
+	<select id="findJxlWaitCount" resultType="Integer" parameterType="Map">
+		select count(1) 
+		<include refid="findJxlWaitSql"/>
+	</select>
+	<select id="findJxlWait" resultType="User">
+		select b.id as id,b.realname,b.user_phone as userPhone,b.id_number as idNumber,b.jxl_token_time as jxlTokenTime,b.jxl_token as jxlToken
+		from user_info as b
+		inner join (select a.id <include refid="findJxlWaitSql"/>  ORDER BY a.id DESC 
+		limit #{pageNum},#{numPerPage})c on b.id=c.id
+		order by b.jxl_token_time asc 
+	</select>
+	<update id="updateResetIndexInfoJxl" parameterType="Integer">
+		update info_index_info set auth_mobile=0 where user_id=#{userId}
+	</update>
+	<update id="updateResetUserJxl" parameterType="Integer">
+		update user_info  set jxl_token=NULL, jxl_token_time= NULL , jxl_status=1
+		,jxl_detail=null,jxl_detail_time=null,jxl_detail=1,update_time =now()
+        WHERE id=#{userId}
+	</update>
+	<select id="findResetJxlStatus" resultType="Integer" parameterType="Integer">
+		select count(1) from user_info where  id=#{userId} and jxl_detail_status=2
+	</select>
+	
+	<!--地推系统新用户注册，修改推广员信息为地推系统所推送ID-->
+	<select id="selectChanelUserPushCount" resultType="int" parameterType="HashMap">
+		 SELECT COUNT(1) FROM channel_user_push WHERE push_id =#{pushId} and channel_id=#{userFrom}
+	</select>
+	
+	<select id="selectPushIdByInviteUserid" resultType="map" parameterType="HashMap">
+		SELECT c.push_id AS pushId,c.channel_id AS channelId FROM 
+		channel_user_push c
+		LEFT JOIN user_info a ON c.push_id = a.invite_userid
+		WHERE a.id = #{userId}
+	</select>
+	<select id="selectByChannelId" resultType="User" parameterType="HashMap">
+		SELECT
+		id as id,
+		user_name as userName,
+		realname as realname,
+		realname_status as realnameStatus,
+		id_number as idNumber,
+		user_phone as userPhone,
+		status as status,
+		user_sex as userSex,
+		marital_status as maritalStatus,
+		head_portrait as headPortrait,
+		user_from as userFrom,
+		new_flag as newFlag,
+		user_phone as userPhone,
+		first_contact_phone as firstContactPhone,
+		second_contact_phone as secondContactPhone,
+		email as email,
+		zm_score as zmScore,
+		zm_status as zmStatus,
+		create_time as createTime,
+		td_status as tdStatus
+		FROM user_info where invite_userid in (SELECT user_id from  `channel_user_info` where channel_id=#{channelId})
+		<if test="userPhone !=null and userPhone !=''">
+			AND user_phone=#{userPhone}
+		</if>
+		<if test="beginTime !=null and beginTime !=''">
+			<![CDATA[	and DATE_FORMAT(create_time,'%Y-%m-%d') >=  #{beginTime}  ]]>
+		</if>
+		<if test="endTime !=null and endTime !=''">
+			<![CDATA[	and DATE_FORMAT(create_time,'%Y-%m-%d') <=  #{endTime}  ]]>
+		</if>
+		order by create_time DESC
+	</select>
+	<select id="selectByChannelIdCount" resultType="Integer" parameterType="HashMap">
+		SELECT count(1) FROM user_info where invite_userid in (SELECT user_id from  `channel_user_info` where channel_id=#{channelId})
+		<if test="userPhone !=null and userPhone !=''">
+			AND user_phone=#{userPhone}
+		</if>
+		<if test="beginTime !=null and beginTime !=''">
+			<![CDATA[	and DATE_FORMAT(create_time,'%Y-%m-%d') >=  #{beginTime}  ]]>
+		</if>
+		<if test="endTime !=null and endTime !=''">
+			<![CDATA[	and DATE_FORMAT(create_time,'%Y-%m-%d') <=  #{endTime}  ]]>
+		</if>
+	</select>
+
+	<select id="getRoleByUserId" resultType="Integer">
+		SELECT
+		br.id
+		FROM back_user bu
+		LEFT JOIN back_user_role bur ON bu.id=bur.user_id
+		LEFT JOIN back_role br ON bur.role_id=br.id
+		WHERE 1=1 and bu.id = #{id}
+		ORDER BY bu.id
+	</select>
+</mapper>

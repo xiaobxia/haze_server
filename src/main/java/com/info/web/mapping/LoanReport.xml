@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.web.dao.ILoanReportDao">
+	<resultMap id="BaseResultMap" type="com.info.web.pojo.LoanReport">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="loan_order_count" property="loanOrderCount" />
+		<result column="loan_fourday_count" property="loanFourdayCount" />
+		<result column="loan_sevenday_count" property="loanSevendayCount" />
+		<result column="money_amount_count" property="moneyAmountCount" />
+		<result column="fourday_money_count" property="fourdayMoneyCount"/>
+		<result column="sevenday_moeny_count" property="sevendayMoenyCount"/>
+		<result column="old_loan_order_count" property="oldLoanOrderCount"/>
+		<result column="old_loan_money_count" property="oldLoanMoneyCount"/>
+		<result column="new_loan_order_count" property="newLoanOrderCount"/>
+		<result column="new_loan_money_count" property="newLoanMoneyCount"/>
+		<result column="borrow_apply_count" property="borrowApplyCount"/>
+		<result column="borrow_suc_count" property="borrowSucCount"/>
+		<result column="register_count" property="registerCount"/>
+		<result column="report_date" property="reportDate"/>
+		<result column="created_at" property="createdAt"/>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id,
+		loan_order_count,
+		loan_fourday_count,
+		loan_sevenday_count,
+		money_amount_count,
+		fourday_money_count,
+		sevenday_moeny_count,
+		old_loan_order_count,
+		old_loan_money_count,
+		new_loan_order_count,
+		new_loan_money_count,
+		register_count,
+		borrow_apply_count,
+		borrow_suc_count,
+		report_date,
+		created_at
+	</sql>
+	 
+	 
+	<sql id="Sql">
+	<where>
+			<if test="beginTime !=null and beginTime !=''">
+	    		<!--<![CDATA[	and DATE_FORMAT(a.report_date,'%Y-%m-%d') >=  #{beginTime}  ]]>-->
+				<![CDATA[a.report_date >= #{beginTime}]]>
+			</if>
+			<if test="endTime !=null and endTime !=''">
+		    	<!--<![CDATA[	and DATE_FORMAT(a.report_date,'%Y-%m-%d') <=  #{endTime}  ]]>-->
+				<![CDATA[a.report < #{endTimeChangeEnd}]]>
+			</if>
+		</where>
+	</sql>
+	<select id="findAllCount" resultType="Integer"
+		parameterType="HashMap">
+		select 
+		count(1)
+		from loan_report a
+		<include refid="Sql"/>
+		
+	</select>
+	<select id="findAll" resultMap="BaseResultMap"
+		parameterType="HashMap">
+		select 
+		<include refid="Base_Column_List"/>
+		from loan_report a
+		<include refid="Sql"/>
+		ORDER BY a.report_date DESC
+	</select>
+	
+	<select id="findAllMoneySum" resultType="Long"
+		parameterType="HashMap">
+		select 
+		SUM(a.money_amount_count)
+		from loan_report a
+		<include refid="Sql"/>
+		ORDER BY a.report_date DESC
+	</select>
+	<select id="findAllLoanSum" resultType="Integer"
+		parameterType="HashMap">
+		select 
+		SUM(loan_order_count)
+		from loan_report a
+		<include refid="Sql"/>
+		ORDER BY a.report_date DESC
+	</select>
+	<sql id="SumList">
+		b.channel_name AS channelName,b.channel_province ,
+		 report_date,
+		SUM(a.register_count) AS register_count,
+		SUM(a.attestation_realname_count) AS attestation_realname_count,
+		SUM(a.attestation_bank_count) AS attestation_bank_count,
+		SUM(a.contact_count) AS contact_count,
+		SUM(a.jxl_count) AS jxl_count,
+		SUM(a.alipay_count) AS alipay_count,
+		SUM(a.zhima_count) AS zhima_count,
+		SUM(a.company_count) AS company_count,
+		SUM(a.borrow_apply_count) AS borrow_apply_count,
+		SUM(a.borrow_suc_count) AS borrow_suc_count,
+		SUM(a.late_day_count) AS late_day_count,
+		SUM(a.black_user_count) AS black_user_count,
+		SUM(a.late_day_sumCount) AS late_day_sumCount,
+		SUM(a.pass_rate) AS pass_rate,
+		SUM(a.into_money) AS into_money,
+		SUM(a.approve_error_count) AS approve_error_count,
+		channelid,b.channel_province as channelProvince,
+		b.channel_city AS channelCity,b.channel_area as channelArea
+	</sql>
+	<select id="findSumAllCount" resultType="Integer"
+		parameterType="HashMap">
+		
+		SELECT COUNT(1) FROM (SELECT
+			COUNT(1)
+			FROM channel_report a
+			LEFT JOIN channel_info b ON a.channelid = b.id
+			<include refid="Sql"/>
+			GROUP BY channelid
+			ORDER BY a.report_date DESC) t
+		
+	</select>
+	<select id="findSumAll" resultMap="BaseResultMap"
+		parameterType="HashMap">
+		SELECT 
+		<include refid="SumList"/>
+		FROM channel_report a
+		LEFT JOIN channel_info b ON a.channelid = b.id
+		<include refid="Sql"/>
+		GROUP BY channelid
+		ORDER BY a.report_date DESC
+	</select>
+ 	<select id="findRegistCount" resultType="Integer"	parameterType="map">
+		SELECT COUNT(1) FROM user_info a WHERE
+		<!--<![CDATA[-->
+		<!--DATE_FORMAT(a.create_time,'%Y-%m-%d')>DATE_ADD(#{startDate} , INTERVAL -1 DAY) -->
+		<!--AND DATE_FORMAT(a.create_time,'%Y-%m-%d')<DATE_ADD(#{startDate} , INTERVAL 1 DAY)-->
+		<!--]]>-->
+		<![CDATA[a.create_time > #{startDate} and a.create_time < #{startDateChangeEnd}]]>
+	</select>
+	
+ 	<select id="findBorrowApplyCount" resultType="Integer"	parameterType="map">
+		SELECT COUNT(1) FROM (SELECT a.user_id
+			FROM asset_borrow_order a 
+			where
+			<!--and <![CDATA[
+			DATE_FORMAT(a.created_at,'%Y-%m-%d')>DATE_ADD(#{startDate} , INTERVAL -1 DAY)
+			AND DATE_FORMAT(a.created_at,'%Y-%m-%d')<DATE_ADD(#{startDate} , INTERVAL 1 DAY)
+			]]>-->
+			<![CDATA[
+				a.created_at > #{startDate} and a.created_at < #{startDateChangeEnd}
+			]]>
+		GROUP BY a.user_id) t
+	</select>
+	<select id="findBorrowSucCount" resultType="Integer"	parameterType="HashMap">
+		SELECT COUNT(1) FROM (SELECT a.user_id
+			FROM asset_borrow_order a 
+			where  
+			a.status in
+			<foreach item="item" index="index" collection="inStatus"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			<![CDATA[
+				and a.loan_time > #{startDate} and a.loan_time < #{startDateChangeEnd}
+			]]>
+		GROUP BY a.user_id) t
+	</select>
+ 
+	<select id="findLoanCount" resultType="Integer"	parameterType="map">
+		SELECT COUNT(1)
+		FROM asset_borrow_order a 
+		where STATUS in
+			<foreach item="item" index="index" collection="inStatus"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			<!--AND <![CDATA[-->
+			<!--DATE_FORMAT(a.loan_time,'%Y-%m-%d')>DATE_ADD(#{startDate} , INTERVAL -1 DAY) -->
+			<!--AND DATE_FORMAT(a.loan_time,'%Y-%m-%d')<DATE_ADD(#{startDate}, INTERVAL 1 DAY)-->
+			<!--]]>-->
+			<![CDATA[
+				AND a.loan_time > #{startDate} and a.loan_time < #{startDateChangeEnd}
+			]]>
+		<if test="loanTerm != null and loanTerm != ''"> 
+				and loan_term=#{loanTerm}
+		</if>
+		<if test="customerType != null and customerType != ''"> 
+				and customer_type = #{customerType}
+		</if>
+	</select>
+	<select id="findMoneyCount" resultType="Long"	parameterType="HashMap">
+		
+	SELECT IFNULL(SUM(money_amount),0)
+		FROM asset_borrow_order a 
+		WHERE STATUS in
+			<foreach item="item" index="index" collection="inStatus"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		<!--AND <![CDATA[-->
+			<!--DATE_FORMAT(a.loan_time,'%Y-%m-%d')>DATE_ADD(#{startDate} , INTERVAL -1 DAY) -->
+			<!--AND DATE_FORMAT(a.loan_time,'%Y-%m-%d')<DATE_ADD(#{startDate}, INTERVAL 1 DAY)-->
+			<!--]]>	-->
+			<![CDATA[
+				AND a.loan_time > #{startDate} and a.loan_time < #{startDateChangeEnd}
+			]]>
+		<if test="loanTerm != null and loanTerm != ''"> 
+				and loan_term=#{loanTerm}	
+		</if>
+		<if test="customerType != null and customerType != ''"> 
+				and customer_type = #{customerType}
+		</if>
+		
+	</select>
+	<!-- 续期统计  放款单数统计-->
+	<select id="findRenewalLoanCount" resultType="Integer"	parameterType="map">
+		SELECT COUNT(1) FROM
+		asset_renewal_record a
+		WHERE
+		<!--<![CDATA[DATE_FORMAT(a.old_repayment_time,'%Y-%m-%d')=#{startDate}]]>-->
+		<![CDATA[
+			a.old_repayment_time > #{startDate} and a.old_repayment_time < #{startDateChangeEnd}
+		]]>
+		AND STATUS = 1
+		<if test="loanTerm != null and loanTerm != ''"> 
+				and renewal_day=#{loanTerm}
+		</if>
+		
+	</select>
+	<!-- 续期统计  放款金额统计-->
+	<select id="findRenewalMoneyCount" resultType="Long"	parameterType="HashMap">
+	 	SELECT IFNULL(SUM(money_amount),0) FROM
+		asset_renewal_record a
+		WHERE 
+		<!--<![CDATA[
+			DATE_FORMAT(a.old_repayment_time,'%Y-%m-%d')>DATE_ADD(#{startDate}, INTERVAL -1 DAY)
+			AND DATE_FORMAT(a.old_repayment_time,'%Y-%m-%d')<DATE_ADD(#{startDate}, INTERVAL 1 DAY)
+		]]>-->
+		STATUS = 1
+		<if test="loanTerm != null and loanTerm != ''"> 
+				and renewal_day=#{loanTerm}
+		</if>
+		<![CDATA[
+			AND a.old_repayment_time > #{startDate} and a.old_repayment_time < #{startDateChangeEnd}
+		]]>
+	</select>
+
+	 
+	<insert id="insert" parameterType="com.info.web.pojo.LoanReport">
+		INSERT INTO loan_report
+		(
+		loan_order_count,
+		loan_fourday_count,
+		loan_sevenday_count,
+		money_amount_count,
+		fourday_money_count,
+		sevenday_moeny_count,
+		old_loan_order_count,
+		old_loan_money_count,
+		new_loan_order_count,
+		new_loan_money_count,
+		register_count,
+		borrow_apply_count,
+		borrow_suc_count,
+		report_date,
+		created_at)
+		VALUES (
+		 #{loanOrderCount},
+		 #{loanFourdayCount},
+		 #{loanSevendayCount},
+		 #{moneyAmountCount},
+		 #{fourdayMoneyCount},
+		 #{sevendayMoenyCount},
+		 #{oldLoanOrderCount},
+		 #{oldLoanMoneyCount},
+		 #{newLoanOrderCount},
+		 #{newLoanMoneyCount},
+		 #{registerCount},
+		 #{borrowApplyCount},
+		 #{borrowSucCount},
+		 #{reportDate},
+		 now());
+	</insert>
+	<delete id="deleteByLoanReport" parameterType="com.info.web.pojo.LoanReport">
+		DELETE
+		FROM loan_report
+		WHERE
+		<!--<![CDATA[report_date= DATE_FORMAT(#{reportDate},'%Y-%m-%d')]]>-->
+		<![CDATA[report_date = #{reportDate}]]>
+	</delete>
+</mapper>

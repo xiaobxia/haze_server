@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.info.web.dao.IBackReviewDistributionDao">
+    <resultMap id="BaseResultMap" type="com.info.web.pojo.BackReviewDistribution">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="distribution_rate" property="distributionRate" jdbcType="DOUBLE"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,user_id,distribution_rate
+    </sql>
+    <sql id="findAllSql">
+        FROM back_review_distribution brd
+        INNER JOIN back_user bu on bu.id = brd.user_id AND bu.status=1
+        <where>
+            <if test="userId != null and userId != ''">
+                and brd.user_id != #{userId}
+            </if>
+        </where>
+    </sql>
+    <select id="findParams" resultMap="BaseResultMap" parameterType="Map">
+        SELECT brd.id,brd.user_id,brd.distribution_rate,bu.user_name
+        <include refid="findAllSql"/>
+    </select>
+
+    <select id="selectInUseBakRevDist" resultMap="BaseResultMap" parameterType="Map">
+        SELECT brd.id,brd.user_id,brd.distribution_rate,bu.user_name
+        FROM back_review_distribution brd
+        INNER JOIN back_user bu ON brd.user_id = bu.id
+        WHERE bu.status=1 AND  bu.id IN(
+        SELECT DISTINCT user_id FROM back_user_role WHERE role_id IN(
+        SELECT brm.role_id FROM back_role_module brm INNER JOIN back_module bm ON brm.module_id = bm.id
+        AND bm.module_url = #{moduleUrl}))
+    </select>
+
+    <select id="findByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM back_review_distribution
+        where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <insert id="insert" parameterType="com.info.web.pojo.BackReviewDistribution">
+        INSERT INTO back_review_distribution
+        (user_id,distribution_rate)
+        VALUES (
+        #{userId,jdbcType=INTEGER},
+        #{distributionRate,jdbcType=DOUBLE}
+        );
+    </insert>
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from
+        back_review_distribution
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateById" parameterType="com.info.web.pojo.BackReviewDistribution">
+        UPDATE back_review_distribution
+        SET
+        distribution_rate =#{distributionRate,jdbcType=DOUBLE}
+        WHERE id = #{id,jdbcType=INTEGER};
+    </update>
+</mapper>

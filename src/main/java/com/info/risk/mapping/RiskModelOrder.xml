@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.risk.dao.IRiskModelOrderDao">
+    <resultMap id="BaseReaultMap" type="RiskModelOrder">
+        <id column="id" property="id"></id>
+        <result column="borrow_order_id" property="borrowOrderId"></result>
+        <result column="user_id" property="userId"></result>
+        <result column="model_code" property="modelCode"></result>
+        <result column="variable_version" property="variableVersion"></result>
+        <result column="binning_version" property="binningVersion"></result>
+        <result column="cutoff_version" property="cutoffVersion"></result>
+        <result column="can_ignore_version" property="canIgnoreVersion"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_time" property="updateTime"></result>
+        <result column="cutoff" property="cutoff"></result>
+        <result column="review_up" property="reviewUp"></result>
+        <result column="review_down" property="reviewDown"></result>
+        <result column="old_customer_advice" property="oldCustomerAdvice"></result>
+        <result column="inflexible_advice" property="inflexibleAdvice"></result>
+        <result column="model_advice" property="modelAdvice"></result>
+        <result column="customer_type" property="customerType"></result>
+        <result column="summary_advice" property="summaryAdvice"></result>
+        <result column="execute_advice" property="executeAdvice"></result>
+        <result column="model_score" property="modelScore"></result>
+        <result column="loan_switch_status" property="loanSwitchStatus"></result>
+        <result column="person_review_advice" property="personReviewAdvice"></result>
+        <result column="person_review_account" property="personReviewAccount"></result>
+        <result column="person_review_remark" property="personReviewRemark"></result>
+        <result column="person_review_time" property="personReviewTime"></result>
+    </resultMap>
+    <sql id="sql">
+        from risk_model_order
+        <where>
+            1=1
+            <if test="id != null and id!= ''">
+                and id = #{id}
+            </if>
+            <if test="borrowOrderId != null and borrowOrderId != ''">
+                and borrow_order_id = #{borrowOrderId}
+            </if>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="modelCode != null and modelCode != ''">
+                and model_code = #{modelCode}
+            </if>
+            <if test="variableVersion != null and variableVersion != ''">
+                and variable_version = #{variableVersion}
+            </if>
+        </where>
+    </sql>
+    <sql id="selectSql">
+        from risk_model_order
+        <where>
+            <if test="sDate != null">
+                <![CDATA[    and create_time >= #{sDate}   ]]>
+            </if>
+            <if test="eDate != null">
+                <![CDATA[    and create_time <= #{eDate}   ]]>
+            </if>
+            <if test="modelAdvice!=null and modelAdvice!=''">
+                and model_advice=#{modelAdvice}
+            </if>
+            <if test="modelCode!=null and modelCode!=''">
+                and model_code = #{modelCode}
+            </if>
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="com.info.risk.pojo.RiskModelOrder" useGeneratedKeys="true" keyProperty="id">
+        INSERT
+        INTO risk_model_order
+        (id,
+        borrow_order_id,
+        user_id,
+        model_code,
+        variable_version,
+        binning_version,
+        cutoff_version,
+        can_ignore_version,
+        cutoff,
+        review_up,
+        review_down,
+        inflexible_advice,
+        model_advice,
+        summary_advice,
+        execute_advice,
+        model_score,
+        loan_switch_status)
+        values
+        (#{id},
+        #{borrowOrderId},
+        #{userId},
+        #{modelCode},
+        #{variableVersion},
+        #{binningVersion},
+        #{cutoffVersion},
+        #{canIgnoreVersion},
+        #{cutoff},
+        #{reviewUp},
+        #{reviewDown},
+        #{inflexibleAdvice},
+        #{modelAdvice},
+        #{summaryAdvice},
+        #{executeAdvice},
+        #{modelScore},
+        #{loanSwitchStatus})
+    </insert>
+    <select id="findById" parameterType="java.lang.Integer" resultMap="BaseReaultMap">
+      select * from risk_model_order where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="findOneByParams" parameterType="java.util.Map" resultMap="BaseReaultMap">
+        select * <include refid="sql"></include> limit 1
+    </select>
+    <select id="findParamsCount" resultType="int" parameterType="Map">
+        select
+        count(1)
+        <include refid="selectSql"/>
+    </select>
+
+    <update id="updateRiskModelOrder" parameterType="com.info.risk.pojo.RiskModelOrder">
+        update risk_model_order
+        <set>
+            <if test="personReviewAdvice != null">
+                person_review_advice = #{personReviewAdvice,jdbcType=INTEGER},
+            </if>
+            <if test="personReviewAccount != null">
+                person_review_account = #{personReviewAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="personReviewRemark != null">
+                person_review_remark = #{personReviewRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="personReviewTime != null">
+                person_review_time = #{personReviewTime,jdbcType=TIMESTAMP},
+            </if>
+            update_time = now()
+        </set>
+        where borrow_order_id = #{borrowOrderId,jdbcType=INTEGER}
+    </update>
+
+    <select id="findAllScoreCard" resultType="java.lang.String">
+        SELECT CONCAT(model_code,'_',variable_version) FROM (SELECT DISTINCT model_code,variable_version FROM risk_model_order AS datas) datas
+    </select>
+
+    <!--根据借款订单号查询该笔订单的风控信息-->
+    <select id="selectRiskOrderInfoBybrdId" parameterType="java.lang.Integer" resultMap="BaseReaultMap">
+        SELECT borrow_order_id,inflexible_advice,customer_type,model_advice
+        FROM risk_model_order
+        WHERE borrow_order_id = #{borrowOrderId,jdbcType=INTEGER}
+    </select>
+</mapper>

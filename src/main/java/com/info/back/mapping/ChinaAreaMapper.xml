@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.info.back.dao.IChinaAreaDao">
+  <resultMap id="BaseResultMap" type="com.info.back.pojo.ChinaArea">
+    <result column="code_id" jdbcType="INTEGER" property="codeId" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="city_name" jdbcType="VARCHAR" property="cityName" />
+  </resultMap>
+
+  <!--省市联动使用MAP-->
+  <resultMap id="AreaMap" type="com.info.back.pojo.Areas">
+    <result column="provinceId" jdbcType="VARCHAR" property="provinceId" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="cityId" jdbcType="VARCHAR" property="cityId" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="countyId" jdbcType="VARCHAR" property="countyId" />
+    <result column="county" jdbcType="VARCHAR" property="county" />
+  </resultMap>
+
+  <!--根据身份证前几位ID查处中国省市县信息-->
+  <select id="selectByCodeId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select code_id,parent_id,city_name
+    FROM china_area
+    where code_id = #{codeId}
+  </select>
+
+  <insert id="insert" parameterType="com.info.back.pojo.ChinaArea">
+    insert into china_area (code_id, parent_id, city_name
+      )
+    values (#{codeId,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{cityName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.info.back.pojo.ChinaArea">
+    insert into china_area
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="codeId != null">
+        code_id,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="cityName != null">
+        city_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="codeId != null">
+        #{codeId,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="cityName != null">
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!--查询省市信息 city带入市级信息-->
+  <select id="selectProAndCity" resultMap="AreaMap">
+    SELECT
+      ca1.code_id AS provinceId,
+      ca1.city_name AS province,
+      (SELECT GROUP_CONCAT(ca2.code_id,'|',ca2.city_name) FROM china_area ca2 WHERE ca2.parent_id = ca1.code_id) AS city
+    FROM
+      china_area ca1
+    WHERE ca1.parent_id = 0
+  </select>
+
+  <!--查询所有省份-->
+  <select id="selectAllProvince" resultMap="AreaMap">
+    SELECT
+      code_id AS provinceId,
+      city_name AS province
+    FROM
+      china_area
+    WHERE parent_id = 0
+  </select>
+
+
+  <!--根据省份查询地级市-->
+  <select id="selectCityByProvince" resultMap="AreaMap" parameterType="java.lang.Integer">
+    SELECT
+     ca1.code_id AS cityId,
+     ca1.city_name AS city
+    FROM
+      china_area ca1
+    WHERE ca1.parent_id = #{provinceId, jdbcType=VARCHAR}
+  </select>
+
+  <!--根据市查询县级/区-->
+  <select id="selectCountyByCity" resultMap="AreaMap" parameterType="java.lang.Integer">
+    SELECT
+     ca1.code_id AS countyId,
+     ca1.city_name AS county
+    FROM
+      china_area ca1
+    WHERE ca1.parent_id = #{cityId, jdbcType=VARCHAR}
+  </select>
+
+  <!--根据前6位身份证好查询完整的地域信息-->
+  <select id="selectAreaInfo" resultType="java.lang.String" parameterType="java.lang.String">
+    SELECT REPLACE(CONCAT(ca3.city_name,ca2.city_name,ca1.city_name),' ','')
+    FROM
+      china_area ca1
+    LEFT JOIN china_area ca2 ON ca2.code_id = ca1.parent_id
+    LEFT JOIN china_area ca3 ON ca3.code_id = ca2.parent_id
+    WHERE ca1.code_id =#{code, jdbcType=VARCHAR}
+  </select>
+</mapper>

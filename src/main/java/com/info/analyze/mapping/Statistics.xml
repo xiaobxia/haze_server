@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.analyze.dao.IStatisticsDao">
+    
+    <select id="selectBorrowApplyUserCount" resultType="HashMap" parameterType="HashMap">
+        SELECT
+            LEFT (b.created_at, 10) as createAt,
+            -- 总人数
+            count(b.customer_type = 0 OR NULL) AS newApplyBorrowUserCount,
+            -- 新用户人数
+            count(
+                DISTINCT CASE
+                WHEN b.customer_type = 1 THEN
+                    b.user_id
+                ELSE
+                    NULL
+                END
+            ) AS oldApplyBorrowUserCount -- 老用户人数
+        FROM
+            asset_borrow_order b
+        <choose>
+            <when test="getBeforeDataFlag != null and getBeforeDataFlag !='' ">
+
+            </when>
+            <when test="beforeTime != null and beforeTime != ''">
+                WHERE
+                b.created_at between str_to_date(#{beforeTime},'%Y-%m-%d') and date_add(#{beforeTime}, interval 1 day)
+            </when>
+        </choose>
+        GROUP BY
+            LEFT (b.created_at, 10)
+    </select>
+
+
+    <select id="selectBorrowLoanUserCount"  resultType="HashMap" parameterType="HashMap">
+        SELECT
+            LEFT (r.created_at, 10),
+            count(b.customer_type = 0 OR NULL) AS newBorrowUserLoanCount,
+            -- 新用户贷款人数
+            count(
+                DISTINCT CASE
+                WHEN b.customer_type = 1 THEN
+                    b.user_id
+                ELSE
+                    NULL
+                END
+            ) AS oldBorrowUserLoanCount -- 老用户贷款人数
+        FROM
+            asset_borrow_order b,
+            asset_repayment r
+        WHERE
+            b.pay_status = '0000'
+        AND r.asset_order_id = b.id
+        AND r.created_at between str_to_date(#{createAt},'%Y-%m-%d') and date_add(#{createAt}, interval 1 day)
+        GROUP BY
+            LEFT (r.created_at, 10)
+    </select>
+
+    <select id="selectBorrowMoneyCount"  resultType="HashMap" parameterType="HashMap">
+        SELECT
+            LEFT (r.created_at, 10),
+            SUM(
+                CASE
+                WHEN b.customer_type = 0 THEN
+                    (
+                        b.loan_interests + b.into_money
+                    ) / 100
+                ELSE
+                    NULL
+                END
+            ) AS newMoneyCount,
+            -- 新用户放款金额
+            sum(
+                CASE
+                WHEN b.customer_type = 1 THEN
+                    (
+                        b.loan_interests + b.into_money
+                    ) / 100
+                ELSE
+                    NULL
+                END
+            ) AS oldMoneyCount -- 老用户放款金额
+        FROM
+            asset_borrow_order b,
+            `asset_repayment` r
+        WHERE
+            b.pay_status = '0000'
+        AND r.asset_order_id = b.id
+        AND r.created_at between str_to_date(#{createAt},'%Y-%m-%d') and date_add(#{createAt}, interval 1 day)
+
+        GROUP BY
+            LEFT (r.created_at, 10)
+    </select>
+
+    <select id="selectRegistCount" resultType="Integer" parameterType="HashMap">
+        SELECT
+            count(*) as rgisterCount -- 注册数
+        FROM
+            user_info u
+        WHERE u.create_time between str_to_date(#{createAt},'%Y-%m-%d') and date_add(#{createAt}, interval 1 day)
+    </select>
+
+    <select id="selectNoReturnMoney" resultType="INTEGER">
+        SELECT
+            (count(*) * 1000 - count(
+                CASE
+                WHEN r.`status` IN (34, 30) THEN
+                    r.id
+                ELSE
+                    NULL
+                END
+            )*1000) as noPayMoney -- 未还金额
+        FROM
+            asset_repayment r
+    </select>
+
+    <select id="loanAginCount" resultType="Integer" parameterType="HashMap">
+        SELECT
+            count(DISTINCT user_id)
+        FROM
+            (
+                SELECT
+                    b.`user_id`,
+                    LEFT (b.`created_at`, 7),
+                    count(1) AS num
+                FROM
+                    `asset_borrow_order` b,
+                    `asset_repayment` r
+                WHERE
+                    b.id = r.`asset_order_id`
+                AND LEFT (b.`created_at`, 7) BETWEEN
+                #{startMonth,jdbcType=VARCHAR} AND #{endMonth,jdbcType=VARCHAR}
+                GROUP BY
+                    r.`user_id`
+                <if test="loanAginFlag != null and loanAginFlag != '' ">
+                  HAVING num >= 2
+                </if>
+                ORDER BY
+                    r.`user_id` ASC
+            ) AS tempCount
+    </select>
+
+    <select id="selectCheckRateCount" resultType="Integer" parameterType="HashMap">
+          select COUNT(1)
+          from `asset_borrow_order` b
+          WHERE 1 = 1
+          <if test="customerType != null and customerType != '' ">
+              AND b.customer_type = #{customerType}
+          </if>
+          <choose>
+              <when test="passLoanFlag != null and passLoanFlag != ''">
+                  AND (b.`pay_status`= '0000' or b.status = 22)
+                  <choose>
+                      <!--防止统计时间会有更改,暂时不做这块的优化 -->
+                      <when test="dayTime != null and dayTime != ''">
+                          and b.`created_at` between  str_to_date(#{dayTime},'%Y-%m-%d') and date_add(#{dayTime}, interval 1 day)
+                      </when>
+                      <when test="weekTime != null and weekTime != ''">
+                          and b.`created_at` between str_to_date(#{startWeekTime},'%Y-%m-%d') and str_to_date(#{endWeekTime},'%Y-%m-%d')
+                      </when>
+                      <when test="monthTime != null and monthTime != ''">
+                          and left(b.`created_at`, 7) = left(#{monthTime},7)
+                      </when>
+                  </choose>
+              </when>
+              <otherwise>
+                  <choose>
+                      <when test="dayTime != null and dayTime != ''">
+                          and b.`created_at` between  str_to_date(#{dayTime},'%Y-%m-%d') and date_add(#{dayTime}, interval 1 day)
+                      </when>
+                      <when test="weekTime != null and weekTime != ''">
+                          and b.`created_at` between str_to_date(#{startWeekTime},'%Y-%m-%d') and str_to_date(#{endWeekTime},'%Y-%m-%d')
+                      </when>
+                      <when test="monthTime != null and monthTime != ''"> and left(b.`created_at`, 7) = left(#{monthTime},7)</when>
+                  </choose>
+              </otherwise>
+          </choose>
+
+    </select>
+
+<select id="selectAppyUserCountByMonthOrWeek" parameterType="HashMap" resultType="HashMap">
+       SELECT
+        COUNT(
+            DISTINCT CASE
+            WHEN b.`customer_type` = 0 THEN
+                b.`user_id`
+            ELSE
+                NULL
+            END
+        ) as applyNewUserCount,
+        COUNT(
+            DISTINCT CASE
+            WHEN b.`customer_type` = 1 THEN
+                b.`user_id`
+            ELSE
+                NULL
+            END
+        ) as applyOldUserCount,
+        count(DISTINCT b.user_id) as applyUserCount
+    FROM
+        asset_borrow_order b
+    WHERE 1=1
+        <choose>
+            <when test="startWeekTime != null and startWeekTime != ''">
+              and b.`created_at` between str_to_date(#{startWeekTime},'%Y-%m-%d') and str_to_date(#{endWeekTime},'%Y-%m-%d')
+            </when>
+            <when test="monthTime != null and monthTime != ''"> and left(b.`created_at`, 7) = left(#{monthTime},7)</when>
+        </choose>
+</select>
+
+<select id="selectLoanUserCountByMonthOrWeek" parameterType="HashMap" resultType="HashMap">
+    SELECT
+        COUNT(
+            DISTINCT CASE
+            WHEN b.`customer_type` = 0 THEN
+                b.`user_id`
+            ELSE
+                NULL
+            END
+        ) as loanUserNewCount,
+    COUNT(
+            DISTINCT CASE
+            WHEN b.`customer_type` = 1 THEN
+                b.`user_id`
+            ELSE
+                NULL
+            END
+        ) as loanUserOldCount,
+    count(DISTINCT b.`user_id`) as loanUserCount
+    FROM
+        asset_borrow_order b,
+        asset_repayment r
+    WHERE
+        b.id = r.asset_order_id
+    <choose>
+        <when test="startWeekTime != null and startWeekTime != ''">
+         and r.`created_at` between str_to_date(#{startWeekTime},'%Y-%m-%d') and str_to_date(#{endWeekTime},'%Y-%m-%d')
+        </when>
+        <when test="monthTime != null and monthTime != ''"> and left(r.`created_at`, 7) = left(#{monthTime},7)</when>
+    </choose>
+</select>
+</mapper>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.info.back.dao.IBackUserRoleDao">
+    <resultMap id="BaseResultMap" type="BackUserRole">
+        <id column="id" property="id"/>
+        <result column="role_id" property="roleId"/>
+        <result column="user_id" property="userId"/>
+    </resultMap>
+    <resultMap id="UserResultMap" type="BackUser">
+        <id column="id" property="id" />
+        <result column="user_account" property="userAccount" />
+        <result column="user_password" property="userPassword" />
+        <result column="user_name" property="userName" />
+        <result column="user_sex" property="userSex" />
+        <result column="user_address" property="userAddress" />
+        <result column="user_telephone" property="userTelephone" />
+        <result column="user_mobile" property="userMobile" />
+        <result column="user_email" property="userEmail" />
+        <result column="user_qq" property="userQq" />
+        <result column="create_date" property="createDate" />
+        <result column="update_date" property="updateDate" />
+        <result column="add_ip" property="addIp" />
+        <result column="remark" property="remark" />
+        <result column="status" property="status" />
+        <result column="order_limit_mor" property="orderLimitMor"/>
+        <result column="order_limit_nig" property="orderLimitNig"/>
+        <result column="order_limit_flag" property="orderLimitFlag"/>
+
+    </resultMap>
+    <select id="findAll" resultType="BackUserRole" parameterType="HashMap">
+			select * from back_user_role
+	</select>
+    <delete id="deleteByRoleId" parameterType="Integer">
+		delete from back_user_role where role_id=#{roleId}
+	</delete>
+    <!--	根据用户删除所有关联的角色-->
+    <delete id="deleteUserRoleByUserId" parameterType="java.lang.Integer">
+		DELETE FROM
+		back_user_role
+		WHERE user_id=#{id}
+	</delete>
+    <!--	插入用户关联的角色-->
+    <insert id="inserUserRoleList" parameterType="HashMap">
+        INSERT INTO back_user_role(role_id,user_id)
+        VALUES
+        <foreach collection="roleIds" item="item" index="index"
+                 separator=",">
+            ( #{item}, #{id})
+        </foreach>
+    </insert>
+    <insert id="inserUserRole" parameterType="BackUserRole">
+		INSERT INTO back_user_role(role_id,user_id)
+		VALUES (#{roleId}, #{userId})
+	</insert>
+
+    <select id="roleKeFu" parameterType="HashMap" resultType="BackUserRole">
+		SELECT a.id as id,a.user_id as userId,a.role_id as roleId from back_user_role a LEFT JOIN back_role b on a.role_id=b.id where a.user_id=#{backUserId,jdbcType=INTEGER} and b.role_name=#{roleName,jdbcType=VARCHAR};
+	</select>
+
+    <select id="queryCustomerService" parameterType="HashMap" resultType="BackUserRole">
+        SELECT
+        a.id AS id,
+        a.user_id AS userId,
+        a.role_id AS roleId
+        FROM
+        back_user_role a
+        LEFT JOIN back_role b ON a.role_id = b.id
+        WHERE
+        1=1
+        <if test="backUserId != null and backUserId != ''">
+            and a.user_id = #{backUserId}
+        </if>
+        <if test="roleId != null and roleId != ''">
+            and b.id = #{roleId}
+        </if>
+    </select>
+    <select id="queryBackUser" parameterType="HashMap" resultMap="UserResultMap">
+        SELECT
+        a.*
+        FROM
+        back_user a
+        LEFT JOIN back_user_role b ON a.id = b.user_id
+        LEFT JOIN back_role c ON c.id = b.role_id
+        WHERE
+        1=1
+        <if test="roleId != null and roleId != ''">
+            and c.id = #{roleId}
+        </if>
+        <if test="userNameLike != null and userNameLike != ''">
+            and a.user_name like concat(${userNameLike},'%')
+        </if>
+        <if test="userMobileLike != null and userMobileLike != ''">
+            and a.user_mobile like concat(${userMobileLike},'%')
+        </if>
+    </select>
+    <select id="queryBackUserCount" parameterType="HashMap" resultType="Integer">
+        SELECT
+        count(0)
+        FROM
+        back_user a
+        LEFT JOIN back_user_role b ON a.id = b.user_id
+        LEFT JOIN back_role c ON c.id = b.role_id
+        WHERE
+        1=1
+        <if test="roleId != null and roleId != ''">
+            and c.id = #{roleId}
+        </if>
+        <if test="userNameLike != null and userNameLike != ''">
+            and a.user_name like concat(${userNameLike},'%')
+        </if>
+        <if test="userMobileLike != null and userMobileLike != ''">
+            and a.user_mobile like concat(${userMobileLike},'%')
+        </if>
+    </select>
+
+</mapper>

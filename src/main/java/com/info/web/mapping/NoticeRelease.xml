@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.info.back.dao.INoticeReleaseDao">
+
+  <resultMap type="NoticeRelease" id="BaseResultMap"></resultMap>
+  
+  <sql id="Base_Column_List">
+      id,source,channel,column_type,title,dynamic_link,send_condition,sort,send_content,send_type,create_time,remark
+  </sql>
+    
+  <select id="findAll"  resultMap="BaseResultMap" parameterType="HashMap">
+        select <include refid="Base_Column_List"/>
+		from info_notice_release
+		order by create_time desc
+  </select>
+  
+  <select id="findAllCount" parameterType="HashMap" resultType="Integer">
+        select count(1) from info_notice_release
+  </select>
+  
+  <select id="selectById" parameterType="Integer" resultType="NoticeRelease">
+     select * from info_notice_release where id=#{id}
+  </select>
+  
+  <insert id="insert" parameterType="NoticeRelease" useGeneratedKeys="true">
+     insert into info_notice_release
+     <trim prefix="(" suffix=")" suffixOverrides=",">
+     source,channel,column_type,title,
+     <if test="dynamic_link!=null">dynamic_link,</if>
+     send_condition,
+     <if test="sort!=null">sort,</if>
+     send_content,send_type,create_time,
+     <if test="remark!=null">remark,</if>
+     </trim>
+     values
+     <trim prefix="(" suffix=")" suffixOverrides=",">
+     #{source},#{channel},#{column_type},#{title},
+     <if test="dynamic_link!=null">#{dynamic_link},</if>
+     #{send_condition},
+     <if test="sort!=null">#{sort},</if>
+     #{send_content},#{send_type},now(),
+     <if test="remark!=null">#{remark},</if>
+     </trim>     
+  </insert>
+  
+  <update id="update">
+     update info_notice_release
+     <set>
+       <if test="source!=null">source=#{source},</if>
+       <if test="channel!=null">channel=#{channel},</if>
+       <if test="column_type!=null">column_type=#{column_type},</if>
+       <if test="title!=null">title=#{title},</if>
+       <if test="dynamic_link!=null">dynamic_link=#{dynamic_link},</if>
+       <if test="send_condition!=null">send_condition=#{send_condition},</if>
+       <if test="sort!=null">sort=#{sort},</if>
+       <if test="send_content!=null">send_content=#{send_content},</if>
+       <if test="send_type!=null">send_type=#{send_type},</if>
+       <if test="remark!=null">remark=#{remark},</if>          
+     </set>
+     where id=#{id}
+  </update>
+
+</mapper>

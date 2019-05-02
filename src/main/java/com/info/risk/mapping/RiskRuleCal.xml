@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.risk.dao.IRiskRuleCalDao">
+	<select id="findDbTime" resultType="String">
+	select DATE_FORMAT(NOW(),'%Y%m%d') as dbTime
+	</select>
+	<insert id="batchInsert" parameterType="HashMap">
+		insert into risk_rule_cal${dbTime} (user_id,rule_id,credit_id,asset_id,attention_type,rule_name,
+		formula_show,rule_value,rule_detail)
+		VALUES
+		<foreach collection="list" item="rule"  open="" close="" separator=",">
+ 		 	(#{rule.userId},#{rule.ruleId},#{rule.creditId},#{rule.assetId},#{rule.attentionType},#{rule.ruleName},
+ 		 	#{rule.formulaShow},#{rule.ruleValue},#{rule.ruleDetail})
+		</foreach>
+	</insert>
+</mapper>

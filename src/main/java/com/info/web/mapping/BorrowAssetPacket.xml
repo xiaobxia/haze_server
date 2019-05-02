@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.web.dao.IBorrowAssetPacketDao" >
+ <resultMap id="BaseResultMap" type="com.info.web.pojo.BorrowAssetPacket" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="packet_id" property="packetId" jdbcType="INTEGER" />
+    <result column="packet_totalamount" property="packetTotalamount" jdbcType="INTEGER" />
+    <result column="packet_signamount" property="packetSignamount" jdbcType="INTEGER" />
+    <result column="fillup_flag" property="fillupFlag" jdbcType="INTEGER" />
+    <result column="push_status" property="pushStatus" jdbcType="INTEGER" />
+    <result column="borrow_cycle" property="borrowCycle" jdbcType="INTEGER" />
+    <result column="packet_time" property="packetTime" jdbcType="TIMESTAMP" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, packet_id, packet_totalamount, packet_signamount, fillup_flag, push_status, borrow_cycle, 
+    packet_time, created_at, updated_at, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from borrow_asset_packet
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+   <select id="selectByParam" resultMap="BaseResultMap" parameterType="Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from borrow_asset_packet
+     <where>
+       <if test="packetTime!=null and packetTime!=''">
+       and <![CDATA[DATE_FORMAT(packet_time,'%Y-%m-%d')=#{packetTime}]]>
+	</if>
+      
+       <if test="fillupFlag!=null">
+       and  fillup_flag=#{fillupFlag}
+	 </if>
+	 <if test="borrowCycle!=null and borrowCycle!=''">
+       and  borrow_cycle=#{borrowCycle}
+	</if>
+ 
+ </where>
+  order by id asc
+  </select> 
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from borrow_asset_packet
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.info.web.pojo.BorrowAssetPacket" >
+    insert into borrow_asset_packet (id, packet_id, packet_totalamount, 
+      packet_signamount, fillup_flag, push_status, 
+      borrow_cycle, packet_time, created_at, 
+      updated_at, status)
+    values (#{id,jdbcType=INTEGER}, #{packetId,jdbcType=INTEGER}, #{packetTotalamount,jdbcType=INTEGER}, 
+      #{packetSignamount,jdbcType=INTEGER}, #{fillupFlag,jdbcType=INTEGER}, #{pushStatus,jdbcType=INTEGER}, 
+      #{borrowCycle,jdbcType=INTEGER}, #{packetTime,jdbcType=TIMESTAMP}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.info.web.pojo.BorrowAssetPacket" >
+    insert into borrow_asset_packet
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="packetId != null" >
+        packet_id,
+      </if>
+      <if test="packetTotalamount != null" >
+        packet_totalamount,
+      </if>
+      <if test="packetSignamount != null" >
+        packet_signamount,
+      </if>
+      <if test="fillupFlag != null" >
+        fillup_flag,
+      </if>
+      <if test="pushStatus != null" >
+        push_status,
+      </if>
+      <if test="borrowCycle != null" >
+        borrow_cycle,
+      </if>
+      <if test="packetTime != null" >
+        packet_time,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="packetId != null" >
+        #{packetId,jdbcType=INTEGER},
+      </if>
+      <if test="packetTotalamount != null" >
+        #{packetTotalamount,jdbcType=INTEGER},
+      </if>
+      <if test="packetSignamount != null" >
+        #{packetSignamount,jdbcType=INTEGER},
+      </if>
+      <if test="fillupFlag != null" >
+        #{fillupFlag,jdbcType=INTEGER},
+      </if>
+      <if test="pushStatus != null" >
+        #{pushStatus,jdbcType=INTEGER},
+      </if>
+      <if test="borrowCycle != null" >
+        #{borrowCycle,jdbcType=INTEGER},
+      </if>
+      <if test="packetTime != null" >
+        #{packetTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.info.web.pojo.BorrowAssetPacket" >
+    update borrow_asset_packet
+    <set >
+      <if test="packetId != null" >
+        packet_id = #{packetId,jdbcType=INTEGER},
+      </if>
+      <if test="packetTotalamount != null" >
+        packet_totalamount = #{packetTotalamount,jdbcType=INTEGER},
+      </if>
+      <if test="packetSignamount != null" >
+        packet_signamount = #{packetSignamount,jdbcType=INTEGER},
+      </if>
+      <if test="fillupFlag != null" >
+        fillup_flag = #{fillupFlag,jdbcType=INTEGER},
+      </if>
+      <if test="pushStatus != null" >
+        push_status = #{pushStatus,jdbcType=INTEGER},
+      </if>
+      <if test="borrowCycle != null" >
+        borrow_cycle = #{borrowCycle,jdbcType=INTEGER},
+      </if>
+      <if test="packetTime != null" >
+        packet_time = #{packetTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.info.web.pojo.BorrowAssetPacket" >
+    update borrow_asset_packet
+    set packet_id = #{packetId,jdbcType=INTEGER},
+      packet_totalamount = #{packetTotalamount,jdbcType=INTEGER},
+      packet_signamount = #{packetSignamount,jdbcType=INTEGER},
+      fillup_flag = #{fillupFlag,jdbcType=INTEGER},
+      push_status = #{pushStatus,jdbcType=INTEGER},
+      borrow_cycle = #{borrowCycle,jdbcType=INTEGER},
+      packet_time = #{packetTime,jdbcType=TIMESTAMP},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

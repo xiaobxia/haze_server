@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.web.dao.IRepaymentReturnDao" >
+  <resultMap id="BaseResultMap" type="com.info.web.pojo.RepaymentReturn" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="asset_order_id" property="assetOrderId" jdbcType="INTEGER" />
+    <result column="asset_repayment_id" property="assetRepaymentId" jdbcType="INTEGER" />
+     <result column="asset_repayment_detail_id" property="assetRepaymentDetailId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="return_type" property="returnType" jdbcType="INTEGER" />
+    <result column="repayment_return_money" property="repaymentReturnMoney" jdbcType="BIGINT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="return_order_id" property="returnOrderId" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="admin_username" property="adminUsername" jdbcType="VARCHAR" />
+    <result column="return_time" property="returnTime" jdbcType="TIMESTAMP" />
+    <result column="return_source" property="returnSource" jdbcType="INTEGER" />
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List" >
+    id,asset_order_id,asset_repayment_id,asset_repayment_detail_id,
+    user_id,return_type,repayment_return_money,remark
+    return_order_id,created_at,updated_at,admin_username,
+    return_time,return_source
+  </sql>
+  <insert id="insertSelective" parameterType="com.info.web.pojo.RepaymentDetail" useGeneratedKeys="true" keyProperty="id" >
+    insert into asset_repayment_refund
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="assetOrderId != null" >
+        asset_order_id,
+      </if>
+      <if test="assetRepaymentId != null" >
+        asset_repayment_id,
+      </if>
+      <if test="assetRepaymentDetailId != null" >
+        asset_repayment_detail_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="returnType != null" >
+        return_type,
+      </if>
+      <if test="repaymentReturnMoney != null" >
+        repayment_return_money,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="returnOrderId != null" >
+        return_order_id,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="adminUsername != null" >
+        admin_username,
+      </if>
+      <if test="returnTime != null" >
+        return_time,
+      </if>
+       <if test="returnSource != null" >
+        return_source
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="assetOrderId != null" >
+        #{assetOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="assetRepaymentId != null" >
+        #{assetRepaymentId,jdbcType=INTEGER},
+      </if>
+       <if test="assetRepaymentDetailId != null" >
+        #{assetRepaymentDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="returnType != null" >
+        #{returnType,jdbcType=INTEGER},
+      </if>
+      <if test="repaymentReturnMoney != null" >
+        #{repaymentReturnMoney,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="returnOrderId != null" >
+        #{returnOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adminUsername != null" >
+        #{adminUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="returnTime != null" >
+        #{returnTime,jdbcType=INTEGER},
+      </if>
+      <if test="returnSource != null" >
+        #{returnSource,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+ <!--  <update id="updateByPrimaryKeySelective" parameterType="com.info.web.pojo.RepaymentDetail" >
+    update asset_repayment_detail
+    <set >
+      <if test="assetOrderId != null" >
+        asset_order_id = #{assetOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="assetRepaymentId != null" >
+        asset_repayment_id = #{assetRepaymentId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="repaymentType != null" >
+        repayment_type = #{repaymentType,jdbcType=INTEGER},
+      </if>
+      <if test="trueRepaymentMoney != null" >
+        true_repayment_money = #{trueRepaymentMoney,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cardId != null" >
+        card_id = #{cardId,jdbcType=INTEGER},
+      </if>
+      <if test="adminUsername != null" >
+        admin_username = #{adminUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="repaymentImg != null" >
+        repayment_img = #{repaymentImg,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update> -->
+  
+</mapper>

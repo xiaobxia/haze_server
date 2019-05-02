@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.web.dao.IThirdChannelReportDao">
+	<resultMap id="BaseResultMap" type="com.info.web.pojo.ThirdChannelReport">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="report_date" property="reportDate" />
+		<result column="third_type" property="thirdType" />
+		<result column="register_count" property="registerCount" />
+		<result column="attestation_realname_count" property="attestationRealnameCount" />
+		<result column="attestation_bank_count" property="attestationBankCount" />
+		<result column="contact_count" property="contactCount"/>
+		<result column="jxl_count" property="jxlCount"/>
+		<result column="alipay_count" property="alipayCount"/>
+		<result column="zhima_count" property="zhimaCount"/>
+		<result column="company_count" property="companyCount"/>
+		<result column="borrow_apply_count" property="borrowApplyCount"/>
+		<result column="borrow_suc_count" property="borrowSucCount"/>
+		<result column="borrow_rate" property="borrowRate"/>
+		<result column="pass_rate" property="passRate"/>
+		<result column="into_money" property="intoMoney"/>
+		<result column="approve_error_count" property="approveErrorCount"/>
+		<result column="third_id" property="thirdId"/>
+		<result column="channelid" property="channelid"/>
+		<result column="black_user_count" property="blackUserCount"/>
+		<result column="late_day_count" property="lateDayCount"/>
+		<result column="late_day_sumCount" property="lateDaySumCount"/>
+		<result column="created_at" property="createdAt"/>
+		<result column="overdue_money" property="overdueMoney"/>
+		<result column="overdue_money_sum" property="overdueMoneySum"/>
+		<result column="baddebt_money" property="baddebtMoney"/>
+		<result column="baddebt_money_sum" property="baddebtMoneySum"/>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		 id, report_date,  third_id,  third_type,  register_count,  attestation_realname_count,  attestation_bank_count,  contact_count,  jxl_count,
+  			alipay_count,  zhima_count,  company_count,  borrow_apply_count,  borrow_suc_count,  pass_rate,  borrow_rate,  into_money,  approve_error_count,
+  		channelid,  black_user_count,  late_day_count,  late_day_sumCount,overdue_money,  overdue_money_sum,  baddebt_money,  baddebt_money_sum, created_at
+	</sql>
+	
+	
+	<sql id="findSql">
+		FROM user_info a
+	</sql>
+	<sql id="Sql">
+	<where>
+			<if test="beginTime !=null and beginTime !=''">
+	    		<![CDATA[	and DATE_FORMAT(a.report_date,'%Y-%m-%d') >=  #{beginTime}  ]]>
+			</if>
+			<if test="endTime !=null and endTime !=''">
+		    	<![CDATA[	and DATE_FORMAT(a.report_date,'%Y-%m-%d') <=  #{endTime}  ]]>
+			</if>
+			<if test="startDate !=null and startDate !=''">
+		    	<![CDATA[	and DATE_FORMAT(a.report_date,'%Y-%m-%d') =  #{startDate}  ]]>
+			</if>
+			
+		</where>
+	</sql>
+	
+	
+	<select id="findAllCount" resultType="Integer"
+		parameterType="HashMap">
+		
+		SELECT COUNT(1) FROM third_channel_report a
+		
+		<include refid="Sql"/>
+		
+	</select>
+	<select id="findAll" resultMap="BaseResultMap"
+		parameterType="HashMap">
+		SELECT <include refid="Base_Column_List"/>
+		from third_channel_report a
+		<include refid="Sql"/>
+		ORDER BY a.report_date DESC
+	</select>
+	
+		<select id="findAllListByTime" resultMap="BaseResultMap"  parameterType="HashMap">
+		
+			SELECT 
+			<include refid="Base_Column_List"/>
+			FROM third_channel_report a
+			<include refid="Sql"/>
+		
+		</select>
+
+		<select id="findThirdId" resultMap="BaseResultMap"
+		parameterType="HashMap">
+			SELECT push_id AS thirdId,channel_id AS channelid FROM channel_user_push
+		</select>
+		
+		<select id="findUserId" resultType="map"
+		parameterType="HashMap">
+			SELECT id FROM user_info a WHERE user_from = 223
+		</select>
+		
+		<select id="findRegisterCount" resultType="Integer"
+			parameterType="HashMap">
+			SELECT COUNT(1)
+			<include refid="findSql"/>
+			<where>a.invite_userid = #{thirdId} and a.user_from = 223 and
+			 	<![CDATA[DATE_FORMAT(a.create_time,'%Y-%m-%d')=DATE_ADD(#{startDate} , INTERVAL -1 DAY)]]>
+			</where>
+		</select>
+		<select id="findRealNameCount" resultType="Integer"
+			parameterType="HashMap">
+			SELECT COUNT(1)
+			<include refid="findSql"/>
+			<where> a.invite_userid = #{thirdId} and a.user_from = 223
+			 	and a.realname_status = 1
+				and <![CDATA[DATE_FORMAT(a.realname_time,'%Y-%m-%d')=DATE_ADD(#{startDate} , INTERVAL -1 DAY)]]>
+			</where>
+			
+		</select>
+
+		<select id="findJXLCount" resultType="Integer"
+			parameterType="HashMap">
+			SELECT COUNT(1)
+			<include refid="findSql"/>
+			<where>a.invite_userid = #{thirdId} and a.user_from = 223
+			 	and a.jxl_status = 2
+				and <![CDATA[DATE_FORMAT(a.jxl_token_time,'%Y-%m-%d')=DATE_ADD(#{startDate} , INTERVAL -1 DAY)]]>
+			</where>
+			
+		</select>
+		<select id="findZMCount" resultType="Integer"
+			parameterType="HashMap">
+			SELECT COUNT(1)
+			<include refid="findSql"/>
+			<where>a.invite_userid = #{thirdId} and a.user_from = 223
+			 	and a.zm_status = 2
+				and <![CDATA[DATE_FORMAT(a.zm_score_time,'%Y-%m-%d')=DATE_ADD(#{startDate} , INTERVAL -1 DAY)]]>
+			</where>
+		</select>
+		<select id="findCompanyCount" resultType="Integer"
+			parameterType="HashMap">
+			SELECT COUNT(1)
+			<include refid="findSql"/>
+			<where>a.invite_userid = #{thirdId} and a.user_from = 223
+			 	and a.company_address IS NOT null AND a.company_address_distinct IS NOT NULL 
+				AND a.company_name IS NOT NULL AND a.company_period IS NOT null AND a.company_phone IS NOT null
+				and <![CDATA[DATE_FORMAT(a.realname_time,'%Y-%m-%d')=DATE_ADD(#{startDate} , INTERVAL -1 DAY)]]>
+			</where>
+		</select>
+		<select id="findContactCount" resultType="Integer"
+			parameterType="HashMap">
+			SELECT COUNT(1)
+			<include refid="findSql"/>
+			<where>a.invite_userid = #{thirdId} and a.user_from = 223
+			 	and a.first_contact_phone IS NOT NULL AND a.second_contact_phone IS NOT NULL
+				and <![CDATA[DATE_FORMAT(a.realname_time,'%Y-%m-%d')=DATE_ADD(#{startDate} , INTERVAL -1 DAY)]]>
+			</where>
+			
+		</select>
+		<select id="findBankCount" resultType="Integer"
+			parameterType="HashMap">
+			
+			SELECT COUNT(1)
+			<include refid="findSql"/>
+			LEFT JOIN user_card_info e ON  a.id = e.user_id
+			<where>
+				a.invite_userid = #{thirdId} and a.user_from = 223
+			 	and  e.status =1
+				and <![CDATA[DATE_FORMAT(e.create_time,'%Y-%m-%d')=DATE_ADD(#{startDate} , INTERVAL -1 DAY)]]>
+			</where>			
+		</select>
+		<select id="findAlipayCount" resultType="Integer"
+			parameterType="HashMap">
+			SELECT COUNT(1)
+			<include refid="findSql"/>
+			<where>a.invite_userid = #{thirdId} and a.user_from = 223
+			 	and a.my_hb_time IS NOT NULL
+				and <![CDATA[DATE_FORMAT(a.my_hb_time,'%Y-%m-%d')=DATE_ADD(#{startDate} , INTERVAL -1 DAY)]]>
+			</where>	
+		</select>
+		<select id="findApproveErrorCount" resultType="Integer"
+			parameterType="HashMap">
+			SELECT COUNT(1)
+			<include refid="findSql"/>
+			where a.invite_userid = #{thirdId} and a.my_hb_time IS NOT NULL and a.user_from = 223
+			<![CDATA[	AND a.my_hb_time >= #{startDate} AND a.my_hb_time <= DATE_ADD(#{startDate} , INTERVAL -1 DAY) ]]>
+		</select>
+		<select id="findBorrowApplyCount" resultType="Integer"
+			parameterType="HashMap">
+			SELECT COUNT(1) FROM (SELECT e.user_id
+			<include refid="findSql"/>
+			INNER JOIN asset_borrow_order e ON e.user_id = a.id
+			<where>a.invite_userid = #{thirdId} and a.user_from = 223
+				and <![CDATA[DATE_FORMAT(e.created_at,'%Y-%m-%d')=DATE_ADD(#{startDate} , INTERVAL -1 DAY)]]>
+			</where>	
+			GROUP BY e.user_id) t
+		</select>
+		<select id="findBorrowSucCount" resultType="Integer"
+			parameterType="HashMap">
+			SELECT COUNT(1) FROM (SELECT e.user_id
+			<include refid="findSql"/>
+			INNER JOIN asset_borrow_order e ON e.user_id = a.id
+			where a.invite_userid = #{thirdId} and a.user_from = 223 and
+			<![CDATA[DATE_FORMAT(e.loan_time,'%Y-%m-%d')=DATE_ADD(#{startDate} , INTERVAL -1 DAY)]]>
+			and e.status in
+			<foreach item="item" index="index" collection="inStatus"
+					open="(" separator="," close=")">
+					#{item}
+			</foreach>
+			 GROUP BY e.user_id) t
+		</select>
+		<select id="findIntoMoney" resultType="Integer"
+			parameterType="HashMap">
+			SELECT CAST(IFNULL(SUM(e.money_amount),0)/100 as DECIMAL(20,0))
+			<include refid="findSql"/>
+			INNER JOIN asset_borrow_order e ON e.user_id = a.id
+			where a.invite_userid = #{thirdId} and a.user_from = 223 and
+			<![CDATA[DATE_FORMAT(e.loan_time,'%Y-%m-%d')= DATE_ADD(#{startDate} , INTERVAL -1 DAY) ]]>
+			and e.status in
+			<foreach item="item" index="index" collection="inStatus"
+					open="(" separator="," close=")">
+					#{item}
+			</foreach>
+		</select>
+		<select id="findBlackUserCount" resultType="Integer"
+			parameterType="HashMap">
+			SELECT COUNT(1) FROM (SELECT e.user_id
+			<include refid="findSql"/>
+			INNER JOIN risk_black_user e ON e.user_id = a.id  and e.black_type=1
+			where a.invite_userid = #{thirdId} and a.user_from = 223 and <![CDATA[DATE_FORMAT(e.add_time,'%Y-%m-%d')= DATE_ADD(#{startDate} , INTERVAL -1 DAY) ]]>
+			GROUP BY e.user_id) t
+		</select>
+		<select id="findlateDayCount" resultType="Integer"
+			parameterType="HashMap">
+			SELECT COUNT(1)
+			<include refid="findSql"/>
+			INNER JOIN asset_repayment e ON e.user_id = a.id
+			where a.invite_userid = #{thirdId} and a.user_from = 223  and <![CDATA[DATE_FORMAT(e.late_fee_start_time,'%Y-%m-%d')= DATE_ADD(#{startDate} , INTERVAL -1 DAY) ]]>
+			
+		</select>
+			<!-- 		当日逾期金额 -->
+		<select id="findoverdueMoney" resultType="Integer"
+			parameterType="HashMap">
+			<![CDATA[	SELECT CAST(SUM(IFNULL(money_amount,0))/100.0 AS DECIMAL(20,0)) AS money_amount
+					FROM (
+						SELECT ar.user_id AS user_id,SUM(repayment_principal+repayment_interest) AS money_amount FROM asset_repayment ar
+						INNER JOIN (SELECT id FROM user_info a
+								INNER JOIN (SELECT push_id FROM channel_user_push GROUP BY push_id) b 
+								ON  a.invite_userid = b.push_id
+								WHERE b.push_id = #{thirdId} AND user_from = 223
+								) pua
+						ON pua.id = ar.user_id
+						WHERE DATE_FORMAT(late_fee_start_time,'%Y-%m-%d') = #{startDate}
+						  
+						UNION ALL
+						SELECT c.user_id,c.money_amount  FROM asset_renewal_record c 
+						INNER JOIN (
+							SELECT  ass.user_id FROM asset_repayment ass
+							INNER JOIN (
+								SELECT id FROM user_info a
+								INNER JOIN (SELECT push_id FROM channel_user_push GROUP BY push_id) b 
+								ON  a.invite_userid = b.push_id 
+								WHERE b.push_id =#{thirdId} AND user_from = 223
+								) pub 
+								
+							ON pub.id = ass.user_id
+							WHERE DATE_FORMAT(late_fee_start_time,'%Y-%m-%d') = #{startDate}
+						) d ON d.user_id = c.user_id
+						WHERE			
+						STATUS=1   
+				) basee 
+			]]>
+		</select>
+			<!-- 		当日还款金额 -->
+		<select id="findoverdueMoneySum" resultType="Integer"
+			parameterType="HashMap">
+			<![CDATA[	SELECT CAST(SUM(IFNULL(money_amount,0))/100.0 AS DECIMAL(20,0)) AS money_amount
+					FROM (
+						SELECT ar.user_id AS user_id,SUM(repayment_principal+repayment_interest) AS money_amount FROM asset_repayment ar
+						INNER JOIN (SELECT id FROM user_info a
+								INNER JOIN (SELECT push_id FROM channel_user_push GROUP BY push_id) b 
+								ON  a.invite_userid = b.push_id
+								WHERE b.push_id = #{thirdId} AND user_from = 223
+								) pua
+						ON pua.id = ar.user_id
+						 WHERE DATE_FORMAT(ar.repayment_time,'%Y-%m-%d') = DATE_ADD(#{startDate} , INTERVAL -1 DAY) 
+						UNION ALL
+						SELECT c.user_id,c.money_amount  FROM asset_renewal_record c 
+						INNER JOIN (
+							SELECT  ass.user_id FROM asset_repayment ass
+							INNER JOIN (							 
+								SELECT id FROM user_info a
+								INNER JOIN (SELECT push_id FROM channel_user_push GROUP BY push_id) b 
+								ON  a.invite_userid = b.push_id
+								WHERE b.push_id = #{thirdId} AND user_from = 223
+								) pub 
+							ON pub.id = ass.user_id
+							 WHERE DATE_FORMAT(ass.first_repayment_time,'%Y-%m-%d') = DATE_ADD(#{startDate}, INTERVAL -1 DAY) 
+						) d ON d.user_id = c.user_id
+						WHERE			
+						STATUS=1   
+				) basee 
+			]]>
+		</select>
+		
+			<!-- 		M3逾期金额-->
+		<select id="findbaddebtMoney" resultType="Integer"
+			parameterType="HashMap">
+			<![CDATA[SELECT IFNULL(SUM(amountAll),0) FROM (	
+						SELECT DATEDIFF(#{startDate},DATE_FORMAT(ar.late_fee_start_time,'%Y-%m-%d')) + 1 AS lateDay,
+						COUNT(1) AS countAll,
+						CAST(IFNULL(SUM(ar.repayment_principal + ar.repayment_interest),0)/100.0 AS DECIMAL(20, 0)) AS amountAll
+						FROM asset_repayment ar
+						INNER JOIN (
+							SELECT id FROM user_info a 
+							INNER JOIN (SELECT push_id FROM channel_user_push GROUP BY push_id) b 
+							ON  a.invite_userid = b.push_id
+							WHERE b.push_id =  #{thirdId} AND user_from = 223
+						) pu
+						ON ar.user_id = pu.id
+						WHERE DATE_FORMAT(ar.late_fee_start_time,'%Y-%m-%d') <= #{startDate}
+						AND (ar.status = -11 OR DATE_FORMAT(ar.repayment_real_time,'%Y-%m-%d') > #{startDate})
+						GROUP BY DATEDIFF(#{startDate},DATE_FORMAT(ar.late_fee_start_time,'%Y-%m-%d'))
+						HAVING lateDay = 61
+					) t
+			]]>
+		</select>
+		
+			<!-- 		M3还款金额-->
+		<select id="findbaddebtMoneySum" resultType="Integer"
+			parameterType="HashMap">
+			<![CDATA[	
+					SELECT CAST(SUM(IFNULL(money_amount,0))/100.0 AS DECIMAL(20,0)) AS money_amount
+					FROM (
+						SELECT ar.user_id AS user_id,SUM(repayment_principal+repayment_interest) AS money_amount FROM asset_repayment ar
+						INNER JOIN (SELECT id FROM user_info a
+								INNER JOIN (SELECT push_id FROM channel_user_push GROUP BY push_id) b 
+								ON  a.invite_userid = b.push_id
+								WHERE b.push_id = #{thirdId}
+								) pua
+						ON pua.id = ar.user_id
+						 WHERE DATE_FORMAT(ar.repayment_time,'%Y-%m-%d') = DATE_ADD(#{startDate} , INTERVAL -61 DAY) 
+						UNION ALL
+						SELECT c.user_id,c.money_amount  FROM asset_renewal_record c 
+						INNER JOIN (
+							SELECT  ass.user_id FROM asset_repayment ass
+							INNER JOIN (							 
+								SELECT id FROM user_info a
+								INNER JOIN (SELECT push_id FROM channel_user_push GROUP BY push_id) b 
+								ON  a.invite_userid = b.push_id
+								WHERE b.push_id = #{thirdId}
+								) pub 
+							ON pub.id = ass.user_id
+							 WHERE DATE_FORMAT(ass.first_repayment_time,'%Y-%m-%d') = DATE_ADD(#{startDate}, INTERVAL -61 DAY) 
+						) d ON d.user_id = c.user_id
+						WHERE			
+						STATUS=1   
+				) basee 
+			]]>
+		</select>
+		
+		<select id="findUserInfoByIdCount" resultType="Integer"
+		parameterType="HashMap">
+			SELECT count(1)
+			FROM user_info a
+			LEFT JOIN user_card_info b ON  a.id = b.user_id
+			where user_from = 223 and DATE_FORMAT(a.create_time,'%Y-%m-%d') = #{startDate}
+		</select>
+		
+		<select id="findUserInfoById" resultType="map"
+		parameterType="HashMap">
+			SELECT a.invite_userid as inviteUserid,a.id AS id,a.user_phone as userPhone,a.user_name as userName,a.id_number as idNumber,b.status as bankStatus,
+			b.create_time as bankCreateTime,a.create_time as createTime,a.first_contact_phone AS firstContactPhone,a.realname_time AS realnameTime,a.zm_score_time AS zmScoreTime,
+			a.jxl_token_time AS jxlTokenTime,a.company_name AS companyName,a.company_phone AS companyPhone,a.realname AS realname
+			FROM user_info a
+			LEFT JOIN user_card_info b ON  a.id = b.user_id
+			where user_from =223 and DATE_FORMAT(a.create_time,'%Y-%m-%d') = #{startDate}
+		</select>
+		
+<!-- 		<select id="findUserBorrowSucInfo" resultType="map" -->
+<!-- 		parameterType="HashMap"> -->
+<!-- 			SELECT a.id as id,a.loan_time FROM  -->
+<!-- 			asset_borrow_order a  -->
+<!-- 			LEFT JOIN asset_repayment b  -->
+<!-- 			ON a.id = b.asset_order_id -->
+<!-- 			WHERE a.user_id = #{userId} AND  a.customer_type = 0 -->
+<!-- 		</select> -->
+		
+		<select id="findUserBorrowSucInfo" resultType="map"
+				parameterType="HashMap">
+			SELECT a.id,a.loan_time as loanTime, a.status as borrowStatus,b.repayment_real_time as repaymentRealTime FROM
+			asset_borrow_order a
+			LEFT JOIN asset_repayment b
+			ON a.id = b.asset_order_id
+			WHERE a.user_id = #{userId} AND a.customer_type = 0 
+		</select>
+		
+		
+	<insert id="insert" parameterType="com.info.web.pojo.ThirdChannelReport">
+		INSERT INTO third_channel_report
+            (
+             `report_date`,
+             `third_id`,
+             `third_type`,
+             `register_count`,
+             `attestation_realname_count`,
+             `attestation_bank_count`,
+             `contact_count`,
+             `jxl_count`,
+             `alipay_count`,
+             `zhima_count`,
+             `company_count`,
+             `borrow_apply_count`,
+             `borrow_suc_count`,
+             `pass_rate`,
+             `borrow_rate`,
+             `into_money`,
+             `approve_error_count`,
+             `channelid`,
+             `black_user_count`,
+             `late_day_count`,
+             `late_day_sumCount`,
+             `overdue_money`,
+             `overdue_money_sum`,
+             `baddebt_money`,
+             `baddebt_money_sum`,
+             `created_at`)
+		VALUES (
+        #{reportDate},
+        #{thirdId},
+        #{thirdType},
+        #{registerCount},
+        #{attestationRealnameCount},
+        #{attestationBankCount},
+        #{contactCount},
+        #{jxlCount},
+        #{alipayCount},
+        #{zhimaCount},
+        #{companyCount},
+        #{borrowApplyCount},
+        #{borrowSucCount},
+       	#{passRate},
+        #{borrowRate},
+        #{intoMoney},
+        #{approveErrorCount},
+        #{channelid},
+        #{blackUserCount},
+        #{lateDayCount},
+        #{lateDaySumCount},
+        #{overdueMoney},
+        #{overdueMoneySum},
+        #{baddebtMoney},
+        #{baddebtMoneySum},
+        NOW());
+	</insert>
+	<delete id="deleteByThirdChannelReport" parameterType="com.info.web.pojo.ThirdChannelReport">
+		DELETE
+		FROM third_channel_report
+		WHERE channelid = #{channelid} AND third_id = #{thirdId}
+			and <![CDATA[report_date= DATE_FORMAT(#{reportDate},'%Y-%m-%d')]]>
+	</delete>
+</mapper>

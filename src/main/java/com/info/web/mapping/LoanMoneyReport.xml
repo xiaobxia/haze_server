@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.web.dao.ILoanMoneyReportDao">
+	<resultMap id="BaseResultMap" type="com.info.web.pojo.LoanMoneyReport">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="report_date" property="reportDate" />
+		<result column="expire_amount" property="expireAmount" />
+		<result column="money_amount_count" property="moneyAmountCount" />
+		<result column="fourteenday_money_count" property="fourteendayMoneyCount"/>
+		<result column="sevenday_moeny_count" property="sevendayMoenyCount"/>
+		<result column="overdue_amount" property="overdueAmount" />
+		<result column="overdue_rate_seven_amount" property="overdueRateSevenAmount"/>
+		<result column="overdue_rate_fourteen_amount" property="overdueRateFourteenAmount"/>
+		<result column="created_at" property="created_at"/>
+	</resultMap>
+   
+	
+	<select id="findMoneyCount" resultType="Long"	parameterType="HashMap">
+		
+	SELECT IFNULL(SUM(money_amount),0)
+		FROM asset_borrow_order a 
+		WHERE STATUS in
+			<foreach item="item" index="index" collection="inStatus"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		AND <![CDATA[
+			DATE_FORMAT(a.loan_time,'%Y-%m-%d')>DATE_ADD(#{startDate} , INTERVAL -1 DAY) 
+			AND DATE_FORMAT(a.loan_time,'%Y-%m-%d')<DATE_ADD(#{startDate}, INTERVAL 1 DAY)
+			]]>	
+		<if test="loanTerm != null and loanTerm != ''"> 
+				and loan_term=#{loanTerm}	
+		</if>
+		<if test="customerType != null and customerType != ''"> 
+				and customer_type = #{customerType}
+		</if>
+		
+	</select>
+	 
+	<!-- 续期统计  放款金额统计-->
+	<select id="findRenewalMoneyCount" resultType="Long"	parameterType="HashMap">
+	 	SELECT IFNULL(SUM(money_amount),0) FROM
+		asset_renewal_record a
+		WHERE 
+		<![CDATA[
+			DATE_FORMAT(a.old_repayment_time,'%Y-%m-%d')>DATE_ADD(#{startDate}, INTERVAL -1 DAY) 
+			AND DATE_FORMAT(a.old_repayment_time,'%Y-%m-%d')<DATE_ADD(#{startDate}, INTERVAL 1 DAY)
+		]]>
+		AND STATUS = 1
+		<if test="loanTerm != null and loanTerm != ''"> 
+				and renewal_day=#{loanTerm}
+		</if>
+		
+	</select>
+	
+	
+	<!-- 查询当天到期金额-->
+	<select id="findExpireAmount" resultType="Long"	parameterType="HashMap">
+	 	SELECT IFNULL(SUM(expire_amount),0) AS expireAmount FROM report_repayment 
+	 	WHERE  
+		<![CDATA[
+			DATE_FORMAT(report_date,'%Y-%m-%d')>DATE_ADD(#{startDate}, INTERVAL -1 DAY) 
+			AND DATE_FORMAT(report_date,'%Y-%m-%d')<DATE_ADD(#{startDate}, INTERVAL 1 DAY)
+		]]>
+	</select>
+	
+	<!-- 查询当天逾期金额金额-->
+	<select id="findOverdueRateAmount" resultType="Long"	parameterType="HashMap">
+	
+		SELECT IFNULL(SUM(a.repayment_principal+a.repayment_interest),0) as moneyAmount  FROM
+		asset_repayment a
+		LEFT JOIN asset_borrow_order b
+		ON a.asset_order_id = b.id
+		WHERE  
+		<![CDATA[
+			DATE_FORMAT(a.late_fee_start_time,'%Y-%m-%d')>DATE_ADD(#{startDate}, INTERVAL -1 DAY) 
+			AND DATE_FORMAT(a.late_fee_start_time,'%Y-%m-%d')<DATE_ADD(#{startDate}, INTERVAL 1 DAY)
+		]]>
+		<if test="loanTerm != null and loanTerm != ''">
+				and b.loan_term = #{loanTerm}
+		</if>
+		
+		
+	</select>
+	 
+	<insert id="insert" parameterType="com.info.web.pojo.LoanMoneyReport">
+		INSERT INTO loan_money_report
+            (
+             report_date,
+             expire_amount,
+             money_amount_count,
+             fourteenday_money_count,
+             sevenday_moeny_count,
+             overdue_amount,
+             overdue_rate_seven_amount,
+             overdue_rate_fourteen_amount,
+             created_at)
+			VALUES (
+	       	 #{reportDate},
+	         #{expireAmount},
+	         #{moneyAmountCount},
+	         #{fourteendayMoneyCount},
+	         #{sevendayMoenyCount},
+	      	 #{overdueAmount},
+	        #{overdueRateSevenAmount},
+	        #{overdueRateFourteenAmount},
+	       	 now());
+	        
+	</insert>
+	<delete id="deleteByLoanReport" parameterType="com.info.web.pojo.LoanMoneyReport">
+		DELETE
+		FROM loan_money_report
+		WHERE <![CDATA[report_date= DATE_FORMAT(#{reportDate},'%Y-%m-%d')]]>
+	</delete>
+</mapper>

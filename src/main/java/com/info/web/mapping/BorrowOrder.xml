@@ -1,0 +1,1613 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.web.dao.IBorrowOrderDao">
+	<resultMap id="BaseResultMap" type="BorrowOrder">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="review_back_user_id" property="reviewBackUserId" jdbcType="VARCHAR" />
+		<result column="re_back_user_name" property="reBackUserName" jdbcType="VARCHAR" />
+		<result column="review_back_user_name" property="reviewBackUserName" jdbcType="VARCHAR" />
+		<result column="review_status" property="reviewStatus" jdbcType="VARCHAR" />
+		<result column="out_trade_no" property="outTradeNo" jdbcType="VARCHAR" />
+		<result column="order_type" property="orderType" jdbcType="INTEGER" />
+		<result column="money_amount" property="moneyAmount" jdbcType="INTEGER" />
+		<result column="apr" property="apr" jdbcType="INTEGER" />
+		<result column="loan_interests" property="loanInterests"
+				jdbcType="INTEGER" />
+		<result column="into_money" property="intoMoney" jdbcType="INTEGER" />
+		<result column="loan_method" property="loanMethod" jdbcType="INTEGER" />
+		<result column="loan_term" property="loanTerm" jdbcType="INTEGER" />
+		<result column="operator_name" property="operatorName"
+				jdbcType="VARCHAR" />
+		<result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+		<result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+		<result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+		<result column="loan_time" property="loanTime" jdbcType="TIMESTAMP" />
+		<result column="loan_end_time" property="loanEndTime" jdbcType="TIMESTAMP" />
+		<result column="late_fee_apr" property="lateFeeApr" jdbcType="INTEGER" />
+		<result column="receive_card_id" property="receiveCardId"
+				jdbcType="INTEGER" />
+		<result column="debit_card_id" property="debitCardId" jdbcType="INTEGER" />
+		<result column="capital_type" property="capitalType" jdbcType="INTEGER" />
+		<result column="reason_remark" property="reasonRemark"
+				jdbcType="VARCHAR" />
+		<result column="credit_lv" property="creditLv" jdbcType="INTEGER" />
+		<result column="is_hit_risk_rule" property="isHitRiskRule"
+				jdbcType="TINYINT" />
+		<result column="auto_risk_check_status" property="autoRiskCheckStatus"
+				jdbcType="TINYINT" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="verify_trial_user" property="verifyTrialUser"
+				jdbcType="VARCHAR" />
+		<result column="verify_trial_time" property="verifyTrialTime"
+				jdbcType="TIMESTAMP" />
+		<result column="verify_trial_remark" property="verifyTrialRemark"
+				jdbcType="VARCHAR" />
+		<result column="verify_review_user" property="verifyReviewUser"
+				jdbcType="VARCHAR" />
+		<result column="verify_review_time" property="verifyReviewTime"
+				jdbcType="TIMESTAMP" />
+		<result column="verify_review_remark" property="verifyReviewRemark"
+				jdbcType="VARCHAR" />
+		<result column="verify_loan_user" property="verifyLoanUser"
+				jdbcType="VARCHAR" />
+		<result column="verify_loan_time" property="verifyLoanTime"
+				jdbcType="TIMESTAMP" />
+		<result column="verify_loan_remark" property="verifyLoanRemark"
+				jdbcType="VARCHAR" />
+		<result column="yurref" property="yurref" jdbcType="VARCHAR" />
+		<result column="customer_type" property="customerType"
+				jdbcType="INTEGER" />
+		<result column="serial_no" property="serialNo" jdbcType="VARCHAR" />
+		<result column="bank_iscmb" property="bankIscmb" jdbcType="INTEGER" />
+		<result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+		<result column="realname" property="realname" jdbcType="VARCHAR" />
+		<result column="id_number" property="idNumber" jdbcType="VARCHAR" />
+
+		<result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+		<result column="bank_number" property="bankNumber" jdbcType="VARCHAR" />
+
+		<result column="pay_status" property="paystatus" jdbcType="VARCHAR" />
+		<result column="pay_remark" property="payRemark" jdbcType="VARCHAR" />
+		<result column="client_type" property="clientType" jdbcType="VARCHAR" />
+		<result column="auto_loan_flag" property="autoLoanFlag" jdbcType="INTEGER" />
+		<result column="area" property="area" jdbcType="VARCHAR" />
+		<result column="renewal_fee" property="renewalFee" jdbcType="VARCHAR" />
+		<result column="renewal_poundage" property="renewalPoundage" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="ResultMapWithBLOBs" type="BorrowOrder"
+			   extends="BaseResultMap">
+		<result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<resultMap id="BaseResultDeviceMap" type="BorrowOrderDevice">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="asset_borrow_order_id" property="assetBorrowOrderId" jdbcType="INTEGER" />
+		<result column="device_content" property="deviceContent" jdbcType="VARCHAR" />
+		<result column="request_params" property="requestParams" jdbcType="VARCHAR" />
+		<result column="return_params" property="returnParams" jdbcType="VARCHAR" />
+		<result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
+		<result column="update_at" property="updateAt" jdbcType="TIMESTAMP" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="BaseResultTdDeviceMap" type="BorrowOrderTdDevice">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="asset_borrow_order_id" property="assetBorrowOrderId" jdbcType="INTEGER" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="device_content" property="deviceContent" jdbcType="VARCHAR"/>
+		<result column="fqz_content" property="fqzContent" jdbcType="VARCHAR"/>
+		<result column="request_params" property="requestParams" jdbcType="VARCHAR"/>
+		<result column="return_params" property="returnParams" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="StatisticResultMap" type="BorrowOrder">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="status" property="status" jdbcType="INTEGER"/>
+		<result column="verify_review_user" property="verifyReviewUser" jdbcType="VARCHAR"/>
+		<association property="user" javaType="com.info.web.pojo.User">
+			<id column="uid" property="id" jdbcType="INTEGER"/>
+			<result column="customer_type" property="customerType" jdbcType="INTEGER"/>
+		</association>
+	</resultMap>
+	<select id="findOrderIdAndUserIdList" resultMap="BaseResultMap" parameterType="Map">
+		select
+		abo.id,abo.user_id
+		from asset_borrow_order abo
+		<include refid="selectSqlForFK" />
+	</select>
+	<sql id="selectSqlForFK">
+		<where>
+            1=1
+            <![CDATA[and abo.created_at < DATE_SUB(NOW(),INTERVAL  20 MINUTE) ]]>
+			<if test="borrowStatus!=null and borrowStatus!=''">
+				and abo.status=#{borrowStatus}
+			</if>
+			<if test="loanTerm!=null and loanTerm!=0">
+				and abo.loan_term=#{loanTerm}
+			</if>
+			<if test="payStatus!=null and payStatus!=''">
+				and abo.pay_status=#{payStatus}
+			</if>
+		</where>
+		<if test="queryType==null">
+			order by abo.updated_at desc
+		</if>
+		<if test="queryType!=null and queryType=='reverse'">
+			order by abo.updated_at
+		</if>
+		<if test="queryType!=null and queryType=='subPay' and querylimit!=null">
+			order by abo.id asc limit 0,#{querylimit}
+		</if>
+	</sql>
+	<!--	20170321范银川添加-->
+	<select id="findTerm" resultType="Integer" parameterType="Integer">
+		select loan_term from asset_borrow_order where id=#{id}
+	</select>
+	<sql id="Base_Column_List">
+		id, user_id, out_trade_no, order_type, money_amount, apr,
+		loan_interests,
+		into_money,
+		loan_method, loan_term, operator_name,
+		created_at, updated_at, order_time,
+		loan_time,
+		loan_end_time,
+		late_fee_apr, receive_card_id, debit_card_id, capital_type,
+		reason_remark,
+		credit_lv, is_hit_risk_rule, auto_risk_check_status,
+		status,
+		verify_trial_user,verify_trial_time,verify_trial_remark,
+		verify_review_user,verify_review_time,verify_review_remark,
+		verify_loan_user,verify_loan_time,verify_loan_remark,pay_status,pay_remark,bank_iscmb,user_phone,realname,card_no,bank_number,yurref,customer_type,id_number,serial_no,
+		client_type,auto_loan_flag,renewal_fee,renewal_poundage
+	</sql>
+	<sql id="Statistic_Column_List">
+		abo.id,abo.status,abo.verify_review_user,ui.id uid,ui.customer_type
+	</sql>
+	<sql id="Blob_Column_List">
+		remark
+	</sql>
+
+	<sql id="selectSql">
+		<if test="channelInfoId != '' and channelInfoId != null">
+			,user_info u
+		</if>
+		<where>
+			<choose>
+				<when test="channelInfoId != null and channelInfoId == 0">AND u.id = abo.user_id AND u.user_from IN (0,null)</when>
+				<when test="channelInfoId != null and channelInfoId != 0">AND u.id = abo.user_id AND u.user_from = #{channelInfoId}</when>
+			</choose>
+
+			<if test="productAmount != null and productAmount != ''">
+				and abo.money_amount = #{productAmount}
+			</if>
+
+			<if test="statusList!=null">
+				and abo.status in
+				<foreach collection="statusList" item="item" open="("
+						 separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="noStatusList!=null">
+				and abo.status not in
+				<foreach collection="noStatusList" item="item" open="("
+						 separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="ids!=null">
+				and abo.id in (${ids})
+			</if>
+			<if test="borrowStatusArray != '-1' and borrowStatusArray != null and borrowStatusArray != ''">
+				and abo.status in
+				<foreach collection="borrowStatusArray" item="item" open="("
+						 separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="startApplyTime !=null and startApplyTime!=''">
+				<![CDATA[ and abo.created_at >= #{startApplyTime} ]]>
+			</if>
+			<if test="endApplyTime !=null and endApplyTime!=''">
+				<![CDATA[ and abo.created_at < #{endApplyTime}]]>
+			</if>
+			<if test="borrowStatus!=null and borrowStatus!=''">
+				and abo.status=#{borrowStatus}
+			</if>
+			<if test="customerTypeStatus!=null and customerTypeStatus!=''">
+				and abo.customer_type = #{customerTypeStatus}
+			</if>
+
+			<if test="loanTerm!=null and loanTerm!=0">
+				and abo.loan_term=#{loanTerm}
+			</if>
+			<if test="capitalType!=null and capitalType!=''">
+				and abo.capital_type=#{capitalType}
+			</if>
+			<if test="bankIscmb!=null and bankIscmb!=0">
+				and abo.bank_iscmb=#{bankIscmb}
+			</if>
+			<if test="payStatus!=null and payStatus!=''">
+				and abo.pay_status=#{payStatus}
+			</if>
+			<if test="outTradeNo!=null and outTradeNo!=''">
+				and (abo.out_trade_no like CONCAT(#{outTradeNo},'%') or abo.yurref like CONCAT(#{outTradeNo},'%')  )
+			</if>
+			<if test="userPhone!=null and userPhone!=''">
+				and abo.user_phone like CONCAT(#{userPhone}, '%')
+			</if>
+			<if test="userId!=null and userId!=''">
+				and abo.user_id=#{userId}
+			</if>
+			<if test="realname!=null and realname!=''">
+				and abo.realname like CONCAT(#{realname},'%')
+			</if>
+
+			<if test="sVerifyLoanTime !=null and sVerifyLoanTime !='' and eVerifyLoanTime !=null and eVerifyLoanTime !='' ">
+				and <![CDATA[abo.verify_loan_time>=#{sVerifyLoanTime} AND abo.verify_loan_time<=#{eVerifyLoanTime}]]>
+			</if>
+			<if test="sVerifyLoanTime !=null and sVerifyLoanTime !='' and (eVerifyLoanTime==null || eVerifyLoanTime=='') ">
+				and <![CDATA[abo.verify_loan_time>=#{createTime}]]>
+			</if>
+			<if test="eVerifyLoanTime !=null and eVerifyLoanTime !='' and (sVerifyLoanTime==null || sVerifyLoanTime=='')">
+				and <![CDATA[abo.verify_loan_time<=#{eVerifyLoanTime}]]>
+			</if>
+			<if test="startloanTime !=null and startloanTime !=''">
+				and <![CDATA[DATE_FORMAT(abo.loan_time,'%Y-%m-%d')>=#{startloanTime}]]>
+			</if>
+			<if test="endloanTime !=null and endloanTime !=''">
+				and <![CDATA[DATE_FORMAT(abo.loan_time,'%Y-%m-%d')<=#{endloanTime}]]>
+			</if>
+			<if test="startReviewTime !=null and startReviewTime !=''">
+				and <![CDATA[abo.verify_review_time>=#{startReviewTime}]]>
+			</if>
+			<if test="endReviewTime !=null and endReviewTime !=''">
+				and <![CDATA[abo.verify_review_time<=#{endReviewTime}]]>
+			</if>
+			<if test="reviewBackUserId!=null and reviewBackUserId!=''">
+				and abo.review_back_user_id=#{reviewBackUserId}
+			</if>
+			<if test="reviewBackUserName!=null and reviewBackUserName!=''">
+				and abo.review_back_user_name=#{reviewBackUserName}
+			</if>
+			<if test="reviewStatus!=null and reviewStatus!=''">
+				and abo.review_status=#{reviewStatus}
+			</if>
+			<if test="modelAdvice!=null and modelAdvice!=''">
+				and abo.model_advice=#{modelAdvice}
+			</if>
+			<if test="provinceId!=null and provinceId!=''">
+				and ca3.code_id = #{provinceId}
+			</if>
+			<if test="cityId!=null and cityId!=''">
+				and ca2.code_id = #{cityId}
+			</if>
+			<if test="modelCode!=null and modelCode!='' and modelCode!='all_scorecard'">
+				and rmo.model_code = #{modelCode}
+			</if>
+			<if test="variableVersion!=null and variableVersion!='' and variableVersion!='all_scorecard'">
+				and rmo.variable_version = #{variableVersion}
+			</if>
+			<if test="modelCode=='all_scorecard'">
+				and rmo.model_code  <![CDATA[<>]]> 0
+			</if>
+			<if test="reviewUser!=null and reviewUser!='' and reviewUser!='all_review' and reviewUser!='not_review'">
+				and bu.user_account = #{reviewUser}
+			</if>
+			<if test="reviewStartTime!=null and reviewStartTime!=''">
+				and abo.verify_review_time &gt;= #{reviewStartTime}
+			</if>
+			<if test="reviewEndTime!=null and reviewEndTime!=''">
+				and abo.verify_review_time &lt;= #{reviewEndTime}
+			</if>
+			<if test="reviewUser == 'all_review'">
+				and verify_review_user REGEXP '[0-9]{11,}'
+			</if>
+			<if test="reviewUser == 'not_review'">
+				and verify_review_user REGEXP '[0-9]{11,}' = 0 OR verify_review_user IS NULL
+			</if>
+		</where>
+		<if test="queryType==null">
+			order by abo.updated_at desc
+		</if>
+		<if test="queryType!=null and queryType=='reverse'">
+			order by abo.updated_at
+		</if>
+		<if test="queryType!=null and queryType=='subPay' and querylimit!=null">
+			order by abo.id asc limit 0,#{querylimit}
+		</if>
+	</sql>
+	<resultMap id="LocationStatisticMap" type="com.info.web.pojo.BorrowOrderLocationStatisticsDo">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="user_id" property="userId" jdbcType="INTEGER"/>
+		<result column="created_at" property="createdAt" jdbcType="TIMESTAMP"/>
+		<result column="verify_review_user" property="verifyReviewUser" jdbcType="VARCHAR"/>
+		<result column="user_phone" property="userPhone" jdbcType="VARCHAR"/>
+		<result column="realname" property="realname" jdbcType="VARCHAR"/>
+		<result column="status" property="status" jdbcType="INTEGER"/>
+		<result column="pay_status" property="paystatus" jdbcType="VARCHAR"/>
+		<result column="pay_status" property="paystatus" jdbcType="VARCHAR"/>
+		<result column="id_number" property="idNumber" jdbcType="VARCHAR"/>
+
+		<result column="repayment_time" property="repaymentTime" jdbcType="TIMESTAMP"/>
+		<result column="repayment_real_time" property="repaymentRealTime" jdbcType="TIMESTAMP"/>
+
+		<result column="user_sex" property="userSex" jdbcType="VARCHAR"/>
+		<result column="user_age" property="userAge" jdbcType="INTEGER"/>
+		<result column="education" property="education" jdbcType="INTEGER"/>
+		<result column="marital_status" property="maritalStatus" jdbcType="INTEGER"/>
+		<result column="present_address" property="presentAddress" jdbcType="VARCHAR"/>
+		<result column="present_address_distinct" property="presentAddressDistinct" jdbcType="VARCHAR"/>
+		<result column="present_latitude" property="presentLatitude" jdbcType="VARCHAR"/>
+		<result column="present_longitude" property="presentLongitude" jdbcType="VARCHAR"/>
+		<result column="present_period" property="presentPeriod" jdbcType="INTEGER"/>
+	</resultMap>
+
+
+	<select id="selectBorrowOrderLocationStatistics" resultMap="LocationStatisticMap">
+		select
+		a.id,
+		a.user_id,
+		a.created_at,
+		a.verify_review_user,
+		a.id_number,
+		a.user_phone,
+		a.realname,
+		a.status,
+		a.pay_status,
+
+		ar.repayment_time,
+		ar.repayment_real_time,
+
+		u.user_sex,
+		u.user_age,
+		u.education,
+		u.marital_status,
+		u.present_address,
+		u.present_address_distinct,
+		u.present_latitude,
+		u.present_longitude,
+		u.present_period
+		from
+		asset_borrow_order AS a
+		LEFT JOIN asset_repayment AS ar
+		ON a.id = ar.asset_order_id
+		LEFT JOIN user_info AS u
+		ON ar.user_id = u.id
+		WHERE
+		<if test="beginTime != null ">
+			repayment_time BETWEEN  #{beginTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP}
+		</if>
+	</select>
+
+	<select id="selectBorrowOrderLocationStatisticsAll" resultMap="LocationStatisticMap">
+		select
+		a.id,
+		a.user_id,
+		a.created_at,
+		a.verify_review_user,
+		a.id_number,
+		a.user_phone,
+		a.realname,
+		a.status,
+		a.pay_status,
+
+		ar.repayment_time,
+		ar.repayment_real_time,
+
+		u.user_sex,
+		u.user_age,
+		u.education,
+		u.marital_status,
+		u.present_address,
+		u.present_address_distinct,
+		u.present_latitude,
+		u.present_longitude,
+		u.present_period
+		from
+		asset_borrow_order AS a
+		LEFT JOIN asset_repayment AS ar
+		ON a.id = ar.asset_order_id
+		LEFT JOIN user_info AS u
+		ON ar.user_id = u.id
+		<if test="beginTime != null ">
+			WHERE a.created_at BETWEEN  #{beginTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP}
+		</if>
+	</select>
+
+
+
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+			parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from asset_borrow_order
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectByParam" resultMap="ResultMapWithBLOBs"
+			parameterType="Map">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from asset_borrow_order
+		where 1=1
+		<if test="serial_no!=''">
+			and serial_no = #{serial_no,jdbcType=VARCHAR}
+		</if>
+		<if test="yurref!=null">
+			and yurref = #{yurref,jdbcType=VARCHAR}
+		</if>
+		<if test="notPayStatus!=null and notPayStatus!=''">
+			and pay_status!=#{notPayStatus}
+		</if>
+	</select>
+	<select id="findMoneyAmountSucSum" resultType="Long"
+			parameterType="Map">
+		select
+		SUM((FLOOR(money_amount/100)) )
+		from asset_borrow_order
+		where 1=1
+		<if test="userId!=null and userId!=''">
+			and  user_id=#{userId}
+		</if>
+		<if
+				test="borrowStatusArray != '-1' and borrowStatusArray != null and borrowStatusArray != ''">
+			and status in
+			<foreach collection="borrowStatusArray" item="borrowStatusItem" open="("
+					 separator="," close=")">
+				#{borrowStatusItem}
+			</foreach>
+		</if>
+		<if test="startloanTime !=null and startloanTime !=''">
+			<![CDATA[	and DATE_FORMAT(loan_time,'%Y-%m-%d') >=  #{startloanTime}  ]]>
+		</if>
+		<if test="endloanTime !=null and endloanTime !=''">
+			<![CDATA[	and DATE_FORMAT(loan_time,'%Y-%m-%d') <=  #{endloanTime}  ]]>
+		</if>
+		<if test="capitalType!=null and capitalType!=''">
+			and  capital_type=#{capitalType}
+		</if>
+	</select>
+	<select id="findIntoMoneySucSum" resultType="Long"
+			parameterType="Map">
+		select
+		SUM((FLOOR(into_money/100)) )
+		from asset_borrow_order
+		where 1=1
+		<if
+				test="borrowStatusArray != '-1' and borrowStatusArray != null and borrowStatusArray != ''">
+			and status in
+			<foreach collection="borrowStatusArray" item="borrowStatusItem" open="("
+					 separator="," close=")">
+				#{borrowStatusItem}
+			</foreach>
+		</if>
+		<if test="startloanTime !=null and startloanTime !=''">
+			<![CDATA[	and DATE_FORMAT(loan_time,'%Y-%m-%d') >=  #{startloanTime}  ]]>
+		</if>
+		<if test="endloanTime !=null and endloanTime !=''">
+			<![CDATA[	and DATE_FORMAT(loan_time,'%Y-%m-%d') <=  #{endloanTime}  ]]>
+		</if>
+		<if test="capitalType!=null and capitalType!=''">
+			and  capital_type=#{capitalType}
+		</if>
+	</select>
+
+
+
+	<select id="selectBorrowByParams" resultType="BorrowOrder"
+			parameterType="Map">
+		select
+		<include refid="Base_Column_List" />
+
+		from asset_borrow_order
+		<where>
+			<if test="id != null and id !=''">
+				and id = #{id}
+			</if>
+
+
+		</where>
+	</select>
+	<select id="selectBorrowOrderUseId" resultType="BorrowOrder"
+			parameterType="java.lang.Integer">
+		select
+		bo.id as id,
+		bo.out_trade_no outTradeNo,
+		bo.apr apr,
+		bo.loan_interests loanInterests,
+		bo.created_at createdAt,
+		bo.order_time
+		orderTime,
+		bo.loan_time loanTime,
+		bo.loan_time loanTime,
+		bo.loan_end_time loanEndTime
+		from asset_borrow_order bo
+		where user_id =
+		#{id,jdbcType=INTEGER} AND status >20 order by loan_time DESC LIMIT 1
+	</select>
+	<select id="findParamsCount" resultType="int" parameterType="Map">
+		select
+		count(1)
+		from asset_borrow_order abo
+		<if test="(provinceId!=null and provinceId!='') or (cityId!=null and cityId!='')">
+			LEFT JOIN china_area ca1 ON ca1.code_id = SUBSTRING(abo.id_number,1,6)
+			LEFT JOIN china_area ca2 ON ca2.code_id = SUBSTRING(abo.id_number,1,4)
+			LEFT JOIN china_area ca3 ON ca3.code_id = SUBSTRING(abo.id_number,1,2)
+		</if>
+		<if test="modelCode!=null and modelCode!=''">
+			LEFT JOIN risk_model_order rmo ON abo.id = rmo.borrow_order_id
+		</if>
+		<if test="reviewUser!=null and reviewUser!='' ">
+			LEFT JOIN back_user bu ON bu.user_account = abo.verify_review_user
+		</if>
+		<include refid="selectSql" />
+	</select>
+
+	<sql id="Find_column_List">
+		abo.id, abo.user_id,abo.review_back_user_name, abo.out_trade_no, abo.order_type, abo.money_amount, abo.apr,
+		abo.loan_interests,
+		abo.into_money,
+		abo.loan_method, abo.loan_term, abo.operator_name,
+		abo.created_at, abo.updated_at, abo.order_time,
+		abo.loan_time,
+		abo.loan_end_time,
+		abo.late_fee_apr, abo.receive_card_id, abo.debit_card_id, abo.capital_type,
+		abo.reason_remark,
+		abo.credit_lv, abo.is_hit_risk_rule, abo.auto_risk_check_status,
+		abo.status,
+		abo.verify_trial_user,verify_trial_time,verify_trial_remark,
+		abo.verify_review_user,verify_review_time,verify_review_remark,
+		abo.verify_loan_user,abo.verify_loan_time,abo.verify_loan_remark,abo.pay_status,abo.pay_remark,abo.bank_iscmb,abo.user_phone,abo.realname,abo.card_no,abo.bank_number,abo.yurref,abo.customer_type,abo.id_number,abo.serial_no,
+		abo.client_type,abo.auto_loan_flag,
+		abo.review_back_user_id,
+		bu.user_name as re_back_user_name,
+		abo.review_status,
+		REPLACE(CONCAT(ca3.city_name,IFNULL(ca2.city_name,''),IFNULL(ca1.city_name,'')),' ','') AS area
+	</sql>
+
+	<select id="findParams" resultMap="BaseResultMap" parameterType="Map">
+		select
+		<include refid="Find_column_List" />
+		from asset_borrow_order abo
+		LEFT JOIN china_area ca1 ON ca1.code_id = SUBSTRING(abo.id_number,1,6)
+		LEFT JOIN china_area ca2 ON ca2.code_id = SUBSTRING(abo.id_number,1,4)
+		LEFT JOIN china_area ca3 ON ca3.code_id = SUBSTRING(abo.id_number,1,2)
+		LEFT JOIN risk_model_order rmo ON abo.id = rmo.borrow_order_id
+		LEFT JOIN back_user bu ON bu.user_account = abo.verify_review_user
+		<include refid="selectSql" />
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		asset_borrow_order
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="BorrowOrder">
+		insert into asset_borrow_order
+		(id, user_id, out_trade_no,
+		order_type, money_amount, apr,
+		loan_interests, into_money, loan_method,
+		loan_term, operator_name,
+		created_at,
+		updated_at, order_time, loan_time,
+		loan_end_time,
+		late_fee_apr, receive_card_id,
+		debit_card_id, capital_type,
+		reason_remark,
+		credit_lv, is_hit_risk_rule, auto_risk_check_status,
+		status, remark)
+		values (#{id,jdbcType=INTEGER},
+		#{userId,jdbcType=INTEGER},
+		#{outTradeNo,jdbcType=VARCHAR},
+		#{orderType,jdbcType=INTEGER}, #{moneyAmount,jdbcType=INTEGER},
+		#{apr,jdbcType=INTEGER},
+		#{loanInterests,jdbcType=INTEGER},
+		#{intoMoney,jdbcType=INTEGER},
+		#{loanMethod,jdbcType=INTEGER},
+		#{loanTerm,jdbcType=INTEGER}, #{operatorName,jdbcType=VARCHAR},
+		#{createdAt,jdbcType=TIMESTAMP},
+		#{updatedAt,jdbcType=TIMESTAMP},
+		#{orderTime,jdbcType=TIMESTAMP},
+		#{loanTime,jdbcType=TIMESTAMP},
+		#{loanEndTime,jdbcType=TIMESTAMP}, #{lateFeeApr,jdbcType=INTEGER},
+		#{receiveCardId,jdbcType=INTEGER},
+		#{debitCardId,jdbcType=INTEGER},
+		#{capitalType,jdbcType=INTEGER},
+		#{reasonRemark,jdbcType=VARCHAR},
+		#{creditLv,jdbcType=INTEGER}, #{isHitRiskRule,jdbcType=TINYINT},
+		#{autoRiskCheckStatus,jdbcType=TINYINT},
+		#{status,jdbcType=INTEGER},
+		#{remark,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="BorrowOrder"
+			useGeneratedKeys="true" keyProperty="id">
+		insert into asset_borrow_order
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="outTradeNo != null">
+				out_trade_no,
+			</if>
+			<if test="orderType != null">
+				order_type,
+			</if>
+			<if test="moneyAmount != null">
+				money_amount,
+			</if>
+			<if test="apr != null">
+				apr,
+			</if>
+			<if test="loanInterests != null">
+				loan_interests,
+			</if>
+			<if test="intoMoney != null">
+				into_money,
+			</if>
+			<if test="loanMethod != null">
+				loan_method,
+			</if>
+			<if test="loanTerm != null">
+				loan_term,
+			</if>
+			<if test="operatorName != null">
+				operator_name,
+			</if>
+			<if test="createdAt != null">
+				created_at,
+			</if>
+			<if test="updatedAt != null">
+				updated_at,
+			</if>
+			<if test="orderTime != null">
+				order_time,
+			</if>
+			<if test="loanTime != null">
+				loan_time,
+			</if>
+			<if test="loanEndTime != null">
+				loan_end_time,
+			</if>
+			<if test="lateFeeApr != null">
+				late_fee_apr,
+			</if>
+			<if test="receiveCardId != null">
+				receive_card_id,
+			</if>
+			<if test="debitCardId != null">
+				debit_card_id,
+			</if>
+			<if test="capitalType != null">
+				capital_type,
+			</if>
+			<if test="reasonRemark != null">
+				reason_remark,
+			</if>
+			<if test="creditLv != null">
+				credit_lv,
+			</if>
+			<if test="isHitRiskRule != null">
+				is_hit_risk_rule,
+			</if>
+			<if test="autoRiskCheckStatus != null">
+				auto_risk_check_status,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="bankIscmb != null">
+				bank_iscmb,
+			</if>
+			<if test="userPhone != null">
+				user_phone,
+			</if>
+			<if test="realname != null">
+				realname,
+			</if>
+			<if test="cardNo != null">
+				card_no,
+			</if>
+			<if test="bankNumber != null">
+				bank_number,
+			</if>
+			<if test="paystatus != null">
+				pay_status,
+			</if>
+			<if test="payRemark != null">
+				pay_remark,
+			</if>
+			<if test="yurref != null">
+				yurref,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="outTradeNo != null">
+				#{outTradeNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderType != null">
+				#{orderType,jdbcType=INTEGER},
+			</if>
+			<if test="moneyAmount != null">
+				#{moneyAmount,jdbcType=INTEGER},
+			</if>
+			<if test="apr != null">
+				#{apr,jdbcType=INTEGER},
+			</if>
+			<if test="loanInterests != null">
+				#{loanInterests,jdbcType=INTEGER},
+			</if>
+			<if test="intoMoney != null">
+				#{intoMoney,jdbcType=INTEGER},
+			</if>
+			<if test="loanMethod != null">
+				#{loanMethod,jdbcType=INTEGER},
+			</if>
+			<if test="loanTerm != null">
+				#{loanTerm,jdbcType=INTEGER},
+			</if>
+			<if test="operatorName != null">
+				#{operatorName,jdbcType=VARCHAR},
+			</if>
+			<if test="createdAt != null">
+				#{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedAt != null">
+				#{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orderTime != null">
+				#{orderTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="loanTime != null">
+				#{loanTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="loanEndTime != null">
+				#{loanEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lateFeeApr != null">
+				#{lateFeeApr,jdbcType=INTEGER},
+			</if>
+			<if test="receiveCardId != null">
+				#{receiveCardId,jdbcType=INTEGER},
+			</if>
+			<if test="debitCardId != null">
+				#{debitCardId,jdbcType=INTEGER},
+			</if>
+			<if test="capitalType != null">
+				#{capitalType,jdbcType=INTEGER},
+			</if>
+			<if test="reasonRemark != null">
+				#{reasonRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="creditLv != null">
+				#{creditLv,jdbcType=INTEGER},
+			</if>
+			<if test="isHitRiskRule != null">
+				#{isHitRiskRule,jdbcType=TINYINT},
+			</if>
+			<if test="autoRiskCheckStatus != null">
+				#{autoRiskCheckStatus,jdbcType=TINYINT},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="bankIscmb != null">
+				#{bankIscmb,jdbcType=INTEGER},
+			</if>
+			<if test="userPhone != null">
+				#{userPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="realname != null">
+				#{realname,jdbcType=VARCHAR},
+			</if>
+			<if test="cardNo != null">
+				#{cardNo,jdbcType=VARCHAR},
+			</if>
+			<if test="bankNumber != null">
+				#{bankNumber,jdbcType=VARCHAR},
+			</if>
+
+			<if test="paystatus != null">
+
+				#{paystatus,jdbcType=VARCHAR},
+			</if>
+			<if test="payRemark != null">
+				#{payRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="yurref != null">
+				#{yurref,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="BorrowOrder">
+		update asset_borrow_order
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="outTradeNo != null">
+				out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderType != null">
+				order_type = #{orderType,jdbcType=INTEGER},
+			</if>
+			<if test="moneyAmount != null">
+				money_amount = #{moneyAmount,jdbcType=INTEGER},
+			</if>
+			<if test="apr != null">
+				apr = #{apr,jdbcType=INTEGER},
+			</if>
+			<if test="loanInterests != null">
+				loan_interests = #{loanInterests,jdbcType=INTEGER},
+			</if>
+			<if test="intoMoney != null">
+				into_money = #{intoMoney,jdbcType=INTEGER},
+			</if>
+			<if test="loanMethod != null">
+				loan_method = #{loanMethod,jdbcType=INTEGER},
+			</if>
+			<if test="loanTerm != null">
+				loan_term = #{loanTerm,jdbcType=INTEGER},
+			</if>
+			<if test="operatorName != null">
+				operator_name = #{operatorName,jdbcType=VARCHAR},
+			</if>
+			<if test="createdAt != null">
+				created_at = #{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orderTime != null">
+				order_time = #{orderTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="loanTime != null">
+				loan_time = #{loanTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="loanEndTime != null">
+				loan_end_time = #{loanEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lateFeeApr != null">
+				late_fee_apr = #{lateFeeApr,jdbcType=INTEGER},
+			</if>
+			<if test="receiveCardId != null">
+				receive_card_id = #{receiveCardId,jdbcType=INTEGER},
+			</if>
+			<if test="debitCardId != null">
+				debit_card_id = #{debitCardId,jdbcType=INTEGER},
+			</if>
+			<if test="capitalType != null">
+				capital_type = #{capitalType,jdbcType=INTEGER},
+			</if>
+			<if test="reasonRemark != null">
+				reason_remark = #{reasonRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="creditLv != null">
+				credit_lv = #{creditLv,jdbcType=INTEGER},
+			</if>
+			<if test="isHitRiskRule != null">
+				is_hit_risk_rule = #{isHitRiskRule,jdbcType=TINYINT},
+			</if>
+			<if test="autoRiskCheckStatus != null">
+				auto_risk_check_status =
+				#{autoRiskCheckStatus,jdbcType=TINYINT},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=LONGVARCHAR},
+			</if>
+
+			<if test="verifyTrialUser != null">
+				verify_trial_user = #{verifyTrialUser,jdbcType=VARCHAR},
+			</if>
+			<if test="verifyTrialTime != null">
+				verify_trial_time =
+				#{verifyTrialTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="verifyTrialRemark != null">
+				verify_trial_remark =
+				#{verifyTrialRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="verifyReviewUser != null">
+				verify_review_user =
+				#{verifyReviewUser,jdbcType=VARCHAR},
+			</if>
+			<if test="verifyReviewTime != null">
+				verify_review_time =
+				#{verifyReviewTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="verifyReviewRemark != null">
+				verify_review_remark =
+				#{verifyReviewRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="verifyLoanUser != null">
+				verify_loan_user = #{verifyLoanUser,jdbcType=VARCHAR},
+			</if>
+			<if test="verifyLoanTime != null">
+				verify_loan_time = #{verifyLoanTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="verifyLoanRemark != null">
+				verify_loan_remark =
+				#{verifyLoanRemark,jdbcType=VARCHAR},
+			</if>
+
+			<if test="paystatus != null">
+				pay_status = #{paystatus,jdbcType=VARCHAR},
+
+			</if>
+			<if test="yurref != null">
+				yurref = #{yurref,jdbcType=VARCHAR},
+			</if>
+
+			<if test="serialNo != null">
+				serial_no = #{serialNo,jdbcType=VARCHAR},
+			</if>
+			<if test="payRemark != null">
+				pay_remark = #{payRemark,jdbcType=VARCHAR},
+
+			</if>
+			<if test="reviewBackUserId!=null">
+				review_back_user_id=#{reviewBackUserId,jdbcType=INTEGER},
+			</if>
+			<if test="reviewBackUserName!=null">
+				review_back_user_name=#{reviewBackUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="reviewStatus!=null">
+				review_status=#{reviewStatus,jdbcType=INTEGER},
+			</if>
+			<if test="distributeTime!=null">
+				distribute_time=#{distributeTime,jdbcType=TIMESTAMP},
+			</if>
+			updated_at = now()
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="BorrowOrder">
+		update
+		asset_borrow_order
+		set user_id = #{userId,jdbcType=INTEGER},
+		out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+		order_type =
+		#{orderType,jdbcType=INTEGER},
+		money_amount =
+		#{moneyAmount,jdbcType=INTEGER},
+		apr = #{apr,jdbcType=INTEGER},
+		loan_interests = #{loanInterests,jdbcType=INTEGER},
+		into_money =
+		#{intoMoney,jdbcType=INTEGER},
+		loan_method =
+		#{loanMethod,jdbcType=INTEGER},
+		loan_term =
+		#{loanTerm,jdbcType=INTEGER},
+		operator_name =
+		#{operatorName,jdbcType=VARCHAR},
+		created_at =
+		#{createdAt,jdbcType=TIMESTAMP},
+		updated_at =now(),
+		order_time =
+		#{orderTime,jdbcType=TIMESTAMP},
+		loan_time =
+		#{loanTime,jdbcType=TIMESTAMP},
+		loan_end_time =
+		#{loanEndTime,jdbcType=TIMESTAMP},
+		late_fee_apr =
+		#{lateFeeApr,jdbcType=INTEGER},
+		receive_card_id =
+		#{receiveCardId,jdbcType=INTEGER},
+		debit_card_id =
+		#{debitCardId,jdbcType=INTEGER},
+		capital_type =
+		#{capitalType,jdbcType=INTEGER},
+		reason_remark =
+		#{reasonRemark,jdbcType=VARCHAR},
+		credit_lv =
+		#{creditLv,jdbcType=INTEGER},
+		is_hit_risk_rule =
+		#{isHitRiskRule,jdbcType=TINYINT},
+		auto_risk_check_status =
+		#{autoRiskCheckStatus,jdbcType=TINYINT},
+		status =
+		#{status,jdbcType=INTEGER},
+		remark = #{remark,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="BorrowOrder">
+		update
+		asset_borrow_order
+		set user_id = #{userId,jdbcType=INTEGER},
+		out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+		order_type =
+		#{orderType,jdbcType=INTEGER},
+		money_amount =
+		#{moneyAmount,jdbcType=INTEGER},
+		apr = #{apr,jdbcType=INTEGER},
+		loan_interests = #{loanInterests,jdbcType=INTEGER},
+		into_money =
+		#{intoMoney,jdbcType=INTEGER},
+		loan_method =
+		#{loanMethod,jdbcType=INTEGER},
+		loan_term =
+		#{loanTerm,jdbcType=INTEGER},
+		operator_name =
+		#{operatorName,jdbcType=VARCHAR},
+		created_at =
+		#{createdAt,jdbcType=TIMESTAMP},
+		updated_at =now(),
+		order_time =
+		#{orderTime,jdbcType=TIMESTAMP},
+		loan_time =
+		#{loanTime,jdbcType=TIMESTAMP},
+		loan_end_time =
+		#{loanEndTime,jdbcType=TIMESTAMP},
+		late_fee_apr =
+		#{lateFeeApr,jdbcType=INTEGER},
+		receive_card_id =
+		#{receiveCardId,jdbcType=INTEGER},
+		debit_card_id =
+		#{debitCardId,jdbcType=INTEGER},
+		capital_type =
+		#{capitalType,jdbcType=INTEGER},
+		reason_remark =
+		#{reasonRemark,jdbcType=VARCHAR},
+		credit_lv =
+		#{creditLv,jdbcType=INTEGER},
+		is_hit_risk_rule =
+		#{isHitRiskRule,jdbcType=TINYINT},
+		auto_risk_check_status =
+		#{autoRiskCheckStatus,jdbcType=TINYINT},
+		status =
+		#{status,jdbcType=INTEGER}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateRiskCreditUserById" parameterType="HashMap">
+		update
+		risk_credit_user set risk_status=#{riskStatus,jdbcType=INTEGER}
+		where
+		asset_id=#{assetId,jdbcType=INTEGER}
+
+	</update>
+	<insert id="insertRiskUser" parameterType="HashMap">
+		insert into risk_credit_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="assetId != null">
+				asset_id,
+			</if>
+			<if test="userName != null">
+				user_name,
+			</if>
+			<if test="cardNum != null">
+				card_num,
+			</if>
+			<if test="userPhone != null">
+				user_phone,
+			</if>
+			<if test="age != null">
+				age,
+			</if>
+			<if test="sex != null">
+				sex,
+			</if>
+			<if test="moneyAmount != null">
+				money_amount,
+			</if>
+			<if test="amountAddsum != null">
+				amount_addsum,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="assetId != null">
+				#{assetId,jdbcType=INTEGER},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="cardNum != null">
+				#{cardNum,jdbcType=VARCHAR},
+			</if>
+			<if test="userPhone != null">
+				#{userPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="age != null">
+				#{age,jdbcType=INTEGER},
+			</if>
+			<if test="sex != null">
+				#{sex,jdbcType=INTEGER},
+			</if>
+			<if test="moneyAmount != null">
+				#{moneyAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="amountAddsum != null">
+				#{amountAddsum,jdbcType=DECIMAL},
+			</if>
+
+		</trim>
+	</insert>
+	<select id="findByUserId" parameterType="Integer" resultMap="ResultMapWithBLOBs">
+		select * from asset_borrow_order where user_id=#{userId}
+	</select>
+	<!-- three_loan_order -->
+	<sql id="Base_Column_List_TLO">
+		id, user_id, out_trade_no, order_type, into_money,
+		created_at,
+		order_time, updated_at,
+		loan_time, customer_type, yurref,
+		id_number, serial_no, user_phone, realname,
+		card_no,
+		bank_number,
+		bank_iscmb, status, pay_remark, pay_status
+	</sql>
+	<sql id="selectSqlThreeLoanOrder">
+		from three_loan_order abo
+		<where>
+			<if test="statusList!=null">
+				and abo.status in
+				<foreach collection="statusList" item="item" open="("
+						 separator="," close=")">
+					#{item}
+				</foreach>
+
+			</if>
+
+			<if test="ids!=null">
+				and abo.id in (${ids})
+			</if>
+			<if
+					test="borrowStatusArray != '-1' and borrowStatusArray != null and borrowStatusArray != ''">
+				and abo.status in (${borrowStatusArray})
+			</if>
+			<if test="borrowStatus!=null and borrowStatus!=''">
+				and abo.status=#{borrowStatus}
+			</if>
+			<if test="bankIscmb!=null and bankIscmb!=0">
+				and abo.bank_iscmb=#{bankIscmb}
+			</if>
+			<if test="loanTerm!=null and loanTerm!=0">
+				and abo.loan_term=#{loanTerm}
+			</if>
+			<if test="payStatus!=null and payStatus!=''">
+				and abo.pay_status=#{payStatus}
+			</if>
+			<if test="outTradeNo!=null and outTradeNo!=''">
+				and abo.out_trade_no like CONCAT('%',#{outTradeNo},'%')
+			</if>
+			<if test="yurref!=null and yurref!=''">
+				and abo.yurref like CONCAT('%',#{yurref},'%')
+			</if>
+			<if test="userPhone!=null and userPhone!=''">
+				and abo.user_phone like CONCAT('%', #{userPhone}, '%')
+			</if>
+			<if test="userId!=null and userId!=''">
+				and abo.user_id=#{userId}
+			</if>
+			<if test="realname!=null and realname!=''">
+				and abo.realname like CONCAT('%',#{realname},'%')
+			</if>
+			<if test="startloanTime !=null and startloanTime !=''">
+				and <![CDATA[DATE_FORMAT(abo.loan_time,'%Y-%m-%d')>=#{startloanTime}]]>
+			</if>
+			<if test="endloanTime !=null and endloanTime !=''">
+				and <![CDATA[DATE_FORMAT(abo.loan_time,'%Y-%m-%d')<=#{endloanTime}]]>
+			</if>
+		</where>
+		<if test="queryType==null">
+			order by abo.updated_at desc
+		</if>
+		<if test="queryType!=null and queryType=='subPay' and querylimit!=null">
+			order by abo.id asc limit 0,#{querylimit}
+		</if>
+	</sql>
+
+	<select id="findParamsTLO" resultMap="BaseResultMap"
+			parameterType="Map">
+		select
+		<include refid="Base_Column_List_TLO" />
+		from three_loan_order abo
+		where
+		abo.status=#{borrowStatus}
+		and abo.pay_status=#{payStatus}
+		and abo.bank_iscmb=#{bankIscmb}
+
+		order by abo.id asc limit 0,#{querylimit}
+
+	</select>
+
+	<select id="selectByParamTLO" resultMap="ResultMapWithBLOBs"
+			parameterType="Map">
+		select
+		<include refid="Base_Column_List_TLO" />
+		from three_loan_order
+		where
+		yurref = #{yurref,jdbcType=VARCHAR}
+		<if test="notPayStatus!=null and notPayStatus!=''">
+			and pay_status!=#{notPayStatus}
+		</if>
+	</select>
+
+	<update id="updateByPrimaryKeySelectiveTLO" parameterType="BorrowOrder">
+		update three_loan_order
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="outTradeNo != null">
+				out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderType != null">
+				order_type = #{orderType,jdbcType=INTEGER},
+			</if>
+			<if test="intoMoney != null">
+				into_money = #{intoMoney,jdbcType=INTEGER},
+			</if>
+			<if test="createdAt != null">
+				created_at = #{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orderTime != null">
+				order_time = #{orderTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="loanTime != null">
+				loan_time = #{loanTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="customerType != null">
+				customer_type = #{customerType,jdbcType=INTEGER},
+			</if>
+			<if test="yurref != null">
+				yurref = #{yurref,jdbcType=VARCHAR},
+			</if>
+			<if test="idNumber != null">
+				id_number = #{idNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="serialNo != null">
+				serial_no = #{serialNo,jdbcType=VARCHAR},
+			</if>
+			<if test="userPhone != null">
+				user_phone = #{userPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="realname != null">
+				realname = #{realname,jdbcType=VARCHAR},
+			</if>
+			<if test="cardNo != null">
+				card_no = #{cardNo,jdbcType=VARCHAR},
+			</if>
+			<if test="bankNumber != null">
+				bank_number = #{bankNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="bankIscmb != null">
+				bank_iscmb = #{bankIscmb,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="payRemark != null">
+				pay_remark = #{payRemark,jdbcType=VARCHAR},
+			</if>
+
+			<if test="paystatus != null">
+				pay_status = #{paystatus,jdbcType=VARCHAR},
+
+			</if>
+
+			<if test="remark != null">
+				remark = #{remark,jdbcType=LONGVARCHAR},
+			</if>
+			updated_at = now()
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+
+	<insert id="batchInsertBCI" parameterType="java.util.List">
+		insert into borrow_contract_info (asset_order_id, id_number, realname,money_amount,capital_type,capital_name)
+		VALUES
+		<foreach collection="boNewList" item="bci"  open="" close="" separator=",">
+			(#{bci.id},#{bci.idNumber},#{bci.realname},#{bci.moneyAmount},#{bci.capitalType},#{bci.operatorName})
+		</foreach>
+	</insert>
+	<select id="findAssetBorrowOrderForZhimaFeedback" resultType="BorrowOrder" parameterType="HashMap">
+		<![CDATA[
+		SELECT
+		id,
+		user_id AS userId,
+		out_trade_no AS outTradeNo,
+		order_type AS orderType,
+		money_amount AS moneyAmount,
+		apr,
+		loan_interests AS loanInterests,
+		into_money AS intoMoney,
+		loan_method AS loanMethod,
+		loan_term AS loanTerm ,
+		operator_name AS operatorName ,
+		created_at AS createdAt,
+		updated_at AS updatedAt,
+		order_time AS orderTime,
+		loan_time AS loanTime,
+		loan_end_time AS loanEndTime,
+		STATUS
+		FROM asset_borrow_order
+		WHERE  DATE_FORMAT(updated_at,'%Y%m%d')=#{yestoday} ORDER BY id DESC
+		LIMIT 10000
+		]]>
+	</select>
+	<select id="searchBorrowOrderDeviceByParams" resultMap="BaseResultDeviceMap" parameterType="HashMap">
+		SELECT *
+		FROM asset_borrow_order_device
+		WHERE 1 = 1
+		<if test="id != null and id !=''">
+			and id = #{id,jdbcType=INTEGER}
+		</if>
+		<if test="userId != null and userId !=''">
+			and user_id = #{userId,jdbcType=INTEGER}
+		</if>
+		<if test="assetBorrowOrderId != null and assetBorrowOrderId !=''">
+			and asset_borrow_order_id = #{assetBorrowOrderId,jdbcType=INTEGER}
+		</if>
+		ORDER BY id DESC
+		LIMIT 1
+	</select>
+
+	<update id="updateAssetBorrowOrderDevice" parameterType="HashMap">
+		update asset_borrow_order_device
+		<set>
+			<if test="requestParams != null">
+				request_params = #{requestParams,jdbcType=VARCHAR},
+			</if>
+			<if test="returnParams != null">
+				return_params = #{returnParams,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<sql id="findWaitCajlSql">
+		from asset_borrow_order_device where status = 1
+	</sql>
+	<select id="countAssetBorrowOrderDevice" resultType="int">
+		select count(1)   <include refid="findWaitCajlSql"/>
+	</select>
+	<!--	等待分析的列表-->
+	<select id="findWaitCajlAnalysis" resultType="HashMap" parameterType="HashMap">
+		select
+		id as id,
+		user_id as userId,
+		asset_borrow_order_id as assetBorrowOrderId,
+		status as status,
+		remark as remark,
+		request_params as requestParams,
+		return_params as returnParams,
+		device_content as deviceContent
+		<include refid="findWaitCajlSql"/>
+	</select>
+	<select id="selectTdFqzByUserIdAndAssetBorrowId" resultMap="BaseResultTdDeviceMap" parameterType="HashMap">
+		select * from asset_borrow_order_td_device
+		where
+		user_id = #{userId,jdbcType=INTEGER} and asset_borrow_order_id = #{assetBorrowOrderId,jdbcType=INTEGER}
+	</select>
+
+	<update id="updateTdDeviceFqzData" parameterType="HashMap">
+		update asset_borrow_order_td_device
+		<set>
+			<if test="requestParams != null">
+				request_params = #{requestParams,jdbcType=VARCHAR},
+			</if>
+			<if test="returnParams != null">
+				return_params = #{returnParams,jdbcType=VARCHAR},
+			</if>
+			<if test="fqzContent != null">
+				fqz_content = #{fqzContent,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="remark != null">
+			remark = #{remark,jdbcType=VARCHAR},
+		</if>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<select id="findOrderLeftMony" resultType="Long">
+		SELECT sum(repayment_amount-repaymented_amount) from asset_repayment where asset_order_id in (SELECT id from asset_borrow_order where status=#{statusBfhk})
+	</select>
+	<select id="findBorrowCount" resultType="int" parameterType="java.lang.String">
+		select
+		count(1)
+		from asset_borrow_order where user_id=#{userId}
+		<if
+				test="borrowStatusArray != '-1' and borrowStatusArray != null and borrowStatusArray != ''">
+			and status in
+			<foreach collection="borrowStatusArray" item="borrowStatusArray" open="("
+					 separator="," close=")">
+				#{borrowStatusArray}
+			</foreach>
+		</if>
+	</select>
+	<select id="selectBorrowOrderByIdNumber" parameterType="HashMap" resultMap="BaseResultMap">
+		select * from  asset_borrow_order where id_number = #{idNumber,jdbcType=VARCHAR}
+	</select>
+	<select id="findByReviewWay" parameterType="HashMap" resultType="com.info.web.pojo.BorrowOrder">
+		select status from asset_borrow_order
+		<where>
+			<if test="modelCode != null and modelCode != '' ">
+				and  model_code = #{modelCode,jdbcType=VARCHAR}
+			</if>
+			<if test="variableVersion != null and variableVersion != '' ">
+				and  variable_version = #{variableVersion,jdbcType=INTEGER}
+			</if>
+			<if test="userId != null and userId != '' ">
+				and  user_id = #{userId,jdbcType=INTEGER}
+			</if>
+			<if test="verifyReviewUser != null and verifyReviewUser != '' ">
+				and verify_review_user = #{verifyReviewUser,jdbcType=VARCHAR}
+			</if>
+			<if test="sdate != null">
+				<![CDATA[    and verify_review_time >= #{sdate}   ]]>
+			</if>
+			<if test="edate != null">
+				<![CDATA[    and verify_review_time <= #{edate}   ]]>
+			</if>
+		</where>
+	</select>
+	<select id="findByReviewUser" parameterType="HashMap" resultMap="StatisticResultMap">
+		select
+		<include refid="Statistic_Column_List"/>
+		from asset_borrow_order abo INNER JOIN user_info ui ON abo.user_id = ui.id and ui.customer_type is NOT NULL
+		where abo.verify_review_user IS NOT NULL
+		<if test="sdate != null">
+			<![CDATA[    and abo.verify_review_time >= #{sdate}   ]]>
+		</if>
+		<if test="edate != null">
+			<![CDATA[    and abo.verify_review_time <= #{edate}   ]]>
+		</if>
+		<if test="customerType == 1">
+			and ui.customer_type = 1
+		</if>
+		<if test="customerType == 2">
+			and ui.customer_type = 0
+		</if>
+		AND abo.verify_review_user REGEXP '[u0391-uFFE5]'
+	</select>
+	<select id="selectBorrowOrderByTime" resultMap="BaseResultMap" parameterType="HashMap">
+		SELECT  <include refid="Base_Column_List" /> FROM  asset_borrow_order where 1=1
+		<if test="beginTime != null ">
+			and created_at BETWEEN  #{beginTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="verifyReviewUser != null and verifyReviewUser != '' ">
+			and  verify_review_user = #{verifyReviewUser,jdbcType=VARCHAR}
+		</if>
+	</select>
+	<select id="selectBorrowOrderByUserIdForLast" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select <include refid="Base_Column_List_ABO" /> from asset_borrow_order abo,user_info ui
+		where ui.id = abo.user_id
+		and ui.id = #{userId}
+		order by abo.id desc limit 0,1
+	</select>
+	<sql id="Base_Column_List_ABO">
+		abo.id,
+		abo.user_id,
+		abo.out_trade_no,
+		abo.order_type,
+		abo.money_amount,
+		abo.apr,
+		abo.loan_interests,
+		abo.into_money,
+		abo.loan_method,
+		abo.loan_term,
+		abo.operator_name,
+		abo.created_at,
+		abo.updated_at,
+		abo.order_time,
+		abo.loan_time,
+		abo.loan_end_time,
+		abo.late_fee_apr,
+		abo.receive_card_id,
+		abo.debit_card_id,
+		abo.capital_type,
+		abo.reason_remark,
+		abo.credit_lv,
+		abo.is_hit_risk_rule,
+		abo.auto_risk_check_status,
+		abo.STATUS,
+		abo.verify_trial_user,
+		abo.verify_trial_time,
+		abo.verify_trial_remark,
+		abo.verify_review_user,
+		abo.verify_review_time,
+		abo.verify_review_remark,
+		abo.verify_loan_user,
+		abo.verify_loan_time,
+		abo.verify_loan_remark,
+		abo.pay_status,
+		abo.pay_remark,
+		abo.bank_iscmb,
+		abo.user_phone,
+		abo.realname,
+		abo.card_no,
+		abo.bank_number,
+		abo.yurref,
+		abo.customer_type,
+		abo.id_number,
+		abo.serial_no,
+		abo.client_type,
+		abo.auto_loan_flag
+	</sql>
+	<update id="updateBatch" parameterType="java.util.Map">
+		<foreach collection="list" item="borrowOrder" separator=";">
+			update asset_borrow_order
+			set
+			review_back_user_id=#{borrowOrder.reviewBackUserId,jdbcType=INTEGER},
+			review_back_user_name=#{borrowOrder.reviewBackUserName,jdbcType=VARCHAR},
+			review_status=#{borrowOrder.reviewStatus,jdbcType=INTEGER},
+			distribute_time=#{borrowOrder.distributeTime,jdbcType=TIMESTAMP},
+			updated_at = now()
+			where id = #{borrowOrder.id,jdbcType=INTEGER}
+		</foreach>
+	</update>
+
+	<select id="selectDelayNoLoanCunt" resultType="java.lang.Integer" parameterType="java.util.Map">
+		SELECT count(1) FROM  asset_borrow_order
+		WHERE TIMESTAMPDIFF(minute,updated_at,NOW()) &gt; #{minutes,jdbcType=INTEGER} AND status = #{status,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectDelayAutoReviewCunt" resultType="java.lang.Integer" parameterType="java.util.Map">
+		SELECT count(1) FROM  asset_borrow_order
+		WHERE TIMESTAMPDIFF(minute,order_time,NOW()) &gt; #{minutes,jdbcType=INTEGER}
+		AND status = #{status,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectLoanFailedCunt" resultType="java.lang.Integer" parameterType="java.util.Map">
+		SELECT count(1) FROM asset_borrow_order
+		WHERE status = #{status,jdbcType=INTEGER}
+	</select>
+	<!--查询审核人员姓名与手机号码，根据借款表的后台用户手机号码-->
+	<select id="selectReviewUserNames" resultType="java.util.Map">
+		SELECT user_account as telephone,user_name as userName FROM back_user WHERE user_account IN (SELECT DISTINCT verify_review_user FROM `asset_borrow_order` WHERE verify_review_user REGEXP '[0-9]{11,}')
+	</select>
+	<select id="getBorrowOrderIdByUserId" resultType="String" parameterType="Integer">
+		select id from asset_borrow_order where user_id=#{userId} order by id desc limit 0,1
+
+	</select>
+
+	<select id="getUserIdList" resultType="String">
+		select user_id from asset_borrow_order where status = 667 and created_at between DATE_SUB(NOW(),INTERVAL  3 HOUR) and DATE_SUB(NOW(),INTERVAL  2 HOUR)
+	</select>
+    <select id="getUserIdList2" resultType="String">
+		select user_id from asset_borrow_order where status = 667 and created_at between DATE_SUB(NOW(),INTERVAL  5 HOUR) and DATE_SUB(NOW(),INTERVAL  4 HOUR)
+	</select>
+
+</mapper>

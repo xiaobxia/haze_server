@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.statistic.dao.IOverdueDao" >
+  <resultMap id="StatisticMap" type="com.info.web.pojo.statistics.Overdue" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="point_date" property="pointDate" jdbcType="TIMESTAMP" />
+    <result column="overdue_rate" property="overdueRate" jdbcType="DOUBLE" />
+    <result column="dirtyuser_rate_m1" property="dirtyUserRateM1" jdbcType="DOUBLE" />
+    <result column="dirty_rate_15" property="dirtyRate15" jdbcType="DOUBLE" />
+    <result column="pass_rate" property="passRate" jdbcType="DOUBLE" />
+    <result column="review_way" property="reviewWay" jdbcType="VARCHAR" />
+    <result column="borrow_num" property="borrowNum" jdbcType="INTEGER" />
+      <result column="channel_name" property="channelName" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Statistic_Column_List" >
+      id,point_date,overdue_rate,dirtyuser_rate_m1,dirty_rate_15,pass_rate,review_way,borrow_num,channel_name
+  </sql>
+  <sql id="selectSql">
+  from statistic_overdue
+    <where>
+      <if test="sDate != null">
+        <![CDATA[    and point_date >= #{sDate}   ]]>
+      </if>
+      <if test="eDate != null">
+        <![CDATA[    and point_date <= #{eDate}   ]]>
+      </if>
+      <if test="reviewWay != null">
+        and review_way = #{reviewWay}
+      </if>
+      <if test="reviewFlag != null">
+        and review_flag = #{reviewFlag}
+      </if>
+      <if test="source != null">
+        and source = #{source}
+      </if>
+      <if test="customerType != null">
+        and customer_type = #{customerType}
+      </if>
+    </where>
+  </sql>
+  <insert id="insertList">
+    INSERT INTO statistic_overdue(start_date,end_date,point_date,overdue_rate,overuser_rate,dirtyuser_rate_s1,
+    dirtyuser_rate_s2,dirtyuser_rate_s3,dirtyuser_rate_m1,dirty_rate_15,pass_rate,overdue_distribution,
+    channel_name,review_way,customer_type,source,borrow_num,review_flag,overdue_num,overdue_num_3,overdue_rate_3)
+    VALUES
+    <foreach collection="overdueList" item="overdue" separator=",">
+      (#{overdue.startDate,jdbcType=TIMESTAMP},#{overdue.endDate,jdbcType=TIMESTAMP},#{overdue.pointDate,jdbcType=TIMESTAMP},
+      #{overdue.overdueRate,jdbcType=DOUBLE},#{overdue.overUserRate,jdbcType=DOUBLE},#{overdue.dirtyUserRateS1,jdbcType=DOUBLE},
+      #{overdue.dirtyUserRateS2,jdbcType=DOUBLE},#{overdue.dirtyUserRateS3,jdbcType=DOUBLE},#{overdue.dirtyUserRateM1,jdbcType=DOUBLE},
+      #{overdue.dirtyRate15,jdbcType=DOUBLE},#{overdue.passRate,jdbcType=DOUBLE},#{overdue.overdueDistribution,jdbcType=LONGVARCHAR},
+      #{overdue.channelName,jdbcType=VARCHAR},#{overdue.reviewWay,jdbcType=VARCHAR},#{overdue.type,jdbcType=INTEGER},
+      #{overdue.source,jdbcType=INTEGER},#{overdue.borrowNum,jdbcType=INTEGER},#{overdue.reviewFlag,jdbcType=INTEGER},
+      #{overdue.overdueNum,jdbcType=INTEGER},#{overdue.overdueNum3,jdbcType=INTEGER},#{overdue.overdueRate3,jdbcType=DOUBLE})
+    </foreach>
+  </insert>
+  <select id="findParams" parameterType="Map" resultMap="StatisticMap">
+    select
+    <include refid="Statistic_Column_List" />
+    <include refid="selectSql" />
+  </select>
+  <select id="findParamsCount" resultType="int" parameterType="Map">
+    select
+    count(1)
+    <include refid="selectSql" />
+  </select>
+  <delete id="deleteBySource" parameterType="Integer">
+    DELETE FROM statistic_overdue WHERE source = #{source}
+    <![CDATA[    and point_date < '2018-05-12'   ]]>
+  </delete>
+    <delete id="deleteParams" parameterType="Map">
+    DELETE FROM statistic_overdue WHERE source = #{source}
+    <![CDATA[    and point_date < #{date}
+        ]]>
+    </delete>
+    <update id="updateRate3" parameterType="java.util.List">
+        update statistic_overdue
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="overdue_num_3 =case" suffix="end,">
+                <foreach collection="overdueList" item="item" index="index">
+                    when id=#{item.id} then #{item.overdueNum3,jdbcType=INTEGER}
+                </foreach>
+            </trim>
+            <trim prefix="overdue_rate_3 =case" suffix="end,">
+                <foreach collection="overdueList" item="item" index="index">
+                    when id=#{item.id} then #{item.overdueRate3,jdbcType=DOUBLE}
+                </foreach>
+            </trim>
+        </trim>
+        where id in
+        <foreach collection="overdueList" index="index" item="item"
+                 separator="," open="(" close=")">
+            #{item.id,jdbcType=BIGINT}
+        </foreach>
+    </update>
+</mapper>

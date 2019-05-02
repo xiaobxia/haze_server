@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.info.back.dao.IBankAllInfoDao">
+	<resultMap id="BaseResultMap" type="com.info.web.pojo.BankAllInfo">
+		<id column="id" property="bankId" /> 
+		<result column="bank_name" property="bankName" />
+		<result column="bank_sequence" property="bankSequence" />
+		<result column="bank_status" property="bankStatus" />
+		<result column="bank_updatetime" property="bankUpdatetime" />
+		<result column="bank_code" property="bankCode" />
+	</resultMap>
+	<select id="selectBankAll" parameterType="map" resultType="map">
+		select
+		b.id,
+		b.bank_name bankName,
+		b.bank_code bankCode
+		from bank_all_info b order by b.bank_sequence asc
+	</select>
+	<select id="selectBankInfo" parameterType="map" resultType="map" >
+    	select 
+    	b.id,
+    	b.bank_sequence bankSequence,
+		b.bank_name bankName,
+		b.bank_code bankCode ,
+		b.bank_number bankNumber
+		from bank_all_info b  
+		<where>
+		<if test="id!=null and id!=''">
+				and  b.id = #{id,jdbcType=INTEGER}
+			</if>
+		<if test="bankNumber!=null and bankNumber!=''">
+				and b.bank_number=#{bankNumber}
+			</if>
+		</where>
+		
+		
+  	</select>
+</mapper>

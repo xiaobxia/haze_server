@@ -1,0 +1,1214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.web.dao.IRepaymentDao" >
+    <resultMap id="BaseResultMap" type="com.info.web.pojo.Repayment" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="asset_order_id" property="assetOrderId" jdbcType="INTEGER" />
+        <result column="repayment_amount" property="repaymentAmount" jdbcType="BIGINT" />
+        <result column="repaymented_amount" property="repaymentedAmount" jdbcType="BIGINT" />
+        <result column="repayment_principal" property="repaymentPrincipal" jdbcType="BIGINT" />
+        <result column="repayment_interest" property="repaymentInterest" jdbcType="BIGINT" />
+        <result column="plan_late_fee" property="planLateFee" jdbcType="INTEGER" />
+        <result column="true_late_fee" property="trueLateFee" jdbcType="INTEGER" />
+        <result column="late_fee_apr" property="lateFeeApr" jdbcType="INTEGER" />
+        <result column="credit_repayment_time" property="creditRepaymentTime" jdbcType="TIMESTAMP" />
+        <result column="period" property="period" jdbcType="INTEGER" />
+        <result column="repayment_time" property="repaymentTime" jdbcType="TIMESTAMP" />
+        <result column="repayment_real_time" property="repaymentRealTime" jdbcType="TIMESTAMP" />
+        <result column="late_fee_start_time" property="lateFeeStartTime" jdbcType="TIMESTAMP" />
+        <result column="interest_update_time" property="interestUpdateTime" jdbcType="TIMESTAMP" />
+        <result column="late_day" property="lateDay" jdbcType="INTEGER" />
+        <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+        <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+        <result column="auto_debit_fail_times" property="autoDebitFailTimes" jdbcType="INTEGER" />
+        <result column="renewal_count" property="renewalCount" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="collection" property="collection" jdbcType="INTEGER" />
+        <result column="repayment_no" property="repaymentNo" jdbcType="VARCHAR" />
+        <result column="first_repayment_time" property="firstRepaymentTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.info.web.pojo.Repayment" extends="BaseResultMap" >
+        <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+    </resultMap>
+
+    <resultMap id="userDetail" type="com.info.back.pojo.UserDetail">
+        <id column="id" property="id"/>
+        <result column="realname" property="realname"/>
+        <result column="user_sex" property="userSex"/>
+        <result column="brower_type" property="browerType"/>
+        <result column="user_phone" property="userPhone"/>
+        <result column="id_number" property="idNumber"/>
+        <result column="card_no" property="cardNo"/>
+        <result column="bank_name" property="bankName"/>
+        <result column="customer_type" property="customerType"/>
+    </resultMap>
+    <resultMap id="BaseResultRemarkMap" type="com.info.web.pojo.Remark" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="assign_id" property="assignId" jdbcType="INTEGER" />
+        <result column="remark_content" property="remarkContent" jdbcType="VARCHAR" />
+        <result column="remark_flag" property="remarkFlag" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="job_name" property="jobName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <insert id="insertIntoRemak" parameterType="com.info.web.pojo.Remark" >
+        insert into borrow_remark (assign_id,remark_flag,remark_content,create_time,update_time,job_name,job_phone)
+        VALUES (#{assignId},#{remarkFlag},#{remarkContent},#{createTime},#{updateTime},#{jobName},#{jobPhone})
+    </insert>
+
+    <select id="getRemarkIdByOrderId" resultType="String" parameterType="String">
+      select id from borrow_remark where assign_id = #{borrowOrderId}
+    </select>
+
+    <update id="updateRemarkStatus" parameterType="String">
+        update borrow_remark set last_flag = 2 where id in
+        <foreach collection="ids" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        and last_flag = 1
+    </update>
+    <select id="selectRemarkByCondition" parameterType="HashMap" resultType="com.info.web.pojo.Remark">
+        SELECT
+        r.id as id,
+        r.create_time as createTime,
+        r.remark_flag as remarkFlag,
+        r.remark_content as remarkContent,
+        concat(r.job_name,' ',r.job_phone) as jobName
+        FROM
+        borrow_remark r
+        WHERE r.assign_id = #{borrowOrderId,jdbcType=INTEGER}
+        ORDER BY r.create_time desc
+    </select>
+
+
+    <resultMap id="BaseResultAssignMap" type="com.info.web.pojo.AssetBorrowAssign" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="borrow_order_id" property="borrowOrderId" jdbcType="INTEGER" />
+        <result column="job_id" property="jobId" jdbcType="INTEGER" />
+        <result column="job_name" property="jobName" jdbcType="VARCHAR" />
+        <result column="del_flg" property="delFlag" jdbcType="INTEGER" />
+        <result column="remark_id" property="remarkId" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="asset_id" property="assetId" jdbcType="INTEGER" />
+        <result column="assign_type" property="assignType" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="StatisticResultMap" type="com.info.web.pojo.Repayment" >
+        <id column="repayment_id" property="id" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="credit_repayment_time" property="creditRepaymentTime" jdbcType="TIMESTAMP" />
+        <result column="repayment_time" property="repaymentTime" jdbcType="TIMESTAMP" />
+        <result column="repayment_real_time" property="repaymentRealTime" jdbcType="TIMESTAMP" />
+        <result column="late_day" property="lateDay" jdbcType="INTEGER" />
+        <collection property="renewalRecords" ofType="com.info.web.pojo.RenewalRecord" >
+            <id column="or_id" property="id" jdbcType="INTEGER"/>
+            <result column="old_repayment_time" property="oldRepaymentTime" jdbcType="TIMESTAMP"/>
+            <result column="asset_repayment_id" property="assetRepaymentId" jdbcType="INTEGER"/>
+            <result column="renewal_day" property="renewalDay" jdbcType="INTEGER"/>
+            <result column="record_repayment_time" property="repaymentTime" jdbcType="TIMESTAMP"/>
+            <result column="record_created_at" property="createdAt" jdbcType="TIMESTAMP"/>
+        </collection>
+    </resultMap>
+    <resultMap id="StatisticUserMap" type="com.info.web.pojo.Repayment" extends="StatisticResultMap">
+        <association property="user" javaType="com.info.web.pojo.User">
+            <id column="uid" property="id" jdbcType="INTEGER"/>
+            <result column="user_from" property="userFrom" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+    <resultMap id="StatisticOrderMap" type="com.info.web.pojo.Repayment" extends="StatisticResultMap">
+        <association property="riskModelOrder" javaType="com.info.risk.pojo.RiskModelOrder">
+            <result column="model_code" property="modelCode" jdbcType="VARCHAR"/>
+            <result column="variable_version" property="variableVersion" jdbcType="INTEGER"/>
+        </association>
+    </resultMap>
+    <resultMap id="StatisticReviewMap" type="com.info.web.pojo.Repayment" extends="StatisticResultMap">
+        <association property="borrowOrder" javaType="com.info.web.pojo.BorrowOrder">
+            <result column="verify_review_user" property="verifyReviewUser" jdbcType="VARCHAR"/>
+            <result column="borrow_status" property="status" jdbcType="INTEGER"/>
+        </association>
+    </resultMap>
+    <resultMap id="StatisticMap" type="com.info.web.pojo.Repayment" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="credit_repayment_time" property="creditRepaymentTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Statistic_Column_List" >
+    p.id repayment_id,p.user_id, p.repayment_time, p.repayment_real_time,p.late_day,p.credit_repayment_time,
+    d.id or_id,d.asset_repayment_id,d.old_repayment_time, d.renewal_day,d.repayment_time record_repayment_time,d.created_at
+    record_created_at
+  </sql>
+    <sql id="Statistic_User_List" >
+    p.id repayment_id,p.user_id, p.repayment_time, p.repayment_real_time,p.late_day,p.credit_repayment_time,u.id
+    uid,u.user_from,
+    d.id or_id,d.asset_repayment_id,d.old_repayment_time, d.renewal_day,d.repayment_time record_repayment_time,d.created_at
+    record_created_at
+  </sql>
+    <sql id="Statistic_Order_List" >
+    p.user_id, p.repayment_time, p.repayment_real_time,p.late_day,p.credit_repayment_time,rmo.model_code,rmo.variable_version,
+    d.id or_id, d.old_repayment_time, d.renewal_day,d.repayment_time record_repayment_time,d.created_at record_created_at
+  </sql>
+    <sql id="Statistic_Review_List">
+    p.id repayment_id,p.user_id, p.repayment_time,
+    p.repayment_real_time,p.late_day,p.credit_repayment_time,abo.verify_review_user,abo.status borrow_status,
+    d.id or_id ,d.old_repayment_time, d.renewal_day,d.repayment_time record_repayment_time,d.created_at record_created_at,d.asset_repayment_id,d.status
+  </sql>
+    <sql id="Statistic_List" >
+    id,user_id,credit_repayment_time
+  </sql>
+    <sql id="asset_borrow_assign_sql">
+    id,borrow_order_id,job_id,job_name,del_flg,remark_id,create_time,update_time,asset_id,assign_type
+  </sql>
+    <select id="findAssetBorrowAssignByCreateTime" parameterType="map" resultMap="BaseResultAssignMap">
+        SELECT  <include refid="asset_borrow_assign_sql" /> from asset_borrow_assign where 1 = 1
+        <if test="createTime != null and createTime != ''">
+            <![CDATA[ and DATE_FORMAT(create_time,'%Y-%m-%d') = #{createTime,jdbcType=VARCHAR} ]]>
+        </if>
+        <if test="id != null and id != ''">
+            and id = #{id,jdbcType=INTEGER}
+        </if>
+        <if test="borrowOrderId != null and borrowOrderId != '' ">
+            and borrow_order_id = #{borrowOrderId,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <insert id="insertAssetBorrowAssign" parameterType="com.info.web.pojo.AssetBorrowAssign" >
+    insert into asset_borrow_assign(id,borrow_order_id,job_id,job_name,create_time,update_time,del_flg,remark_id,asset_id,assign_type)
+    values (#{id,jdbcType=INTEGER}, #{borrowOrderId,jdbcType=INTEGER}, #{jobId,jdbcType=INTEGER},
+    #{jobName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},#{delFlag,jdbcType=INTEGER}, #{remarkId,jdbcType=INTEGER},#{assetId,jdbcType=INTEGER},#{assignType,jdbcType=INTEGER})
+  </insert>
+
+    <select id="seleShowKeFuList"  resultType="com.info.web.pojo.ShowKeFuMessage" parameterType="map">
+        select r.remark_flag as remarkFlag,CONCAT(r.create_time,r.remark_content) as remarkContent,a.id as id,a.job_name as jobName,a.create_time as createTime,u.realname as userName,u.user_phone as userPhone,u.customer_type as customerType,
+        a.borrow_order_id as borrowOrderId,a.assign_type as assignType,u.brower_type as browerType,
+        case when DATE(c.`repayment_time`)= DATE(a.`create_time`) then c.`status` else 30 end as `status`,c.repayment_amount/100 as repaymentMoney,c.repayment_time expectedTime,u.user_sex sex
+        from asset_borrow_assign a
+        inner join asset_repayment c on c.asset_order_id=a.borrow_order_id
+        inner join user_info u on u.id=c.user_id
+        left join borrow_remark r
+        on a.borrow_order_id = r.assign_id and r.last_flag =1 and left(a.create_time,10) = left(r.create_time,10)
+        <include refid="selectAssignSql" />
+        ORDER BY a.id
+
+    </select>
+
+    <sql id="selectAssignSql">
+        WHERE 1 = 1 and a.del_flg =0
+        <if test="labelStatus != null and labelStatus != '' ">
+            and r.remark_flag = #{remarkFlag,jdbcType=INTEGER}
+        </if>
+
+        <if test="productAmount != null and productAmount != ''">
+            and c.repayment_amount = #{productAmount}
+        </if>
+
+        <if test="createTime != null and createTime != ''">
+            <![CDATA[  and a.create_time >= str_to_date(#{createTime,jdbcType=VARCHAR},'%Y-%m-%d') ]]>
+        </if>
+        <if test="payStatus != null and payStatus !='' ">
+            AND  (c.status = #{payStatus,jdbcType=INTEGER} or c.repayment_time > str_to_date(#{xuqiPayTime,jdbcType=VARCHAR},'%Y-%m-%d'))
+        </if>
+        <if test="noPayStatus != null and noPayStatus !='' ">
+            AND  c.status != #{noPayStatus,jdbcType=INTEGER}
+            and  c.repayment_time between str_to_date(#{createTime,jdbcType=VARCHAR},'%Y-%m-%d') and date_add(#{createTime}, interval 1 day)
+        </if>
+        <if test="payed == 1">
+            AND  c.status != '30' and c.status != '34'
+            and  c.repayment_time between str_to_date(#{createTime,jdbcType=VARCHAR},'%Y-%m-%d') and date_add(#{createTime}, interval 1 day)
+
+        </if>
+        <if test="jobId != null and jobId !='' ">
+            AND  a.job_id = #{jobId,jdbcType=INTEGER}
+        </if>
+        <if test="jobName != null and jobName !='' ">
+            AND  a.job_name LIKE CONCAT('%',#{jobName},'%')
+        </if>
+        <if test="assignType != null and assignType !='' ">
+            AND  a.assign_type = #{assignType,jdbcType=INTEGER}
+        </if>
+        <if test="borrowOrderId != null and borrowOrderId !='' ">
+            AND  a.borrow_order_id = #{borrowOrderId,jdbcType=INTEGER}
+        </if>
+        <if test="browerType != null and browerType != ''">
+            AND  u.brower_type = #{browerType}
+        </if>
+        <if test="queryType!=null and queryType=='subPay' and querylimit!=null">
+            order by a.id asc limit 0,#{querylimit}
+        </if>
+    </sql>
+    <select id="findAssignParamsCount"  resultType="int" parameterType="map">
+        SELECT count(1) from (select a.id as id,a.job_name as jobName,a.create_time as createTime,u.realname as
+        userName,u.user_phone as userPhone,u.customer_type as customerType,c.`status`,c.repayment_amount/100 as
+        repaymentMoney,c.repayment_time expectedTime,u.user_sex sex from asset_borrow_assign a
+        inner join asset_repayment c on c.asset_order_id=a.borrow_order_id
+        inner join user_info u on u.id=c.user_id
+        left join borrow_remark r
+        on a.borrow_order_id = r.assign_id and r.last_flag =1 and left(a.create_time,10) = left(r.create_time,10)
+        <include refid="selectAssignSql"/>
+        ) f
+    </select>
+    <update id="updateAssetBorrowAssignById" parameterType="com.info.web.pojo.AssetBorrowAssign">
+        update asset_borrow_assign
+        <set>
+            <if test="updateTime != null and updateTime != ''">
+                update_time = #{updateTime},
+            </if>
+            <if test="jobId != null and jobId != '' ">
+                job_id = #{jobId},
+            </if>
+            <if test="jobName != null and jobName != ''">
+                job_name = #{jobName},
+            </if>
+            <if test="remarkId != null and remarkId != '' ">
+                remark_id = #{remarkId},
+            </if>
+            <if test="borrowOrderId != null and borrowOrderId != '' ">
+                borrow_order_id = #{borrowOrderId},
+            </if>
+            <if test="assignType != null and assignType != ''">
+                assign_Type = #{assignType}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+
+
+
+    <sql id="Base_Column_List" >
+    id, user_id, asset_order_id, repayment_amount, repaymented_amount, repayment_principal,
+    repayment_interest, plan_late_fee, true_late_fee, late_fee_apr, credit_repayment_time,
+    period, repayment_time, repayment_real_time, late_fee_start_time, interest_update_time,
+    late_day, created_at, updated_at, auto_debit_fail_times, renewal_count, status,collection,repayment_no
+  </sql>
+    <sql id="Blob_Column_List" >
+    remark
+  </sql>
+    <sql id="selectSql">
+        from asset_repayment a LEFT JOIN user_info u on u.id = a.user_id
+        left join asset_borrow_order abo on a.asset_order_id = abo.id
+        where 1 = 1
+        <if test="statuses != null and statuses != '' and statuses.length > 0">
+            and a.status in
+            <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        <if test="assetOrderId != null and asssetOrderId != ''">
+            and a.asset_order_id = #{assetOrderId}
+        </if>
+        <if test="repaymentTimeStart != null and repaymentTimeStart != ''">
+            <![CDATA[    and a.repayment_time >= #{repaymentTimeStart}   ]]>
+        </if>
+        <if test="repaymentTimeEnd != null and repaymentTimeEnd != ''">
+            <![CDATA[    and a.repayment_time < #{repaymentTimeEnd}   ]]>
+        </if>
+        <if test="repaymentedTimeStart != null and repaymentedTimeStart != ''">
+            <![CDATA[ and a.repayment_real_time >=str_to_date(#{repaymentedTimeStart},'%Y-%m-%d') ]]>
+        </if>
+        <if test="repaymentedTimeEnd != null and repaymentedTimeEnd != ''">
+            <![CDATA[ and a.repayment_real_time <  str_to_date(#{repaymentedTimeEnd},'%Y-%m-%d') ]]>
+        </if>
+        <if test="userAccountLike != null and userAccountLike != ''">
+            <![CDATA[ and u.realname  LIKE concat(#{userAccountLike},'%') ]]>
+        </if>
+        <if test="userMobileLike != null and userMobileLike != ''">
+            <![CDATA[ and u.user_phone = #{userMobileLike} ]]>
+        </if>
+        <if test="lateDayStart != null and lateDayStart != ''">
+            <![CDATA[ and a.late_day >= #{lateDayStart} ]]>
+        </if>
+        <if test="lateDayEnd != null and lateDayEnd != ''">
+            <![CDATA[ and a.late_day <= #{lateDayEnd} ]]>
+        </if>
+        <if test="productAmount != null and productAmount != ''">
+          and abo.money_amount = #{productAmount}
+        </if>
+    </sql>
+
+    <sql id="selectSqlPrecise">
+        from asset_repayment a LEFT JOIN user_info u on u.id = a.user_id
+        where 1 = 1
+        <if test="statuses != null and statuses != '' and statuses.length > 0">
+            and a.status in
+            <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        <if test="assetOrderId != null and asssetOrderId != ''">
+            and a.asset_order_id = #{assetOrderId}
+        </if>
+        <!--    <if test="repaymentTimeStart != null and repaymentTimeStart != ''">
+              <![CDATA[    and a.repayment_time >= #{repaymentTimeStart}   ]]>
+            </if>
+            <if test="repaymentTimeEnd != null and repaymentTimeEnd != ''">
+              <![CDATA[    and a.repayment_time < #{repaymentTimeEnd}   ]]>
+            </if>
+            <if test="repaymentedTimeStart != null and repaymentedTimeStart != ''">
+              <![CDATA[ and DATE_FORMAT(a.repayment_real_time,'%Y-%m-%d') >= #{repaymentedTimeStart} ]]>
+            </if>
+            <if test="repaymentedTimeEnd != null and repaymentedTimeEnd != ''">
+              <![CDATA[ and DATE_FORMAT(a.repayment_real_time,'%Y-%m-%d') <= #{repaymentedTimeEnd}  ]]>
+            </if>-->
+        <if test="userAccountLike != null and userAccountLike != ''">
+            <![CDATA[ and u.realname  = #{userAccountLike} ]]>
+        </if>
+        <if test="userMobileLike != null and userMobileLike != ''">
+            <![CDATA[ and u.user_phone = #{userMobileLike} ]]>
+        </if>
+        <!-- <if test="lateDayStart != null and lateDayStart != ''">
+           <![CDATA[ and a.late_day >= #{lateDayStart} ]]>
+         </if>
+         <if test="lateDayEnd != null and lateDayEnd != ''">
+           <![CDATA[ and a.late_day <= #{lateDayEnd} ]]>
+         </if>-->
+    </sql>
+    <select id="findMyLoan" resultType="map" parameterType="map">
+        select id,asset_order_id,(repayment_amount - repaymented_amount) as debt,
+        (repayment_principal + repayment_interest) as principal,
+        repayment_interest as counter_fee,
+        repayment_principal as receipts,
+        plan_late_fee as late_fee,
+        repayment_time as plan_fee_time,
+        status
+        from asset_repayment
+        where user_id = #{userId}
+        <if test="statuses != null and statuses != '' and statuses.length > 0">
+            and status in
+            <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        order by id desc
+        <if test="limit != null and limit != ''">
+            limit #{limit}
+        </if>
+    </select>
+    <select id="findAllByBorrowId" parameterType="Integer" resultMap="ResultMapWithBLOBs">
+    select * from asset_repayment where asset_order_id=#{borrowId}
+  </select>
+    <select id="findParamsCount" resultType="int" parameterType="map">
+        select
+        count(1)
+        <include refid="selectSql"/>
+    </select>
+    <select id="findParamsCountPrecise" resultType="int" parameterType="map">
+        select
+        count(1)
+        <include refid="selectSqlPrecise"/>
+    </select>
+
+    <select id="findParams" resultMap="BaseResultMap"
+            parameterType="map">
+        select
+        a.*,u.realname as realname,u.user_phone as userPhone,u.customer_type as customerType
+        <include refid="selectSql"/>
+        order by id desc
+    </select>
+
+    <select id="findUserIdByPhone" resultType="java.lang.Integer"
+            parameterType="java.lang.String">
+    select id from user_info where user_phone = #{userPhone}
+  </select>
+
+    <select id="findRepayingByUserId" resultMap="BaseResultMap"
+            parameterType="java.lang.Integer">
+    select * from asset_repayment where user_id = #{userId} and `status` in (21,-11,-20,23)
+  </select>
+
+    <select id="findTaskRepayment" resultMap="BaseResultMap" parameterType="map">
+        select
+        a.id
+        from asset_repayment a
+        where 1 = 1
+        <if test="statuses != null and statuses != '' and statuses.length > 0">
+            and a.status in
+            <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        <if test="repaymentTimeEnd != null and repaymentTimeEnd != ''">
+            <![CDATA[    and a.repayment_time < #{repaymentTimeEnd}   ]]>
+        </if>
+        <if test="repaymentTime != null and repaymentTime != ''">
+            <![CDATA[   and a.repayment_time between #{repaymentTime} and date_add(#{repaymentTime}, interval 1 day) ]]>
+        </if>
+    </select>
+
+    <select id="findByRepaymentReport" resultMap="BaseResultMap" parameterType="map" >
+        SELECT
+        re.id,
+        re.user_id as userId,
+        re.repayment_time as repaymentTime,
+        re.first_repayment_time as firstRepaymentTime,
+        re.repayment_principal AS repaymentPrincipal,
+        re.repayment_interest AS repaymentInterest,
+        bo.customer_type AS customerType,
+        re.`status`,
+        re.late_day as lateDay,
+        bo.loan_term as loanTerm,
+        bo.id as assetOrderId,
+        bo.user_phone as userPhone,
+        bo.realname as realName
+        FROM
+        asset_repayment re
+        LEFT JOIN asset_borrow_order bo ON bo.id = re.asset_order_id
+        WHERE 1 = 1
+        <if test="firstRepaymentTime != null and firstRepaymentTime != ''">
+            <![CDATA[  and first_repayment_time between #{firstRepaymentTime} and date_add(#{firstRepaymentTime}, interval 1 day) ]]>
+        </if>
+        <if test="firstRepaymentTimeEnd != null and firstRepaymentTimeEnd != ''">
+            <![CDATA[  and first_repayment_time < str_to_date(#{firstRepaymentTimeEnd},'%Y-%m-%d')  ]]>
+        </if>
+        <if test="repaymentTimeStart != null and repaymentTimeStart != ''">
+            <![CDATA[    and re.repayment_time >= #{repaymentTimeStart}   ]]>
+        </if>
+        <if test="repaymentTimeEnd != null and repaymentTimeEnd != ''">
+            <![CDATA[    and re.repayment_time < #{repaymentTimeEnd}   ]]>
+        </if>
+        <!-- 预期还款时间-->
+        <if test="expectedRepaymentTime != null and expectedRepaymentTime != '' ">
+            <![CDATA[  and repayment_time between #{expectedRepaymentTime} and date_add(#{expectedRepaymentTime}, interval 1 day)  ]]>
+        </if>
+        <if test="noPayStatus == 1">
+            and re.status != '30' and re.status != '34'
+        </if>
+        <if test="status != null and status != ''">
+            and re.status = #{status}
+        </if>
+        <if test="statuses != null and statuses != '' and statuses.length > 0">
+            and re.status in
+            <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+    </select>
+    <select id="findUserPhoneName" resultType="map" parameterType="Integer" >
+    select user_phone as userPhone,realname from user_info where id = #{userId}
+  </select>
+    <select id="findCardNo" resultType="map" parameterType="Integer" >
+    SELECT
+    id,
+    card_no AS cardNo
+    FROM
+    user_card_info
+    WHERE
+    user_id = #{userId} AND card_default = 1
+  </select>
+    <select id="findByRepaymentSmsRemind" resultMap="BaseResultMap" parameterType="map" >
+        SELECT
+        id,
+        user_id as userId,
+        repayment_amount as repaymentAmount,
+        `status`
+        FROM
+        asset_repayment
+        WHERE 1 = 1
+        <if test="repaymentTimeStart != null and repaymentTimeStart != ''">
+            <![CDATA[    and repayment_time >= #{repaymentTimeStart}   ]]>
+        </if>
+        <if test="repaymentTimeEnd != null and repaymentTimeEnd != ''">
+            <![CDATA[    and repayment_time < #{repaymentTimeEnd}   ]]>
+        </if>
+        <if test="statuses != null and statuses != '' and statuses.length > 0">
+            and status in
+            <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from asset_repayment
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <!--添加查询逾期客户相关信息 2017-6-16 lp -->
+    <select id="findBlackList" resultType="map" parameterType="map">
+    SELECT
+    u.realname realName,
+    u.id_number idNumber,
+    u.user_phone userPhone,
+    DATE_FORMAT(b.loan_time, '%Y/%m/%d') applied_at,
+    DATE_FORMAT(NOW(), '%Y/%m/%d') confirmed_at,
+    u.first_contact_name firstContactName,
+    u.first_contact_phone firstContactPhone
+    FROM
+    asset_repayment ar
+    LEFT JOIN user_info u ON u.id = ar.user_id
+    LEFT JOIN asset_borrow_order b ON b.id = ar.asset_order_id
+    WHERE
+    ar.`status` = '-11'
+    AND ar.late_day = '1'
+
+  </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from asset_repayment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.info.web.pojo.Repayment" >
+    insert into asset_repayment (id, user_id, asset_order_id,
+    repayment_amount, repaymented_amount, repayment_principal,
+    repayment_interest, plan_late_fee, true_late_fee,
+    late_fee_apr, credit_repayment_time, period,
+    repayment_time, repayment_real_time, late_fee_start_time,
+    interest_update_time, late_day, created_at,
+    auto_debit_fail_times, renewal_count,
+    status, remark,collection,repayment_no)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{assetOrderId,jdbcType=INTEGER},
+    #{repaymentAmount,jdbcType=BIGINT}, #{repaymentedAmount,jdbcType=BIGINT}, #{repaymentPrincipal,jdbcType=BIGINT},
+    #{repaymentInterest,jdbcType=BIGINT}, #{planLateFee,jdbcType=INTEGER}, #{trueLateFee,jdbcType=INTEGER},
+    #{lateFeeApr,jdbcType=INTEGER}, #{creditRepaymentTime,jdbcType=TIMESTAMP}, #{period,jdbcType=INTEGER},
+    #{repaymentTime,jdbcType=TIMESTAMP}, #{repaymentRealTime,jdbcType=TIMESTAMP}, #{lateFeeStartTime,jdbcType=TIMESTAMP},
+    #{interestUpdateTime,jdbcType=TIMESTAMP}, #{lateDay,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP},
+    #{autoDebitFailTimes,jdbcType=INTEGER}, #{renewalCount,jdbcType=INTEGER},
+    #{status,jdbcType=INTEGER}, #{remark,jdbcType=LONGVARCHAR},#{collection,jdbcType=INTEGER},#{repaymentNo,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.info.web.pojo.Repayment" >
+        insert into asset_repayment
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="userId != null" >
+                user_id,
+            </if>
+            <if test="assetOrderId != null" >
+                asset_order_id,
+            </if>
+            <if test="repaymentAmount != null" >
+                repayment_amount,
+            </if>
+            <if test="repaymentedAmount != null" >
+                repaymented_amount,
+            </if>
+            <if test="repaymentPrincipal != null" >
+                repayment_principal,
+            </if>
+            <if test="repaymentInterest != null" >
+                repayment_interest,
+            </if>
+            <if test="planLateFee != null" >
+                plan_late_fee,
+            </if>
+            <if test="trueLateFee != null" >
+                true_late_fee,
+            </if>
+            <if test="lateFeeApr != null" >
+                late_fee_apr,
+            </if>
+            <if test="creditRepaymentTime != null" >
+                credit_repayment_time,
+            </if>
+            <if test="period != null" >
+                period,
+            </if>
+            <if test="repaymentTime != null" >
+                repayment_time,
+            </if>
+            <if test="repaymentRealTime != null" >
+                repayment_real_time,
+            </if>
+            <if test="lateFeeStartTime != null" >
+                late_fee_start_time,
+            </if>
+            <if test="interestUpdateTime != null" >
+                interest_update_time,
+            </if>
+            <if test="lateDay != null" >
+                late_day,
+            </if>
+            <if test="createdAt != null" >
+                created_at,
+            </if>
+            <if test="autoDebitFailTimes != null" >
+                auto_debit_fail_times,
+            </if>
+            <if test="renewalCount != null" >
+                renewal_count,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+            <if test="remark != null" >
+                remark,
+            </if>
+            <if test="collection != null" >
+                collection,
+            </if>
+            <if test="repaymentNo != null" >
+                repayment_no,
+            </if>
+            <if test="firstRepaymentTime != null" >
+                first_repayment_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null" >
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="assetOrderId != null" >
+                #{assetOrderId,jdbcType=INTEGER},
+            </if>
+            <if test="repaymentAmount != null" >
+                #{repaymentAmount,jdbcType=BIGINT},
+            </if>
+            <if test="repaymentedAmount != null" >
+                #{repaymentedAmount,jdbcType=BIGINT},
+            </if>
+            <if test="repaymentPrincipal != null" >
+                #{repaymentPrincipal,jdbcType=BIGINT},
+            </if>
+            <if test="repaymentInterest != null" >
+                #{repaymentInterest,jdbcType=BIGINT},
+            </if>
+            <if test="planLateFee != null" >
+                #{planLateFee,jdbcType=INTEGER},
+            </if>
+            <if test="trueLateFee != null" >
+                #{trueLateFee,jdbcType=INTEGER},
+            </if>
+            <if test="lateFeeApr != null" >
+                #{lateFeeApr,jdbcType=INTEGER},
+            </if>
+            <if test="creditRepaymentTime != null" >
+                #{creditRepaymentTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="period != null" >
+                #{period,jdbcType=INTEGER},
+            </if>
+            <if test="repaymentTime != null" >
+                #{repaymentTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="repaymentRealTime != null" >
+                #{repaymentRealTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lateFeeStartTime != null" >
+                #{lateFeeStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="interestUpdateTime != null" >
+                #{interestUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lateDay != null" >
+                #{lateDay,jdbcType=INTEGER},
+            </if>
+            <if test="createdAt != null" >
+                #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="autoDebitFailTimes != null" >
+                #{autoDebitFailTimes,jdbcType=INTEGER},
+            </if>
+            <if test="renewalCount != null" >
+                #{renewalCount,jdbcType=INTEGER},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="collection != null" >
+                #{collection,jdbcType=INTEGER},
+            </if>
+            <if test="repaymentNo != null" >
+                #{repaymentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="firstRepaymentTime != null" >
+                #{firstRepaymentTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.info.web.pojo.Repayment" >
+        update asset_repayment
+        <set >
+            <if test="userId != null" >
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="assetOrderId != null" >
+                asset_order_id = #{assetOrderId,jdbcType=INTEGER},
+            </if>
+            <if test="repaymentAmount != null" >
+                repayment_amount = #{repaymentAmount,jdbcType=BIGINT},
+            </if>
+            <if test="repaymentedAmount != null" >
+                repaymented_amount = #{repaymentedAmount,jdbcType=BIGINT},
+            </if>
+            <if test="repaymentPrincipal != null" >
+                repayment_principal = #{repaymentPrincipal,jdbcType=BIGINT},
+            </if>
+            <if test="repaymentInterest != null" >
+                repayment_interest = #{repaymentInterest,jdbcType=BIGINT},
+            </if>
+            <if test="planLateFee != null" >
+                plan_late_fee = #{planLateFee,jdbcType=INTEGER},
+            </if>
+            <if test="trueLateFee != null" >
+                true_late_fee = #{trueLateFee,jdbcType=INTEGER},
+            </if>
+            <if test="lateFeeApr != null" >
+                late_fee_apr = #{lateFeeApr,jdbcType=INTEGER},
+            </if>
+            <if test="creditRepaymentTime != null" >
+                credit_repayment_time = #{creditRepaymentTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="period != null" >
+                period = #{period,jdbcType=INTEGER},
+            </if>
+            <if test="repaymentTime != null" >
+                repayment_time = #{repaymentTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="repaymentRealTime != null" >
+                repayment_real_time = #{repaymentRealTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lateFeeStartTime != null" >
+                late_fee_start_time = #{lateFeeStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="interestUpdateTime != null" >
+                interest_update_time = #{interestUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lateDay != null" >
+                late_day = #{lateDay,jdbcType=INTEGER},
+            </if>
+            <if test="createdAt != null" >
+                created_at = #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="autoDebitFailTimes != null" >
+                auto_debit_fail_times = #{autoDebitFailTimes,jdbcType=INTEGER},
+            </if>
+            <if test="renewalCount != null" >
+                renewal_count = #{renewalCount,jdbcType=INTEGER},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="collection != null" >
+                collection = #{collection,jdbcType=INTEGER},
+            </if>
+            <if test="repaymentNo != null" >
+                repayment_no = #{repaymentNo,jdbcType=VARCHAR},
+            </if>
+            updated_at = now()
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.info.web.pojo.Repayment" >
+    update asset_repayment
+    set user_id = #{userId,jdbcType=INTEGER},
+    asset_order_id = #{assetOrderId,jdbcType=INTEGER},
+    repayment_amount = #{repaymentAmount,jdbcType=BIGINT},
+    repaymented_amount = #{repaymentedAmount,jdbcType=BIGINT},
+    repayment_principal = #{repaymentPrincipal,jdbcType=BIGINT},
+    repayment_interest = #{repaymentInterest,jdbcType=BIGINT},
+    plan_late_fee = #{planLateFee,jdbcType=INTEGER},
+    true_late_fee = #{trueLateFee,jdbcType=INTEGER},
+    late_fee_apr = #{lateFeeApr,jdbcType=INTEGER},
+    credit_repayment_time = #{creditRepaymentTime,jdbcType=TIMESTAMP},
+    period = #{period,jdbcType=INTEGER},
+    repayment_time = #{repaymentTime,jdbcType=TIMESTAMP},
+    repayment_real_time = #{repaymentRealTime,jdbcType=TIMESTAMP},
+    late_fee_start_time = #{lateFeeStartTime,jdbcType=TIMESTAMP},
+    interest_update_time = #{interestUpdateTime,jdbcType=TIMESTAMP},
+    late_day = #{lateDay,jdbcType=INTEGER},
+    created_at = #{createdAt,jdbcType=TIMESTAMP},
+    auto_debit_fail_times = #{autoDebitFailTimes,jdbcType=INTEGER},
+    renewal_count = #{renewalCount,jdbcType=INTEGER},
+    status = #{status,jdbcType=INTEGER},
+    remark = #{remark,jdbcType=LONGVARCHAR},
+    collection = #{collection,jdbcType=INTEGER},
+    repayment_no = #{repaymentNo,jdbcType=VARCHAR},
+    updated_at =now()
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.info.web.pojo.Repayment" >
+    update asset_repayment
+    set user_id = #{userId,jdbcType=INTEGER},
+    asset_order_id = #{assetOrderId,jdbcType=INTEGER},
+    repayment_amount = #{repaymentAmount,jdbcType=BIGINT},
+    repaymented_amount = #{repaymentedAmount,jdbcType=BIGINT},
+    repayment_principal = #{repaymentPrincipal,jdbcType=BIGINT},
+    repayment_interest = #{repaymentInterest,jdbcType=BIGINT},
+    plan_late_fee = #{planLateFee,jdbcType=INTEGER},
+    true_late_fee = #{trueLateFee,jdbcType=INTEGER},
+    late_fee_apr = #{lateFeeApr,jdbcType=INTEGER},
+    credit_repayment_time = #{creditRepaymentTime,jdbcType=TIMESTAMP},
+    period = #{period,jdbcType=INTEGER},
+    repayment_time = #{repaymentTime,jdbcType=TIMESTAMP},
+    repayment_real_time = #{repaymentRealTime,jdbcType=TIMESTAMP},
+    late_fee_start_time = #{lateFeeStartTime,jdbcType=TIMESTAMP},
+    interest_update_time = #{interestUpdateTime,jdbcType=TIMESTAMP},
+    late_day = #{lateDay,jdbcType=INTEGER},
+    created_at = #{createdAt,jdbcType=TIMESTAMP},
+    auto_debit_fail_times = #{autoDebitFailTimes,jdbcType=INTEGER},
+    renewal_count = #{renewalCount,jdbcType=INTEGER},
+    status = #{status,jdbcType=INTEGER},
+    collection = #{collection,jdbcType=INTEGER},
+    repayment_no = #{repaymentNo,jdbcType=VARCHAR},
+    updated_at =now()
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <update id="updateRenewalByPrimaryKey" parameterType="com.info.web.pojo.Repayment" >
+    update asset_repayment
+    set plan_late_fee = #{planLateFee,jdbcType=INTEGER},
+    repayment_amount = #{repaymentAmount,jdbcType=BIGINT},
+    true_late_fee = #{trueLateFee,jdbcType=INTEGER},
+    repayment_time = #{repaymentTime,jdbcType=TIMESTAMP},
+    late_fee_start_time = #{lateFeeStartTime,jdbcType=TIMESTAMP},
+    interest_update_time = #{interestUpdateTime,jdbcType=TIMESTAMP},
+    late_day = #{lateDay,jdbcType=INTEGER},
+    renewal_count = #{renewalCount,jdbcType=INTEGER},
+    status = #{status,jdbcType=INTEGER},
+    collection = #{collection,jdbcType=INTEGER},
+    repayment_no = #{repaymentNo,jdbcType=VARCHAR},
+    updated_at = now()
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <!--根据用户id和订单id查询-->
+    <select id="selectAssetRepaymentByUserIdAndBorrowId"  resultMap="ResultMapWithBLOBs" parameterType="Map">
+    select * from asset_repayment where user_id=#{userId,jdbcType=VARCHAR} and asset_order_id=#{assetOrderId,jdbcType=VARCHAR}
+  </select>
+    <select id="selectAssetRepaymentByUserId" resultMap="BaseResultMap">
+    select * from asset_repayment where user_id = #{userId} and asset_order_id = #{assetOrderId} order by id desc limit 0,1
+  </select>
+
+
+    <!-- 根据日期查询推送统计数据 -->
+    <select id="assignStatistics" resultType="java.util.HashMap" parameterType="map">
+        ( SELECT LEFT
+        ( a.create_time, 10 ) AS createDate,
+        '09:00:00' AS createTime,
+        '18:00:00' AS endTime,
+        count( 0 ) as assignCount,
+        count( b.STATUS = '30' and left(b.repayment_real_time,10) = left(a.create_time,10) and b.repayment_real_time &lt; CONCAT(left(a.create_time,10),' 22:00:00') OR NULL  ) + count(
+        b.STATUS != '30'
+        AND left(b.repayment_time,10) > date_format( a.create_time, '%Y-%m-%d' )
+        OR NULL
+        ) as payBackCount,
+        '系统派单' as assignType
+        FROM
+        asset_borrow_assign a
+        LEFT JOIN asset_repayment b ON a.borrow_order_id = b.asset_order_id
+        WHERE
+        a.assign_Type = '0'
+        <include refid="assignCondition" />
+        GROUP BY
+        LEFT ( a.create_time, 10 )
+        ) UNION ALL
+        (
+        SELECT LEFT
+        ( a.create_time, 10 ) AS createDate,
+        RIGHT ( a.create_time, 9 ) AS createTime,
+        '22:00:00' AS endTime,
+        count( 0 ) as assignCount,
+        count( b.STATUS = '30' and left(b.repayment_real_time,10) = left(a.create_time,10) and b.repayment_real_time &lt; CONCAT(left(a.create_time,10),' 22:00:00') OR NULL ) + count(
+        b.STATUS != '30'
+        AND left(b.repayment_time,10) > date_format( a.create_time, '%Y-%m-%d' )
+        OR NULL
+        ) as payBackCount,
+        '人工派单' as assignType
+        FROM
+        asset_borrow_assign a
+        LEFT JOIN asset_repayment b ON a.borrow_order_id = b.asset_order_id
+        WHERE
+        a.assign_Type = '1'
+        <include refid="assignCondition" />
+        GROUP BY
+        LEFT ( a.create_time, 10 )
+        )
+        ORDER BY
+        createDate,
+        endTime
+    </select>
+
+    <sql id="assignCondition">
+        <if test="dateBefore != null and dateBefore != ''">
+            <![CDATA[ and create_time  >= str_to_date(#{dateBefore},'%Y-%m-%d')]]>
+        </if>
+        <if test="dateEnd != null and dateEnd != ''">
+            <![CDATA[ and create_time < str_to_date(#{dateEnd},'%Y-%m-%d') ]]>
+        </if>
+        <if test="jobId != null and jobId != ''">
+            and job_id = #{jobId}
+        </if>
+    </sql>
+
+    <select id="assignStatisticsCount" resultType="int" parameterType="com.info.web.pojo.AssetBorrowAssign">
+        SELECT
+        count( a.somes )
+        FROM
+        (
+        SELECT
+        count( 0 ) somes
+        FROM
+        asset_borrow_assign
+        WHERE 1=1
+        <include refid="assignCondition" />
+        GROUP BY
+        LEFT ( create_time, 10 ),
+        assign_Type
+        ) a
+    </select>
+
+    <select id="selectAssignStatisticsByCondition" parameterType="map" resultType="map">
+        ( SELECT
+        a.job_id as jobId,
+        LEFT( a.create_time, 10 ) AS createDate,
+        '09:00:00' AS createTime,
+        '18:00:00' AS endTime,
+        count( 0 ) AS assignCount,
+        count( b.STATUS = '30' and left(b.repayment_real_time,10) = left(a.create_time,10) and b.repayment_real_time &lt; CONCAT(left(a.create_time,10),' 22:00:00') OR NULL ) + count(
+        b.STATUS != '30'
+        AND left(b.repayment_time,10) > date_format( a.create_time, '%Y-%m-%d' )
+        OR NULL
+        ) AS payBackCount,
+        '系统派单' AS assignType ,
+        job_name as jobName
+        FROM
+        asset_borrow_assign a
+        LEFT JOIN asset_repayment b ON a.borrow_order_id = b.asset_order_id
+        WHERE
+        a.assign_Type = '0'
+        <include refid="AssignStatisticsCondition"/>
+        GROUP BY
+        LEFT ( a.create_time, 10 ) ,a.job_id
+        ) UNION ALL
+        (
+        SELECT
+        a.job_id as jobId,
+        LEFT( a.create_time, 10 ) AS createDate,
+        RIGHT ( a.create_time, 9 ) AS createTime,
+        '22:00:00' AS endTime,
+        count( 0 ) AS assignCount,
+        count( b.STATUS = '30' and left(b.repayment_real_time,10) = left(a.create_time,10) and b.repayment_real_time &lt; CONCAT(left(a.create_time,10),' 22:00:00') OR NULL ) + count(
+        b.STATUS != '30'
+        AND left(b.repayment_time,10) > date_format( a.create_time, '%Y-%m-%d' )
+        OR NULL
+        ) AS payBackCount,
+        '人工派单' AS assignType ,
+        job_name as jobName
+        FROM
+        asset_borrow_assign a
+        LEFT JOIN asset_repayment b ON a.borrow_order_id = b.asset_order_id
+        WHERE
+        a.assign_Type = '1'
+        <include refid="AssignStatisticsCondition"/>
+        GROUP BY
+        LEFT ( a.create_time, 10 ) ,a.job_id
+
+        )
+        ORDER BY
+        jobName,endTime
+
+
+    </select>
+
+    <select id="selectAssignStatisticsForSystemSend" parameterType="map" resultType="map">
+        SELECT
+        a.job_id as jobId,
+        LEFT( a.create_time, 10 ) AS createDate,
+        '09:00:00' AS createTime,
+        '18:00:00' AS endTime,
+        count( 0 ) AS assignCount,
+        count( b.STATUS = '30' and left(b.repayment_real_time,10) = left(a.create_time,10) and b.repayment_real_time &lt; CONCAT(left(a.create_time,10),' 22:00:00') OR NULL ) + count(
+        b.STATUS != '30'
+        AND left(b.repayment_time,10) > date_format( a.create_time, '%Y-%m-%d' )
+        OR NULL
+        ) AS payBackCount,
+        '系统派单' AS assignType ,
+        job_name as jobName
+        FROM
+        asset_borrow_assign a
+        LEFT JOIN asset_repayment b ON a.borrow_order_id = b.asset_order_id
+        WHERE
+        a.assign_Type = '0'
+        <include refid="AssignStatisticsCondition"/>
+        GROUP BY
+        LEFT ( a.create_time, 10 ) ,a.job_id
+        ORDER BY
+        jobName,endTime
+    </select>
+    <select id="selectAssignStatisticsForArtificialSend" parameterType="map" resultType="map">
+        SELECT
+        a.job_id as jobId,
+        LEFT( a.create_time, 10 ) AS createDate,
+        RIGHT ( a.create_time, 9 ) AS createTime,
+        '22:00:00' AS endTime,
+        count( 0 ) AS assignCount,
+        count( b.STATUS = '30' and left(b.repayment_real_time,10) = left(a.create_time,10) and b.repayment_real_time &lt; CONCAT(left(a.create_time,10),' 22:00:00') OR NULL ) + count(
+        b.STATUS != '30'
+        AND left(b.repayment_time,10) > date_format( a.create_time, '%Y-%m-%d' )
+        OR NULL
+        ) AS payBackCount,
+        '人工派单' AS assignType ,
+        job_name as jobName
+        FROM
+        asset_borrow_assign a
+        LEFT JOIN asset_repayment b ON a.borrow_order_id = b.asset_order_id
+        WHERE
+        a.assign_Type = '1'
+        <include refid="AssignStatisticsCondition"/>
+        GROUP BY
+        LEFT ( a.create_time, 10 ) ,a.job_id
+        ORDER BY
+        jobName,endTime
+    </select>
+
+    <sql id="AssignStatisticsCondition">
+        <if test="jobId != null and jobId != '' ">
+            and a.job_id = #{jobId}
+        </if>
+        <if test="createDate != null and createDate != '' ">
+            and a.create_time between str_to_date(#{createDate},'%Y-%m-%d') and date_add(#{createDate}, interval 1 day)
+        </if>
+        <if test="jobName != null and jobName !='' ">
+            AND  a.job_name like '%${jobName}%'
+        </if>
+        <if test="beforDate != null and beforDate != ''">
+            <![CDATA[ and a.create_time < str_to_date(#{beforDate},'%Y-%m-%d')]]>
+        </if>
+    </sql>
+
+    <select id="findUserByPhone" resultMap="userDetail"
+            parameterType="java.lang.String">
+        SELECT
+        a.id,
+        a.realname,
+        a.user_sex,
+        a.brower_type,
+        a.user_phone,
+        a.id_number,
+        a.customer_type
+        FROM
+        user_info a
+        WHERE
+        user_phone = #{userPhone}
+    </select>
+    <select id="queryBorrowRemark" resultMap="BaseResultRemarkMap">
+        select br.*,concat(br.job_name,' ',br.job_phone) as jobName
+        from borrow_remark br
+        left join asset_borrow_order abo on abo.id = br.assign_id
+        where abo.user_id = #{userId}
+        order by br.id DESC
+    </select>
+    <select id="findByDates" parameterType="com.info.web.pojo.statistics.Overdue" resultMap="StatisticResultMap">
+        select
+        <include refid="Statistic_Column_List" />
+        from asset_repayment p
+        left join asset_renewal_record d
+        on p.id = d.asset_repayment_id and d.status = 1 AND d.created_at IS NOT NULL
+        <where>
+            <if test="startDate != null">
+                <![CDATA[    and p.credit_repayment_time >= #{startDate}   ]]>
+            </if>
+            <if test="endDate != null">
+                <![CDATA[    and p.credit_repayment_time <= #{endDate}   ]]>
+            </if>
+        </where>
+        order by p.id,d.created_at DESC
+    </select>
+
+    <select id="findByDatesUser" parameterType="com.info.web.pojo.statistics.Overdue" resultMap="StatisticUserMap">
+        select
+        <include refid="Statistic_User_List" />
+        from (asset_repayment p inner join user_info u
+        on p.user_id = u.id)
+        left join asset_renewal_record d
+        on p.id = d.asset_repayment_id and d.status = 1 AND d.created_at IS NOT NULL
+        <where>
+            <if test="startDate != null">
+                <![CDATA[    and p.repayment_time >= #{startDate}   ]]>
+            </if>
+            <if test="endDate != null">
+                <![CDATA[    and p.repayment_time <= #{endDate}   ]]>
+            </if>
+        </where>
+        order by p.id,d.created_at DESC
+    </select>
+    <select id="findByModelOrder" parameterType="com.info.web.pojo.statistics.Overdue" resultMap="StatisticOrderMap">
+        select
+        <include refid="Statistic_Order_List" />
+        from (asset_repayment p inner join risk_model_order rmo
+        on p.asset_order_id = rmo.borrow_order_id AND rmo.model_code IS NOT NULL AND rmo.model_code !='')
+        left join asset_renewal_record d
+        on p.id = d.asset_repayment_id and d.status = 1 AND d.created_at IS NOT NULL
+        <where>
+            <if test="startDate != null">
+                <![CDATA[    and p.credit_repayment_time >= #{startDate}   ]]>
+            </if>
+            <if test="endDate != null">
+                <![CDATA[    and p.credit_repayment_time <= #{endDate}   ]]>
+            </if>
+        </where>
+        order by p.id,d.created_at DESC
+    </select>
+    <select id="findByReviewTime" parameterType="com.info.web.pojo.statistics.Overdue" resultMap="StatisticReviewMap">
+        select
+        <include refid="Statistic_Review_List"/>
+        from
+        asset_repayment p inner join asset_borrow_order abo on abo.id = p.asset_order_id inner join user_info ui on p.user_id = ui.id and ui.customer_type is not null
+        LEFT JOIN asset_renewal_record d
+        ON p.id = d.asset_repayment_id AND d.status = 1 AND d.created_at IS NOT NULL
+        <where>
+            <if test="list!=null">
+                and abo.status not in
+                <foreach collection="list" item="item" open="("
+                         separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="startDate != null">
+                <![CDATA[    and abo.verify_review_time >= #{startDate}   ]]>
+            </if>
+            <if test="endDate != null">
+                <![CDATA[    and abo.verify_review_time <= #{endDate}   ]]>
+            </if>
+            <if test="type == 1">
+                and ui.customer_type = 1
+            </if>
+            <if test="type == 2">
+                and ui.customer_type = 0
+            </if>
+            AND abo.verify_review_user IS NOT NULL
+            AND abo.verify_review_user REGEXP '[u0391-uFFE5]'
+        </where>
+        ORDER BY p.id,d.created_at DESC
+    </select>
+    <select id="findByUserIds" parameterType="java.util.List" resultMap="StatisticMap">
+        select <include refid="Statistic_List" />
+        from asset_repayment where user_id in
+        <foreach collection="list" item="userId" open="(" close=")" separator=",">
+            #{userId}
+        </foreach> ORDER BY credit_repayment_time
+    </select>
+    <select id="queryAssignByCondition" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT
+        aba.id
+        FROM
+        asset_borrow_assign aba
+        LEFT JOIN asset_borrow_order abo ON abo.id = aba.borrow_order_id
+        left join asset_repayment ar on ar.asset_order_id = abo.id
+        where left(aba.create_time,10) = #{createTime}
+        and aba.assign_type = #{assignType}
+        and abo.status &lt; 30
+        and ar.repayment_time between str_to_date(#{createTime},'%Y-%m-%d') and date_add(#{createTime}, interval 1 day)
+    </select>
+    <select id="selectBorrowOrderIdByAssignId" resultType="String" parameterType="Integer">
+        select borrow_order_id from asset_borrow_assign where id = #{assignId}
+    </select>
+    <select id="getClientByUserId" resultType="String" parameterType="Integer">
+        select client_id from user_client_info where user_id =#{userId} order by create_time desc limit 1
+    </select>
+    <update id="updateAssignDelFlag" parameterType="Integer" >
+        update asset_borrow_assign set del_flg =1 where id =#{assignId}
+    </update>
+</mapper>

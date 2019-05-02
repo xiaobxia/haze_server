@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.web.dao.IBorrowOrderLoanPersonDao">
+	<resultMap id="BaseResultMap" type="com.info.web.pojo.BorrowOrderLoanPerson">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="asset_order_id" property="assetOrderId"
+			jdbcType="INTEGER" />
+		<result column="yurref" property="yurref" jdbcType="VARCHAR" />
+		<result column="loan_interests" property="loanInterests"
+			jdbcType="INTEGER" />
+		<result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+		<result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+		<result column="loan_time" property="loanTime" jdbcType="TIMESTAMP" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="pay_remark" property="payRemark" jdbcType="VARCHAR" />
+		<result column="pay_status" property="payStatus" jdbcType="VARCHAR" />
+		<result column="capital_type" property="capitalType" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, user_id, asset_order_id, yurref, loan_interests,
+		created_at,
+		updated_at, loan_time,
+		status, pay_remark,
+		pay_status,capital_type
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from borrow_loaninterests_person
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<sql id="selectSql">
+		from borrow_loaninterests_person abo
+		<!-- left join user_info ui on -->
+		<!-- abo.user_id=ui.id -->
+		<where>
+			<if test="assetOrderId!=null and assetOrderId!=''">
+				and abo.asset_order_id=#{assetOrderId}
+			</if>
+			<if test="userId!=null and userId!=''">
+				and abo.user_id=#{userId}
+			</if>
+			<if test="notPayStatus!=null and notPayStatus!=''">
+				and abo.pay_status!=#{notPayStatus}
+			</if>
+			<if test="status!=null and status!=''">
+				and abo.status=#{status}
+			</if>
+			<if test="capitalType!=null and capitalType!=''">
+				and abo.capital_type=#{capitalType}
+			</if>
+			<if test="payStatus!=null and payStatus!=''">
+				and abo.pay_status=#{payStatus}
+			</if>
+			<if test="noPayStatus!=null and noPayStatus!=''">
+				and abo.pay_status!=#{noPayStatus}
+			</if>
+			<if test="yurref!=null and yurref!=''">
+				and abo.yurref=#{yurref}
+			</if>
+			<if test="beginTime !=null and beginTime !=''">
+	    		<![CDATA[	and DATE_FORMAT(abo.loan_time,'%Y-%m-%d') >=  #{beginTime}  ]]>
+			</if>
+			<if test="endTime !=null and endTime !=''">
+		    	<![CDATA[	and DATE_FORMAT(abo.loan_time,'%Y-%m-%d') <=  #{endTime}  ]]>
+			</if>
+			<if test="fromTime !=null and fromTime !=''">
+	    		<![CDATA[	and DATE_FORMAT(abo.created_at,'%Y-%m-%d') >=  #{fromTime}  ]]>
+			</if>
+			<if test="toTime !=null and toTime !=''">
+		    	<![CDATA[	and DATE_FORMAT(abo.created_at,'%Y-%m-%d') <=  #{toTime}  ]]>
+			</if>
+			
+		
+		</where>
+
+		<if test="islistPage==null">
+			order by abo.updated_at desc
+		</if>
+
+		<if test="islistPage!=null and islistPage=='yes' and querylimit!=null">
+			order by abo.id asc limit 0,#{querylimit}
+		</if>
+
+	</sql>
+
+	<sql id="selectStatisSql">
+
+		select
+		abo.user_id,SUM(abo.loan_interests) AS
+		loan_interests,abo.yurref,abo.created_at,abo.updated_at,abo.loan_time,abo.STATUS,abo.pay_remark,abo.pay_status,abo.capital_type
+		from borrow_loaninterests_person abo
+		<where>
+			<if test="payStatus!=null and payStatus!=''">
+				and abo.pay_status=#{payStatus}
+			</if>
+			<if test="status!=null and status!=''">
+				and abo.status=#{status}
+			</if>
+			<if test="capitalType!=null and capitalType!=''">
+				and abo.capital_type=#{capitalType}
+			</if>
+
+			<if test="yurref!=null and yurref!=''">
+				and abo.yurref=#{yurref}
+			</if>
+			<if test="beginTime !=null and beginTime !=''">
+	    		<![CDATA[	and DATE_FORMAT(abo.loan_time,'%Y-%m-%d') >=  #{beginTime}  ]]>
+			</if>
+			<if test="endTime !=null and endTime !=''">
+		    	<![CDATA[	and DATE_FORMAT(abo.loan_time,'%Y-%m-%d') <=  #{endTime}  ]]>
+			</if>
+
+		</where>
+
+		GROUP BY abo.yurref
+		ORDER BY abo.loan_time DESC
+
+	</sql>
+	
+	
+	
+	
+	<select id="findParams" resultMap="BaseResultMap" parameterType="Map">
+		select
+		abo.*
+		<!-- <include refid="Base_Column_List" /> -->
+		<include refid="selectSql" />
+
+	</select>
+
+	<select id="findParamsCount" resultType="int"
+		parameterType="com.info.web.pojo.BorrowOrderLoanPerson">
+		select
+		count(1)
+		<include refid="selectSql" />
+	</select>
+	<select id="selectByParam" resultMap="BaseResultMap"
+		parameterType="Map">
+		select
+		abo.*
+		<!-- <include refid="Base_Column_List" /> -->
+		<include refid="selectSql" />
+
+	</select>
+	<select id="findStatisParams" resultMap="BaseResultMap"
+		parameterType="Map">
+
+		<include refid="selectStatisSql" />
+	</select>
+
+
+	<select id="findParamsStatisCount" resultType="java.lang.Integer"
+		parameterType="com.info.web.pojo.BorrowOrderLoanPerson">
+		select
+		count(1) from(
+		<include refid="selectStatisSql" />
+		) tt
+	</select>
+
+	<select id="findloanInterestsSucSumC" resultType="Long"
+		parameterType="Map">
+		SELECT SUM(loan_interests) as loanInterestsSucSum FROM(
+
+		select
+		abo.user_id,FLOOR(SUM(abo.loan_interests)/100) AS
+		loan_interests,abo.yurref,abo.created_at,abo.updated_at,abo.loan_time,abo.STATUS,abo.pay_remark,abo.pay_status
+		from borrow_loaninterests_person abo
+		<where>
+			<if test="payStatus!=null and payStatus!=''">
+				and abo.pay_status=#{payStatus}
+			</if>
+			<if test="status!=null and status!=''">
+				and abo.status=#{status}
+			</if>
+			<if test="capitalType!=null and capitalType!=''">
+				and abo.capital_type=#{capitalType}
+			</if>
+			<if test="yurref!=null and yurref!=''">
+				and abo.yurref=#{yurref}
+			</if>
+			<if test="beginTime !=null and beginTime !=''">
+	    		<![CDATA[	and DATE_FORMAT(abo.loan_time,'%Y-%m-%d') >=  #{beginTime}  ]]>
+			</if>
+			<if test="endTime !=null and endTime !=''">
+		    	<![CDATA[	and DATE_FORMAT(abo.loan_time,'%Y-%m-%d') <=  #{endTime}  ]]>
+			</if>
+			<if test="fromTime !=null and fromTime !=''">
+	    		<![CDATA[	and DATE_FORMAT(abo.created_at,'%Y-%m-%d') >=  #{fromTime}  ]]>
+			</if>
+			<if test="toTime !=null and toTime !=''">
+		    	<![CDATA[	and DATE_FORMAT(abo.created_at,'%Y-%m-%d') <=  #{toTime}  ]]>
+			</if>
+		</where>
+
+		GROUP BY abo.yurref
+		) temp
+
+
+
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		borrow_loaninterests_person
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.info.web.pojo.BorrowOrderLoanPerson">
+		insert into
+		borrow_loaninterests_person (id, user_id, asset_order_id,
+		yurref,
+		loan_interests, created_at,
+		updated_at, loan_time, status,
+		pay_remark,
+		pay_status)
+		values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},
+		#{assetOrderId,jdbcType=INTEGER},
+		#{yurref,jdbcType=VARCHAR},
+		#{loanInterests,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP},
+		#{updatedAt,jdbcType=TIMESTAMP}, #{loanTime,jdbcType=TIMESTAMP},
+		#{status,jdbcType=INTEGER},
+		#{payRemark,jdbcType=VARCHAR},
+		#{payStatus,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.info.web.pojo.BorrowOrderLoanPerson">
+		insert into borrow_loaninterests_person
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="assetOrderId != null">
+				asset_order_id,
+			</if>
+			<if test="yurref != null">
+				yurref,
+			</if>
+			<if test="loanInterests != null">
+				loan_interests,
+			</if>
+			<if test="createdAt != null">
+				created_at,
+			</if>
+			<if test="updatedAt != null">
+				updated_at,
+			</if>
+			<if test="loanTime != null">
+				loan_time,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="payRemark != null">
+				pay_remark,
+			</if>
+			<if test="payStatus != null">
+				pay_status,
+			</if>
+			<if test="capitalType != null">
+				capital_type,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="assetOrderId != null">
+				#{assetOrderId,jdbcType=INTEGER},
+			</if>
+			<if test="yurref != null">
+				#{yurref,jdbcType=VARCHAR},
+			</if>
+			<if test="loanInterests != null">
+				#{loanInterests,jdbcType=INTEGER},
+			</if>
+			<if test="createdAt != null">
+				#{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedAt != null">
+				#{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="loanTime != null">
+				#{loanTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="payRemark != null">
+				#{payRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="payStatus != null">
+				#{payStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="capitalType != null">
+				#{capitalType,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByParams" parameterType="Map">
+		update borrow_loaninterests_person
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="assetOrderId != null">
+				asset_order_id = #{assetOrderId,jdbcType=INTEGER},
+			</if>
+			<if test="yurref != null">
+				yurref = #{yurref,jdbcType=VARCHAR},
+			</if>
+			<if test="loanInterests != null">
+				loan_interests = #{loanInterests,jdbcType=INTEGER},
+			</if>
+			<if test="createdAt != null">
+				created_at = #{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedAt != null">
+				updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="loanTime != null">
+				loan_time = #{loanTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="payRemark != null">
+				pay_remark = #{payRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="payStatus != null">
+				pay_status = #{payStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="capitalType != null">
+				capital_type = #{capitalType,jdbcType=INTEGER},
+			</if>
+		</set>
+         
+         <where>
+         	<if test="ids!=null">
+		      id in
+			<foreach collection="ids" item="item" open="(" separator=","
+				close=")">
+				#{item}
+			</foreach>
+			</if>
+			<if test="fromTime !=null and fromTime !=''">
+	    		<![CDATA[	and DATE_FORMAT(created_at,'%Y-%m-%d') >=  #{fromTime}  ]]>
+			</if>
+			<if test="toTime !=null and toTime !=''">
+		    	<![CDATA[	and DATE_FORMAT(created_at,'%Y-%m-%d') <=  #{toTime}  ]]>
+			</if>
+			<if test="statusCondition!=null and statusCondition!=''">
+				and  status=#{statusCondition}
+			</if>
+			<if test="capitalTypeCondition!=null and capitalTypeCondition!=''">
+				and  capital_type=#{capitalTypeCondition}
+			</if>
+         </where>
+		
+
+	</update>
+
+
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.info.web.pojo.BorrowOrderLoanPerson">
+		update borrow_loaninterests_person
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="assetOrderId != null">
+				asset_order_id = #{assetOrderId,jdbcType=INTEGER},
+			</if>
+			<if test="yurref != null">
+				yurref = #{yurref,jdbcType=VARCHAR},
+			</if>
+			<if test="loanInterests != null">
+				loan_interests = #{loanInterests,jdbcType=INTEGER},
+			</if>
+			<if test="createdAt != null">
+				created_at = #{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedAt != null">
+				updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="loanTime != null">
+				loan_time = #{loanTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="payRemark != null">
+				pay_remark = #{payRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="payStatus != null">
+				pay_status = #{payStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="capitalType != null">
+				capital_type = #{capitalType,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateByYurref" parameterType="com.info.web.pojo.BorrowOrderLoanPerson">
+		update borrow_loaninterests_person
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="assetOrderId != null">
+				asset_order_id = #{assetOrderId,jdbcType=INTEGER},
+			</if>
+			<if test="loanInterests != null">
+				loan_interests = #{loanInterests,jdbcType=INTEGER},
+			</if>
+			<if test="createdAt != null">
+				created_at = #{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedAt != null">
+				updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="loanTime != null">
+				loan_time = #{loanTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="payRemark != null">
+				pay_remark = #{payRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="payStatus != null">
+				pay_status = #{payStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="capitalType != null">
+				capital_type = #{capitalType,jdbcType=INTEGER},
+			</if>
+		</set>
+		where yurref = #{yurref,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.info.web.pojo.BorrowOrderLoanPerson">
+		update
+		borrow_loaninterests_person
+		set user_id = #{userId,jdbcType=INTEGER},
+		asset_order_id = #{assetOrderId,jdbcType=INTEGER},
+		yurref =
+		#{yurref,jdbcType=VARCHAR},
+		loan_interests =
+		#{loanInterests,jdbcType=INTEGER},
+		created_at =
+		#{createdAt,jdbcType=TIMESTAMP},
+		updated_at =
+		#{updatedAt,jdbcType=TIMESTAMP},
+		loan_time =
+		#{loanTime,jdbcType=TIMESTAMP},
+		status = #{status,jdbcType=INTEGER},
+		pay_remark = #{payRemark,jdbcType=VARCHAR},
+		pay_status =
+		#{payStatus,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByOrderId" parameterType="com.info.web.pojo.BorrowOrderLoan">
+		update
+		borrow_loaninterests_person
+		set
+		loan_interests = #{loanInterests,jdbcType=INTEGER},
+		updated_at =
+		#{updatedAt,jdbcType=TIMESTAMP}
+		where asset_order_id =
+		#{assetOrderId,jdbcType=INTEGER}
+	</update>
+</mapper>

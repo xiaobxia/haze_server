@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.web.dao.IChannelSuperInfoDao">
+	<resultMap id="BaseResultMap" type="com.info.web.pojo.ChannelSuperInfo">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="channel_super_name" property="channelSuperName" jdbcType="VARCHAR" />
+		<result column="channel_super_code" property="channelSuperCode" jdbcType="VARCHAR" />
+		<result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+		<result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+		<result column="remark" property="remark" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+	</resultMap>
+ 
+	  
+	 
+	<sql id="findAllSql">
+		
+		<where>
+			<if test="id != null and id != ''">
+				and id  = #{id}
+			</if>
+			<if test="channelSuperName != null and channelSuperName != ''">
+				and channel_super_name  = #{channelSuperName} 
+			</if>
+			<if test="channelSuperCode != null and channelSuperName != ''">
+				and channel_super_code  = #{channelSuperCode} 
+			</if>
+			<if test="beginTime !=null and beginTime !=''">
+		    		<![CDATA[	and DATE_FORMAT(created_at,'%Y-%m-%d') >=  #{beginTime}  ]]>
+			</if>
+			<if test="endTime !=null and endTime !=''">
+			    	<![CDATA[	and DATE_FORMAT(created_at,'%Y-%m-%d') <=  #{endTime}  ]]>
+			</if>
+		</where>
+	</sql>
+	<select id="findAllCount" resultType="Integer" parameterType="HashMap">
+		select count(1)
+		FROM channel_super_info
+		<include refid="findAllSql" />
+	</select>
+
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		SELECT
+		id,
+		channel_super_name,
+		channel_super_code,
+		created_at,
+		updated_at,
+		remark,
+		status
+		FROM channel_super_info
+		where id = #{id}
+	</select>
+
+	<select id="findAll" resultMap="BaseResultMap" parameterType="HashMap">
+		SELECT
+		id,
+		channel_super_name,
+		channel_super_code,
+		created_at,
+		updated_at,
+		remark,
+		status
+		FROM channel_super_info
+
+		<include refid="findAllSql" />
+
+		order by created_at DESC
+	</select>
+	  
+	<insert id="insert" parameterType="com.info.web.pojo.ChannelSuperInfo">
+		INSERT INTO channel_super_info
+		(channel_super_name,
+		channel_super_code,
+		created_at,
+		remark)
+		VALUES (
+		#{channelSuperName},
+		#{channelSuperCode},
+		now(),
+		#{remark});
+	</insert>
+	 
+	<update id="updateById" parameterType="com.info.web.pojo.ChannelSuperInfo">
+		UPDATE channel_super_info
+		SET 
+		channel_super_name =#{channelSuperName},
+		channel_super_code =#{channelSuperCode},
+		updated_at = now(),
+		remark = remark,
+		status = status
+		WHERE id = #{id};
+
+	</update>
+</mapper>

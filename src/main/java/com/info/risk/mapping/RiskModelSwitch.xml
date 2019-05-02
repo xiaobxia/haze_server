@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.risk.dao.IRiskModelSwitchDao" >
+  <resultMap id="StatisticMap" type="com.info.risk.pojo.RiskModelSwitch" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="model_code" property="modelCode" jdbcType="VARCHAR" />
+    <result column="variable_version" property="variableVersion" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Statistic_Column_List" >
+    id,model_code,variable_version
+  </sql>
+  <sql id="selectSql">
+  from risk_model_switch
+  </sql>
+  <select id="findParams" parameterType="Map" resultMap="StatisticMap">
+    select
+    <include refid="Statistic_Column_List" />
+    <include refid="selectSql" />
+  </select>
+</mapper>

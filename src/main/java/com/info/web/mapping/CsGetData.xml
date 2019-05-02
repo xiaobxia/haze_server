@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.back.dao.ICsGetDataDao">
+    <select id="queryCsDataByAssetOrderId" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT
+            bu.user_name
+        FROM
+            back_user bu
+            LEFT JOIN mman_loan_collection_order mmlco ON bu.uuid = mmlco.current_collection_user_id
+        WHERE
+            mmlco.loan_id = #{assetOrderId}
+    </select>
+</mapper>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!--         延迟加载总开关 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!--         禁止积极主动的加载 -->
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <setting name="callSettersOnNulls" value="true"/>
+    </settings>
+    <typeAliases>
+        <!--		后台相关-->
+        <typeAlias type="com.info.web.pojo.Advertisement" alias="Advertisement"/>
+        <typeAlias type="com.info.web.pojo.Banner" alias="Banner"/>
+        <typeAlias type="com.info.web.pojo.BackModule" alias="BackModule"/>
+        <typeAlias type="com.info.web.pojo.BackRole" alias="BackRole"/>
+        <typeAlias type="com.info.web.pojo.BackRoleModule" alias="BackRoleModule"/>
+        <typeAlias type="com.info.web.pojo.BackUser" alias="BackUser"/>
+        <typeAlias type="com.info.web.pojo.BackUserRole" alias="BackUserRole"/>
+        <typeAlias type="com.info.web.pojo.BackTree" alias="BackTree"/>
+        <typeAlias type="com.info.web.pojo.BackConfigParams" alias="BackConfigParams"/>
+        <typeAlias type="com.info.web.pojo.BackNotice" alias="BackNotice"/>
+        <typeAlias type="com.info.web.pojo.BackMessageCenter" alias="BackMessageCenter"/>
+        <typeAlias type="com.info.web.pojo.PlatfromAdvise" alias="PlatfromAdvise"/>
+        <typeAlias type="com.info.web.pojo.ObtainUserShortMessage"
+                   alias="ObtainUserShortMessage"/>
+        <typeAlias type="com.info.web.pojo.BackLog" alias="BackLog"/>
+        <typeAlias type="com.info.web.pojo.PlatfromAdvise" alias="PlatfromAdvise" />
+        <typeAlias type="com.info.web.pojo.PlatformReport" alias="PlatformReport" />
+        <!--		风控相关开始-->
+        <typeAlias type="com.info.risk.pojo.RiskManageRule" alias="RiskManageRule"/>
+        <typeAlias type="com.info.risk.pojo.RiskOrders" alias="RiskOrders"/>
+        <typeAlias type="com.info.risk.pojo.RiskCreditUser" alias="RiskCreditUser"/>
+        <typeAlias type="com.info.risk.pojo.RiskCreditLog" alias="RiskCreditLog"/>
+        <typeAlias type="com.info.risk.pojo.RiskRuleProperty" alias="RiskRuleProperty"/>
+        <typeAlias type="com.info.risk.pojo.RiskRuleCal" alias="RiskRuleCal"/>
+        <typeAlias type="com.info.risk.pojo.RiskBlackUser" alias="RiskBlackUser"/>
+        <typeAlias type="com.info.risk.pojo.RiskModelOrder" alias="RiskModelOrder"/>
+        <!--大屏幕展示结束-->
+        <!--前台-->
+        <typeAlias type="com.info.web.pojo.OutOrders" alias="OutOrders"/>
+        <typeAlias type="com.info.web.pojo.User" alias="User"/>
+        <typeAlias type="com.info.web.pojo.BorrowOrder" alias="UserOrder"/>
+        <typeAlias type="com.info.web.pojo.UserSendMessage" alias="UserSendMessage"/>
+        <typeAlias type="com.info.web.pojo.UserLoginLog" alias="UserLoginLog"/>
+        <typeAlias type="com.info.web.pojo.UserContacts" alias="UserContacts"/>
+        <typeAlias type="com.info.web.pojo.Content" alias="Content"/>
+        <typeAlias type="com.info.web.pojo.NoticeRelease" alias="NoticeRelease"/>
+
+
+        <typeAlias type="com.info.web.pojo.BorrowOrder" alias="BorrowOrder"/>
+        <typeAlias type="com.info.web.pojo.BorrowOrderDevice" alias="BorrowOrderDevice"/>
+        <typeAlias type="com.info.web.pojo.BorrowOrderTdDevice" alias="BorrowOrderTdDevice"/>
+        <typeAlias type="com.info.web.pojo.ChannelInfo" alias="ChannelInfo"/>
+        <typeAlias type="com.info.web.pojo.ChannelReport" alias="ChannelReport"/>
+        <typeAlias type="com.info.web.pojo.Repayment" alias="Repayment"/>
+        <typeAlias type="com.info.web.pojo.RepaymentAlipay" alias="RepaymentAlipay"/>
+        <typeAlias type="com.info.web.pojo.ReportRepayment" alias="ReportRepayment"/>
+        <typeAlias type="com.info.web.pojo.LoanReport" alias="LoanReport"/>
+        <typeAlias type="com.info.web.pojo.ThirdChannelReport" alias="ThirdChannelReport"/>
+         <typeAlias type="com.info.web.pojo.LoanMoneyReport" alias="LoanMoneyReport"/>
+
+
+        <typeAlias type="com.info.web.pojo.JsAwardRecord" alias="JsAwardRecord"/>
+        <typeAlias type="com.info.web.pojo.JsDrawrollsRecord" alias="JsDrawrollsRecord"/>
+        <typeAlias type="com.info.web.pojo.JsLoanPerson" alias="JsLoanPerson"/>
+        <typeAlias type="com.info.web.pojo.JsStepConfig" alias="JsStepConfig"/>
+        <typeAlias type="com.info.web.pojo.JsStepRecord" alias="JsStepRecord"/>
+<!--        渠道推送相关-->
+        <!--<typeAlias type="com.info.ts.pojo.TsOrders" alias="TsOrders"/>
+        <typeAlias type="com.info.ts.pojo.SyBody" alias="SyBody"/>
+        <typeAlias type="com.info.ts.pojo.SyUserVo" alias="SyUserVo"/>-->
+        <typeAlias type="com.info.web.pojo.ActiveStatisticsInfo" alias="ActiveStatisticsInfo" />
+        <typeAlias type="com.info.back.pojo.BackDistributeRecord" alias="BackDistributeRecord"/>
+    </typeAliases>
+    <plugins>
+        <plugin
+                interceptor="com.github.miemiedev.mybatis.paginator.OffsetLimitInterceptor">
+            <property name="dialectClass"
+                      value="com.github.miemiedev.mybatis.paginator.dialect.MySQLDialect"/>
+        </plugin>
+    </plugins>
+</configuration>

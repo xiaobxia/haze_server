@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.web.dao.IChannelInfoDao">
+	<resultMap id="BaseResultMap" type="com.info.web.pojo.ChannelInfo">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="channel_super_id" property="channelSuperId" jdbcType="INTEGER" />
+		<result column="channel_name" property="channelName" jdbcType="VARCHAR" />
+		<result column="channel_code" property="channelCode" jdbcType="VARCHAR" />
+		<result column="operator_name" property="operatorName"
+			jdbcType="VARCHAR" />
+		<result column="channel_tel" property="channelTel" jdbcType="VARCHAR" />
+		<result column="channel_province" property="channelProvince" />
+		<result column="channel_city" property="channelCity"/>
+		<result column="channel_area" property="channelArea" jdbcType="VARCHAR" />
+		<result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+		<result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+		<result column="apr" property="apr" jdbcType="REAL" />
+		<result column="rate_id" property="rateId"/>
+		<result column="remark" property="remark" jdbcType="TIMESTAMP" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="channel_password" property="channelPassword" jdbcType="VARCHAR"/>
+		<result column="apk_url" property="apkUrl" jdbcType="VARCHAR"/>
+		<result column="channel_tag" property="channelTag" jdbcType="VARCHAR"/>
+		<result column="download_pic_url" property="downloadPicUrl" jdbcType="VARCHAR"/>
+		<result column="register_pic_url" property="registerPicUrl" jdbcType="VARCHAR"/>
+		<result column="pic_code_num" property="picCodeNum" jdbcType="VARCHAR"/>
+		<result column="toutiao_convert_id" property="toutiaoConvertId" jdbcType="VARCHAR"/>
+		<result column="user_info_id" property="userInfoId" jdbcType="INTEGER"/>
+		<association property="user" column="user_id"
+			javaType="com.info.web.pojo.User" select="com.info.web.dao.IUserDao.selectByPrimaryKey" />
+	</resultMap>
+
+	<select id="getCountSuperChannelCode" resultType="int" parameterType="String">
+		select count(1) from channel_super_info where channel_super_code = #{code}
+	</select>
+	<sql id="Base_Column_List">
+		id,channel_name,channel_code,operator_name,channel_tel,channel_province,channel_city,channel_area,
+		created_at,updated_at,apr,remark,channel_password,status,channel_super_id
+	</sql>
+	<sql id="sql">
+		FROM channel_info
+	</sql>
+	
+	<select id="findList" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		<include refid="sql" />
+	</select>
+	<sql id="findUserAllSql">
+		<where>
+			<if test="channelName != null and channelName != ''">
+				and b.channel_name like CONCAT('%', #{channelName}, '%') #
+			</if>
+			<if test="realname != null and realname != ''">
+				and c.realname = #{realname}
+			</if>
+			<if test="userPhone != null and userPhone != ''">
+				and c.user_phone =#{userPhone} 
+			</if>
+			<if test="channelCode != null and channelCode != ''">
+				and b.channel_code= #{channelCode}
+			</if>
+			<if test="channelid != null and channelid != ''">
+				and b.id= #{channelid}
+			</if>
+			<if test="superChannelId != null and superChannelId != ''">
+				and s.id= #{superChannelId}
+			</if>
+			<if test="beginTime !=null and beginTime !=''">
+		    		<![CDATA[	and DATE_FORMAT(create_time,'%Y-%m-%d') >=  #{beginTime}  ]]>
+			</if>
+			<if test="endTime !=null and endTime !=''">
+			    	<![CDATA[	and DATE_FORMAT(create_time,'%Y-%m-%d') <=  #{endTime}  ]]>
+			</if>
+		</where>
+	</sql>
+	<select id="findParamsCount" resultType="Integer"
+		parameterType="HashMap">
+		SELECT COUNT(1)
+		FROM
+		channel_user_info a
+		LEFT JOIN
+		channel_info b ON
+		a.channel_id = b.id
+		LEFT
+		JOIN user_info c ON a.user_id
+		= c.id
+		<include refid="findUserAllSql"/>
+	</select>
+	<select id="findUserAllCount" resultType="Integer"
+		parameterType="HashMap">
+		SELECT COUNT(1)
+		FROM
+		channel_user_info a
+		LEFT JOIN
+		channel_info b ON
+		a.channel_id = b.id
+		LEFT
+		JOIN user_info c ON a.user_id
+		= c.id
+		left join channel_super_info s on s.id = b.channel_super_id
+		<include refid="findUserAllSql"/>
+	</select>
+	<select id="findUserAll" resultMap="BaseResultMap"
+		parameterType="HashMap">
+		SELECT b.channel_code,b.channel_name,b.operator_name,
+		b.channel_tel,b.created_at,b.updated_at,b.apr,	
+		c.realname AS realname,c.user_phone AS userPhone,a.rel_path
+		as relPath,a.remark as remark,c.create_time AS createTime
+		FROM
+		channel_user_info a
+		LEFT JOIN
+		channel_info b ON a.channel_id = b.id
+		LEFT
+		JOIN user_info c ON a.user_id
+		= c.id
+		left join channel_super_info s on s.id = b.channel_super_id
+		<include refid="findUserAllSql"/>
+		order by created_at DESC
+	</select>
+
+	
+
+	<select id="findAllChUser" resultType="String" parameterType="Map">
+		<![CDATA[  
+			SELECT 
+			 CONVERT(
+			   CONCAT(
+			    CONCAT(
+			      CONCAT(
+			        CONCAT(
+			          '<li><a  tname="userId" tvalue="',
+			          a.user_id
+			        ),
+			        '">'
+			      ),
+			      b.user_phone
+			    ),
+			    '</a><ul></ul></li>'
+			) USING utf8) AS html 
+				  ]]>
+		FROM
+		channel_user_info a
+		LEFT JOIN user_info b ON a.user_id = b.id
+		WHERE a.channel_id IS NULL
+
+		<if test="userPhone!=null and userPhone!=null !=''">
+			and b.user_phone like CONCAT('%', #{userPhone}, '%')
+		</if>
+
+		ORDER BY a.user_id DESC
+
+	</select>
+	
+	<sql id="findRecordAllSql">
+	<where>
+			<if test="userName != null and userName != ''">
+				and a.realname = #{userName} 
+			</if>
+			<if test="userTel != null and userTel != ''">
+				and a.user_phone = #{userTel} 
+			</if>
+			<if test="realname != null and realname != ''">
+				and b.realname = #{realname} 
+			</if>
+
+			<if test="channelTel != null and channelTel != ''">
+				and channel_tel = #{channelTel} 
+			</if>
+			<if test="channelCode != null and channelCode != ''">
+				and d.channel_code= #{channelCode}
+			</if>
+			<if test="beginTime !=null and beginTime !=''">
+	    		<![CDATA[	and DATE_FORMAT(a.create_time,'%Y-%m-%d') >=  #{beginTime}  ]]>
+			</if>
+			<if test="endTime !=null and endTime !=''">
+		    	<![CDATA[	and DATE_FORMAT(a.create_time,'%Y-%m-%d') <=  #{endTime}  ]]>
+			</if>
+		</where>
+	</sql>
+	
+	<select id="findRecordAllCount" resultType="Integer"
+		parameterType="HashMap">
+		SELECT COUNT(1)
+		FROM user_info a
+		INNER JOIN (
+		SELECT * FROM user_info WHERE id IN(SELECT user_id FROM channel_user_info)
+		)
+		b ON a.invite_userid=b.id
+		LEFT JOIN channel_info d ON d.id =
+		a.user_from
+		<include refid="findRecordAllSql"/>
+	</select>
+	<select id="findRecordAll" resultMap="BaseResultMap"
+		parameterType="HashMap">
+		SELECT b.realname as realname,b.user_phone AS userPhone,a.create_time
+		AS createTime, a.realname AS userName,a.user_phone AS userTel,d.*
+		FROM
+		user_info a
+		INNER JOIN (
+		SELECT * FROM user_info WHERE id IN(SELECT user_id FROM channel_user_info)
+		)
+		b ON a.invite_userid=b.id
+		LEFT JOIN channel_info d ON d.id =
+		a.user_from
+		<include refid="findRecordAllSql"/>
+		order by a.create_time DESC
+	</select>
+	<sql id="findAllSql">
+		<where>
+			
+			<if test="id != null and id != ''">
+				a.id = #{id}
+			</if>
+			<if test="channelName != null and channelName != ''">
+				and a.channel_name  = #{channelName}
+			</if>
+			<if test="channelCode != null and channelCode != ''">
+				and a.channel_code  = #{channelCode} 
+			</if>
+			<if test="operatorName != null and operatorName != ''">
+				and a.operator_name = #{operatorName}
+			</if>
+			<if test="superCode != null and superCode != ''">
+				and b.channel_super_code= #{superCode}
+			</if>
+
+			<if test="channelTel != null and channelTel != ''">
+				and a.channel_tel = # {channelTel}
+			</if>
+			<if test="beginTime !=null and beginTime !=''">
+		    		<![CDATA[	and DATE_FORMAT(a.created_at,'%Y-%m-%d') >=  #{beginTime}  ]]>
+			</if>
+			<if test="endTime !=null and endTime !=''">
+			    	<![CDATA[	and DATE_FORMAT(a.created_at,'%Y-%m-%d') <=  #{endTime}  ]]>
+			</if>
+		</where>
+	</sql>
+	<select id="findAllCount" resultType="Integer" parameterType="HashMap">
+		select count(1) FROM channel_info a
+		LEFT JOIN channel_super_info b ON a.channel_super_id = b.id
+
+		<include refid="findAllSql" />
+	</select>
+
+	<select id="findAll" resultMap="BaseResultMap" parameterType="HashMap">
+		SELECT a.*,b.channel_super_name AS channelSuperName,channel_super_code as channelSuperCode,c.channel_rate_name AS channelRateName FROM channel_info a
+		LEFT JOIN channel_super_info b ON a.channel_super_id = b.id
+		LEFT JOIN channel_rate c on a.rate_id = c.id
+		<include refid="findAllSql" />
+
+		order by a.created_at DESC
+	</select>
+	<select id="findAll2" resultMap="BaseResultMap" parameterType="HashMap">
+		SELECT
+			cd.apk_url as apkUrl,
+			cd.channel_tag as channelTag,
+			cd.download_pic_url as downloadPicUrl,
+			cd.register_pic_url as registerPicUrl,
+			cd.pic_code_num as picCodeNum,
+			cd.toutiao_convert_id as toutiaoConvertId,
+			cd.user_info_id as userInfoId,
+			a.*, b.channel_super_name AS channelSuperName,
+			channel_super_code AS channelSuperCode,
+			c.channel_rate_name AS channelRateName
+		FROM
+			channel_info a
+		LEFT JOIN channel_super_info b ON a.channel_super_id = b.id
+		LEFT JOIN channel_rate c ON a.rate_id = c.id
+		LEFT JOIN channel_dynamic cd on cd.channel_info_id = b.id
+		WHERE
+			a.id = #{id}
+		ORDER BY
+			a.created_at DESC
+	</select>
+	<select id="findById" parameterType="Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from
+		<include refid="sql" />
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="findChannelCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		<include refid="sql" />
+		where channel_code = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="findChanellBroowRecordCount" resultType="Integer" parameterType="HashMap">
+		SELECT COUNT(1) from asset_borrow_order b  LEFT JOIN user_info u ON u.id=b.user_id WHERE u.user_from=#{channelId}
+		<if test="registeredSTime !=null and registeredSTime !='' and registeredETime and registeredETime!='' " >
+	 		<![CDATA[AND DATE_FORMAT(u.create_time,'%Y-%m-%d')=#{registeredSTime} AND DATE_FORMAT(u.create_time,'%Y-%m-%d')<=#{registeredETime}]]>
+	 	</if>
+	 	<if test="registeredSTime !=null and registeredSTime !='' and (registeredETime==null || registeredETime=='') " >
+	 		<![CDATA[AND DATE_FORMAT(u.create_time,'%Y-%m-%d')>=#{registeredSTime}]]>
+	 	</if>
+	 	<if test="registeredETime!=null and registeredETime!='' and (registeredSTime==null and registeredSTime =='')  " >
+	 		<![CDATA[AND DATE_FORMAT(u.create_time,'%Y-%m-%d')<=#{registeredETime!=}]]>
+	 	</if>
+	 	
+	 	 <if test="lendingSTime !=null and lendingSTime !='' and lendingETime !=null and lendingETime !='' " >
+	 		<![CDATA[AND DATE_FORMAT(b.loan_time,'%Y-%m-%d')>=#{lendingSTime} AND DATE_FORMAT(b.loan_time,'%Y-%m-%d')<=#{lendingETime}]]>
+	 	</if>
+	 	<if test="lendingSTime !=null and lendingSTime !='' and (lendingETime==null || lendingETime=='') " >
+	 		<![CDATA[AND DATE_FORMAT(b.loan_time,'%Y-%m-%d')>=#{lendingSTime}]]>
+	 	</if>
+	 	<if test="lendingETime and lendingETime!='' and (lendingSTime==null and lendingSTime =='')  " >
+	 		<![CDATA[AND DATE_FORMAT(b.loan_time,'%Y-%m-%d')<=#{lendingETime}]]>
+	 	</if>
+	</select>
+	<select id="findChanellBroowRecord" resultType="map" parameterType="HashMap">
+		select u.create_time,u.user_name,b.money_amount,b.loan_term,b.created_at,b.loan_time,b.loan_end_time,b.status  from asset_borrow_order b  LEFT JOIN user_info u ON u.id=b.user_id WHERE u.user_from=#{channelId}
+	 	<if test="registeredSTime !=null and registeredSTime !='' and registeredETime and registeredETime!='' " >
+	 		<![CDATA[AND DATE_FORMAT(u.create_time,'%Y-%m-%d')=#{registeredSTime} AND DATE_FORMAT(u.create_time,'%Y-%m-%d')<=#{registeredETime}]]>
+	 	</if>
+	 	<if test="registeredSTime !=null and registeredSTime !='' and (registeredETime==null || registeredETime=='') " >
+	 		<![CDATA[AND DATE_FORMAT(u.create_time,'%Y-%m-%d')>=#{registeredSTime}]]>
+	 	</if>
+	 	<if test="registeredETime!=null and registeredETime!='' and (registeredSTime==null and registeredSTime =='')  " >
+	 		<![CDATA[AND DATE_FORMAT(u.create_time,'%Y-%m-%d')<=#{registeredETime!=}]]>
+	 	</if>
+	 	
+	 	 <if test="lendingSTime !=null and lendingSTime !='' and lendingETime !=null and lendingETime !='' " >
+	 		<![CDATA[AND DATE_FORMAT(b.loan_time,'%Y-%m-%d')>=#{lendingSTime} AND DATE_FORMAT(b.loan_time,'%Y-%m-%d')<=#{lendingETime}]]>
+	 	</if>
+	 	<if test="lendingSTime !=null and lendingSTime !='' and (lendingETime==null || lendingETime=='') " >
+	 		<![CDATA[AND DATE_FORMAT(b.loan_time,'%Y-%m-%d')>=#{lendingSTime}]]>
+	 	</if>
+	 	<if test="lendingETime and lendingETime!='' and (lendingSTime==null and lendingSTime =='')  " >
+	 		<![CDATA[AND DATE_FORMAT(b.loan_time,'%Y-%m-%d')<=#{lendingETime}]]>
+	 	</if>
+	</select>
+	<select  id="countChanellUser" resultType="map" parameterType="Integer">
+		select (SELECT COUNT(1) from user_info u  where u.user_from=#{channelId}) countUser,
+		(select SUM(b.money_amount) FROM asset_borrow_order b LEFT JOIN user_info u on b.user_id=u.id WHERE u.user_from=#{channelId})totalMonery from DUAL
+	</select>
+	<insert id="insert" parameterType="com.info.web.pojo.ChannelInfo">
+		INSERT INTO channel_info
+		(channel_name,
+		channel_code,
+		channel_super_id,
+		operator_name,
+		channel_tel,
+		channel_province,
+		channel_city,
+		channel_area,
+		created_at,
+		updated_at,
+		rate_id,
+		remark,
+		channel_password,
+		status)
+		VALUES (		
+		#{channelName},
+		#{channelCode},
+		#{channelSuperId},
+		#{operatorName},
+		#{channelTel,jdbcType=VARCHAR},
+		#{channelProvince},
+		#{channelCity},
+		#{channelArea},
+		NOW(),
+		#{updatedAt},
+		#{rateId},
+		#{remark},
+		#{channelPassword},
+		#{status});
+	</insert>
+	<insert id="insertChannelUserInfo" parameterType="map">
+		INSERT INTO
+		channel_user_info(channel_id,user_id,created_at,rel_path,remark)
+		VALUES
+		(#{channelId}, #{userId}, NOW(),#{relPath},#{remark});
+	</insert>
+
+	<update id="updateById" parameterType="com.info.web.pojo.ChannelInfo">
+
+
+		UPDATE channel_info
+		SET
+		channel_super_id = #{channelSuperId},
+		channel_name = #{channelName},
+		channel_code = #{channelCode},
+		operator_name = #{operatorName},
+		channel_tel = #{channelTel},
+		channel_province = 	#{channelProvince},
+		channel_city = #{channelCity},
+		channel_area = #{channelArea},
+		created_at = #{createdAt},
+		channel_password = #{channelPassword},
+		updated_at = NOW(),
+		rate_id = #{rateId},
+		remark =
+		#{remark},
+		status = #{status}
+		WHERE id = #{id};
+
+	</update>
+<!--New 动态渠道-->
+	<select id="findAllUserList" resultMap="BaseResultMap" parameterType="HashMap">
+		SELECT a.*,b.channel_super_name AS channelSuperName,channel_super_code as channelSuperCode,c.channel_rate_name AS channelRateName FROM channel_info a
+		LEFT JOIN channel_super_info b ON a.channel_super_id = b.id
+		LEFT JOIN channel_rate c on a.rate_id = c.id
+		<include refid="findAllSql" />
+
+		order by a.created_at DESC
+	</select>
+
+	<select id="findAUserListCount" resultType="Integer" parameterType="HashMap">
+		select count(1) FROM channel_info a
+		<include refid="findAllSql" />
+	</select>
+
+	<!--New-->
+	<select id="findUserAllPage" resultMap="BaseResultMap"
+			parameterType="HashMap">
+		SELECT b.channel_code,b.channel_name,b.operator_name,
+		b.channel_tel,b.created_at,b.updated_at,b.apr,
+		c.realname AS realname,c.user_phone AS userPhone,a.rel_path
+		as relPath,a.remark as remark,c.create_time AS createTime,
+		d.channel_tag AS channelTag,
+		d.register_pic_url AS registerPicUrl,
+		d.download_pic_url AS  downloadPicUrl
+		FROM
+		channel_user_info a
+		LEFT JOIN
+		channel_info b ON a.channel_id = b.id
+		LEFT
+		JOIN user_info c ON a.user_id
+		= c.id
+		LEFT JOIN channel_dynamic d ON d.channel_info_id=b.id and a.user_id = d.user_info_id
+		<include refid="findUserAllSql"/>
+		order by created_at DESC
+	</select>
+
+	<select id="findUserAllPageCount" resultType="Integer"
+			parameterType="HashMap">
+		SELECT COUNT(1)
+		FROM
+		channel_user_info a
+		LEFT JOIN
+		channel_info b ON
+		a.channel_id = b.id
+		LEFT
+		JOIN user_info c ON a.user_id
+		= c.id
+		LEFT JOIN channel_dynamic d ON d.channel_info_id=a.channel_id
+		<include refid="findUserAllSql"/>
+	</select>
+
+	<select id="selectChannelByUserId" parameterType="HashMap" resultType="HashMap">
+		SELECT
+		ch.channel_name,
+		ch.id
+		FROM
+		user_info u,
+		channel_info ch
+		WHERE
+		u.id = #{userId}
+		AND ch.id = u.user_from
+	</select>
+	<select id="findAllChannels" resultMap="BaseResultMap">
+		select id,channel_name
+		from channel_info
+	</select>
+</mapper>

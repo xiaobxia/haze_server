@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.web.dao.IBorrowRemarkDao" >
+  <resultMap id="BaseResultMap" type="com.info.web.pojo.BorrowRemark" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="remark_flag" property="remarkFlag" jdbcType="INTEGER" />
+    <result column="assign_id" property="assignId" jdbcType="INTEGER" />
+    <result column="last_flag" property="lastFlag" jdbcType="INTEGER" />
+    <result column="job_name" property="jobName" jdbcType="VARCHAR" />
+    <result column="job_phone" property="jobPhone" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.info.web.pojo.BorrowRemark" extends="BaseResultMap" >
+    <result column="remark_content" property="remarkContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_time, update_time, remark_flag, assign_id, last_flag, job_name, job_phone
+  </sql>
+  <sql id="Blob_Column_List" >
+    remark_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from borrow_remark
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from borrow_remark
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.info.web.pojo.BorrowRemark" >
+    insert into borrow_remark (id, create_time, update_time, 
+      remark_flag, assign_id, last_flag, 
+      job_name, job_phone, remark_content
+      )
+    values (#{id,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{remarkFlag,jdbcType=INTEGER}, #{assignId,jdbcType=INTEGER}, #{lastFlag,jdbcType=INTEGER}, 
+      #{jobName,jdbcType=VARCHAR}, #{jobPhone,jdbcType=VARCHAR}, #{remarkContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.info.web.pojo.BorrowRemark" >
+    insert into borrow_remark
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="remarkFlag != null" >
+        remark_flag,
+      </if>
+      <if test="assignId != null" >
+        assign_id,
+      </if>
+      <if test="lastFlag != null" >
+        last_flag,
+      </if>
+      <if test="jobName != null" >
+        job_name,
+      </if>
+      <if test="jobPhone != null" >
+        job_phone,
+      </if>
+      <if test="remarkContent != null" >
+        remark_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarkFlag != null" >
+        #{remarkFlag,jdbcType=INTEGER},
+      </if>
+      <if test="assignId != null" >
+        #{assignId,jdbcType=INTEGER},
+      </if>
+      <if test="lastFlag != null" >
+        #{lastFlag,jdbcType=INTEGER},
+      </if>
+      <if test="jobName != null" >
+        #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobPhone != null" >
+        #{jobPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="remarkContent != null" >
+        #{remarkContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.info.web.pojo.BorrowRemark" >
+    update borrow_remark
+    <set >
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarkFlag != null" >
+        remark_flag = #{remarkFlag,jdbcType=INTEGER},
+      </if>
+      <if test="assignId != null" >
+        assign_id = #{assignId,jdbcType=INTEGER},
+      </if>
+      <if test="lastFlag != null" >
+        last_flag = #{lastFlag,jdbcType=INTEGER},
+      </if>
+      <if test="jobName != null" >
+        job_name = #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobPhone != null" >
+        job_phone = #{jobPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="remarkContent != null" >
+        remark_content = #{remarkContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.info.web.pojo.BorrowRemark" >
+    update borrow_remark
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      remark_flag = #{remarkFlag,jdbcType=INTEGER},
+      assign_id = #{assignId,jdbcType=INTEGER},
+      last_flag = #{lastFlag,jdbcType=INTEGER},
+      job_name = #{jobName,jdbcType=VARCHAR},
+      job_phone = #{jobPhone,jdbcType=VARCHAR},
+      remark_content = #{remarkContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.info.web.pojo.BorrowRemark" >
+    update borrow_remark
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      remark_flag = #{remarkFlag,jdbcType=INTEGER},
+      assign_id = #{assignId,jdbcType=INTEGER},
+      last_flag = #{lastFlag,jdbcType=INTEGER},
+      job_name = #{jobName,jdbcType=VARCHAR},
+      job_phone = #{jobPhone,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getLabelsOnlineCustomer" resultType="com.info.web.pojo.LabelCountNum" parameterType="map">
+    SELECT f.remark_flag value, count(1) num from (SELECT a.remark_flag,a.assign_id  FROM `borrow_remark` a, `back_dictionary` b
+    where a.`remark_flag` = b.`data_value` and b.`dict_value`  = #{customerType}
+    and date(a.`create_time`)= #{countDate}  GROUP BY a.`assign_id`, a.`remark_flag`) f GROUP BY f.remark_flag;
+  </select>
+  
+  <select id="getUserNumByParams" resultType="Integer" parameterType="map">
+        SELECT count(1) from (SELECT a.id, count(1) FROM `borrow_remark` a, `back_dictionary` b, `asset_borrow_order` abo, `user_info` u
+        where a.`remark_flag` = b.`data_value` and a.`assign_id` = abo.`id` and abo.`user_id` = u.`id`
+        <if test="userType != null">
+            and u.`customer_type` = #{userType}
+        </if>
+        <if test="userFrom != null">
+            and u.`client_type` in ${userFrom}
+        </if>
+        <if test="customerType != null">
+            and b.`dict_value`  = #{customerType}
+        </if>
+        <if test="countDate != null">
+            and date(a.`create_time`)= #{countDate}
+        </if>
+        GROUP BY a.`assign_id`) c
+  </select>
+
+  <select id="getLabelsTelCustomer" resultType="com.info.web.pojo.LabelCountNum" parameterType="map">
+    SELECT jobKind,f.remark_flag value, count(1) num from
+    (SELECT a.remark_flag,a.assign_id,case when
+    substring(a.`create_time`, 12, 2) &gt; 8 and substring(a.`create_time`, 12, 2) &lt; 19 then 1 when  substring(a.`create_time`, 12, 2) &gt; 18 and substring(a.`create_time`, 12, 2) &lt; 23  then 2 end as jobKind
+    FROM `borrow_remark` a, `back_dictionary` b
+    where a.`remark_flag` = b.`data_value` and b.`dict_value`  = #{customerType}
+    and date(a.`create_time`)= #{countDate}
+    GROUP BY a.`assign_id`, a.`remark_flag` ) f GROUP BY f.remark_flag,f.jobKind
+  </select>
+
+  <select id="getLabelsOnlineCustomerByParams" resultType="com.info.web.pojo.LabelCountNum" parameterType="map">
+    SELECT f.remark_flag value, count(1) num from (SELECT a.remark_flag,a.assign_id  FROM `borrow_remark` a, `back_dictionary` b,`asset_borrow_order` abo,`user_info` u
+    where a.`remark_flag` = b.`data_value` and a.`assign_id` = abo.id and abo.user_id = u.id
+    <if test="customerType != null and customerType != ''">
+      and b.`dict_value`  = #{customerType}
+    </if>
+    <if test="userType != null and userType != ''">
+      and u.`customer_type` = #{userType}
+    </if>
+    <if test="userFrom != null and userFrom != ''">
+      and u.`client_type` in ${userFrom}
+    </if>
+    <if test="countDate != null and countDate != ''">
+      and date(a.`create_time`)= #{countDate}
+    </if>
+    GROUP BY a.`assign_id`, a.`remark_flag`) f GROUP BY f.remark_flag;
+  </select>
+
+  <select id="getLabelsTelCustomerByParams" resultType="com.info.web.pojo.LabelCountNum" parameterType="map">
+    SELECT h.jobKind,h.remark_flag value, count(1) num from
+    (SELECT g.* from
+    (SELECT a.id,a.remark_flag,a.assign_id,case when
+    substring(a.`create_time`, 12, 2) &gt; 8 and substring(a.`create_time`, 12, 2) &lt; 19 then 1 when  substring(a.`create_time`, 12, 2) &gt; 18 and substring(a.`create_time`, 12, 2) &lt; 23  then 2 end as jobKind
+    FROM `borrow_remark` a, `back_dictionary` b, `asset_borrow_order` abo, `user_info` u
+    where a.`assign_id` = abo.`id` and abo.`user_id` = u.`id` and
+    a.`remark_flag` = b.`data_value`
+    <if test="customerType != null and customerType != ''">
+      and b.`dict_value`  = #{customerType}
+    </if>
+    <if test="userType != null and userType != ''">
+      and u.`customer_type` = #{userType}
+    </if>
+    <if test="userFrom != null and userFrom != ''">
+      and u.`client_type` in ${userFrom}
+    </if>
+    <if test="countDate != null and countDate != ''">
+      and date(a.`create_time`)= #{countDate}
+    </if>
+    ) g
+
+    INNER JOIN
+
+    (SELECT MAX(a.id) max_id , a.`create_time` ,a.remark_flag,a.assign_id, 1 as jobKind
+    FROM `borrow_remark` a, `back_dictionary` b, `asset_borrow_order` abo, `user_info` u
+    where a.`assign_id` = abo.`id` and abo.`user_id` = u.`id` and
+    a.`remark_flag` = b.`data_value` and substring(a.`create_time`, 12, 2) &gt; 8 and substring(a.`create_time`, 12, 2) &lt; 19
+    <if test="customerType != null and customerType != ''">
+      and b.`dict_value`  = #{customerType}
+    </if>
+    <if test="userType != null and userType != ''">
+      and u.`customer_type` = #{userType}
+    </if>
+    <if test="userFrom != null and userFrom != ''">
+      and u.`client_type` in ${userFrom}
+    </if>
+    <if test="countDate != null and countDate != ''">
+      and date(a.`create_time`)= #{countDate}
+    </if>
+    GROUP BY jobkind, a.`assign_id` DESC
+
+    union all
+
+    SELECT max(a.id) max_id , a.`create_time` ,a.remark_flag,a.assign_id, 2 as jobKind
+    FROM `borrow_remark` a, `back_dictionary` b, `asset_borrow_order` abo, `user_info` u
+    where a.`assign_id` = abo.`id` and abo.`user_id` = u.`id` and
+    a.`remark_flag` = b.`data_value` and substring(a.`create_time`, 12, 2) &gt; 18 and substring(a.`create_time`, 12, 2) &lt; 23
+    <if test="customerType != null and customerType != ''">
+      and b.`dict_value`  = #{customerType}
+    </if>
+    <if test="userType != null and userType != ''">
+      and u.`customer_type` = #{userType}
+    </if>
+    <if test="userFrom != null and userFrom != ''">
+      and u.`client_type` in ${userFrom}
+    </if>
+    <if test="countDate != null and countDate != ''">
+      and date(a.`create_time`)= #{countDate}
+    </if>
+    GROUP BY a.`assign_id` DESC,jobkind
+
+    ) f
+    on g.assign_id=f.assign_id and g.`id`=f.max_id
+    ) h
+    GROUP BY h.remark_flag,h.jobKind;
+  </select>
+
+</mapper>

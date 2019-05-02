@@ -1,0 +1,90 @@
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.info.back.dao.IBannerDao">
+	<resultMap type="Banner" id="bannerList">
+		<id column="id" property="id"/>
+		<result column="showType" property="showType" javaType="String"/>
+		<result column="channelType" property="channelType" javaType="String"/>
+		<result column="columnType" property="columnType" javaType="String"/>
+		<result column="url" property="url" javaType="String"/>
+		<result column="title" property="title" javaType="String"/>
+		<result column="reurl" property="reurl" javaType="String"/>
+		<result column="sort" property="sort" javaType="String"/>
+		<result column="status" property="status" javaType="String"/>
+		<result column="startTime" property="startTime" javaType="String" />
+		<result column="endTime" property="endTime" javaType="String"/>
+		<result column="presentWay" property="presentWay" javaType="String"/>
+	</resultMap>
+	<sql id="basicSql">
+		id,show_type showType,channel_type channelType,column_type columnType,url,reurl,title,status,sort,start_time startTime,end_time endTime,present_way presentWay
+	</sql>
+	<!-- 保存 -->
+	<insert id="save" parameterType="Banner">
+		insert into
+		info_image (title,url,reurl,sort,status,show_type,channel_type,column_type,present_way,start_time,end_time)
+		values (#{title},#{url},#{reurl},#{sort},#{status},#{showType},#{channelType},#{columnType},#{presentWay},#{startTime},#{endTime})
+	</insert>
+	<!-- 删除 -->
+	<delete id="delete" parameterType="int">
+		delete from info_image where
+		id = #{id}
+	</delete>
+	<!-- 更新 -->
+	<update id="update" parameterType="Banner">
+		update info_image set
+		show_type=#{showType},channel_type=#{channelType},column_type=#{columnType},title=#{title},url=#{url},reurl=#{reurl},sort=#{sort}
+		,start_time=#{startTime},end_time=#{endTime},status=#{status},present_way=#{presentWay}
+		where id=#{id}
+	</update>
+	<!-- 查询一条数据 -->
+	<select id="findById" parameterType="int" resultType="Banner">
+		select 
+		<include refid="basicSql"/> 
+		from info_image where id = #{id}
+	</select>
+	<!-- 查询所有数据 -->
+	<select id="findALl" resultMap="bannerList" >
+		select 
+		<include refid="basicSql"/> 
+		from info_image
+	</select>
+	<select id="countByCondition" resultType="Integer" parameterType="Map">
+		select count(1) from info_image where 1=1
+		<if test="channelType != null and '' != channelType">
+			and channel_type=#{channelType}
+		</if> 
+		<if test="showType != null and '' != showType">
+			and show_type=#{showType}
+		</if> 
+		<if test="columnType != null and '' != columnType">
+			and column_type=#{columnType}
+		</if> 
+	</select>
+	<select id="findByCondition" resultType="Banner" parameterType="Map">
+		select 
+		<include refid="basicSql"/>
+ 		from info_image where 1=1
+		<if test="channelType != null and '' != channelType">
+			and channel_type=#{channelType}
+		</if> 
+		<if test="showType != null and '' != showType">
+			and show_type=#{showType}
+		</if> 
+		<if test="columnType != null and '' != columnType">
+			and column_type=#{columnType}
+		</if> 
+		<if test="sortType != null and '' != sortType and sortType == 0">
+			order by sort*1 asc
+		</if>
+		<if test="sortType != null and '' != sortType and sortType == 1">
+			order by sort*1 desc
+		</if>
+		limit #{beginIndex}, #{pagesize}
+	</select>
+	
+	<!-- 删除缓存-->
+	<delete id="deleteIndexCache" parameterType="int">
+		DELETE FROM info_index_cache
+	</delete>
+</mapper>

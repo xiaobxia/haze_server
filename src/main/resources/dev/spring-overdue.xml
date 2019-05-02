@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        ">
+    <bean id="withholdBean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.info.web.util.JobDetailBean"/>
+        <property name="durability" value="true"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="targetObject" value="taskJob"/>
+                <entry key="targetMethod" value="withhold"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="withholdJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="withholdBean"/>
+        <!-- 代扣每日5、17点-->
+        <!--<property name="cronExpression" value="0 0 13,18 * * ?"/>-->
+        <property name="cronExpression" value="0 0 5,17 * * ?"/>
+ </bean>
+
+ <bean id="reportRepayment12Bean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+     <property name="jobClass" value="com.info.web.util.JobDetailBean"/>
+     <property name="durability" value="true"/>
+     <property name="jobDataAsMap">
+         <map>
+             <entry key="targetObject" value="taskJob"/>
+             <entry key="targetMethod" value="reportRepayment12"/>
+         </map>
+     </property>
+ </bean>
+ <bean id="reportRepayment12JobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+     <property name="jobDetail" ref="reportRepayment12Bean"/>
+     <!-- 每日还款、逾期报表 中午12点-->
+        <property name="cronExpression" value="0 0 4 * * ?"/>
+    </bean>
+    <bean id="reportRepaymentE2Bean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.info.web.util.JobDetailBean"/>
+        <property name="durability" value="true"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="targetObject" value="taskJob"/>
+                <entry key="targetMethod" value="reportRepaymentE2"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="reportRepaymentE2JobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="reportRepaymentE2Bean"/>
+        <!-- 每天两个小时逾期统计-->
+        <property name="cronExpression" value="0 0 0/2 * * ?"/>
+    </bean>
+
+    <bean id="overdueBean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.info.web.util.JobDetailBean"/>
+        <property name="durability" value="true"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="targetObject" value="taskJob"/>
+                <entry key="targetMethod" value="overdue"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="overdueJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="overdueBean"/>
+        <!-- 每天凌晨一点逾期-->
+        <property name="cronExpression" value="0 0 1 * * ?"/>
+    </bean>
+
+     <bean id="channelReportBean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.info.web.util.JobDetailBean"/>
+        <property name="durability" value="true"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="targetObject" value="taskJob"/>
+                <entry key="targetMethod" value="channelReport"/>
+            </map>
+        </property>
+     </bean>
+     <bean id="channelReportJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+         <property name="jobDetail" ref="channelReportBean"/>
+         <!-- 每隔半小时推广统计-->
+         <property name="cronExpression" value="0 0/30 * * * ?"/>
+     </bean>
+<!--    平台全数据统计-->
+     <bean id="platformReportBean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.info.web.util.JobDetailBean"/>
+        <property name="durability" value="true"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="targetObject" value="taskJob"/>
+                <entry key="targetMethod" value="insertReport"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="platformReportJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="platformReportBean"/>
+        <property name="cronExpression" value="0 0 4 * * ?"/>
+    </bean>
+
+    <!--<bean id="updateRetry" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">  -->
+       <!--<property name="jobClass" value="com.info.web.util.JobDetailBean" />-->
+   	   <!--<property name="durability" value="true" />  -->
+       <!--<property name="jobDataAsMap">  -->
+           <!--<map>  -->
+               <!--<entry key="targetObject" value="taskJob" />  -->
+               <!--<entry key="targetMethod" value="updateRetry" />  -->
+           <!--</map>  -->
+       <!--</property>  -->
+   <!--</bean>  -->
+   <!--<bean id="updateRetryJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  -->
+	    <!--<property name="jobDetail" ref="updateRetry"/>  -->
+	    <!--&lt;!&ndash;	  每天一点三十分扫描前台推送失败的用户&ndash;&gt;-->
+	    <!--<property name="cronExpression" value="0 30 1 * * ?" />  -->
+	<!--</bean>-->
+	<bean id="acitveClickStatistics" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">  
+       <property name="jobClass" value="com.info.web.util.JobDetailBean" />
+   	   <property name="durability" value="true" />  
+       <property name="jobDataAsMap">  
+           <map>  
+               <entry key="targetObject" value="taskJob" />  
+               <entry key="targetMethod" value="acitveClickStatistics" />  
+           </map>  
+       </property>  
+   </bean>  
+   <bean id="acitveClickStatisticsJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+	    <property name="jobDetail" ref="acitveClickStatistics"/>  
+	    <!--	  每天零点三十分统计当天点击活动页面的用户数-->
+	    <property name="cronExpression" value="0 30 0 * * ?" />
+	   <!--  <property name="cronExpression" value="0 0/1 13 * * ?" />   -->
+  </bean>
+	<!--    地推系统，每日推送数据-->
+	  <bean id="thirdReportBean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.info.web.util.JobDetailBean"/>
+        <property name="durability" value="true"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="targetObject" value="taskJob"/>
+                <entry key="targetMethod" value="thirdReport"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="thirdReportJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="thirdReportBean"/>
+        <property name="cronExpression" value="0 30 6 * * ?"/>
+    </bean> 
+
+	<bean id="updateLoanTermJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="updateLoanTerm"/>
+        <!--  每5分钟放款一次-->
+        <property name="cronExpression" value="0 0/5 * * * ?"/>
+    </bean>
+    <bean id="updateLoanTerm" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.info.web.util.JobDetailBean"/>
+        <property name="durability" value="true"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="targetObject" value="taskJob"/>
+                <!--<entry key="targetMethod" value="updateLoanTerm"/>-->
+                <entry key="targetMethod" value="updateLoanTermForSimgle"/>
+            </map>
+        </property>
+    </bean>
+    
+    <!--自动分单 autoAssignOrder-->
+    <bean id="autoAssignOrderBean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.info.web.util.JobDetailBean" />
+        <property name="durability" value="true" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="targetObject" value="taskJob" />
+                <entry key="targetMethod" value="autoAssignOrder" />
+            </map>
+        </property>
+    </bean>
+    <bean id="autoAssignOrderJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="autoAssignOrderBean"/>
+
+        <property name="cronExpression" value="0 0 9 * * ?" />
+    </bean>
+    <!--自动分单 autoAssignOrderForNig-->
+    <bean id="autoAssignOrderForNig" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.info.web.util.JobDetailBean" />
+        <property name="durability" value="true" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="targetObject" value="taskJob" />
+                <entry key="targetMethod" value="autoAssignOrderForNig" />
+            </map>
+        </property>
+    </bean>
+    <bean id="autoAssignOrderForNigJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="autoAssignOrderForNig"/>
+
+        <property name="cronExpression" value="0 0 18 * * ?" />
+    </bean>
+
+    <bean id="autoAddCustomerClass" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.info.web.util.JobDetailBean" />
+        <property name="durability" value="true" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="targetObject" value="taskJob" />
+                <entry key="targetMethod" value="createCustomerClass" />
+            </map>
+        </property>
+    </bean>
+    <bean id="autoAddCustomerClassTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="autoAddCustomerClass"/>
+        <property name="cronExpression" value="0 0 1 * * ?" />
+    </bean>
+
+    <bean id="autoDistributionBean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.info.web.util.JobDetailBean"/>
+        <property name="durability" value="true"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="targetObject" value="borrowOrderService"/>
+                <entry key="targetMethod" value="autoDistributeOrderForReview"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="autoDistributionJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="autoDistributionBean"/>
+        <!-- 每小时派单-->
+        <property name="cronExpression" value="0 */3 * * * ?"/>
+    </bean>
+    <!--定时调用api接口 做mq失败补偿-->
+    <bean id="taskMq" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.info.web.util.JobDetailBean" />
+        <property name="durability" value="true" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="targetObject" value="taskJob" />
+                <entry key="targetMethod" value="mqTask" />
+            </map>
+        </property>
+    </bean>
+    <bean id="taskMqJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="taskMq"/>
+        <property name="cronExpression" value="0 0 1 * * ?"/>
+    </bean>
+
+    <bean id="taskLabelCount" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.info.web.util.JobDetailBean" />
+        <property name="durability" value="true" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="targetObject" value="taskJob" />
+                <entry key="targetMethod" value="customerLabelCount" />
+            </map>
+        </property>
+    </bean>
+    <bean id="taskLabelCountJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="taskLabelCount"/>
+        <property name="cronExpression" value="0 30 23 * * ?"/>
+    </bean>
+</beans>

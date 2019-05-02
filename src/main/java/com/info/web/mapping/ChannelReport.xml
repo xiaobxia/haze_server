@@ -1,0 +1,941 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.web.dao.IChannelReportDao">
+	<resultMap id="BaseResultMap" type="com.info.web.pojo.ChannelReport">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="report_date" property="reportDate" />
+		<result column="register_count" property="registerCount" />
+		<result column="ulh_register_count" property="ulhRegisterCount" />
+		<result column="android_count" property="androidCount" />
+		<result column="ulh_android_count" property="ulhAndroidCount" />
+		<result column="ios_count" property="iosCount" />
+		<result column="pc_count" property="pcCount" />
+		<result column="attestation_realname_count" property="attestationRealnameCount" />
+		<result column="attestation_bank_count" property="attestationBankCount" />
+		<result column="contact_count" property="contactCount" />
+		<result column="jxl_count" property="jxlCount" />
+		<result column="alipay_count" property="alipayCount" />
+		<result column="zhima_count" property="zhimaCount" />
+		<result column="company_count" property="companyCount" />
+		<result column="borrow_apply_count" property="borrowApplyCount" />
+		<result column="borrow_suc_count" property="borrowSucCount" />
+		<result column="borrow_rate" property="borrowRate" />
+		<result column="pass_rate" property="passRate" />
+		<result column="into_money" property="intoMoney" />
+		<result column="new_into_money" property="newIntoMoney" />
+		<result column="old_into_money" property="oldIntoMoney" />
+		<result column="approve_error_count" property="approveErrorCount" />
+		<result column="channelid" property="channelid" />
+		<result column="black_user_count" property="blackUserCount" />
+		<result column="late_day_count" property="lateDayCount" />
+		<result column="late_day_sumCount" property="lateDaySumCount" />
+		<result column="channel_money" property="channelMoney" />
+		<result column="created_at" property="createdAt" />
+		<result column="day_realname_count" property="dayRealnameCount" />
+		<result column="day_bank_count" property="dayBankCount" />
+		<result column="day_contact_count" property="dayContactCount" />
+		<result column="day_td_count" property="dayTdCount" />
+		<result column="day_alipay_count" property="dayAlipayCount" />
+		<result column="day_zhima_count" property="dayZhimaCount" />
+		<result column="day_company_count" property="dayCompanyCount" />
+		<result column="day_black_user_count" property="dayBlackUserCount" />
+		<result column="day_borrow_apply_count" property="dayBorrowApplyCount" />
+		<result column="day_borrow_suc_count" property="dayBorrowSucCount" />
+		<result column="day_overdue_count" property="dayOverdueCount" />
+		<result column="borrow_apply_out_count" property="borrowApplyOutCount"/>
+		<result column="borrow_suc_out_count" property="borrowSucOutCount"/>
+		<result column="pass_rate_out" property="passRateOut"/>
+		<result column="borrow_rate_out" property="borrowRateOut"/>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		report_date,register_count,android_count,ios_count,pc_count,attestation_realname_count,attestation_bank_count,contact_count,jxl_count,alipay_count,zhima_count,
+		company_count,borrow_apply_count,borrow_suc_count,borrow_suc_count,pass_rate,into_money,new_into_money,old_into_money,approve_error_count,channelid,borrow_rate,created_at
+	</sql>
+
+
+	<sql id="Sql">
+		<where>
+			<if test="channelid != null and channelid != ''">
+				and a.channelid= #{channelid}
+			</if>
+			<if test="channelCode != null and channelCode != ''">
+				and b.channel_code = #{channelCode}
+			</if>
+			<if test="channelName != null and channelName != ''">
+				and b.channel_name= #{channelName}
+			</if>
+			<if test="superCode != null and superCode != ''">
+				and c.channel_super_code= #{superCode}
+			</if>
+			<if test="superChannelId != null and superChannelId != ''">
+				and c.id= #{superChannelId}
+			</if>
+
+			<if test="beginTime !=null and beginTime !=''">
+				<![CDATA[ and a.report_date >= str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+			</if>
+			<if test="endTime !=null and endTime !=''">
+				<![CDATA[ and a.report_date <= str_to_date(#{endTime},'%Y-%m-%d') ]]>
+			</if>
+
+            <if test="countDate != null and countDate != ''">
+                and a.report_date = #{countDate}
+            </if>
+		</where>
+	</sql>
+	<select id="getRegisterNow" parameterType="String" resultType="int">
+		select COUNT(1) from user_info where create_time  BETWEEN DATE_FORMAT(NOW(), '%Y-%m-%d') and date_add(NOW(), interval 1 day) and user_from = #{channelId}
+	</select>
+	<select id="getRegisterRealNow" parameterType="String" resultType="int">
+		select COUNT(1) from user_info where create_time  BETWEEN DATE_FORMAT(NOW(), '%Y-%m-%d') and date_add(NOW(), interval 1 day) and user_from = #{channelId} and realname_status=1
+	</select>
+	<select id="getChannelIdByCode" parameterType="String" resultType="String">
+		select id from channel_info where channel_code =#{channelCode}
+	</select>
+	<select id="findAllCount" resultType="Integer" parameterType="HashMap">
+
+		SELECT COUNT(1) FROM channel_report a
+		LEFT JOIN channel_info b ON
+		a.channelid = b.id
+		LEFT JOIN channel_super_info c ON b.channel_super_id = c.id
+
+		<include refid="Sql" />
+
+	</select>
+	<select id="findAll" resultMap="BaseResultMap" parameterType="HashMap">
+		SELECT a.*,b.channel_name AS channelName,c.channel_super_name AS channelSuperName FROM channel_report a
+		LEFT JOIN channel_info b ON a.channelid = b.id
+		LEFT JOIN channel_super_info c ON b.channel_super_id = c.id
+		<include refid="Sql" />
+		ORDER BY a.report_date DESC
+	</select>
+	<sql id="SumList">
+		b.channel_name AS channelName,b.channel_province ,
+		report_date,
+		SUM(a.register_count) AS register_count,
+		SUM(a.android_count) as android_count,
+		SUM(a.ios_count) as ios_count,
+		SUM(a.pc_count) as pc_count,
+		SUM(a.attestation_realname_count) AS attestation_realname_count,
+		SUM(a.attestation_bank_count) AS attestation_bank_count,
+		SUM(a.contact_count) AS contact_count,
+		SUM(a.jxl_count) AS jxl_count,
+		SUM(a.alipay_count) AS alipay_count,
+		SUM(a.zhima_count) AS zhima_count,
+		SUM(a.company_count) AS company_count,
+		SUM(a.borrow_apply_count) AS
+		borrow_apply_count,
+		SUM(a.borrow_suc_count) AS borrow_suc_count,
+		SUM(a.late_day_count) AS late_day_count,
+		SUM(a.black_user_count) AS
+		black_user_count,
+		SUM(a.late_day_sumCount) AS late_day_sumCount,
+		SUM(a.pass_rate) AS pass_rate,
+		SUM(a.into_money) AS into_money,
+		SUM(a.approve_error_count) AS approve_error_count,
+		channelid,b.channel_province as channelProvince,
+		b.channel_city AS
+		channelCity,b.channel_area as channelArea
+	</sql>
+	<select id="findSumAllCount" resultType="Integer" parameterType="HashMap">
+
+		SELECT COUNT(1) FROM (SELECT
+		COUNT(1)
+		FROM channel_report a
+		LEFT JOIN channel_info b ON a.channelid = b.id
+		left join channel_super_info c on c.id = b.channel_super_id
+		<include refid="Sql" />
+		GROUP BY channelid
+		ORDER BY a.report_date DESC) t
+
+	</select>
+	<select id="findSumAll" resultMap="BaseResultMap" parameterType="HashMap">
+		SELECT
+		<include refid="SumList" />
+		FROM channel_report a
+		LEFT JOIN channel_info b ON a.channelid = b.id
+		left join channel_super_info c on c.id = b.channel_super_id
+		<include refid="Sql" />
+		GROUP BY channelid
+		ORDER BY a.report_date DESC
+	</select>
+	<select id="findPrAllCount" resultType="Integer" parameterType="HashMap">
+
+		SELECT COUNT(1) FROM (SELECT COUNT(1) FROM channel_report a
+		LEFT JOIN
+		channel_info b ON a.channelid = b.id
+		<where>
+			b.channel_province !=''
+			<if test="channelid != null and channelid != ''">
+				and a.channelid= #{channelid}
+			</if>
+			<if test="channelCode != null and channelCode != ''">
+				and b.channel_code= #{channelCode}
+			</if>
+			<if test="channelProvince != null and channelProvince != ''">
+				and b.channel_province= #{channelProvince}
+			</if>
+			<if test="channelCity != null and channelCity != ''">
+				and b.channel_city= #{channelCity}
+			</if>
+			<if test="beginTime !=null and beginTime !=''">
+				<![CDATA[ and a.report_date >= str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+			</if>
+			<if test="endTime !=null and endTime !=''">
+				<![CDATA[ and a.report_date <= str_to_date(#{endTime},'%Y-%m-%d') ]]>
+			</if>
+		</where>
+		GROUP BY b.channel_city,a.report_date
+
+		) t
+
+	</select>
+	<select id="findPrAll" resultMap="BaseResultMap" parameterType="HashMap">
+		SELECT
+		<include refid="SumList" />
+		FROM channel_report a
+		LEFT JOIN channel_info b ON a.channelid = b.id
+		<where>
+			b.channel_province !=''
+			<if test="channelid != null and channelid != ''">
+				and a.channelid= #{channelid}
+			</if>
+			<if test="channelCode != null and channelCode != ''">
+				and b.channel_code= #{channelCode}
+			</if>
+			<if test="channelProvince != null and channelProvince != ''">
+				and b.channel_province= #{channelProvince}
+			</if>
+			<if test="channelCity != null and channelCity != ''">
+				and b.channel_city= #{channelCity}
+			</if>
+			<if test="beginTime !=null and beginTime !=''">
+				<![CDATA[ and a.report_date >= str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+			</if>
+			<if test="endTime !=null and endTime !=''">
+				<![CDATA[ and a.report_date <= str_to_date(#{endTime},'%Y-%m-%d') ]]>
+			</if>
+		</where>
+		GROUP BY b.channel_city,a.report_date
+		ORDER BY a.report_date DESC
+	</select>
+	<select id="findChannelId" resultMap="BaseResultMap"
+			parameterType="HashMap">
+
+		SELECT id AS channelId,rate_id AS rateId FROM channel_info a WHERE a.status = 1
+
+	</select>
+
+
+    <select id="findOtherCount" resultType="java.util.HashMap"
+            parameterType="HashMap">
+        SELECT a.user_phone, a.user_from
+        FROM
+        user_info a
+        WHERE
+        a.user_from in
+        <foreach item="item" index="index" collection="channelids"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        <if test="countAndroid != null">
+            and a.brower_type = 1
+			and <![CDATA[a.create_time > #{startDate} and a.create_time < #{startDateChangeEnd}]]>
+        </if>
+        <if test="countRealname != null">
+            and a.realname_status = 1
+            and <![CDATA[a.realname_time > #{startDate} and a.realname_time < #{startDateChangeEnd}]]>
+        </if>
+        <if test="coutRegist != null">
+            and <![CDATA[a.create_time > #{startDate} and a.create_time < #{startDateChangeEnd}]]>
+        </if>
+    </select>
+
+
+    <select id="findOtherBorrowApplyOutCount" resultType="java.util.HashMap"
+            parameterType="HashMap">
+        SELECT
+        a.user_from, a.user_phone
+        FROM
+        user_info a
+        INNER JOIN asset_borrow_order e ON
+        e.user_id = a.id
+        WHERE
+        a.customer_type = 0
+        and a.user_from in
+        <foreach item="item" index="index" collection="channelids"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        <if test="countSuc == null">
+            and e.created_at between str_to_date(#{startDate},'%Y-%m-%d') and date_add(#{startDate}, interval 1 day)
+        </if>
+        <if test="countSuc != null">
+            and e.loan_time like CONCAT(#{startDate},'%')
+            and e.status in
+            <foreach item="item" index="index" collection="inStatus" open="("
+                     separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        GROUP BY e.user_id
+    </select>
+
+	<select id="findRegisterCount" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT a.user_from as userFrom,COUNT(1) as count
+		FROM
+		user_info a
+		WHERE
+		a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and <![CDATA[a.create_time > #{startDate} and a.create_time < #{startDateChangeEnd}]]>
+		GROUP BY a.user_from
+	</select>
+
+	<select id="findAndroidCount" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT a.user_from as userFrom,COUNT(1) as count
+		FROM
+		user_info a
+		WHERE
+		a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and a.brower_type = 1
+		and <![CDATA[a.create_time > #{startDate} and a.create_time < #{startDateChangeEnd}]]>
+		GROUP BY a.user_from
+	</select>
+
+	<select id="findIosCount" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT a.user_from as userFrom,COUNT(1) as count
+		FROM
+		user_info a
+		WHERE
+		a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and a.brower_type = 2
+		and <![CDATA[a.create_time > #{startDate} and a.create_time < #{startDateChangeEnd}]]>
+		GROUP BY a.user_from
+	</select>
+
+	<select id="findPcCount" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT a.user_from as userFrom,COUNT(1) as count
+		FROM
+		user_info a
+		WHERE
+		a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and a.brower_type = 3
+		and <![CDATA[a.create_time > #{startDate} and a.create_time < #{startDateChangeEnd}]]>
+		GROUP BY a.user_from
+	</select>
+
+	<select id="findRealNameCount" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT a.user_from as userFrom,COUNT(1) as count
+		FROM
+		user_info a
+		WHERE
+		a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and a.realname_status = 1
+		and <![CDATA[a.realname_time > #{startDate} and a.realname_time < #{startDateChangeEnd}]]>
+		<if test="day != null and day != ''">
+			and <![CDATA[a.create_time > #{startDate} and a.create_time < #{startDateChangeEnd}]]>
+		</if>
+		GROUP BY a.user_from
+	</select>
+
+	<select id="findJXLCount" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT a.user_from as userFrom,COUNT(1) as count
+		FROM
+		user_info a
+		WHERE
+		a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and a.jxl_status = 2
+		and <![CDATA[a.jxl_token_time > #{startDate} and a.jxl_token_time < #{startDateChangeEnd}]]>
+		GROUP BY a.user_from
+	</select>
+	<select id="findTDCount" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT a.user_from as userFrom,COUNT(1) as count
+		FROM
+		user_info a
+		WHERE
+		a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="day != null and day != ''">
+			and <![CDATA[a.create_time > #{startDate} and a.create_time < #{startDateChangeEnd}]]>
+		</if>
+		and a.td_status = 2
+		and <![CDATA[a.td_verify_time > #{startDate} and a.td_verify_time < #{startDateChangeEnd}]]>
+		GROUP BY a.user_from
+	</select>
+
+
+	<select id="findZMCount" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT a.user_from as userFrom,COUNT(1) as count
+		FROM
+		user_info a
+		WHERE
+		a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="day != null and day != ''">
+			and <![CDATA[a.create_time > #{startDate} and a.create_time < #{startDateChangeEnd}]]>
+		</if>
+		and a.zm_status = 2
+		and <![CDATA[a.zm_score_time > #{startDate} and a.zm_score_time < #{startDateChangeEnd}]]>
+		GROUP BY a.user_from
+	</select>
+	<select id="findCompanyCount" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT a.user_from as userFrom,COUNT(1) as count
+		FROM
+		user_info a
+		WHERE
+		a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and <![CDATA[a.realname_time > #{startDate} and a.realname_time < #{startDateChangeEnd}]]>
+		<if test="day != null and day != ''">
+			and <![CDATA[a.create_time > #{startDate} and a.create_time < #{startDateChangeEnd}]]>
+		</if>
+		and a.company_address IS NOT null AND a.company_address_distinct IS
+		NOT NULL
+		AND a.company_name IS NOT NULL AND a.company_period IS NOT null AND
+		a.company_phone IS NOT null
+		GROUP BY a.user_from
+
+	</select>
+	<select id="findContactCount" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT a.user_from as userFrom,COUNT(1) as count
+		FROM
+		user_info a
+		WHERE
+		a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and <![CDATA[a.realname_time > #{startDate} and a.realname_time < #{startDateChangeEnd}]]>
+		<if test="day != null and day != ''">
+			and <![CDATA[a.create_time > #{startDate} and a.create_time < #{startDateChangeEnd}]]>
+		</if>
+		and a.first_contact_phone IS NOT NULL AND a.second_contact_phone IS
+		NOT NULL
+		GROUP BY a.user_from
+
+	</select>
+	<select id="findBankCount" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+
+		SELECT a.user_from as userFrom,COUNT(1) as count
+		FROM
+		user_info a
+		LEFT JOIN user_card_info e ON a.id = e.user_id
+		WHERE a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and e.status =1
+		and <![CDATA[e.create_time > #{startDate} and e.create_time < #{startDateChangeEnd}]]>
+		<if test="day != null and day != ''">
+			and <![CDATA[a.create_time > #{startDate} and a.create_time < #{startDateChangeEnd}]]>
+		</if>
+		GROUP BY a.user_from
+	</select>
+	<select id="findAlipayCount" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT a.user_from as userFrom,COUNT(1) as count
+		FROM
+		user_info a
+		WHERE
+		a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and <![CDATA[a.zm_score_time > #{startDate} and a.zm_score_time < #{startDateChangeEnd}]]>
+		<if test="day != null and day != ''">
+			and <![CDATA[a.create_time > #{startDate} and a.create_time < #{startDateChangeEnd}]]>
+		</if>
+		and a.zm_score_time IS NOT NULL
+		GROUP BY a.user_from
+	</select>
+	<select id="findApproveErrorCount" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT a.user_from as userFrom,COUNT(1) as count
+		FROM
+		user_info a
+		WHERE
+		a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<![CDATA[	AND a.my_hb_time >= #{startDate} AND a.my_hb_time <= #{endDate} ]]>
+		and a.my_hb_time IS NOT NULL
+		GROUP BY a.user_from
+	</select>
+	<select id="findBorrowApplyCount" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT t.user_from as userFrom,COUNT(1) as count FROM (SELECT
+		e.user_id,a.user_from
+		FROM
+		user_info a
+		INNER JOIN asset_borrow_order e ON
+		e.user_id = a.id
+		WHERE a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="day != null and day != ''">
+			and a.create_time between str_to_date(#{startDate},'%Y-%m-%d') and date_add(#{startDate}, interval 1 day)
+		</if>
+		and e.created_at between str_to_date(#{startDate},'%Y-%m-%d') and date_add(#{startDate}, interval 1 day)
+		GROUP BY e.user_id) t
+		GROUP BY t.user_from
+	</select>
+	<select id="findBorrowApplyOutCount" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT t.user_from as userFrom,COUNT(1) as count FROM (SELECT
+		e.user_id,a.user_from
+		FROM
+		user_info a
+		INNER JOIN asset_borrow_order e ON
+		e.user_id = a.id
+		WHERE
+		a.customer_type = 0
+		and a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="day != null and day != ''">
+			and a.create_time between str_to_date(#{startDate},'%Y-%m-%d') and date_add(#{startDate}, interval 1 day)
+		</if>
+		and e.created_at between str_to_date(#{startDate},'%Y-%m-%d') and date_add(#{startDate}, interval 1 day)
+		GROUP BY e.user_id) t
+		GROUP BY t.user_from
+	</select>
+
+	<select id="findBorrowSucCount" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT t.user_from as userFrom,COUNT(1) as count FROM (SELECT
+		e.user_id,a.user_from
+		FROM
+		user_info a
+		INNER JOIN asset_borrow_order e ON
+		e.user_id = a.id
+		WHERE a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="day != null and day != ''">
+			and a.create_time between str_to_date(#{startDate},'%Y-%m-%d') and date_add(#{startDate}, interval 1 day)
+		</if>
+		and e.loan_time like CONCAT(#{startDate},'%')
+		and e.status in
+		<foreach item="item" index="index" collection="inStatus" open="("
+				 separator="," close=")">
+			#{item}
+		</foreach>
+		GROUP BY e.user_id) t
+		GROUP BY t.user_from
+
+	</select>
+	<select id="findBorrowSucOutCount" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT t.user_from as userFrom,COUNT(1) as count FROM (SELECT
+		e.user_id,a.user_from
+		FROM
+		user_info a
+		INNER JOIN asset_borrow_order e ON
+		e.user_id = a.id
+		WHERE
+		a.customer_type = 0
+		and a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="day != null and day != ''">
+			and a.create_time between str_to_date(#{startDate},'%Y-%m-%d') and date_add(#{startDate}, interval 1 day)
+		</if>
+		and e.loan_time like CONCAT(#{startDate},'%')
+		and e.status in
+		<foreach item="item" index="index" collection="inStatus" open="("
+				 separator="," close=")">
+			#{item}
+		</foreach>
+		GROUP BY e.user_id) t
+		GROUP BY t.user_from
+
+	</select>
+	<select id="findIntoMoney" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT a.user_from as userFrom,IFNULL(SUM(e.money_amount),0) AS
+		moneyAmount
+		FROM
+		user_info a
+		INNER JOIN asset_borrow_order e ON e.user_id
+		= a.id
+		WHERE a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and <![CDATA[e.loan_time > #{startDate} and e.loan_time < #{startDateChangeEnd}]]>
+		and e.status in
+		<foreach item="item" index="index" collection="inStatus" open="("
+				 separator="," close=")">
+			#{item}
+		</foreach>
+		GROUP BY a.user_from
+	</select>
+
+	<select id="findNewIntoMoney" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT a.user_from as userFrom,IFNULL(SUM(e.money_amount),0) AS
+		moneyAmount
+		FROM
+		user_info a
+		INNER JOIN asset_borrow_order e ON e.user_id
+		= a.id
+		WHERE a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and <![CDATA[e.loan_time > #{startDate} and e.loan_time < #{startDateChangeEnd}]]>
+		and e.status in
+		<foreach item="item" index="index" collection="inStatus" open="("
+				 separator="," close=")">
+			#{item}
+		</foreach>
+		and e.customer_type = #{newcustomerType}
+		GROUP BY a.user_from
+	</select>
+	<select id="findOldIntoMoney" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT a.user_from as userFrom,IFNULL(SUM(e.money_amount),0) AS
+		moneyAmount
+		FROM
+		user_info a
+		INNER JOIN asset_borrow_order e ON e.user_id
+		= a.id
+		WHERE a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and <![CDATA[e.loan_time > #{startDate} and e.loan_time < #{startDateChangeEnd}]]>
+		and e.status in
+		<foreach item="item" index="index" collection="inStatus" open="("
+				 separator="," close=")">
+			#{item}
+		</foreach>
+		and e.customer_type = #{oldcustomerType}
+		GROUP BY a.user_from
+	</select>
+	<select id="findBlackUserCount" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT t.user_from as userFrom,COUNT(1) as count FROM (SELECT
+		e.user_id,a.user_from
+		FROM
+		user_info a
+		INNER JOIN risk_black_user e ON
+		e.user_id = a.id
+		WHERE a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and <![CDATA[e.add_time > #{startDate} and e.add_time < #{startDateChangeEnd}]]>
+		<if test="day != null and day != ''">
+			and <![CDATA[a.create_time > #{startDate} and a.create_time < #{startDateChangeEnd}]]>
+		</if>
+		and e.black_type=1
+		GROUP BY e.user_id) t
+		GROUP BY t.user_from
+	</select>
+	<select id="findlateDayCount" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT a.user_from as userFrom,COUNT(1) as count
+		FROM
+		user_info a
+		INNER
+		JOIN asset_repayment e ON e.user_id = a.id
+		WHERE a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and <![CDATA[e.late_fee_start_time > #{startDate} and e.late_fee_start_time < #{startDateChangeEnd}]]>
+		GROUP BY a.user_from
+	</select>
+
+	<select id="findChannelById" resultMap="BaseResultMap"
+			parameterType="java.lang.Integer">
+		select *
+		FROM channel_report
+		WHERE id = #{id}
+	</select>
+
+	<insert id="insert" parameterType="com.info.web.pojo.ChannelReport">
+		INSERT INTO
+		`channel_report`
+		(report_date,
+		register_count,
+		ulh_register_count,
+		android_count,
+		ulh_android_count,
+		ios_count,
+		pc_count,
+		attestation_realname_count,
+		attestation_bank_count,
+		contact_count,
+		jxl_count,
+		alipay_count,
+		zhima_count,
+		company_count,
+		borrow_apply_count,
+		borrow_suc_count,
+		pass_rate,
+		into_money,
+		new_into_money ,
+		old_into_money ,
+		approve_error_count,
+		channelid,
+		black_user_count,
+		late_day_count,
+		borrow_rate,
+		channel_money,
+		created_at,
+		day_realname_count,
+		day_bank_count,
+		day_contact_count,
+		day_td_count,
+		day_alipay_count,
+		day_zhima_count,
+		day_company_count,
+		day_black_user_count,
+		day_borrow_apply_count,
+		day_borrow_suc_count,
+		day_overdue_count,
+		borrow_apply_out_count,
+		borrow_suc_out_count,
+		pass_rate_out,
+		borrow_rate_out)
+		VALUES (
+		#{reportDate},
+		#{registerCount},
+		#{ulhRegisterCount},
+		#{androidCount},
+		#{ulhAndroidCount},
+		#{iosCount},
+		#{pcCount},
+		#{attestationRealnameCount},
+		#{attestationBankCount},
+		#{contactCount},
+		#{jxlCount},
+		#{alipayCount},
+		#{zhimaCount},
+		#{companyCount},
+		#{borrowApplyCount},
+		#{borrowSucCount},
+		#{passRate},
+		#{intoMoney},
+		#{newIntoMoney},
+		#{oldIntoMoney},
+		#{approveErrorCount},
+		#{channelid},
+		#{blackUserCount},
+		#{lateDayCount},
+		#{borrowRate},
+		#{channelMoney},
+		now(),
+		#{dayRealnameCount},
+		#{dayBankCount},
+		#{dayContactCount},
+		#{dayTdCount},
+		#{dayAlipayCount},
+		#{dayZhimaCount},
+		#{dayCompanyCount},
+		#{dayBlackUserCount},
+		#{dayBorrowApplyCount},
+		#{dayBorrowSucCount},
+		#{dayOverdueCount},
+		#{borrowApplyOutCount},
+		#{borrowSucOutCount},
+		#{passRateOut},
+		#{borrowRateOut}
+		);
+	</insert>
+	<delete id="deleteByChannelReport" parameterType="com.info.web.pojo.ChannelReport">
+		DELETE
+		FROM channel_report
+		WHERE channelid = #{channelid}
+		and <![CDATA[report_date= DATE_FORMAT(#{reportDate},'%Y-%m-%d')]]>
+	</delete>
+
+	<select id="registerCount" resultType="java.lang.Integer" parameterType="map">
+		select count(0) from user_info a
+		where a.user_from = #{userFrom}
+		and <![CDATA[a.create_time > #{startDate} and a.create_time < #{startDateChangeEnd}]]>
+	</select>
+	<select id="androidCount" resultType="java.lang.Integer" parameterType="map">
+		select count(0) from user_info a
+		where a.user_from = #{userFrom}
+		and a.brower_type = '1'
+		and <![CDATA[a.create_time > #{startDate} and a.create_time < #{startDateChangeEnd}]]>
+	</select>
+	<select id="iosCount" resultType="java.lang.Integer" parameterType="map">
+		select count(0) from user_info a
+		where a.user_from = #{userFrom}
+		and a.brower_type = '2'
+		and <![CDATA[a.create_time > #{startDate} and a.create_time < #{startDateChangeEnd}]]>
+	</select>
+	<select id="pcCount" resultType="java.lang.Integer" parameterType="map">
+		select count(0) from user_info a
+		where a.user_from = #{userFrom}
+		and a.brower_type = '3'
+		and <![CDATA[a.create_time > #{startDate} and a.create_time < #{startDateChangeEnd}]]>
+	</select>
+	<select id="attestationRealnameCount" resultType="java.lang.Integer" parameterType="map">
+		select count(0) from user_info a
+		where a.user_from = #{userFrom}
+		and a.realname_status = '1'
+		and <![CDATA[a.realname_time > #{startDate} and a.realname_time < #{startDateChangeEnd}]]>
+	</select>
+	<select id="jxlCount" resultType="java.lang.Integer" parameterType="map">
+		select count(0) from user_info a
+		where a.user_from = #{userFrom}
+		and a.td_status = '2'
+		and <![CDATA[a.td_verify_time > #{startDate} and a.td_verify_time < #{startDateChangeEnd}]]>
+	</select>
+	<select id="zhimaCount" resultType="java.lang.Integer" parameterType="map">
+		select count(0) from user_info a
+		where a.user_from = #{userFrom}
+		and a.zm_status = '2'
+		and <![CDATA[a.zm_score_time > #{startDate} and a.zm_score_time < #{startDateChangeEnd}]]>
+	</select>
+	<select id="contactCount" resultType="java.lang.Integer" parameterType="map">
+		select count(0) from user_info a where a.user_from = #{userFrom} and a.zm_status = '2'
+		and <![CDATA[a.realname_time > #{startDate} and a.realname_time < #{startDateChangeEnd}]]>
+		and a.first_contact_phone is not null and a.second_contact_phone is not null
+	</select>
+	<select id="companyCount" resultType="java.lang.Integer" parameterType="map">
+		select count(0) from user_info a where a.user_from = #{userFrom} and a.zm_status = '2'
+		 and <![CDATA[a.realname_time > #{startDate} and a.realname_time < #{startDateChangeEnd}]]>
+		and  a.company_name is not null and a.company_period is not null and a.company_phone is not null
+	</select>
+	<select id="attestationBankCount" resultType="java.lang.Integer" parameterType="map">
+		select count(0) from user_info a,user_card_info e
+		where a.id = e.user_id and a.user_from = #{userFrom} and e.status = '1'
+		and <![CDATA[e.create_time > #{startDate} and e.create_time < #{startDateChangeEnd}]]>
+	</select>
+	<select id="alipayCount" resultType="java.lang.Integer" parameterType="map">
+		select count(0) from user_info a where a.user_from = #{userFrom}
+		and <![CDATA[a.zm_score_time > #{startDate} and a.zm_score_time < #{startDateChangeEnd}]]>
+	</select>
+	<select id="borrowApplyCount" resultType="java.lang.Integer" parameterType="map">
+		select count(0) from user_info a,asset_borrow_order d
+		where a.id = d.user_id and a.user_from = #{userFrom}
+		and <![CDATA[d.created_at > #{startDate} and d.created_at < #{startDateChangeEnd}]]>
+	</select>
+	<select id="borrowSucCount" resultType="java.lang.Integer" parameterType="map">
+		select count(0) from user_info a,asset_borrow_order d
+		where a.id = d.user_id and d.status in (21,23,30,34,11,-20) and a.user_from = #{userFrom}
+		and <![CDATA[d.loan_time > #{startDate} and d.loan_time < #{startDateChangeEnd}]]>
+	</select>
+	<select id="intoMoney" resultType="java.lang.Integer" parameterType="map">
+		select sum(d.money_amount) from user_info a,asset_borrow_order d
+		where a.id = d.user_id and d.status in (21,23,30,34,11,-20)
+		and a.user_from = #{userFrom}
+		and <![CDATA[d.loan_time > #{startDate} and d.loan_time < #{startDateChangeEnd}]]>
+	</select>
+	<select id="newIntoMoney" resultType="java.lang.Integer" parameterType="map">
+		select sum(d.money_amount) from user_info a,asset_borrow_order d
+		where a.id = d.user_id and d.status in (21,23,30,34,11,-20) and d.customer_type = 0
+		and a.user_from = #{userFrom}
+		and <![CDATA[d.loan_time > #{startDate} and d.loan_time < #{startDateChangeEnd}]]>
+	</select>
+	<select id="oldIntoMoney" resultType="java.lang.Integer" parameterType="map">
+		select sum(d.money_amount) from user_info a,asset_borrow_order d
+		where a.id = d.user_id and d.status in (21,23,30,34,11,-20) and d.customer_type = 1
+		and a.user_from = #{userFrom}
+		and <![CDATA[d.loan_time > #{startDate} and d.loan_time < #{startDateChangeEnd}]]>
+	</select>
+	<select id="blackUserCount" resultType="java.lang.Integer" parameterType="map">
+		select count(0) from user_info a,risk_black_user f
+		where a.id = f.user_id and f.black_type = 1
+		and a.user_from = #{userFrom}
+		and <![CDATA[f.add_time > #{startDate} and f.add_time < #{startDateChangeEnd}]]>
+	</select>
+	<select id="lateDayCount" resultType="java.lang.Integer" parameterType="map">
+		select count(0) from user_info a,asset_repayment g
+		where a.id = g.user_id
+		and a.user_from = #{userFrom}
+		and <![CDATA[g.late_fee_start_time > #{startDate} and g.late_fee_start_time < #{startDateChangeEnd}]]>
+	</select>
+
+	<select id="dayOverdueCount" resultType="java.util.HashMap" parameterType="map">
+		SELECT b.user_from as userFrom, count(1) as count
+		FROM `asset_repayment` ar, user_info b where ar.`user_id` = b.`id` and ar.`status` = -11 and b.`customer_type` = 0 and
+	 	date_add(date(ar.`first_repayment_time`),INTERVAL 1 day) = #{startDate}
+		and ar.renewal_count = 0 GROUP BY b.user_from
+	</select>
+
+	<select id="dayOverdueRepayedCount" resultType="java.util.HashMap" parameterType="map">
+        SELECT  u.user_from as userFrom, count(1) as count
+        from asset_repayment ar inner JOIN user_info u on ar.user_id = u.id INNER JOIN
+        (SELECT b.user_id, count(1) num from asset_repayment b where b.status in (30,34) GROUP BY b.user_id) ac on u.id=ac.user_id
+        where ar.user_id = u.id and u.id = ac.user_id and ar.late_day = 1
+        and date(ar.repayment_real_time) = #{startDate} and ar.renewal_count = 0 and ac.num = 1
+        GROUP BY u.user_from
+    </select>
+
+	<select id="dayOverdueRenewalCount" resultType="java.util.HashMap" parameterType="map">
+		SELECT u.user_from as userFrom, count(1) as count from asset_repayment a  INNER JOIN user_info u on a.user_id = u.id
+		where renewal_count = 1 and a.`status` = 21 and u.`customer_type` = 0 and EXISTS (SELECT * from asset_renewal_record arr
+		where arr.asset_repayment_id = a.id and arr.status = 1
+		and DATE(arr.created_at) = date(#{startDate}) and arr.plan_late_fee = a.late_fee_apr*10) GROUP BY u.user_from
+	</select>
+</mapper>
