@@ -21,14 +21,14 @@ public class RocketMqUtil {
         Properties properties = new Properties();
         properties.setProperty(PropertyKeyConst.GROUP_ID, "GID_AI_MESSAGE");
         // AccessKey 阿里云身份验证，在阿里云服务器管理控制台创建
-        properties.put(PropertyKeyConst.AccessKey,"LTAI8hToTndRsFAL");
+        properties.put(PropertyKeyConst.AccessKey,"LTAIU2TLHViOwb9v");
         // SecretKey 阿里云身份验证，在阿里云服务器管理控制台创建
-        properties.put(PropertyKeyConst.SecretKey, "ab8Wf9BVwWWbc6dJKemMWQTjagqTt2");
+        properties.put(PropertyKeyConst.SecretKey, "z4vKbsW3o9k2Bolt9RrmR5PDvgXSQv");
         //设置发送超时时间，单位毫秒
         properties.setProperty(PropertyKeyConst.SendMsgTimeoutMillis, "3000");
         // 设置 TCP 接入域名，到控制台的实例基本信息中查看
         properties.put(PropertyKeyConst.NAMESRV_ADDR,
-                "http://onsaddr.mq-internet-access.mq-internet.aliyuncs.com:80");
+                "http://MQ_INST_1144756263127949_BaeOSf5Q.mq-internet-access.mq-internet.aliyuncs.com:");
 
         Producer producer = ONSFactory.createProducer(properties);
         // 在发送消息前，必须调用 start 方法来启动 Producer，只需调用一次即可
@@ -70,14 +70,14 @@ public class RocketMqUtil {
         Properties properties = new Properties();
         properties.setProperty(PropertyKeyConst.GROUP_ID, PropertiesUtil.get("GROUP_ID"));
         // AccessKey 阿里云身份验证，在阿里云服务器管理控制台创建
-        properties.put(PropertyKeyConst.AccessKey,"LTAI8hToTndRsFAL");
+        properties.put(PropertyKeyConst.AccessKey,"LTAIU2TLHViOwb9v");
         // SecretKey 阿里云身份验证，在阿里云服务器管理控制台创建
-        properties.put(PropertyKeyConst.SecretKey, "ab8Wf9BVwWWbc6dJKemMWQTjagqTt2");
+        properties.put(PropertyKeyConst.SecretKey, "z4vKbsW3o9k2Bolt9RrmR5PDvgXSQv");
         //设置发送超时时间，单位毫秒
         properties.setProperty(PropertyKeyConst.SendMsgTimeoutMillis, "3000");
         // 设置 TCP 接入域名，到控制台的实例基本信息中查看
         properties.put(PropertyKeyConst.NAMESRV_ADDR,
-                "http://onsaddr.mq-internet-access.mq-internet.aliyuncs.com:80");
+                "http://MQ_INST_1144756263127949_BaeOSf5Q.mq-internet-access.mq-internet.aliyuncs.com:80");
 
         Producer producer = ONSFactory.createProducer(properties);
         // 在发送消息前，必须调用 start 方法来启动 Producer，只需调用一次即可
