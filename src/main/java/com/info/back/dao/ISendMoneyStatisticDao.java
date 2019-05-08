@@ -22,4 +22,7 @@ public interface ISendMoneyStatisticDao {
 	public List<Integer> findRiskOrdersToday();
 	public List<Integer> findDjsOrdersToday();
 	public List<Integer> findOldToday(String customerType);
+	Map<String,Object> findAllPendingRepayMoney(String number);
+	Map<String,Object> findTodayMoneyCount(String status);
+	Integer applyCountToday();
 }

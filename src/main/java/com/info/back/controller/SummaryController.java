@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.info.web.pojo.MyPageReportInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ import com.info.web.controller.BaseController;
 import com.info.web.pojo.PlatformReport;
 import com.info.web.util.DateUtil;
 import com.info.web.util.PageConfig;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 @Slf4j
 @Controller
@@ -188,5 +191,16 @@ public class SummaryController extends BaseController {
 			log.error("导出excel失败:{}", e);
 		}
 
+	}
+
+	/**
+	 * 运营后台首页
+	 * @return
+	 */
+	@RequestMapping(value="/myPageReportInfo")
+	@ResponseBody
+	public MyPageReportInfo myPageReportInfo(){
+		MyPageReportInfo myPageReportInfo= backStatisticService.findMyPageReportInfo();
+       return myPageReportInfo;
 	}
 }

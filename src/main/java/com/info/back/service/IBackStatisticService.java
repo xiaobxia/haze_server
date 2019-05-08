@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.info.web.pojo.MyPageReportInfo;
 import com.info.web.pojo.PlatformReport;
 import com.info.web.util.PageConfig;
 
@@ -69,4 +70,6 @@ public interface IBackStatisticService {
 	 * @return
 	 */
 	Map<String, Object> findOldToday(String customerType);
+
+	MyPageReportInfo findMyPageReportInfo();
 }

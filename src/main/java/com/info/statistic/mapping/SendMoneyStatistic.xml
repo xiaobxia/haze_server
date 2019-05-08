@@ -46,6 +46,10 @@
      SELECT count(1) as borrowCountToday FROM asset_borrow_order t
 		WHERE status=0 and order_time LIKE CONCAT(DATE_FORMAT(NOW(), '%Y-%m-%d'),'%')
     </select>
+	<select id="applyCountToday" resultType="Integer">
+		  SELECT count(1) as borrowCountToday FROM asset_borrow_order t
+		WHERE status=0 and order_time =DATE_FORMAT(NOW(), '%Y-%m-%d')
+	</select>
 <!--    1.老用户当天申请的总数，创建时间是当天；2.老用户当天申请且状态不是待审核(被审过)；3.放款审核时间是当天且是通过状态-->
      <select id="findOldToday" resultType="Integer" parameterType="String">
 	  <![CDATA[ 
@@ -63,4 +67,16 @@
 		 AND  b.`customer_type`=#{customerType}
 		 ]]>  
    	 </select>
+	<select id="findAllPendingRepayMoney" resultType="map" parameterType="String">
+     select sum(repayment_amount) as money,count(id) as countnumber
+      from  asset_repayment where status in (#{number})
+	</select>
+	<select id="findTodayMoneyCount" resultType="map" parameterType="String">
+		select sum(repayment_amount) as money,count(id) as countNumber
+          from asset_repayment  where repayment_time= DATE_FORMAT(NOW(), '%Y-%m-%d')
+          <if test="_parameter != null and _parameter != ''">
+			  and status in(#{status})
+		  </if>
+	</select>
+
 </mapper>
