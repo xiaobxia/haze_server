@@ -1,8 +1,10 @@
 package com.info.back.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -22,7 +24,11 @@ public interface ISendMoneyStatisticDao {
 	public List<Integer> findRiskOrdersToday();
 	public List<Integer> findDjsOrdersToday();
 	public List<Integer> findOldToday(String customerType);
-	Map<String,Object> findAllPendingRepayMoney(String number);
-	Map<String,Object> findTodayMoneyCount(String status);
+	Map<String,Object> findAllPendingRepayMoney(Integer number);
+	Map<String,Object> findTodayMoneyCount(Integer status);
 	Integer applyCountToday();
+	BigDecimal lateMoney(@Param("fristNumber") Integer fristNumber, @Param("endNumbers") Integer endNumbers);
+    BigDecimal threeMoney();
+    Map<String,Object> extendToday();
+    Map<String,Object> reBorrow();
 }

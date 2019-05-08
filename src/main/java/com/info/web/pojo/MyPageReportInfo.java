@@ -73,7 +73,7 @@ public class MyPageReportInfo {
     /**
      * 总用户注册百分比
      */
-    private BigDecimal allRegistPercentage;
+    private Long allRegistPercentage;
     /**
      * 当天注册用户数
      */
@@ -271,11 +271,10 @@ public class MyPageReportInfo {
         this.allRegistCount = allRegistCount;
     }
 
-    public BigDecimal getAllRegistPercentage() {
+    public Long getAllRegistPercentage() {
         return allRegistPercentage;
     }
-
-    public void setAllRegistPercentage(BigDecimal allRegistPercentage) {
+    public void setAllRegistPercentage(long allRegistPercentage) {
         this.allRegistPercentage = allRegistPercentage;
     }
 

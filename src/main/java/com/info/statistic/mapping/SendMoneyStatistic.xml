@@ -67,16 +67,63 @@
 		 AND  b.`customer_type`=#{customerType}
 		 ]]>  
    	 </select>
-	<select id="findAllPendingRepayMoney" resultType="map" parameterType="String">
+	<select id="findAllPendingRepayMoney" resultType="map" parameterType="Integer">
      select sum(repayment_amount) as money,count(id) as countnumber
-      from  asset_repayment where status in (#{number})
+      from  asset_repayment where 1=1
+      <if test="number =1">
+           and status in(21,-11,-20)
+	  </if>
+	  <if test="number =2">
+         and status in (23,30,34)
+	  </if>
+	  <if test="number = 3">
+		  and status =21
+	  </if>
 	</select>
-	<select id="findTodayMoneyCount" resultType="map" parameterType="String">
+	<select id="findTodayMoneyCount" resultType="map" parameterType="Integer">
 		select sum(repayment_amount) as money,count(id) as countNumber
           from asset_repayment  where repayment_time= DATE_FORMAT(NOW(), '%Y-%m-%d')
           <if test="_parameter != null and _parameter != ''">
-			  and status in(#{status})
+			  and status =#{status}
 		  </if>
 	</select>
-
+    <select id="lateMoney" resultType="java.math.BigDecimal" parameterType="Integer">
+		select sum(repayment_amount) from asset_repayment
+		where 1=1
+		<if test="fristNumber != null and fristNumber != ''">
+			and late_day &gt; fristNumber
+		</if>
+		<if test="endNumbers != null and endNumbers != ''">
+            and late_day &lt; endNumbers
+		</if>
+	</select>
+	<select id="threeMoney" resultType="java.math.BigDecimal">
+		SELECT
+			sum( repayment_amount )
+		FROM
+			asset_repayment
+		WHERE
+			repayment_time BETWEEN ( SELECT date_sub( curdate( ), INTERVAL 2 DAY ) )
+			AND DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+	</select>
+	<select id="extendToday" resultType="map">
+		SELECT
+			sum( renewal_fee ) AS extendMoney,
+			count( id ) AS extendCount
+		FROM
+			asset_renewal_record
+		WHERE
+			old_repayment_time = DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+	</select>
+	<select id="reBorrow" resultType="map">
+		SELECT
+			count( id ) AS reBorrowCount,
+			sum( money_amount ) AS reBorrowMoney
+		FROM
+			asset_borrow_order
+		WHERE
+			customer_type = 1
+			AND STATUS = 21
+			AND loan_time = DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+	</select>
 </mapper>
