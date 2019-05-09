@@ -41,6 +41,224 @@
 			top: 90px
 		}
 	</style>
+	<style>
+		.index-page-wrap {
+			position: relative;
+			margin: auto;
+			width: 1100px;
+			padding: 26px 20px;
+		}
+		.index-page-wrap *{
+			font-size: 16px;
+		}
+		.index-page-wrap .left-main {
+			display: inline-block;
+			width:700px;
+			vertical-align: top;
+			margin-right: 60px;
+		}
+		.index-page-wrap .right-main {
+			display: inline-block;
+			width:330px;
+			vertical-align: top;
+		}
+		.main-title {
+			margin-bottom: 26px;
+			font-size: 18px;
+		}
+		.main-title img{
+			height: 18px;
+			width: auto;
+			margin-right: 10px;
+			vertical-align: bottom;
+		}
+		.circle-card {
+			display: inline-block;
+			margin-bottom: 26px;
+			box-sizing: border-box;
+			padding: 13px 20px;
+			background-color: #fff;
+			box-shadow: 0 0 20px rgb(223, 223, 223);
+			border-radius: 4px;
+			width:330px;
+			height:100px;
+		}
+		.circle-card.left {
+			margin-right: 33px;
+		}
+		.circle-card .circle-wrap {
+			display: inline-block;
+			width: 74px;
+			height: 74px;
+		}
+		.circle-card .detail-wrap {
+			display: inline-block;
+			text-align: right;
+			width: 210px;
+			vertical-align: top;
+		}
+		.circle-card .detail-wrap .number{
+			font-size: 30px;
+			font-weight:400;
+			margin-bottom: 5px;
+		}
+		.number.blue {
+			color: #528DFF;
+		}
+		.number.green {
+			color: #28C189;
+		}
+		.number.yellow {
+			color: #FF9600;
+		}
+		.number.red {
+			color: #F05D5D;
+		}
+		.circle-card .detail-wrap .text{
+			font-size: 18px;
+			color: #7D7D7D;
+		}
+
+		.info-card {
+			box-sizing: border-box;
+			padding: 0 20px;
+			background-color: #fff;
+			box-shadow: 0 0 20px rgb(223, 223, 223);
+			border-radius: 5px;
+			width:700px;
+			height:172px;
+			font-size: 16px;
+			color: #888888;
+		}
+		.info-card .row{
+			border-bottom: 1px solid rgba(223, 223, 223, 1);
+		}
+		.info-card .row:last-child{
+			border-bottom: 0;
+		}
+		.info-card .info-item{
+			box-sizing: border-box;
+			display: inline-block;
+			padding: 15px 0;
+			width: 300px;
+			height: 58px;
+			position: relative;
+		}
+		.info-card .info-item span:nth-of-type(3) {
+			float: right;
+		}
+		.info-card .info-item .fix {
+			position: absolute;
+			left: 80px;
+		}
+		.info-card .info-item span:nth-of-type(2) {
+			margin-left: 30px;
+		}
+		.text-tag {
+			color: #fff;
+			padding: 3px 10px;
+			border-radius:3px;
+		}
+		.text-tag.yellow-tag {
+			background-color: rgba(255,150,0,1);
+		}
+		.text-tag.red-tag {
+			background-color: #F85252;
+		}
+		.info-card .info-item.left{
+			margin-right: 50px;
+		}
+		.info-card .text-tag {
+
+		}
+		.notice-wrap {
+			border: 2px solid #528DFF;
+			border-radius: 8px;
+		}
+		.notice-wrap .title.title-active{
+			background-color: #528DFF;
+			border-radius: 6px 6px 0 0;
+		}
+		.notice-wrap .title.title-active-2{
+			background-color: #75A4FF;
+			border-radius: 0;
+		}
+		.notice-wrap .title{
+			padding: 20px 26px;
+			background-color: #89B1FF;
+			color: #fff;
+			font-size: 15px;
+			border-radius: 0 0 6px 6px;
+			position: relative;
+		}
+		.notice-wrap .title .left{
+			display: inline-block;
+		}
+		.notice-wrap .title .right{
+			display: inline-block;
+			float: right;
+		}
+		.notice-wrap .title.title-active span:nth-of-type(3){
+			float: right;
+		}
+		.notice-wrap .title.title-active span:nth-of-type(2){
+			position: absolute;
+			left: 180px;
+		}
+		.notice-wrap .main-wrap {
+			padding: 0 24px 50px 24px;
+			box-sizing: border-box;
+			color: #4C4C4C;
+		}
+		.notice-wrap .item {
+			box-sizing: border-box;
+			padding: 12px 0;
+			display: inline-block;
+			width: 116px;
+			border-bottom: 1px solid rgb(233,233,233);
+			color: #4C4C4C;
+			font-size: 12px;
+		}
+		.notice-wrap .sub-item {
+			box-sizing: border-box;
+			padding: 12px 0;
+			display: inline-block;
+			width: 116px;
+			border-bottom: 1px solid rgb(233,233,233);
+			color: #888888;
+			font-size: 12px;
+		}
+		.notice-wrap .item.left {
+			margin-right: 40px;
+		}
+		.notice-wrap .sub-item.left {
+			margin-right: 40px;
+		}
+		.notice-wrap .item .icon {
+			display: inline-block;
+			margin-right: 8px;
+			vertical-align: baseline;
+		}
+		.notice-wrap .item .icon img{
+			width: 14px;
+			height: 14px;
+		}
+		.notice-wrap .item .text {
+			display: inline-block;
+		}
+		.notice-wrap .item .text .up-down-icon{
+			margin-top: 4px;
+			float: right;
+		}
+		.notice-wrap .sub-item .text {
+			margin-left: 40px;
+		}
+		.up-down-icon {
+			margin-left: 8px;
+			width: 9px;
+			height: 9px;
+		}
+	</style>
 	<script src="${basePath }/js/dwz.ui.js" type="text/javascript"></script>
 	<script src="${basePath }/js/speedup.js" type="text/javascript"></script>
 	<script src="${basePath }/js/jquery-1.7.2.js" type="text/javascript"></script>
@@ -95,71 +313,195 @@
                 });
 
             $.getJSON("summary/summaryBorrow?type=riskToday", function(data) {
-                console.log("123"+data);
-                $.each(data, function(val, item) {
-                    $("#"+val).html(addCommas(item,false));
-                    console.log(data);
-                });
-            });
-            $.getJSON("summary/summaryUser?type=approve&secondType=allApprove", function(data) {
-                $.each(data, function(val, item) {
-                    $("#"+val).html(addCommas(item,false));
-                });
-            });
-            $.getJSON("summary/summaryUser?type=approve&secondType=realName", function(data) {
-                $.each(data, function(val, item) {
-                    $("#"+val).html(addCommas(item,false));
-                });
-            });
-            $.getJSON("summary/summaryUser?type=approve&secondType=bank", function(data) {
-                $.each(data, function(val, item) {
-                    $("#"+val).html(addCommas(item,false));
-                });
-            });
-            $.getJSON("summary/summaryUser?type=approve&secondType=zm", function(data) {
-                $.each(data, function(val, item) {
-                    $("#"+val).html(addCommas(item,false));
-                });
-            });
-            $.getJSON("summary/summaryUser?type=approve&secondType=mobile", function(data) {
-                $.each(data, function(val, item) {
-                    $("#"+val).html(addCommas(item,false));
-                });
-            });
-            $.getJSON("summary/summaryUser?type=approve&secondType=contacat", function(data) {
-                $.each(data, function(val, item) {
-                    $("#"+val).html(addCommas(item,false));
-                });
-            });
-            //$.getJSON("summary/summaryBorrow?type=riskUser", function(data) {
-            //$.each(data, function(val, item) {
-            //$("#"+val).html(addCommas(item,false));
-            //});
-            //});
-            $.getJSON("summary/summaryUser?type=regUser", function(data) {
-                $.each(data, function(val, item) {
-                    $("#"+val).html(addCommas(item,false));
-                });
-            });
-            $.getJSON("summary/summaryBorrow?type=borrow", function(data) {
-                $.each(data, function(val, item) {
-                    $("#"+val).html(addCommas(item,false));
-                });
-            });
-            $.getJSON("summary/summaryBorrow?type=loan", function(data) {
-                $.each(data, function(val, item) {
-                    $("#"+val).html(addCommas(item,false));
-                });
-            });
-            $.getJSON("summary/summaryBorrow?type=risk", function(data) {
-                $.each(data, function(val, item) {
-                    $("#"+val).html(addCommas(item,false));
-                });
-            });
-            $.getJSON("summary/summaryBorrow?type=old&customerType=1", function(data) {
-                $.each(data, function(val, item) {
-                    $("#"+val).html(addCommas(item,false));
-                });
+                console.log(data)
+
+				function formatNumToThree(str) {
+					str = '' + (str|| 0)
+					var newStr = "";
+					var count = 0;
+					// 当数字是整数
+					if (str.indexOf(".") === -1) {
+						for (var i = str.length - 1; i >= 0; i--) {
+							if (count % 3 === 0 && count !== 0) {
+								newStr = str.charAt(i) + "," + newStr;
+							} else {
+								newStr = str.charAt(i) + newStr;
+							}
+							count++;
+						}
+						str = newStr;
+						return str;
+					}
+					// 当数字带有小数
+					else {
+						for (var j = str.indexOf(".") - 1; j >= 0; j--) {
+							if (count % 3 === 0 && count !== 0) {
+								newStr = str.charAt(j) + "," + newStr;
+							} else {
+								newStr = str.charAt(j) + newStr; //逐个字符相接起来
+							}
+							count++;
+						}
+						str = newStr + (str + "00").substr((str + "00").indexOf("."), 3);
+						return str;
+					}
+				}
+
+				(function($, window, undefined) {
+					$.fn.ringChart = function(curr, total, numText, color) {
+						var canvasWH = 37
+						var canvasHH = 37
+						var canvas = $(this).get(0);
+						var constrast = parseFloat(curr/total).toFixed(2); //比例
+						var context = null;
+						if ( !canvas.getContext) {
+							return;
+						}
+						// 定义开始点的大小
+						var startArc = Math.PI*1.5;
+						// 根据占的比例画圆弧
+						var endArc = (Math.PI * 2) * constrast;
+						context = canvas.getContext("2d");
+						// 圆心文字
+						context.font="14px Arial";
+						context.fillStyle = '#333333';
+						context.textBaseline = 'middle';
+						var text=numText;
+						var tw=context.measureText(text).width;
+						context.fillText(text,canvasWH-tw/2,canvasHH + 2);
+						// 绘制背景圆
+						context.save();
+						context.beginPath();
+						context.strokeStyle = "#e7e7e7";
+						context.lineWidth = "5";
+						context.arc(canvasWH, canvasHH, canvasWH - 5, 0, Math.PI * 2, false);
+						context.closePath();
+						context.stroke();
+						context.restore();
+						// 若为百分零则不必再绘制比例圆
+						if ( curr / total === 0) {
+							return;
+						}
+						// 绘制比例圆
+						context.save();
+						context.beginPath();
+						context.strokeStyle = color;
+						context.lineWidth = "5";
+						context.arc(canvasWH, canvasHH, canvasWH - 5, startArc, ((endArc+startArc)), false);
+						context.stroke();
+						context.restore();
+					}
+				})($, window);
+
+
+				function renderChart (indexInfo) {
+					// 累计放款笔数
+					$('#ljfkje-c').ringChart(100, 100, indexInfo.allLoanCount, '#528DFF');
+					// 已回款笔数
+					$("#yhkje-c").ringChart(indexInfo.allRepayMoney, indexInfo.allLoanMoney, indexInfo.allRepayCount, '#28C189');
+// 待回款笔数
+					$('#dhkje-c').ringChart(indexInfo.allPendingRepayMoney, indexInfo.allLoanMoney, indexInfo.allRepaymentCount, '#FF9600');
+// 未逾期待收笔数
+					$('#wyqdsje-c').ringChart(indexInfo.allOverMoney, indexInfo.allLoanMoney, indexInfo.allOverCount, '#F05D5D');
+				}
+
+				function renderNumber(indexInfo) {
+					// 累计放款金额
+					$('#ljfkje-n').text('¥ ' + formatNumToThree(indexInfo.allLoanMoney))
+					// 已回款金额
+					$('#yhkje-n').text('¥ ' + formatNumToThree(indexInfo.allRepayMoney))
+					// 待回款金额
+					$('#dhkje-n').text('¥ ' + formatNumToThree(indexInfo.allPendingRepayMoney))
+					// 未逾期待收金额
+					$('#wyqdsje-n').text('¥ ' + formatNumToThree(indexInfo.allOverMoney))
+					// 3天内到期
+					$('#stndq-n').text('¥ ' + formatNumToThree(indexInfo.threeExpireMoney))
+					// 放款失败金额
+					$('#fksbje-n').text('¥ ' + formatNumToThree(indexInfo.failLoanMoney))
+					// 放款失败笔数
+					$('#fksbbs-n').text(formatNumToThree(indexInfo.failLoanCount))
+					// 逾期1~3天
+					$('#uqydst-n').text('¥ ' + formatNumToThree(indexInfo.s1Money))
+					// 逾期3~7天
+					$('#uqsdqt-n').text('¥ ' + formatNumToThree(indexInfo.s2Money))
+					// 逾期7~15天
+					$('#uqqdswt-n').text('¥ ' + formatNumToThree(indexInfo.s3Money))
+					// 逾期15天以上
+					$('#uqswtys-n').text('¥ ' + formatNumToThree(indexInfo.s4Money))
+
+
+					// 总用户量
+					$('#zyhl').text(formatNumToThree(indexInfo.allRegistCount))
+					// 涨幅
+					var zyhlImg = ''
+					if (indexInfo.allRegistPercentage > 0) {
+						zyhlImg = '<img class="up-down-icon" src="./img/箭头2.png">'
+					}
+					if (indexInfo.allRegistPercentage < 0) {
+						zyhlImg = '<img class="up-down-icon" src="./img/箭头1.png">'
+					}
+					$('#zyhl-b').html(indexInfo.allRegistPercentage + '%' + zyhlImg)
+					// 当日注册用户数
+					$('#drzcyhs').text(formatNumToThree(indexInfo.registCount))
+					// 当日申请用户数
+					$('#drsqyhs').text(formatNumToThree(indexInfo.applyCount))
+					// 当日放款金额
+					$('#drfkje').text('¥ ' + formatNumToThree(indexInfo.loanMoney))
+					// 当日放款订单
+					$('#drfkdd').text(formatNumToThree(indexInfo.loanCount))
+					// 当日复借金额
+					$('#drfjje-n').text('¥ ' + formatNumToThree(indexInfo.reBorrowMoney))
+					// 当日复借订单
+					$('#drfjdd').text(formatNumToThree(indexInfo.reBorrowCount))
+					// 当日到期金额
+					$('#drdqje').text('¥ ' + formatNumToThree(indexInfo.pendingRepayMoney))
+					// 当日到期订单
+					$('#drdqdd').text(formatNumToThree(indexInfo.pendingRepayCount))
+					// 全额还款金额
+					$('#qehkje').text('¥ ' + formatNumToThree(indexInfo.repyMoney))
+					// 全额还款订单
+					$('#eqhkdd').text(formatNumToThree(indexInfo.repyCount))
+					// 当日展期金额
+					$('#drzqje').text('¥ ' + formatNumToThree(indexInfo.extendMoney))
+					// 当日展期订单
+					$('#drzqdd').text(formatNumToThree(indexInfo.extendCount))
+					// 当日待收金额
+					$('#drdsje').text('¥ ' + formatNumToThree(indexInfo.pendingMoney))
+					// 当日待收订单
+					$('#drdsdd').text(formatNumToThree(indexInfo.pendingCount))
+					// 当日放款率
+					var drfklImg = ''
+					if (indexInfo.loanPercentage > 0) {
+						drfklImg = '<img class="up-down-icon" src="./img/箭头2.png">'
+					}
+					if (indexInfo.loanPercentage < 0) {
+						drfklImg = '<img class="up-down-icon" src="./img/箭头1.png">'
+					}
+					$('#drfkl').html(indexInfo.loanPercentage + '%' + drfklImg)
+
+					// 当日通过率
+					var drtglImg = ''
+					if (indexInfo.passPercentage > 0) {
+						drtglImg = '<img class="up-down-icon" src="./img/箭头2.png">'
+					}
+					if (indexInfo.passPercentage < 0) {
+						drtglImg = '<img class="up-down-icon" src="./img/箭头1.png">'
+					}
+					$('#drtgl').html(indexInfo.passPercentage + '%' + drtglImg)
+					// 当日回款率
+					var drhklImg = ''
+					if (indexInfo.repayPercentage > 0) {
+						drhklImg = '<img class="up-down-icon" src="./img/箭头2.png">'
+					}
+					if (indexInfo.repayPercentage < 0) {
+						drhklImg = '<img class="up-down-icon" src="./img/箭头1.png">'
+					}
+					$('#drhkl').html(indexInfo.repayPercentage + '%' + drhklImg)
+				}
+
+				renderNumber(data.indexInfo)
+
+				renderChart(data.indexInfo)
             });
         });
 
@@ -281,7 +623,7 @@
 			<ul class="tabsMoreList">
 				<li><a href="javascript:;">我的主页</a></li>
 			</ul>
-			<div style="height: 767px;" class="navTab-panel tabsPageContent layoutBox">
+			<div style="height: 767px; overflow: scroll" class="navTab-panel tabsPageContent layoutBox">
 				<div style="display: block;" class="page unitBox">
 					<div class="accountInfo" style="height: 35px;">
 						<div class="right">
@@ -292,399 +634,228 @@
 						</p>
 					</div>
 					<c:if test="${isShow==true}">
-					<div style="height: 747px; overflow: auto;" class="pageFormContent" layoutH="20">
-						<fieldset name="message" style="padding-bottom: 30px;">
-							<legend>用戶统计</legend>
-							<dl>
-								<dt class="pfc">总用户数：</dt>
-								<dd class="pfc">
-									<span class="unit" id="sumCount"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">人</span>
-								</dd>
-							</dl>
-							<dl>
-								<dt class="pfc">今日注册用户数：</dt>
-								<dd class="pfc">
-									<span class="unit loginCount" id="todayRegCount"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">人</span>
-								</dd>
-							</dl>
-							<dl>
-								<dt class="pfc">全要素认证用户数：</dt>
-								<dd class="pfc">
-									<span class="unit registerCount" id="allApprove"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">人</span>
-								</dd>
-							</dl>
-							<dl>
-								<dt class="pfc">实名认证用户总数：</dt>
-								<dd class="pfc">
-									<span class="unit registerAllCount" id="realName"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">人</span>
-								</dd>
-							</dl>
-							<dl>
-								<dt class="pfc">绑卡用户总数：</dt>
-								<dd class="pfc">
-									<span class="unit recharge" id="bank"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">人</span>
-								</dd>
-							</dl>
-							<dl>
-								<dt class="pfc">芝麻认证用户总数：</dt>
-								<dd class="pfc">
-									<span class="unit rechargeAll" id="zm"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">人</span>
-								</dd>
-							</dl>
-							<dl>
-								<dt class="pfc">运营商认证总数：</dt>
-								<dd class="pfc">
-									<span class="unit cash" id="mobile"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">人</span>
-								</dd>
-							</dl>
-							<dl>
-								<dt class="pfc">紧急联系人认证总数：</dt>
-								<dd class="pfc">
-									<span class="unit cashAll" id="contacat"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">人</span>
-								</dd>
-							</dl>
-								<%--<dl>
-                                    <dt class="pfc">累计平台总收益：</dt>
-                                    <dd class="pfc">
-                                        <span class="unit platformEarnings"></span>
-                                    </dd>
-                                    <dd id="xxtj" >
-                                        <span  class="unit1">元</span>
-                                    </dd>
-                                </dl>
-                                <dl>
-                                    <dt class="pfc">累计用户总收益：</dt>
-                                    <dd class="pfc">
-                                        <span class="unit userEarnings"></span>
-                                    </dd>
-                                    <dd id="xxtj" >
-                                        <span  class="unit1">元</span>
-                                    </dd>
-                                </dl>
-                            --%></fieldset>
-						<fieldset name="backlog" style="padding-bottom: 30px;">
-							<legend>放款统计</legend>
-							<dl title="放款成功">
-								<dt class="pfc">累计放款金额：</dt>
-								<dd class="pfc">
-									<span class="unit check" id="borrowMoney"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">元</span>
-								</dd>
-							</dl>
-							<dl>
-								<dt class="pfc">累计放款笔数：</dt>
-								<dd class="pfc">
-									<span class="unit dispose" id="borrowCount"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">笔</span>
-								</dd>
-							</dl>
-							<dl>
-								<dt class="pfc">当日放款金额：</dt>
-								<dd class="pfc">
-									<span class="unit publish" id="borrowMoneyToday"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">元</span>
-								</dd>
-							</dl>
-							<dl>
-								<dt class="pfc">当日放款笔数：</dt>
-								<dd class="pfc">
-									<span class="unit credit" id="borrowCountToday"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">笔</span>
-								</dd>
-							</dl>
-							<dl>
-								<dt class="pfc">放款中总金额：</dt>
-								<dd class="pfc">
-									<span class="unit userCheck" id="loaningMoney"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">元</span>
-								</dd>
-							</dl>
-							<dl>
-								<dt class="pfc">放款中笔数：</dt>
-								<dd class="pfc">
-									<span class="unit cashCheck" id="loaningCount"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">笔</span>
-								</dd>
-							</dl>
-
-							<dl>
-								<dt class="pfc">放款失败金额：</dt>
-								<dd class="pfc">
-									<span class="unit cashChechMoney" id="loanFailMoney"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">元</span>
-								</dd>
-							</dl>
-							<dl>
-								<dt class="pfc">放款失败笔数：</dt>
-								<dd class="pfc">
-									<span class="unit rechargeCheck" id="loanFailCount"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">笔</span>
-								</dd>
-							</dl>
-						</fieldset>
-						<fieldset name="backlog" style="padding-bottom: 30px;">
-							<legend>风控统计</legend>
-							<dl style="width: 33%" title="按照申请的订单数(非用户数)">
-								<dt class="pfc">机审累计订单数：</dt>
-								<dd class="pfc">
-									<span class="unit check" id="riskTotalOrders"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">笔</span>
-								</dd>
-							</dl>
-							<dl style="width: 33%"  title="仅统计机审通过的订单">
-								<dt class="pfc">机审通过累计订单数：</dt>
-								<dd class="pfc">
-									<span class="unit dispose" id="riskPassOrders"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">笔</span>
-								</dd>
-							</dl>
-							<dl style="width: 33%">
-								<dt class="pfc">机审订单通过率：</dt>
-								<dd class="pfc">
-									<span class="unit dispose" id="riskPassOrdersRate"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">%</span>
-								</dd>
-							</dl>
-							<dl style="width: 33%" title="按照用户数进行统计">
-								<dt class="pfc">今日机审订单数：</dt>
-								<dd class="pfc">
-									<span class="unit publish" id="riskOrdersTotalToday"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">笔</span>
-								</dd>
-							</dl>
-							<dl style="width: 33%"  title="机审推到人工复审不在此统计范围">
-								<dt class="pfc">今日机审通过订单数：</dt>
-								<dd class="pfc">
-									<span class="unit credit" id="riskOrdersPassToday"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">笔</span>
-								</dd>
-							</dl>
-							<dl style="width: 33%">
-								<dt class="pfc">今日机审通过率：</dt>
-								<dd class="pfc">
-									<span class="unit credit" id="riskOrdersPassRateToday"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">%</span>
-								</dd>
-							</dl>
-								<%--<dl style="width: 33%">
-                                    <dt class="pfc">今日老用户订单数：</dt>
-                                    <dd class="pfc">
-                                        <span class="unit publish" id="todayOldOrder"></span>
-                                    </dd>
-                                    <dd id="xxtj" >
-                                        <span  class="unit1">笔</span>
-                                    </dd>
-                                </dl>
-                                --%><dl style="width: 33%">
-							<dt class="pfc">今日老用户已审：</dt>
-							<dd class="pfc">
-								<span class="unit publish" id="todayOldOrderReview1"></span>
-							</dd>
-							<dd id="xxtj" >
-								<span  class="unit1">笔</span>
-							</dd>
-						</dl>
-							<dl style="width: 33%">
-								<dt class="pfc">今日老用户通过：</dt>
-								<dd class="pfc">
-									<span class="unit publish" id="todayOldOrderSuc1"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">笔</span>
-								</dd>
-							</dl>
-							<dl style="width: 33%">
-								<dt class="pfc">今日老用户通过率：</dt>
-								<dd class="pfc">
-									<span class="unit publish" id="todayOldOrderRate1"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">%</span>
-								</dd>
-							</dl>
-							<dl style="width: 33%">
-								<dt class="pfc">今日新用户已审：</dt>
-								<dd class="pfc">
-									<span class="unit publish" id="todayOldOrderReview0"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">笔</span>
-								</dd>
-							</dl>
-							<dl style="width: 33%">
-								<dt class="pfc">今日新用户通过：</dt>
-								<dd class="pfc">
-									<span class="unit publish" id="todayOldOrderSuc0"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">笔</span>
-								</dd>
-							</dl>
-							<dl style="width: 33%">
-								<dt class="pfc">今日新用户通过率：</dt>
-								<dd class="pfc">
-									<span class="unit publish" id="todayOldOrderRate0"></span>
-								</dd>
-								<dd id="xxtj" >
-									<span  class="unit1">%</span>
-								</dd>
-							</dl>
-							<!--
-                            <dl style="width: 33%" title="按照用户数进行统计">
-                                <dt class="pfc">机审用户数：</dt>
-                                <dd class="pfc">
-                                    <span class="unit publish" id="riskTotalUser"></span>
-                                </dd>
-                                <dd id="xxtj" >
-                                    <span  class="unit1">人</span>
-                                </dd>
-                            </dl>
-                            <dl style="width: 33%"  title="机审推到人工复审不在此统计范围">
-                                <dt class="pfc">机审通过用户数：</dt>
-                                <dd class="pfc">
-                                    <span class="unit credit" id="riskPassUser"></span>
-                                </dd>
-                                <dd id="xxtj" >
-                                    <span  class="unit1">人</span>
-                                </dd>
-                            </dl>
-                            <dl style="width: 33%">
-                                <dt class="pfc">机审用户通过率：</dt>
-                                <dd class="pfc">
-                                    <span class="unit credit" id="riskPassUserRate"></span>
-                                </dd>
-                                <dd id="xxtj" >
-                                    <span  class="unit1">%</span>
-                                </dd>
-                            </dl>
-                            --><%--<dl>
-									<dt class="pfc">放款中总金额：</dt>
-									<dd class="pfc">
-										<span class="unit userCheck" id="loaningMoney"></span>
-									</dd>
-									<dd id="xxtj" >
-                                    	<span  class="unit1">元</span>
-                                    </dd>
-								</dl>
-								<dl>
-									<dt class="pfc">放款中笔数：</dt>
-									<dd class="pfc">
-										<span class="unit cashCheck" id="loaningCount"></span>
-									</dd>
-									<dd id="xxtj" >
-                                    	<span  class="unit1">笔</span>
-                                    </dd>
-								</dl>
-								<dl>
-									<dt class="pfc">放款失败金额：</dt>
-									<dd class="pfc">
-										<span class="unit cashChechMoney" id="loanFailMoney"></span>
-									</dd>
-									<dd id="xxtj" >
-                                    	<span  class="unit1">元</span>
-                                    </dd>
-								</dl>
-								<dl>
-									<dt class="pfc">放款失败笔数：</dt>
-									<dd class="pfc">
-										<span class="unit rechargeCheck" id="loanFailCount"></span>
-									</dd>
-									<dd id="xxtj" >
-                                    	<span  class="unit1">笔</span>
-                                    </dd>
-								</dl>
-							--%></fieldset>
-
-						<!-- <fieldset>
-                            <legend>使用帮助</legend>
-                            <dl style="width:100%;">
-                                <dt>官方交流网站：</dt>
-                                <dd style="width:80%;">
-                                    <span class="unit"><a style="color:#008bed;" href="http://www.irongbao.com"
-                                        target="_blank"><u>http://www.irongbao.com</u></a></span>
-                                </dd>
-                            </dl>
-                        </fieldset> -->
-					</div>
+						<div style="font-size: 16px" class="index-page-wrap">
+							<div class="left-main">
+								<div class="main-title">
+									<img src="${basePath }/images/shouyeimg/总体概况.png" alt="">
+									<span>总体概况</span>
+								</div>
+								<div class="circle-card left">
+									<div class="circle-wrap">
+										<canvas class="myChart" id="ljfkje-c" width="74px" height="74px"></canvas>
+									</div>
+									<div class="detail-wrap">
+										<div id="ljfkje-n" class="number blue number-text">--</div>
+										<div class="text">累计放款金额/笔数</div>
+									</div>
+								</div>
+								<div class="circle-card">
+									<div class="circle-wrap">
+										<canvas class="myChart" id="yhkje-c" width="74px" height="74px"></canvas>
+									</div>
+									<div class="detail-wrap">
+										<div id="yhkje-n" class="number green number-text">--</div>
+										<div class="text">已回款金额/笔数</div>
+									</div>
+								</div>
+								<div class="circle-card left">
+									<div class="circle-wrap">
+										<canvas class="myChart" id="dhkje-c" width="74px" height="74px"></canvas>
+									</div>
+									<div class="detail-wrap">
+										<div id="dhkje-n" class="number yellow number-text">--</div>
+										<div class="text">待回款金额/笔数</div>
+									</div>
+								</div>
+								<div class="circle-card">
+									<div class="circle-wrap">
+										<canvas class="myChart" id="wyqdsje-c" width="74px" height="74px"></canvas>
+									</div>
+									<div class="detail-wrap">
+										<div id="wyqdsje-n" class="number red number-text">--</div>
+										<div class="text">未逾期待收金额/笔数</div>
+									</div>
+								</div>
+								<div class="main-title" style="margin-top: 30px">
+									<img src="${basePath }/images/shouyeimg/逾期数据.png" alt="">
+									<span>逾期数据</span>
+								</div>
+								<div class="info-card">
+									<div class="row">
+										<div class="info-item left">
+											<span>3天内到期</span>
+											<span id="stndq-n" class="fix number-text">--</span>
+											<span class="yellow-tag text-tag">即将到期</span>
+										</div>
+										<div class="info-item">
+											<span>放款失败金额/笔数</span>
+											<span id="fksbje-n" class="number-text">--</span>
+											<span id="fksbbs-n" class="number-text">--</span>
+										</div>
+									</div>
+									<div class="row">
+										<div class="info-item left">
+											<span>逾期1~3天</span>
+											<span id="uqydst-n" class="fix number-text">--</span>
+											<span class="red-tag text-tag">逾期</span>
+										</div>
+										<div class="info-item">
+											<span>逾期3~7天</span>
+											<span id="uqsdqt-n" class="fix number-text">--</span>
+											<span class="red-tag text-tag">逾期</span>
+										</div>
+									</div>
+									<div class="row">
+										<div class="info-item left">
+											<span>逾期7~15天</span>
+											<span id="uqqdswt-n" class="fix number-text">--</span>
+											<span class="red-tag text-tag">逾期</span>
+										</div>
+										<div class="info-item">
+											<span>逾期15天以上</span>
+											<span id="uqswtys-n" class="fix number-text">--</span>
+											<span class="red-tag text-tag">逾期</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="right-main">
+								<div class="main-title">
+									<img src="${basePath }/images/shouyeimg/当日运营数据.png" alt="">
+									<span>当日运营数据</span>
+								</div>
+								<div class="notice-wrap">
+									<div class="title title-active">
+										<span>总用户量</span>
+										<span id="zyhl" class="number-text">--</span>
+										<span id="zyhl-b">--</span>
+									</div>
+									<div class="title title-active-2">
+										<div class="left">
+											<div>当日注册用户数</div>
+											<div id="drzcyhs" class="number-text">--</div>
+										</div>
+										<div class="right">
+											<div>当日申请用户数</div>
+											<div id="drsqyhs" class="number-text">--</div>
+										</div>
+									</div>
+									<div class="title">
+										<div class="left">
+											<div>当日放款金额</div>
+											<div id="drfkje" class="number-text">--</div>
+										</div>
+										<div class="right">
+											<div>当日放款订单</div>
+											<div id="drfkdd" class="number-text">223</div>
+										</div>
+									</div>
+									<div class="main-wrap">
+										<div class="item left">
+											<div class="icon">
+												<img src="${basePath }/images/shouyeimg/当日放款金额.png" alt="">
+											</div>
+											<div class="text">
+												<div>当日复借金额</div>
+												<div id="drfjje-n" class="number-text">¥ 12344</div>
+											</div>
+										</div>
+										<div class="item">
+											<div class="icon">
+												<img src="${basePath }/images/shouyeimg/当日放款订单.png" alt="">
+											</div>
+											<div class="text">
+												<div>当日复借订单</div>
+												<div id="drfjdd" class="number-text">12344</div>
+											</div>
+										</div>
+										<div class="item left">
+											<div class="icon">
+												<img src="${basePath }/images/shouyeimg/当日到期金额.png" alt="">
+											</div>
+											<div class="text">
+												<div>当日到期金额</div>
+												<div id="drdqje" class="number-text">¥ 12344</div>
+											</div>
+										</div>
+										<div class="item">
+											<div class="icon">
+												<img src="${basePath }/images/shouyeimg/当日到期订单.png" alt="">
+											</div>
+											<div class="text">
+												<div>当日到期订单</div>
+												<div id="drdqdd" class="number-text">12344</div>
+											</div>
+										</div>
+										<div class="sub-item left">
+											<div class="text">
+												<div>全额还款金额</div>
+												<div id="qehkje" class="number-text">12344</div>
+											</div>
+										</div>
+										<div class="sub-item">
+											<div class="text">
+												<div>全额还款订单</div>
+												<div id="eqhkdd" class="number-text">12344</div>
+											</div>
+										</div>
+										<div class="sub-item left">
+											<div class="text">
+												<div>当日展期金额</div>
+												<div id="drzqje" class="number-text">12344</div>
+											</div>
+										</div>
+										<div class="sub-item">
+											<div class="text">
+												<div>当日展期订单</div>
+												<div id="drzqdd" class="number-text">12344</div>
+											</div>
+										</div>
+										<div class="sub-item left">
+											<div class="text">
+												<div>当日待收金额</div>
+												<div id="drdsje" class="number-text">12344</div>
+											</div>
+										</div>
+										<div class="sub-item">
+											<div class="text">
+												<div>当日待收订单</div>
+												<div id="drdsdd" class="number-text">12344</div>
+											</div>
+										</div>
+										<div class="item left">
+											<div class="icon">
+												<img src="${basePath }/images/shouyeimg/当日放款率.png" alt="">
+											</div>
+											<div class="text">
+												<div>当日放款率</div>
+												<div id="drfkl" class="number-text">12344</div>
+											</div>
+										</div>
+										<div class="item">
+											<div class="icon">
+												<img src="${basePath }/images/shouyeimg/当日通过率.png" alt="">
+											</div>
+											<div class="text">
+												<div>当日通过率</div>
+												<div id="drtgl" class="number-text">12344</div>
+											</div>
+										</div>
+										<div class="item left">
+											<div class="icon">
+												<img src="${basePath }/images/shouyeimg/当日回款率.png" alt="">
+											</div>
+											<div class="text">
+												<div>当日回款率</div>
+												<div id="drhkl" class="number-text">12344</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</c:if>
 				</div>
-				</c:if>
-				<c:if test="${isShow==true}">
-					<div style="height: 747px; overflow: auto;" class="pageFormContent" layoutH="20">
-					<fieldset name="backlog" style="padding-bottom: 30px;">
-						<legend>放款统计</legend>
-						<dl>
-							<dt class="pfc">放款失败金额：</dt>
-							<dd class="pfc">
-								<span class="unit cashChechMoney" id="loanFailMoney"></span>
-							</dd>
-							<dd id="xxtj" >
-								<span  class="unit1">元</span>
-							</dd>
-						</dl>
-						<dl>
-							<dt class="pfc">放款失败笔数：</dt>
-							<dd class="pfc">
-								<span class="unit rechargeCheck" id="loanFailCount"></span>
-							</dd>
-							<dd id="xxtj" >
-								<span  class="unit1">笔</span>
-							</dd>
-						</dl>
-					</fieldset>
-					</div>
-				</c:if>
 			</div>
 		</div>
 	</div>
@@ -694,6 +865,8 @@
 <div id="footer" s>
 	Copyright &copy; 2019-2020  技术支持：小鱼儿<a href="#" target="_blank"></a>
 </div>
+<script type="text/javascript">
 
+</script>
 </body>
 </html>
