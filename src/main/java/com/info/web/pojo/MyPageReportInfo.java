@@ -143,6 +143,8 @@ public class MyPageReportInfo {
      */
     private long reBorrowCount;
 
+
+
     public BigDecimal getAllLoanMoney() {
         return allLoanMoney;
     }
