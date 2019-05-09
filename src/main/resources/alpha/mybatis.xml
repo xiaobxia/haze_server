@@ -46,7 +46,7 @@
         <typeAlias type="com.info.web.pojo.UserContacts" alias="UserContacts"/>
         <typeAlias type="com.info.web.pojo.Content" alias="Content"/>
         <typeAlias type="com.info.web.pojo.NoticeRelease" alias="NoticeRelease"/>
-
+        <typeAlias type="com.info.web.pojo.MyPageReportInfo" alias="MypageReportInfo"/>
 
         <typeAlias type="com.info.web.pojo.BorrowOrder" alias="BorrowOrder"/>
         <typeAlias type="com.info.web.pojo.BorrowOrderDevice" alias="BorrowOrderDevice"/>

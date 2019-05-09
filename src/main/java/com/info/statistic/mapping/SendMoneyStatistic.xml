@@ -87,14 +87,14 @@
 			  and status =#{status}
 		  </if>
 	</select>
-    <select id="lateMoney" resultType="java.math.BigDecimal" parameterType="Integer">
+    <select id="lateMoney" resultType="java.math.BigDecimal" >
 		select sum(repayment_amount) from asset_repayment
 		where 1=1
 		<if test="fristNumber != null and fristNumber != ''">
-			and late_day &gt; fristNumber
+			and late_day &gt; #{fristNumber}
 		</if>
 		<if test="endNumbers != null and endNumbers != ''">
-            and late_day &lt; endNumbers
+            and late_day &lt; #{endNumbers}
 		</if>
 	</select>
 	<select id="threeMoney" resultType="java.math.BigDecimal">

@@ -13,7 +13,7 @@ public class MyPageReportInfo {
     /**
      * 总放款数量
      */
-    private Integer allLoanCount;
+    private long allLoanCount;
     /**
      * 总待回款金额
      */
@@ -21,7 +21,7 @@ public class MyPageReportInfo {
     /**
      * 总待回款笔数
      */
-    private Integer allRepaymentCount;
+    private long allRepaymentCount;
     /**
      *总已还款金额
      */
@@ -29,7 +29,7 @@ public class MyPageReportInfo {
     /**
      * 总已还款数量
      */
-    private Integer allRepayCount;
+    private long allRepayCount;
     /**
      * 总未逾期待收金额
      */
@@ -37,7 +37,7 @@ public class MyPageReportInfo {
     /**
      * 总未逾期待收笔数
      */
-    private Integer allOverCount;
+    private long allOverCount;
     /**
      * 三天内到期金额
      */
@@ -49,7 +49,7 @@ public class MyPageReportInfo {
     /**
      * 放款失败笔数
      */
-    private Integer failLoanCount;
+    private long failLoanCount;
     /**
      * 逾期1-3天总金额
      */
@@ -69,15 +69,15 @@ public class MyPageReportInfo {
     /**
      * 总用户注册数
      */
-    private Integer allRegistCount;
+    private long allRegistCount;
     /**
      * 总用户注册百分比
      */
-    private Long allRegistPercentage;
+    private long allRegistPercentage;
     /**
      * 当天注册用户数
      */
-    private Integer registCount;
+    private long registCount;
     /**
      * 当日申请用户数
      */
@@ -89,7 +89,7 @@ public class MyPageReportInfo {
     /**
      * 当日放款笔数
      */
-    private Integer loanCount;
+    private long loanCount;
     /**
      * 当日到期金额
      */
@@ -97,7 +97,7 @@ public class MyPageReportInfo {
     /**
      * 当日到期笔数
      */
-    private Integer pendingRepayCount;
+    private long pendingRepayCount;
     /**
      *全部还款金额(当日已还金额)
      */
@@ -105,7 +105,7 @@ public class MyPageReportInfo {
     /**
      * 全部还款订单（当日已还订单）
      */
-    private Integer repyCount;
+    private long repyCount;
     /**
      * 当日展期金额
      */
@@ -113,7 +113,7 @@ public class MyPageReportInfo {
     /**
      * 当日展期订单
      */
-    private Integer extendCount;
+    private long extendCount;
     /**
      * 当日待收金额（当日未还金额）
      */
@@ -121,19 +121,19 @@ public class MyPageReportInfo {
     /**
      * 当日待收订单
      */
-    private Integer pendingCount;
+    private long pendingCount;
     /**
      * 当日放款率
      */
-    private  Long loanPercentage;
+    private  long loanPercentage;
     /**
      * 当日通过率
      */
-    private Long passPercentage;
+    private long passPercentage;
     /**
      * 当日回款率
      */
-    private Long repayPercentage;
+    private long repayPercentage;
     /**
      * 当日复借金额
      */
@@ -141,7 +141,7 @@ public class MyPageReportInfo {
     /**
      * 当日复借订单数
      */
-    private Integer reBorrowCount;
+    private long reBorrowCount;
 
     public BigDecimal getAllLoanMoney() {
         return allLoanMoney;
@@ -151,11 +151,11 @@ public class MyPageReportInfo {
         this.allLoanMoney = allLoanMoney;
     }
 
-    public Integer getAllLoanCount() {
+    public long getAllLoanCount() {
         return allLoanCount;
     }
 
-    public void setAllLoanCount(Integer allLoanCount) {
+    public void setAllLoanCount(long allLoanCount) {
         this.allLoanCount = allLoanCount;
     }
 
@@ -167,11 +167,11 @@ public class MyPageReportInfo {
         this.allPendingRepayMoney = allPendingRepayMoney;
     }
 
-    public Integer getAllRepaymentCount() {
+    public long getAllRepaymentCount() {
         return allRepaymentCount;
     }
 
-    public void setAllRepaymentCount(Integer allRepaymentCount) {
+    public void setAllRepaymentCount(long allRepaymentCount) {
         this.allRepaymentCount = allRepaymentCount;
     }
 
@@ -183,11 +183,11 @@ public class MyPageReportInfo {
         this.allRepayMoney = allRepayMoney;
     }
 
-    public Integer getAllRepayCount() {
+    public long getAllRepayCount() {
         return allRepayCount;
     }
 
-    public void setAllRepayCount(Integer allRepayCount) {
+    public void setAllRepayCount(long allRepayCount) {
         this.allRepayCount = allRepayCount;
     }
 
@@ -199,11 +199,11 @@ public class MyPageReportInfo {
         this.allOverMoney = allOverMoney;
     }
 
-    public Integer getAllOverCount() {
+    public long getAllOverCount() {
         return allOverCount;
     }
 
-    public void setAllOverCount(Integer allOverCount) {
+    public void setAllOverCount(long allOverCount) {
         this.allOverCount = allOverCount;
     }
 
@@ -223,11 +223,11 @@ public class MyPageReportInfo {
         this.failLoanMoney = failLoanMoney;
     }
 
-    public Integer getFailLoanCount() {
+    public long getFailLoanCount() {
         return failLoanCount;
     }
 
-    public void setFailLoanCount(Integer failLoanCount) {
+    public void setFailLoanCount(long failLoanCount) {
         this.failLoanCount = failLoanCount;
     }
 
@@ -263,26 +263,27 @@ public class MyPageReportInfo {
         this.s4Money = s4Money;
     }
 
-    public Integer getAllRegistCount() {
+    public long getAllRegistCount() {
         return allRegistCount;
     }
 
-    public void setAllRegistCount(Integer allRegistCount) {
+    public void setAllRegistCount(long allRegistCount) {
         this.allRegistCount = allRegistCount;
     }
 
-    public Long getAllRegistPercentage() {
+    public long getAllRegistPercentage() {
         return allRegistPercentage;
     }
+
     public void setAllRegistPercentage(long allRegistPercentage) {
         this.allRegistPercentage = allRegistPercentage;
     }
 
-    public Integer getRegistCount() {
+    public long getRegistCount() {
         return registCount;
     }
 
-    public void setRegistCount(Integer registCount) {
+    public void setRegistCount(long registCount) {
         this.registCount = registCount;
     }
 
@@ -302,11 +303,11 @@ public class MyPageReportInfo {
         this.loanMoney = loanMoney;
     }
 
-    public Integer getLoanCount() {
+    public long getLoanCount() {
         return loanCount;
     }
 
-    public void setLoanCount(Integer loanCount) {
+    public void setLoanCount(long loanCount) {
         this.loanCount = loanCount;
     }
 
@@ -318,11 +319,11 @@ public class MyPageReportInfo {
         this.pendingRepayMoney = pendingRepayMoney;
     }
 
-    public Integer getPendingRepayCount() {
+    public long getPendingRepayCount() {
         return pendingRepayCount;
     }
 
-    public void setPendingRepayCount(Integer pendingRepayCount) {
+    public void setPendingRepayCount(long pendingRepayCount) {
         this.pendingRepayCount = pendingRepayCount;
     }
 
@@ -334,11 +335,11 @@ public class MyPageReportInfo {
         this.repyMoney = repyMoney;
     }
 
-    public Integer getRepyCount() {
+    public long getRepyCount() {
         return repyCount;
     }
 
-    public void setRepyCount(Integer repyCount) {
+    public void setRepyCount(long repyCount) {
         this.repyCount = repyCount;
     }
 
@@ -350,11 +351,11 @@ public class MyPageReportInfo {
         this.extendMoney = extendMoney;
     }
 
-    public Integer getExtendCount() {
+    public long getExtendCount() {
         return extendCount;
     }
 
-    public void setExtendCount(Integer extendCount) {
+    public void setExtendCount(long extendCount) {
         this.extendCount = extendCount;
     }
 
@@ -366,35 +367,35 @@ public class MyPageReportInfo {
         this.pendingMoney = pendingMoney;
     }
 
-    public Integer getPendingCount() {
+    public long getPendingCount() {
         return pendingCount;
     }
 
-    public void setPendingCount(Integer pendingCount) {
+    public void setPendingCount(long pendingCount) {
         this.pendingCount = pendingCount;
     }
 
-    public Long getLoanPercentage() {
+    public long getLoanPercentage() {
         return loanPercentage;
     }
 
-    public void setLoanPercentage(Long loanPercentage) {
+    public void setLoanPercentage(long loanPercentage) {
         this.loanPercentage = loanPercentage;
     }
 
-    public Long getPassPercentage() {
+    public long getPassPercentage() {
         return passPercentage;
     }
 
-    public void setPassPercentage(Long passPercentage) {
+    public void setPassPercentage(long passPercentage) {
         this.passPercentage = passPercentage;
     }
 
-    public Long getRepayPercentage() {
+    public long getRepayPercentage() {
         return repayPercentage;
     }
 
-    public void setRepayPercentage(Long repayPercentage) {
+    public void setRepayPercentage(long repayPercentage) {
         this.repayPercentage = repayPercentage;
     }
 
@@ -406,11 +407,11 @@ public class MyPageReportInfo {
         this.reBorrowMoney = reBorrowMoney;
     }
 
-    public Integer getReBorrowCount() {
+    public long getReBorrowCount() {
         return reBorrowCount;
     }
 
-    public void setReBorrowCount(Integer reBorrowCount) {
+    public void setReBorrowCount(long reBorrowCount) {
         this.reBorrowCount = reBorrowCount;
     }
 
@@ -453,4 +454,5 @@ public class MyPageReportInfo {
                 ", reBorrowCount=" + reBorrowCount +
                 '}';
     }
+
 }

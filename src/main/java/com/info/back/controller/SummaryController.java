@@ -16,6 +16,7 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.info.back.service.IBackStatisticService;
@@ -26,6 +27,7 @@ import com.info.web.controller.BaseController;
 import com.info.web.pojo.PlatformReport;
 import com.info.web.util.DateUtil;
 import com.info.web.util.PageConfig;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -73,6 +75,8 @@ public class SummaryController extends BaseController {
 				String customerType = request.getParameter("customerType");
 				params = backStatisticService.findOldToday(customerType);
 			}
+			MyPageReportInfo myPageReportInfo= backStatisticService.findMyPageReportInfo();
+			params.put("indexInfo",myPageReportInfo);
 		} catch (Exception e) {
 			log.error("summaryUser error:{}", e);
 		}
@@ -196,11 +200,12 @@ public class SummaryController extends BaseController {
 	/**
 	 * 运营后台首页
 	 * @return
-	 */
-	@RequestMapping(value="/myPageReportInfo")
-	@ResponseBody
-	public MyPageReportInfo myPageReportInfo(){
+	 *//*
+	@RequestMapping(value = "myPageReportInfo")
+	public Map<String,Object> myPageReportInfo(){
+		Map<String,Object> map = new HashMap<>();
 		MyPageReportInfo myPageReportInfo= backStatisticService.findMyPageReportInfo();
-       return myPageReportInfo;
-	}
+        map.put("indeReport",myPageReportInfo);
+        return map;
+	}*/
 }

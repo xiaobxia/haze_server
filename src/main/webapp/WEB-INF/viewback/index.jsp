@@ -95,8 +95,10 @@
                 });
 
             $.getJSON("summary/summaryBorrow?type=riskToday", function(data) {
+                console.log("123"+data);
                 $.each(data, function(val, item) {
                     $("#"+val).html(addCommas(item,false));
+                    console.log(data);
                 });
             });
             $.getJSON("summary/summaryUser?type=approve&secondType=allApprove", function(data) {
@@ -105,7 +107,6 @@
                 });
             });
             $.getJSON("summary/summaryUser?type=approve&secondType=realName", function(data) {
-                console.log(data);
                 $.each(data, function(val, item) {
                     $("#"+val).html(addCommas(item,false));
                 });
@@ -156,11 +157,6 @@
                 });
             });
             $.getJSON("summary/summaryBorrow?type=old&customerType=1", function(data) {
-                $.each(data, function(val, item) {
-                    $("#"+val).html(addCommas(item,false));
-                });
-            });
-            $.getJSON("summary/summaryBorrow?type=old&customerType=0", function(data) {
                 $.each(data, function(val, item) {
                     $("#"+val).html(addCommas(item,false));
                 });
