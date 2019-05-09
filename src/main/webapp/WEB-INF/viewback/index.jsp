@@ -435,10 +435,10 @@
 					// 涨幅
 					var zyhlImg = ''
 					if (indexInfo.allRegistPercentage > 0) {
-						zyhlImg = '<img class="up-down-icon" src="./img/箭头2.png">'
+						zyhlImg = '<img class="up-down-icon" src="${basePath }/images/shouyeimg/箭头2.png">'
 					}
 					if (indexInfo.allRegistPercentage < 0) {
-						zyhlImg = '<img class="up-down-icon" src="./img/箭头1.png">'
+						zyhlImg = '<img class="up-down-icon" src="${basePath }/images/shouyeimg/箭头1.png">'
 					}
 					$('#zyhl-b').html(indexInfo.allRegistPercentage + '%' + zyhlImg)
 					// 当日注册用户数
@@ -472,29 +472,29 @@
 					// 当日放款率
 					var drfklImg = ''
 					if (indexInfo.loanPercentage > 0) {
-						drfklImg = '<img class="up-down-icon" src="./img/箭头2.png">'
+						drfklImg = '<img class="up-down-icon" src="${basePath }/images/shouyeimg/箭头2.png">'
 					}
 					if (indexInfo.loanPercentage < 0) {
-						drfklImg = '<img class="up-down-icon" src="./img/箭头1.png">'
+						drfklImg = '<img class="up-down-icon" src="${basePath }/images/shouyeimg/箭头1.png">'
 					}
 					$('#drfkl').html(indexInfo.loanPercentage + '%' + drfklImg)
 
 					// 当日通过率
 					var drtglImg = ''
 					if (indexInfo.passPercentage > 0) {
-						drtglImg = '<img class="up-down-icon" src="./img/箭头2.png">'
+						drtglImg = '<img class="up-down-icon" src="${basePath }/images/shouyeimg/箭头2.png">'
 					}
 					if (indexInfo.passPercentage < 0) {
-						drtglImg = '<img class="up-down-icon" src="./img/箭头1.png">'
+						drtglImg = '<img class="up-down-icon" src="${basePath }/images/shouyeimg/箭头1.png">'
 					}
 					$('#drtgl').html(indexInfo.passPercentage + '%' + drtglImg)
 					// 当日回款率
 					var drhklImg = ''
 					if (indexInfo.repayPercentage > 0) {
-						drhklImg = '<img class="up-down-icon" src="./img/箭头2.png">'
+						drhklImg = '<img class="up-down-icon" src="${basePath }/images/shouyeimg/箭头2.png">'
 					}
 					if (indexInfo.repayPercentage < 0) {
-						drhklImg = '<img class="up-down-icon" src="./img/箭头1.png">'
+						drhklImg = '<img class="up-down-icon" src="${basePath }/images/shouyeimg/箭头1.png">'
 					}
 					$('#drhkl').html(indexInfo.repayPercentage + '%' + drhklImg)
 				}
