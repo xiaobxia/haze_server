@@ -334,11 +334,7 @@
                             themeBase : "${basePath }/themes"});
                     }
                 });
-
-            $.getJSON("summary/summaryBorrow?type=riskToday", function(data) {
-                console.log(data)
-
-
+			function initIndexPage(data) {
 				function setAdaptive () {
 					var baseFontSize = 20
 					// 和width有关
@@ -541,11 +537,15 @@
 					$('#drhkl').html(indexInfo.repayPercentage + '%' + drhklImg)
 				}
 
-				renderNumber(data.indexInfo)
+				renderNumber(data.indexInfo || {})
 
-				renderChart(data.indexInfo)
-
-
+				renderChart(data.indexInfo || {})
+			}
+            $.getJSON("summary/summaryBorrow?type=riskToday", function(data) {
+                console.log(data)
+				setTimeout(function () {
+					initIndexPage(data)
+				}, 100)
 			});
         });
 
