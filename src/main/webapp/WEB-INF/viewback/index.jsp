@@ -208,6 +208,9 @@
 			display: inline-block;
 			float: right;
 		}
+		.notice-wrap .title * {
+			font-size: 15px;
+		}
 		.notice-wrap .title.title-active span:nth-of-type(3){
 			float: right;
 		}
@@ -259,6 +262,9 @@
 		.notice-wrap .item .text {
 			font-size: 14px;
 			display: inline-block;
+		}
+		.notice-wrap .item .text div {
+			font-size: 14px;
 		}
 		.notice-wrap .item .text .up-down-icon{
 			margin-top: 4px;
