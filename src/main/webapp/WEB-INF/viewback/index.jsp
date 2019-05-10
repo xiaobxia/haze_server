@@ -42,24 +42,29 @@
 		}
 	</style>
 	<style>
+		.index-page-wrap div, .index-page-wrap span{
+			line-height: 1.35;
+		}
 		.index-page-wrap {
 			position: relative;
 			margin: auto;
 			width: 1100px;
 			padding: 26px 20px;
 		}
-		.index-page-wrap *{
-			font-size: 16px;
+		.index-page-wrap:after {
+			display: block;
+			content: '';
+			clear:both
 		}
 		.index-page-wrap .left-main {
 			display: inline-block;
-			width:700px;
+			width: 700px;
 			vertical-align: top;
 			margin-right: 60px;
 		}
 		.index-page-wrap .right-main {
 			display: inline-block;
-			width:330px;
+			width: 330px;
 			vertical-align: top;
 		}
 		.main-title {
@@ -144,12 +149,17 @@
 			height: 58px;
 			position: relative;
 		}
+		.info-card .info-item span {
+			font-size: 16px;
+			vertical-align: middle;
+		}
 		.info-card .info-item span:nth-of-type(3) {
 			float: right;
 		}
 		.info-card .info-item .fix {
 			position: absolute;
 			left: 80px;
+			top: 18px;
 		}
 		.info-card .info-item span:nth-of-type(2) {
 			margin-left: 30px;
@@ -184,7 +194,7 @@
 			border-radius: 0;
 		}
 		.notice-wrap .title{
-			padding: 20px 26px;
+			padding: 20px 40px;
 			background-color: #89B1FF;
 			color: #fff;
 			font-size: 15px;
@@ -203,7 +213,7 @@
 		}
 		.notice-wrap .title.title-active span:nth-of-type(2){
 			position: absolute;
-			left: 180px;
+			left: 160px;
 		}
 		.notice-wrap .main-wrap {
 			padding: 0 24px 50px 24px;
@@ -237,13 +247,17 @@
 		.notice-wrap .item .icon {
 			display: inline-block;
 			margin-right: 8px;
-			vertical-align: baseline;
+			vertical-align: top;
+			height: 37.33px;
+			line-height: 37.33px;
 		}
 		.notice-wrap .item .icon img{
 			width: 14px;
 			height: 14px;
+			vertical-align: middle;
 		}
 		.notice-wrap .item .text {
+			font-size: 14px;
 			display: inline-block;
 		}
 		.notice-wrap .item .text .up-down-icon{
@@ -634,7 +648,7 @@
 						</p>
 					</div>
 					<c:if test="${isShow==true}">
-						<div style="font-size: 16px" class="index-page-wrap">
+						<div style="font-size: 16px" class="index-page-wrap pageFormContent">
 							<div class="left-main">
 								<div class="main-title">
 									<img src="${basePath }/images/shouyeimg/总体概况.png" alt="">
