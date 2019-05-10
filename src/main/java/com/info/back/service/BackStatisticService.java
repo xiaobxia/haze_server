@@ -1,6 +1,7 @@
 package com.info.back.service;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -472,32 +473,25 @@ public class BackStatisticService implements IBackStatisticService {
 	public MyPageReportInfo findMyPageReportInfo() {
 		MyPageReportInfo  myPageReportInfo = new MyPageReportInfo();
 		Map<String,Object> map = new HashMap<String,Object>();
-        //总体概况
+		//总放款金额 //总放款笔数
         map=sendMoneyStatisticDao.sendMoneyCount();
-        //总放款金额
         myPageReportInfo.setAllLoanMoney(optimic(map,"borrowMoney"));
-        //总放款笔数
         myPageReportInfo.setAllLoanCount(map.get("borrowCount") == null ?0:(long) map.get("borrowCount") );
-        map=sendMoneyStatisticDao.findAllPendingRepayMoney(1);
-        //总待回款金额
+		//总已还款金额 // 总已还款笔数
+		map=sendMoneyStatisticDao.findAllPendingRepayMoney(1);
+		myPageReportInfo.setAllRepayMoney(optimic(map,"money"));
+		myPageReportInfo.setAllRepayCount(map.get("countnumber") == null ?0:(long) map.get("countnumber"));
+        //总待回款金额//总待回款笔数
+		map=sendMoneyStatisticDao.findAllPendingRepayMoney(2);
         myPageReportInfo.setAllPendingRepayMoney(optimic(map,"money"));
-        //总待回款笔数
-        myPageReportInfo.setAllRegistCount(map.get("countnumber") == null ?0:(long) map.get("countnumber"));
-        map=sendMoneyStatisticDao.findAllPendingRepayMoney(2);
-        //总已还款金额
-        myPageReportInfo.setAllRepayMoney(optimic(map,"money"));
-        // 总已还款笔数
-        myPageReportInfo.setAllRepayCount(map.get("countnumber") == null ?0:(long) map.get("countnumber"));
+		myPageReportInfo.setAllRepaymentCount(map.get("countnumber") == null ?0: (long) map.get("countnumber"));
+		//总未逾期待收金额//总未逾期待收笔数
         map=sendMoneyStatisticDao.findAllPendingRepayMoney(3);
-        //总未逾期待收金额
         myPageReportInfo.setAllOverMoney(optimic(map,"money"));
-        //总未逾期待收笔数
         myPageReportInfo.setAllOverCount(map.get("countnumber") == null?0:(long) map.get("countnumber"));
-		//逾期数据
-        map=sendMoneyStatisticDao.findLoanFail();
-        //放款失败金额
+        //放款失败金额 //放款失败笔数
+		map=sendMoneyStatisticDao.findLoanFail();
         myPageReportInfo.setFailLoanMoney(optimic(map,"loanFailMoney"));
-        //放款失败笔数
         myPageReportInfo.setFailLoanCount(map.get("loanFailCount") == null?0:(long) map.get("loanFailCount"));
         //三天内即将到期的总金额
         BigDecimal money = sendMoneyStatisticDao.threeMoney();
@@ -524,11 +518,10 @@ public class BackStatisticService implements IBackStatisticService {
 		if(money4 != null){
 			myPageReportInfo.setS4Money(money4.divide(new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP));
 		}
-		//当日运营数据
-		map=sendMoneyStatisticDao.sendMoneyCountToday();
-        //当日放款金额
+
+        //当日放款金额 //当日放款笔数
+		map=sendMoneyStatisticDao.loanMoneyToday();
         myPageReportInfo.setLoanMoney(optimic(map,"borrowMoneyToday"));
-        //当日放款笔数
         myPageReportInfo.setLoanCount(map.get("borrowCountToday") == null ?0:(long) map.get("borrowCountToday"));
 		//总用户注册数
 		long sumCount = registerStatisticDao.registerSumCount();
@@ -539,36 +532,40 @@ public class BackStatisticService implements IBackStatisticService {
 		//当天用户申请数
 		Integer applyCountToday=sendMoneyStatisticDao.applyCountToday();
 		myPageReportInfo.setApplyCount(applyCountToday);
-		map=sendMoneyStatisticDao.findTodayMoneyCount(null);
         //当日到期金额/当日应还金额
-        myPageReportInfo.setPendingRepayMoney(optimic(map,"pendingRepaymoney"));
-        //当日到期订单/当日应还订单笔数
-        myPageReportInfo.setPendingRepayCount(map.get("countnumber") == null?0:(long) map.get("countnumber"));
+		map=sendMoneyStatisticDao.findTodayMoneyCount(null);
+        myPageReportInfo.setPendingRepayMoney(optimic(map,"money"));
+        myPageReportInfo.setPendingRepayCount(map.get("countNumber") == null?0:(long) map.get("countNumber"));
+        //当日已还款金额/全额还款金额  //当日已还款订单/当日到期订单
 		map=sendMoneyStatisticDao.findTodayMoneyCount(30);
-        //当日已还款金额/全额还款金额
-        myPageReportInfo.setRepyMoney(optimic(map,"repaymoney"));
-        //当日已还款订单/当日到期订单
-        myPageReportInfo.setRepyCount(0);
-        myPageReportInfo.setRepyCount(map.get("countnumber") == null ?0:(Long) map.get("countnumber"));
+        myPageReportInfo.setRepyMoney(optimic(map,"money"));
+        myPageReportInfo.setRepyCount(map.get("countNumber") == null ?0:(Long) map.get("countNumber"));
+        //当日待收金额/当日未还款金额  //当日待收金额/当日未还款金额
 		map=sendMoneyStatisticDao.findTodayMoneyCount(21);
-        //当日待收金额/当日未还款金额
-        myPageReportInfo.setPendingMoney(optimic(map,"pendingmoney"));
-        //当日待收金额/当日未还款金额
-        myPageReportInfo.setPendingCount(map.get("countnumber") == null ?0:(long) map.get("countnumber"));
+		myPageReportInfo.setPendingMoney(optimic(map,"money"));
+        myPageReportInfo.setPendingCount(map.get("countNumber") == null ?0:(long) map.get("countNumber"));
 		//当日放款率
 		if(todayRegCount != 0){
-			long loanPercentage=myPageReportInfo.getLoanCount()/todayRegCount;
-			myPageReportInfo.setLoanPercentage(loanPercentage);
+			double loanPercentage=(double)myPageReportInfo.getLoanCount()/(double)todayRegCount;
+			//当日放款笔数/当日注册总数
+			DecimalFormat df = new DecimalFormat("0.00");
+			myPageReportInfo.setLoanPercentage(df.format(loanPercentage));
+		}
+		if(applyCountToday != 0){
 			//当日通过率
-			long passPercentage=myPageReportInfo.getLoanCount()/applyCountToday;
-			myPageReportInfo.setPassPercentage(passPercentage);
+			//当日放款笔数/当日申请总数
+			double passPercentage=(double)myPageReportInfo.getLoanCount()/(double)applyCountToday;
+			DecimalFormat df = new DecimalFormat("0.00");
+			myPageReportInfo.setPassPercentage(df.format(passPercentage));
 		}
 		//当日回款率
         Long repyCount = myPageReportInfo.getRepyCount();
         Long pendingCount = myPageReportInfo.getPendingRepayCount();
         if(pendingCount != 0){
-            long repayPercentage=repyCount/pendingCount;
-            myPageReportInfo.setRepayPercentage(repayPercentage);
+        	//当日成功汇款笔数/当日应还款笔数
+            double repayPercentage=(double)repyCount/(double)pendingCount;
+			DecimalFormat df = new DecimalFormat("0.00");
+            myPageReportInfo.setRepayPercentage(df.format(repayPercentage));
         }
 		//当日展期金额 当日展期订单数
         map = sendMoneyStatisticDao.extendToday();
@@ -576,13 +573,14 @@ public class BackStatisticService implements IBackStatisticService {
         myPageReportInfo.setExtendCount(map.get("extendCount") == null ?0:(long) map.get("extendCount"));
         //当日复借金额 当日复借订单数
         map = sendMoneyStatisticDao.reBorrow();
-        myPageReportInfo.setReBorrowMoney(optimic(map,"reBorrowCount"));
+        myPageReportInfo.setReBorrowMoney(optimic(map,"reBorrowMoney"));
         myPageReportInfo.setReBorrowCount(map.get("reBorrowCount") == null?0:(long) map.get("reBorrowCount"));
 		//总用户注册百分比
         Long regist = sumCount - todayRegCount;
         if(!"null".equals(todayRegCount) && regist != 0){
-            long allRegistPercentage = todayRegCount / regist;
-            myPageReportInfo.setAllRegistPercentage(allRegistPercentage);
+            double allRegistPercentage = (double)todayRegCount / (double)regist;
+			DecimalFormat df = new DecimalFormat("0.00");
+            myPageReportInfo.setAllRegistPercentage(df.format(allRegistPercentage));
         }
 		return myPageReportInfo;
 	}

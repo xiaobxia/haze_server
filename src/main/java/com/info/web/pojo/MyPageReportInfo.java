@@ -73,7 +73,7 @@ public class MyPageReportInfo {
     /**
      * 总用户注册百分比
      */
-    private long allRegistPercentage;
+    private String allRegistPercentage;
     /**
      * 当天注册用户数
      */
@@ -125,15 +125,15 @@ public class MyPageReportInfo {
     /**
      * 当日放款率
      */
-    private  long loanPercentage;
+    private  String loanPercentage;
     /**
      * 当日通过率
      */
-    private long passPercentage;
+    private String passPercentage;
     /**
      * 当日回款率
      */
-    private long repayPercentage;
+    private String  repayPercentage;
     /**
      * 当日复借金额
      */
@@ -142,8 +142,6 @@ public class MyPageReportInfo {
      * 当日复借订单数
      */
     private long reBorrowCount;
-
-
 
     public BigDecimal getAllLoanMoney() {
         return allLoanMoney;
@@ -273,11 +271,11 @@ public class MyPageReportInfo {
         this.allRegistCount = allRegistCount;
     }
 
-    public long getAllRegistPercentage() {
+    public String getAllRegistPercentage() {
         return allRegistPercentage;
     }
 
-    public void setAllRegistPercentage(long allRegistPercentage) {
+    public void setAllRegistPercentage(String allRegistPercentage) {
         this.allRegistPercentage = allRegistPercentage;
     }
 
@@ -377,27 +375,27 @@ public class MyPageReportInfo {
         this.pendingCount = pendingCount;
     }
 
-    public long getLoanPercentage() {
+    public String getLoanPercentage() {
         return loanPercentage;
     }
 
-    public void setLoanPercentage(long loanPercentage) {
+    public void setLoanPercentage(String loanPercentage) {
         this.loanPercentage = loanPercentage;
     }
 
-    public long getPassPercentage() {
+    public String getPassPercentage() {
         return passPercentage;
     }
 
-    public void setPassPercentage(long passPercentage) {
+    public void setPassPercentage(String passPercentage) {
         this.passPercentage = passPercentage;
     }
 
-    public long getRepayPercentage() {
+    public String getRepayPercentage() {
         return repayPercentage;
     }
 
-    public void setRepayPercentage(long repayPercentage) {
+    public void setRepayPercentage(String repayPercentage) {
         this.repayPercentage = repayPercentage;
     }
 

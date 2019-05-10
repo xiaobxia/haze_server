@@ -14,6 +14,8 @@ public interface ISendMoneyStatisticDao {
 
 	public Map<String, Object> sendMoneyCountToday();
 
+	public Map<String,Object> loanMoneyToday();
+
 	public Map<String, Object> findLoaning();
 
 	public Map<String, Object> findLoanFail();
@@ -24,7 +26,7 @@ public interface ISendMoneyStatisticDao {
 	public List<Integer> findRiskOrdersToday();
 	public List<Integer> findDjsOrdersToday();
 	public List<Integer> findOldToday(String customerType);
-	Map<String,Object> findAllPendingRepayMoney(Integer number);
+	Map<String,Object> findAllPendingRepayMoney(Integer param);
 	Map<String,Object> findTodayMoneyCount(Integer status);
 	Integer applyCountToday();
 	BigDecimal lateMoney(@Param("fristNumber") Integer fristNumber, @Param("endNumbers") Integer endNumbers);

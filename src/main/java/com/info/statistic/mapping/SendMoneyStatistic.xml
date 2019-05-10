@@ -48,7 +48,7 @@
     </select>
 	<select id="applyCountToday" resultType="Integer">
 		  SELECT count(1) as borrowCountToday FROM asset_borrow_order t
-		WHERE status=0 and order_time =DATE_FORMAT(NOW(), '%Y-%m-%d')
+		WHERE status=0 and YEARWEEK( DATE_FORMAT( order_time, '%Y-%m-%d' ) ) = YEARWEEK( DATE_FORMAT( NOW( ), '%Y-%m-%d' ) )
 	</select>
 <!--    1.老用户当天申请的总数，创建时间是当天；2.老用户当天申请且状态不是待审核(被审过)；3.放款审核时间是当天且是通过状态-->
      <select id="findOldToday" resultType="Integer" parameterType="String">
@@ -68,30 +68,30 @@
 		 ]]>  
    	 </select>
 	<select id="findAllPendingRepayMoney" resultType="map" parameterType="Integer">
-     select sum(repayment_amount) as money,count(id) as countnumber
+     select IFNULL(sum(repayment_amount),0) as money,count(id) as countnumber
       from  asset_repayment where 1=1
-      <if test="number =1">
-           and status in(21,-11,-20)
+      <if test="_parameter ==1">
+		  and status in (23,30,34);
 	  </if>
-	  <if test="number =2">
-         and status in (23,30,34)
+	  <if test="_parameter ==2">
+		  and status in (21,-11,-20)
 	  </if>
-	  <if test="number = 3">
+	  <if test="_parameter ==3">
 		  and status =21
 	  </if>
 	</select>
 	<select id="findTodayMoneyCount" resultType="map" parameterType="Integer">
-		select sum(repayment_amount) as money,count(id) as countNumber
-          from asset_repayment  where repayment_time= DATE_FORMAT(NOW(), '%Y-%m-%d')
+		select IFNULL(sum(repayment_amount),0) as money,IFNULL(count(id),0) as countNumber
+		from asset_repayment  where YEARWEEK( DATE_FORMAT( repayment_time, '%Y-%m-%d' ) ) = YEARWEEK( DATE_FORMAT( NOW( ), '%Y-%m-%d' ) )
           <if test="_parameter != null and _parameter != ''">
 			  and status =#{status}
 		  </if>
 	</select>
     <select id="lateMoney" resultType="java.math.BigDecimal" >
-		select sum(repayment_amount) from asset_repayment
+		select IFNULL(sum(repayment_amount),0) from asset_repayment
 		where 1=1
 		<if test="fristNumber != null and fristNumber != ''">
-			and late_day &gt; #{fristNumber}
+			and late_day &gt;= #{fristNumber}
 		</if>
 		<if test="endNumbers != null and endNumbers != ''">
             and late_day &lt; #{endNumbers}
@@ -99,7 +99,7 @@
 	</select>
 	<select id="threeMoney" resultType="java.math.BigDecimal">
 		SELECT
-			sum( repayment_amount )
+			IFNULL(sum(repayment_amount),0)
 		FROM
 			asset_repayment
 		WHERE
@@ -108,22 +108,31 @@
 	</select>
 	<select id="extendToday" resultType="map">
 		SELECT
-			sum( renewal_fee ) AS extendMoney,
+		IFNULL(sum(renewal_fee),0) AS extendMoney,
 			count( id ) AS extendCount
 		FROM
 			asset_renewal_record
 		WHERE
-			old_repayment_time = DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+		YEARWEEK( DATE_FORMAT( old_repayment_time, '%Y-%m-%d' ) ) = YEARWEEK( DATE_FORMAT( NOW( ), '%Y-%m-%d' ) )
 	</select>
 	<select id="reBorrow" resultType="map">
 		SELECT
 			count( id ) AS reBorrowCount,
-			sum( money_amount ) AS reBorrowMoney
+			IFNULL(sum(money_amount),0) AS reBorrowMoney
 		FROM
 			asset_borrow_order
 		WHERE
 			customer_type = 1
 			AND STATUS = 21
-			AND loan_time = DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+			AND YEARWEEK( DATE_FORMAT( loan_time, '%Y-%m-%d' ) ) = YEARWEEK( DATE_FORMAT( NOW( ), '%Y-%m-%d' ) )
+	</select>
+    <select id="loanMoneyToday" resultType="map">
+	SELECT
+		IFNULL( sum( repayment_amount ), 0 ) as borrowMoneyToday,
+		IFNULL( count( id ), 0 ) as borrowCountToday
+	FROM
+		asset_repayment
+	WHERE
+		YEARWEEK( DATE_FORMAT( credit_repayment_time, '%Y-%m-%d' ) ) = YEARWEEK( DATE_FORMAT( NOW( ), '%Y-%m-%d' ) )
 	</select>
 </mapper>
