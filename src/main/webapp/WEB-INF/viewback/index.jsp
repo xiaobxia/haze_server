@@ -47,64 +47,62 @@
 		}
 		.index-page-wrap {
 			position: relative;
-			margin: auto;
-			width: 1100px;
-			padding: 26px 20px;
-		}
-		.index-page-wrap:after {
-			display: block;
-			content: '';
-			clear:both
+			padding: 4rem;
 		}
 		.index-page-wrap .left-main {
 			display: inline-block;
-			width: 700px;
+			width: 105rem;
 			vertical-align: top;
-			margin-right: 60px;
+			margin-right: 9rem;
 		}
 		.index-page-wrap .right-main {
 			display: inline-block;
-			width: 330px;
+			width: 49.5rem;
 			vertical-align: top;
 		}
 		.main-title {
-			margin-bottom: 26px;
-			font-size: 18px;
+			margin-bottom: 4rem;
+			font-size: 2.6rem;
+		}
+		.main-title span{
+			font-size: 2.6rem;
 		}
 		.main-title img{
-			height: 18px;
+			height: 2.7rem;
 			width: auto;
-			margin-right: 10px;
+			margin-right: 2rem;
 			vertical-align: bottom;
 		}
 		.circle-card {
 			display: inline-block;
-			margin-bottom: 26px;
+			margin-bottom: 4rem;
 			box-sizing: border-box;
-			padding: 13px 20px;
+			padding: 2rem 3rem;
 			background-color: #fff;
 			box-shadow: 0 0 20px rgb(223, 223, 223);
-			border-radius: 4px;
-			width:330px;
-			height:100px;
+			border-radius: 0.6rem;
+			width: 49.5rem;
+			height: 15rem;
 		}
 		.circle-card.left {
-			margin-right: 33px;
+			margin-right: 5rem;
 		}
 		.circle-card .circle-wrap {
 			display: inline-block;
-			width: 74px;
-			height: 74px;
+			width: 11rem;
+			height: 11rem;
+		}
+		.circle-card .circle-wrap canvas {
 		}
 		.circle-card .detail-wrap {
 			display: inline-block;
 			text-align: right;
-			width: 210px;
+			width: 32rem;
 			vertical-align: top;
 		}
 		.circle-card .detail-wrap .number{
-			font-size: 30px;
-			font-weight:400;
+			font-size: 5rem;
+			font-weight: 400;
 			margin-bottom: 5px;
 		}
 		.number.blue {
@@ -120,19 +118,19 @@
 			color: #F05D5D;
 		}
 		.circle-card .detail-wrap .text{
-			font-size: 18px;
+			font-size: 2.6rem;
 			color: #7D7D7D;
 		}
 
 		.info-card {
 			box-sizing: border-box;
-			padding: 0 20px;
+			padding: 1rem 3rem;
 			background-color: #fff;
 			box-shadow: 0 0 20px rgb(223, 223, 223);
 			border-radius: 5px;
-			width:700px;
-			height:172px;
-			font-size: 16px;
+			width: 105rem;
+			height: 26rem;
+			font-size: 2.4rem;
 			color: #888888;
 		}
 		.info-card .row{
@@ -144,30 +142,31 @@
 		.info-card .info-item{
 			box-sizing: border-box;
 			display: inline-block;
-			padding: 15px 0;
-			width: 300px;
-			height: 58px;
+			width: 47rem;
+			height: 8rem;
+			line-height: 8rem;
 			position: relative;
 		}
 		.info-card .info-item span {
-			font-size: 16px;
+			font-size: 2.4rem;
 			vertical-align: middle;
 		}
 		.info-card .info-item span:nth-of-type(3) {
+			margin-top: 2rem;
 			float: right;
 		}
 		.info-card .info-item .fix {
 			position: absolute;
-			left: 80px;
-			top: 18px;
+			left: 15rem;
+			top: 2.6rem;
 		}
 		.info-card .info-item span:nth-of-type(2) {
-			margin-left: 30px;
+			margin-left: 3rem;
 		}
 		.text-tag {
 			color: #fff;
-			padding: 3px 10px;
-			border-radius:3px;
+			padding: 0.5rem 1rem;
+			border-radius: 0.4rem;
 		}
 		.text-tag.yellow-tag {
 			background-color: rgba(255,150,0,1);
@@ -176,29 +175,29 @@
 			background-color: #F85252;
 		}
 		.info-card .info-item.left{
-			margin-right: 50px;
+			margin-right: 4rem;
 		}
 		.info-card .text-tag {
 
 		}
 		.notice-wrap {
-			border: 2px solid #528DFF;
-			border-radius: 8px;
+			border: 0.3rem solid #528DFF;
+			border-radius: 0.8rem;
 		}
 		.notice-wrap .title.title-active{
 			background-color: #528DFF;
-			border-radius: 6px 6px 0 0;
+			border-radius: 1rem 1rem 0 0;
 		}
 		.notice-wrap .title.title-active-2{
 			background-color: #75A4FF;
 			border-radius: 0;
 		}
 		.notice-wrap .title{
-			padding: 20px 40px;
+			padding: 3rem 3rem 3rem 6rem;
 			background-color: #89B1FF;
 			color: #fff;
-			font-size: 15px;
-			border-radius: 0 0 6px 6px;
+			font-size: 2.2rem;
+			border-radius: 0 0 1rem 1rem;
 			position: relative;
 		}
 		.notice-wrap .title .left{
@@ -209,74 +208,75 @@
 			float: right;
 		}
 		.notice-wrap .title * {
-			font-size: 15px;
+			font-size: 2.2rem;
 		}
 		.notice-wrap .title.title-active span:nth-of-type(3){
 			float: right;
 		}
 		.notice-wrap .title.title-active span:nth-of-type(2){
 			position: absolute;
-			left: 160px;
+			left: 24rem;
 		}
 		.notice-wrap .main-wrap {
-			padding: 0 24px 50px 24px;
+			padding: 0 3.3rem 2rem 3.3rem;
 			box-sizing: border-box;
 			color: #4C4C4C;
 		}
 		.notice-wrap .item {
 			box-sizing: border-box;
-			padding: 12px 0;
+			padding: 2rem 0 1rem 0;
 			display: inline-block;
-			width: 116px;
+			width: 17rem;
 			border-bottom: 1px solid rgb(233,233,233);
 			color: #4C4C4C;
-			font-size: 12px;
+			font-size: 2rem;
 		}
 		.notice-wrap .sub-item {
 			box-sizing: border-box;
 			padding: 12px 0;
 			display: inline-block;
-			width: 116px;
+			width: 17rem;
 			border-bottom: 1px solid rgb(233,233,233);
 			color: #888888;
 			font-size: 12px;
 		}
 		.notice-wrap .item.left {
-			margin-right: 40px;
+			margin-right: 8rem;
 		}
 		.notice-wrap .sub-item.left {
-			margin-right: 40px;
+			margin-right: 8rem;
 		}
 		.notice-wrap .item .icon {
 			display: inline-block;
-			margin-right: 8px;
+			margin-right: 1rem;
 			vertical-align: top;
-			height: 37.33px;
-			line-height: 37.33px;
+			height: 5rem;
+			line-height: 5rem;
 		}
 		.notice-wrap .item .icon img{
-			width: 14px;
-			height: 14px;
+			width: 2.2rem;
+			height: 2.2rem;
 			vertical-align: middle;
 		}
 		.notice-wrap .item .text {
-			font-size: 14px;
+			font-size: 2rem;
 			display: inline-block;
 		}
 		.notice-wrap .item .text div {
-			font-size: 14px;
+			font-size: 2rem;
 		}
 		.notice-wrap .item .text .up-down-icon{
-			margin-top: 4px;
+			margin-top: 0.6rem;
 			float: right;
 		}
 		.notice-wrap .sub-item .text {
-			margin-left: 40px;
+			margin-left: 6rem;
+			font-size: 1.8rem;
 		}
 		.up-down-icon {
-			margin-left: 8px;
-			width: 9px;
-			height: 9px;
+			margin-left: 1.2rem;
+			width: 1.2rem;
+			height: 1.2rem;
 		}
 	</style>
 	<script src="${basePath }/js/dwz.ui.js" type="text/javascript"></script>
@@ -335,6 +335,23 @@
             $.getJSON("summary/summaryBorrow?type=riskToday", function(data) {
                 console.log(data)
 
+
+				function setAdaptive () {
+					var baseFontSize = 10
+					// 和width有关
+					var winWidth = $('.index-page-wrap').outerWidth(true)
+					var fontScale = winWidth / 1720
+					document.documentElement.style.fontSize = (baseFontSize * fontScale) + 'px'
+					window.adaptive = {
+						winWidth: winWidth,
+						fontSize: baseFontSize * fontScale
+					}
+				}
+
+				setAdaptive()
+
+				$('.myChart').attr('width', window.adaptive.fontSize * 11)
+				$('.myChart').attr('height', window.adaptive.fontSize * 11)
 				function formatNumToThree(str) {
 					str = '' + (str|| 0)
 					var newStr = "";
@@ -369,8 +386,10 @@
 
 				(function($, window, undefined) {
 					$.fn.ringChart = function(curr, total, numText, color) {
-						var canvasWH = 37
-						var canvasHH = 37
+						var zoom = window.adaptive.fontSize / 10
+						var canvasWH = zoom * 110/2
+						var canvasHH = zoom * 110/2
+						var lineW = zoom * 7
 						var canvas = $(this).get(0);
 						var constrast = parseFloat(curr/total).toFixed(2); //比例
 						var context = null;
@@ -383,18 +402,18 @@
 						var endArc = (Math.PI * 2) * constrast;
 						context = canvas.getContext("2d");
 						// 圆心文字
-						context.font="14px Arial";
+						context.font= (zoom * 26) + "px Arial";
 						context.fillStyle = '#333333';
 						context.textBaseline = 'middle';
 						var text=numText;
 						var tw=context.measureText(text).width;
-						context.fillText(text,canvasWH-tw/2,canvasHH + 2);
+						context.fillText(text,canvasWH-tw/2, canvasHH + 2);
 						// 绘制背景圆
 						context.save();
 						context.beginPath();
 						context.strokeStyle = "#e7e7e7";
-						context.lineWidth = "5";
-						context.arc(canvasWH, canvasHH, canvasWH - 5, 0, Math.PI * 2, false);
+						context.lineWidth = lineW;
+						context.arc(canvasWH, canvasHH, canvasWH - lineW, 0, Math.PI * 2, false);
 						context.closePath();
 						context.stroke();
 						context.restore();
@@ -406,8 +425,8 @@
 						context.save();
 						context.beginPath();
 						context.strokeStyle = color;
-						context.lineWidth = "5";
-						context.arc(canvasWH, canvasHH, canvasWH - 5, startArc, ((endArc+startArc)), false);
+						context.lineWidth = lineW;
+						context.arc(canvasWH, canvasHH, canvasWH - lineW, startArc, ((endArc+startArc)), false);
 						context.stroke();
 						context.restore();
 					}
@@ -522,7 +541,9 @@
 				renderNumber(data.indexInfo)
 
 				renderChart(data.indexInfo)
-            });
+
+
+			});
         });
 
 
@@ -662,7 +683,7 @@
 								</div>
 								<div class="circle-card left">
 									<div class="circle-wrap">
-										<canvas class="myChart" id="ljfkje-c" width="74px" height="74px"></canvas>
+										<canvas class="myChart" id="ljfkje-c"></canvas>
 									</div>
 									<div class="detail-wrap">
 										<div id="ljfkje-n" class="number blue number-text">--</div>
@@ -671,7 +692,7 @@
 								</div>
 								<div class="circle-card">
 									<div class="circle-wrap">
-										<canvas class="myChart" id="yhkje-c" width="74px" height="74px"></canvas>
+										<canvas class="myChart" id="yhkje-c"></canvas>
 									</div>
 									<div class="detail-wrap">
 										<div id="yhkje-n" class="number green number-text">--</div>
@@ -680,7 +701,7 @@
 								</div>
 								<div class="circle-card left">
 									<div class="circle-wrap">
-										<canvas class="myChart" id="dhkje-c" width="74px" height="74px"></canvas>
+										<canvas class="myChart" id="dhkje-c"></canvas>
 									</div>
 									<div class="detail-wrap">
 										<div id="dhkje-n" class="number yellow number-text">--</div>
@@ -689,7 +710,7 @@
 								</div>
 								<div class="circle-card">
 									<div class="circle-wrap">
-										<canvas class="myChart" id="wyqdsje-c" width="74px" height="74px"></canvas>
+										<canvas class="myChart" id="wyqdsje-c"></canvas>
 									</div>
 									<div class="detail-wrap">
 										<div id="wyqdsje-n" class="number red number-text">--</div>
