@@ -193,7 +193,7 @@ public class Constant {
 //     * 短信类型：营销类
 //     */
 //    public static final String ADVERT = "advert";
-//    public static final String SMS_SIGN = "小鱼儿";
+//    public static final String SMS_SIGN = "多米优";
     public static final String SMS_VERIFY_CONTENT = "尊敬的用户，本次验证码为#cont#请勿泄露，5分钟内有效！";
     public static final String SMS_SEND_SUCC = "0";
     /**
@@ -337,7 +337,7 @@ public class Constant {
      **/
     public static final int SESSION_EXPIRE_SECOND = 3600 * 6;
 
-//    public static final String JXNAME = "小鱼儿";
+//    public static final String JXNAME = "多米优";
 
     /**
      * mq-逾期tag名

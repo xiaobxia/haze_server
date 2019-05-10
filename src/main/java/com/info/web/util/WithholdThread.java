@@ -106,13 +106,10 @@ public class WithholdThread extends Thread{
                     //获取当前小时数
                     int currentHour = cal.get(Calendar.HOUR_OF_DAY);
                     if(currentHour >= 13 && currentHour < 18){
-                        String content = "";
-                        if("小鱼儿".equals(PropertiesUtil.get("APP_NAME"))){
-                            content = "尊敬的" + user.getRealname() + "，您的" + (re.getRepaymentAmount() / 100) + "借款今日到期，请至APP还款，若到期未还款，平台将自动扣款，请确保尾号"
-                                    + cardNo.substring(cardNo.length() - 4) + "银行卡资金充足，如已还款，请忽略。";
-                        }
+                        String content = user.getRealname() + "##" + (re.getRepaymentAmount() / 100) + "##"
+                                    + cardNo.substring(cardNo.length() - 4);
                         //发送提醒短信
-                        SendSmsUtil.sendSmsDiyCL(user.getUserPhone(), content);
+                        SendSmsUtil.sendSmsDiyCL(user.getUserPhone(), SendSmsUtil.templateld44638, content);
 
                         UserSendMessage message = new UserSendMessage();
                         // 接收的用户

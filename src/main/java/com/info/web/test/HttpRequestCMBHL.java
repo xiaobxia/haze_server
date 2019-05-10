@@ -62,9 +62,9 @@ public class HttpRequestCMBHL {
 		List<Map> xxx = new ArrayList<Map>();
 		for (BorrowOrder bo : borrowOrders) {
 			String yurref = bo.getYurref();
-			String remark = "小鱼儿放款";
+			String remark = "多米优放款";
 			if (yurref.startsWith("A")) {
-				remark = "小鱼儿放款";
+				remark = "多米优放款";
 			} else if (yurref.startsWith("B")) {
 				remark = "信审服务费";
 

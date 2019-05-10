@@ -74,7 +74,7 @@ public class AutoService implements IAutoRiskService {
         return showRisk;
     }
 
-    //小鱼儿老用户
+    //多米优老用户
     private Map<String,Object> parseJXOCRisk(CreditReport creditReport,String supplier){
         Reason reason = this.getSupplierReson(creditReport,supplier);
         Map<String,Object> storeData = new HashMap<>();

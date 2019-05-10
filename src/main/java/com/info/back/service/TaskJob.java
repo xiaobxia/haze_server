@@ -449,15 +449,10 @@ public class TaskJob implements ITaskJob {
 				Map<String, String> user = repaymentService.findUserPhoneName(re.getUserId());
 				Map<String, String> card = repaymentService.findCardNo(re.getUserId());
 				String cardNo = card.get("cardNo");
-				String content = "";
-				if("小鱼儿".equals(PropertiesUtil.get("APP_NAME"))){
-					content = "尊敬的" + user.get("realname") + "，您的" + (re.getRepaymentAmount() / 100) + "借款明日到期，请至APP还款，若到期未还款，平台将自动扣款，请确保尾号"
-							+ cardNo.substring(cardNo.length() - 4) + "银行卡资金充足，如已还款，请忽略。";
-				}else{
-					content = "尊敬的" + user.get("realname") + "，您的" + (re.getRepaymentAmount() / 100) + "借款明日到期，请至APP还款，若到期未还款，平台将自动扣款，请确保尾号"
-							+ cardNo.substring(cardNo.length() - 4) + "银行卡资金充足。";
-				}
-				SendSmsUtil.sendSmsDiyCL(user.get("userPhone"), content);
+				String content = user.get("realname") + "##" + (re.getRepaymentAmount() / 100) + "##"
+							+ cardNo.substring(cardNo.length() - 4);
+
+				SendSmsUtil.sendSmsDiyCL(user.get("userPhone"), SendSmsUtil.templateld44639, content);
 				UserSendMessage message = new UserSendMessage();
 				message.setPhone(user.get("userPhone"));// 接收的用户
 				message.setMessageCreateTime(new Date());
@@ -497,7 +492,7 @@ public class TaskJob implements ITaskJob {
 			for (int i = 0; i < split.length; i++) {
 				String phone = split[i];
 				String content = "平台人员" + username + "于" + com.info.statistic.util.DateUtil.getDateComplete(date) + "登陆操作信审。";
-				SendSmsUtil.sendSmsDiyCL(phone, content);
+				//SendSmsUtil.sendSmsDiyCL(phone, content);
 				log.info("content:{}",content);
 				UserSendMessage message = new UserSendMessage();
 				message.setPhone(phone);// 接收的用户
@@ -538,16 +533,10 @@ public class TaskJob implements ITaskJob {
 				Map<String, String> user = repaymentService.findUserPhoneName(re.getUserId());
 				Map<String, String> card = repaymentService.findCardNo(re.getUserId());
 				String cardNo = card.get("cardNo");
-				String content = "";
-				if("小鱼儿".equals(PropertiesUtil.get("APP_NAME"))){
-					content = "尊敬的" + user.get("realname") + "，您的" + (re.getRepaymentAmount() / 100) + "借款今日到期，请至APP还款，若到期未还款，平台将自动扣款，请确保尾号"
-							+ cardNo.substring(cardNo.length() - 4) + "银行卡资金充足，如已还款，请忽略。";
-				}else{
-					content = "尊敬的" + user.get("realname") + "，您的" + (re.getRepaymentAmount() / 100) + "借款今日到期，请至APP还款，若到期未还款，平台将自动扣款，请确保尾号"
-							+ cardNo.substring(cardNo.length() - 4) + "银行卡资金充足。";
-				}
+				String content = user.get("realname") + "##" + (re.getRepaymentAmount() / 100) + "##"
+							+ cardNo.substring(cardNo.length() - 4);
 
-				SendSmsUtil.sendSmsDiyCL(user.get("userPhone"), content);
+				SendSmsUtil.sendSmsDiyCL(user.get("userPhone"), SendSmsUtil.templateld44638, content);
 				UserSendMessage message = new UserSendMessage();
 				message.setPhone(user.get("userPhone"));// 接收的用户
 				message.setMessageCreateTime(new Date());
