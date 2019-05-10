@@ -2,7 +2,7 @@
  * <p>Title: ActiveStatisticsInfo.java</p>
  * @Package com.info.web.pojo 
  * <p>Description: 活动数据统计实体类</p> 
- * <p>Company:小鱼儿</p>
+ * <p>Company:多米优</p>
  * @author lixingxing
  * @since 2017年3月14日 上午11:44:26 
  * @version V1.0   
@@ -13,7 +13,7 @@ import java.util.Date;
 
 /** 
  * <p>Description: 活动数据统计实体类</p> 
- * <p>Company:小鱼儿</p>
+ * <p>Company:多米优</p>
  * @author lixingxing
  * @version V1.0 
  */

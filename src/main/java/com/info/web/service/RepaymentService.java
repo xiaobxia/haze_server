@@ -755,7 +755,7 @@ public class RepaymentService implements IRepaymentService {
 				@Override
 				public void run() {
 					try {
-						SendSmsUtil.sendSmsDiyCL(userPhone, "你收到小鱼儿打款" + intoMoney + "元,预计很快到账，请注意查收！");
+						SendSmsUtil.sendSmsDiyCL(userPhone, SendSmsUtil.templateld44636, PropertiesUtil.get("APP_NAME") + "##" + intoMoney);
 
 					}catch (Exception e){
 						log.error("send sms error:{}",e);

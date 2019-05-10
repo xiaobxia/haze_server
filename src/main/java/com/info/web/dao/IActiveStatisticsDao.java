@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 /** 
  * <p>Description: 活动统计数据访问层接口</p> 
- * <p>Company:小鱼儿</p>
+ * <p>Company:多米优</p>
  * @author lixingxing
  * @version V1.0 
  */

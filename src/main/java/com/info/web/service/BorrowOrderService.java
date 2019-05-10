@@ -3,6 +3,7 @@ package com.info.web.service;
 import com.alibaba.fastjson.JSON;
 import com.info.back.dao.IBackConfigParamsDao;
 import com.info.back.service.ReviewDistributionService;
+import com.info.back.utils.PropertiesUtil;
 import com.info.back.utils.ServiceResult;
 import com.info.back.utils.SysCacheUtils;
 import com.info.back.utils.WebClient;
@@ -30,7 +31,6 @@ import org.springframework.stereotype.Service;
 import redis.clients.jedis.JedisCluster;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -177,14 +177,14 @@ public class BorrowOrderService implements IBorrowOrderService {
 //				notice.put("linkUrl","");
 //				infoIndexService.saveInfoNotice(notice);
 
-                final String msg = "尊敬的" + user.getRealname() + "，您在小鱼儿申请的" + (borrowOrder.getMoneyAmount() / 100) + ".00元借款，" +
-                        "已经成功发放至您尾号为" + cardNo.substring(cardNo.length() - 4) + "的银行卡，请注意查收，祝您用款愉快。";
+                final String msg = user.getRealname() + "##"+ PropertiesUtil.get("APP_NAME") +"##" + (borrowOrder.getMoneyAmount() / 100) + "##" +
+                        cardNo.substring(cardNo.length() - 4);
                 com.info.web.test.ThreadPool pool = com.info.web.test.ThreadPool.getInstance();
                 pool.execute(new Runnable() {
                     @Override
                     public void run() {
                         try{
-                            SendSmsUtil.sendSmsDiyCL(user.getUserPhone(), msg);
+                            SendSmsUtil.sendSmsDiyCL(user.getUserPhone(), SendSmsUtil.templateld44641, msg);
 
                         }catch (Exception e){
                             log.error("send sms error:{}",e);
@@ -639,16 +639,11 @@ public class BorrowOrderService implements IBorrowOrderService {
                             // "元，请继续保持良好的还款习惯！");
                             // }
                             // });
-                            ThreadPool3.getInstance().run(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        SendSmsUtil.sendSmsDiyCL(userPhone, "恭喜您已经正常还款累计" + normAmountT + "元，获得提额：" + addAmountT + "元，请继续保持良好的还款习惯！");
-
-                                    }catch (Exception e){
-                                        log.error("send sms error:{}",e);
-                                    }
-
+                            ThreadPool3.getInstance().run(() -> {
+                                try {
+                                    SendSmsUtil.sendSmsDiyCL(userPhone, SendSmsUtil.templateld44634, normAmountT + "##提额：" + addAmountT + "元");
+                                }catch (Exception e){
+                                    log.error("send sms error:{}",e);
                                 }
                             });
 
@@ -740,23 +735,18 @@ public class BorrowOrderService implements IBorrowOrderService {
                     final String userPhone = user.getUserPhone();
                     final Integer amountMax = Integer.parseInt(newUser.getAmountMax()) / 100;
                     if (amountMax > 0) {
-                        ThreadPool.getInstance().run(new Runnable() {
+                        ThreadPool.getInstance().run(() -> {
+                            // 发送提额短信
+                            try{
+                                SendSmsUtil.sendSmsDiyCL(userPhone, SendSmsUtil.templateld44635, String.valueOf(amountMax));
 
-                            @Override
-                            public void run() {
-
-                                // 发送提额短信
-                                try{
-                                    SendSmsUtil.sendSmsDiyCL(userPhone, "通过风控运行，您的额度更改为：" + amountMax + "元，请保持良好的还款习惯！");
-
-                                }catch (Exception e){
-                                    log.error("send sms error:{}",e);
-                                }
-                                // System.out.println("恭喜您已经正常还款累计" + normAmount
-                                // /
-                                // 100+
-                                // "元，获得提额："+addAmount/100+"元，请继续保持良好的还款习惯！");
+                            }catch (Exception e){
+                                log.error("send sms error:{}",e);
                             }
+                            // System.out.println("恭喜您已经正常还款累计" + normAmount
+                            // /
+                            // 100+
+                            // "元，获得提额："+addAmount/100+"元，请继续保持良好的还款习惯！");
                         });
                     }
                 }

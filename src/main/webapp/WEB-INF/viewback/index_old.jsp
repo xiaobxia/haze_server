@@ -692,7 +692,7 @@
 </div>
 
 <div id="footer" s>
-	Copyright &copy; 2019-2020  技术支持：小鱼儿<a href="#" target="_blank"></a>
+	Copyright &copy; 2019-2020  技术支持：多米优<a href="#" target="_blank"></a>
 </div>
 
 </body>

@@ -29,7 +29,7 @@
 						放款账户:
 						<select id="rcl_capitalType" name="capitalType">
 							<option value="">全部</option>
-							<option <c:if test="${params.capitalType == 1}"> selected </c:if> value="1">小鱼儿</option>
+							<option <c:if test="${params.capitalType == 1}"> selected </c:if> value="1">多米优</option>
 							<%--<option <c:if test="${params.capitalType == 2}"> selected </c:if> value="2">杭州招财猫网络科技有限公司</option>--%>
 						</select>
 					</td>

@@ -644,7 +644,7 @@ public class RiskCreditReasonUtil {
     }
 
     /**
-     * 小鱼儿老用户
+     * 多米优老用户
      *
      * @param creditReport
      * @return

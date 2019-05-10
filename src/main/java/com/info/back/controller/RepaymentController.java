@@ -396,7 +396,7 @@ public class RepaymentController extends BaseController {
     public void repaySmsRemind(String amount, String type) {
         try {
             if (StringUtils.isNotBlank(amount)) {
-                SendSmsUtil.sendSmsDiyCL("18516777211", "尊敬的张苏豪，您的" + amount + "借款明日到期，请至APP还款，若到期未还款，平台将自动扣款，请确保尾号9691银行卡资金充足，如已还款，请忽略。");
+                //SendSmsUtil.sendSmsDiyCL("18516777211", "尊敬的张苏豪，您的" + amount + "借款明日到期，请至APP还款，若到期未还款，平台将自动扣款，请确保尾号9691银行卡资金充足，如已还款，请忽略。");
             } else if ("9".equals(type)) {
                 taskJob.repaySmsRemind9();
             } else {
