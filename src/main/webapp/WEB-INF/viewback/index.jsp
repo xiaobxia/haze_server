@@ -47,63 +47,63 @@
 		}
 		.index-page-wrap {
 			position: relative;
-			padding: 4rem;
+			padding: 2rem;
 		}
 		.index-page-wrap .left-main {
 			display: inline-block;
-			width: 105rem;
+			width: 52.5rem;
 			vertical-align: top;
-			margin-right: 9rem;
+			margin-right: 4.5rem;
 		}
 		.index-page-wrap .right-main {
 			display: inline-block;
-			width: 49.5rem;
+			width: 24.6rem;
 			vertical-align: top;
 		}
 		.main-title {
-			margin-bottom: 4rem;
-			font-size: 2.6rem;
+			margin-bottom: 2rem;
+			font-size: 1.3rem;
 		}
 		.main-title span{
-			font-size: 2.6rem;
+			font-size: 1.3rem;
 		}
 		.main-title img{
-			height: 2.7rem;
+			height: 1.35rem;
 			width: auto;
-			margin-right: 2rem;
+			margin-right: 1rem;
 			vertical-align: bottom;
 		}
 		.circle-card {
 			display: inline-block;
-			margin-bottom: 4rem;
+			margin-bottom: 2rem;
 			box-sizing: border-box;
-			padding: 2rem 3rem;
+			padding: 1rem 1.5rem;
 			background-color: #fff;
 			box-shadow: 0 0 20px rgb(223, 223, 223);
-			border-radius: 0.6rem;
-			width: 49.5rem;
-			height: 15rem;
+			border-radius: 0.3rem;
+			width: 24.6rem;
+			height: 7.5rem;
 		}
 		.circle-card.left {
-			margin-right: 5rem;
+			margin-right: 2.5rem;
 		}
 		.circle-card .circle-wrap {
 			display: inline-block;
-			width: 11rem;
-			height: 11rem;
+			width: 5.5rem;
+			height: 5.5rem;
 		}
 		.circle-card .circle-wrap canvas {
 		}
 		.circle-card .detail-wrap {
 			display: inline-block;
 			text-align: right;
-			width: 32rem;
+			width: 15rem;
 			vertical-align: top;
 		}
 		.circle-card .detail-wrap .number{
-			font-size: 5rem;
+			font-size: 2.5rem;
 			font-weight: 400;
-			margin-bottom: 5px;
+			margin-bottom: 2.5px;
 		}
 		.number.blue {
 			color: #528DFF;
@@ -118,19 +118,19 @@
 			color: #F05D5D;
 		}
 		.circle-card .detail-wrap .text{
-			font-size: 2.6rem;
+			font-size: 1.3rem;
 			color: #7D7D7D;
 		}
 
 		.info-card {
 			box-sizing: border-box;
-			padding: 1rem 3rem;
+			padding: 0.5rem 1.5rem;
 			background-color: #fff;
 			box-shadow: 0 0 20px rgb(223, 223, 223);
-			border-radius: 5px;
-			width: 105rem;
-			height: 26rem;
-			font-size: 2.4rem;
+			border-radius: 0.4rem;
+			width: 52.5rem;
+			height: 13rem;
+			font-size: 1.2rem;
 			color: #888888;
 		}
 		.info-card .row{
@@ -142,31 +142,31 @@
 		.info-card .info-item{
 			box-sizing: border-box;
 			display: inline-block;
-			width: 47rem;
-			height: 8rem;
-			line-height: 8rem;
+			width: 23.5rem;
+			height: 4rem;
+			line-height: 4rem;
 			position: relative;
 		}
 		.info-card .info-item span {
-			font-size: 2.4rem;
+			font-size: 1.2rem;
 			vertical-align: middle;
 		}
 		.info-card .info-item span:nth-of-type(3) {
-			margin-top: 2rem;
+			margin-top: 1rem;
 			float: right;
 		}
 		.info-card .info-item .fix {
 			position: absolute;
-			left: 15rem;
-			top: 2.6rem;
+			left: 7.5rem;
+			top: 1.3rem;
 		}
 		.info-card .info-item span:nth-of-type(2) {
-			margin-left: 3rem;
+			margin-left: 1.5rem;
 		}
 		.text-tag {
 			color: #fff;
-			padding: 0.5rem 1rem;
-			border-radius: 0.4rem;
+			padding: 0.25rem 0.5rem;
+			border-radius: 0.2rem;
 		}
 		.text-tag.yellow-tag {
 			background-color: rgba(255,150,0,1);
@@ -175,29 +175,29 @@
 			background-color: #F85252;
 		}
 		.info-card .info-item.left{
-			margin-right: 4rem;
+			margin-right: 2rem;
 		}
 		.info-card .text-tag {
 
 		}
 		.notice-wrap {
-			border: 0.3rem solid #528DFF;
-			border-radius: 0.8rem;
+			border: 0.15rem solid #528DFF;
+			border-radius: 0.4rem;
 		}
 		.notice-wrap .title.title-active{
 			background-color: #528DFF;
-			border-radius: 1rem 1rem 0 0;
+			border-radius: 0.5rem 0.8rem 0 0;
 		}
 		.notice-wrap .title.title-active-2{
 			background-color: #75A4FF;
 			border-radius: 0;
 		}
 		.notice-wrap .title{
-			padding: 3rem 3rem 3rem 6rem;
+			padding: 1.5rem 1.5rem 1.5rem 3rem;
 			background-color: #89B1FF;
 			color: #fff;
-			font-size: 2.2rem;
-			border-radius: 0 0 1rem 1rem;
+			font-size: 1.1rem;
+			border-radius: 0 0 0.5rem 0.5rem;
 			position: relative;
 		}
 		.notice-wrap .title .left{
@@ -208,75 +208,78 @@
 			float: right;
 		}
 		.notice-wrap .title * {
-			font-size: 2.2rem;
+			font-size: 1.1rem;
 		}
 		.notice-wrap .title.title-active span:nth-of-type(3){
 			float: right;
 		}
 		.notice-wrap .title.title-active span:nth-of-type(2){
 			position: absolute;
-			left: 24rem;
+			left: 12rem;
 		}
 		.notice-wrap .main-wrap {
-			padding: 0 3.3rem 2rem 3.3rem;
+			padding: 0 1.65rem 1rem 1.65rem;
 			box-sizing: border-box;
 			color: #4C4C4C;
 		}
 		.notice-wrap .item {
 			box-sizing: border-box;
-			padding: 2rem 0 1rem 0;
+			padding: 1rem 0 0.5rem 0;
 			display: inline-block;
-			width: 17rem;
+			width: 8.5rem;
 			border-bottom: 1px solid rgb(233,233,233);
 			color: #4C4C4C;
-			font-size: 2rem;
+			font-size: 1rem;
 		}
 		.notice-wrap .sub-item {
 			box-sizing: border-box;
-			padding: 12px 0;
+			padding: 0.8rem 0;
 			display: inline-block;
-			width: 17rem;
+			width: 8.5rem;
 			border-bottom: 1px solid rgb(233,233,233);
 			color: #888888;
-			font-size: 12px;
+			font-size: 0.9rem;
 		}
 		.notice-wrap .item.left {
-			margin-right: 8rem;
+			margin-right: 3rem;
 		}
 		.notice-wrap .sub-item.left {
-			margin-right: 8rem;
+			margin-right: 3rem;
 		}
 		.notice-wrap .item .icon {
 			display: inline-block;
-			margin-right: 1rem;
+			margin-right: 0.5rem;
 			vertical-align: top;
-			height: 5rem;
-			line-height: 5rem;
+			height: 2.5rem;
+			line-height: 2.5rem;
 		}
 		.notice-wrap .item .icon img{
-			width: 2.2rem;
-			height: 2.2rem;
+			width: 1.1rem;
+			height: 1.1rem;
 			vertical-align: middle;
 		}
 		.notice-wrap .item .text {
-			font-size: 2rem;
+			font-size: 1rem;
 			display: inline-block;
 		}
 		.notice-wrap .item .text div {
-			font-size: 2rem;
+			font-size: 1rem;
 		}
 		.notice-wrap .item .text .up-down-icon{
-			margin-top: 0.6rem;
+			margin-top: 0.3rem;
 			float: right;
 		}
 		.notice-wrap .sub-item .text {
-			margin-left: 6rem;
-			font-size: 1.8rem;
+			margin-left: 3rem;
+			font-size: 0.9rem;
+		}
+		.notice-wrap .sub-item .text div{
+			font-size: 0.9rem;
 		}
 		.up-down-icon {
-			margin-left: 1.2rem;
-			width: 1.2rem;
-			height: 1.2rem;
+			margin-left: 0.6rem;
+			width: 0.6rem;
+			height: 0.6rem;
 		}
 	</style>
 	<script src="${basePath }/js/dwz.ui.js" type="text/javascript"></script>
@@ -337,9 +340,9 @@
 
 
 				function setAdaptive () {
-					var baseFontSize = 10
+					var baseFontSize = 20
 					// 和width有关
-					var winWidth = $('.index-page-wrap').outerWidth(true)
+					var winWidth = $('.index-page-wrap').innerWidth(true)
 					var fontScale = winWidth / 1720
 					document.documentElement.style.fontSize = (baseFontSize * fontScale) + 'px'
 					window.adaptive = {
@@ -350,8 +353,8 @@
 
 				setAdaptive()
 
-				$('.myChart').attr('width', window.adaptive.fontSize * 11)
-				$('.myChart').attr('height', window.adaptive.fontSize * 11)
+				$('.myChart').attr('width', window.adaptive.fontSize * 110 /20)
+				$('.myChart').attr('height', window.adaptive.fontSize * 110 /20)
 				function formatNumToThree(str) {
 					str = '' + (str|| 0)
 					var newStr = "";
@@ -386,7 +389,7 @@
 
 				(function($, window, undefined) {
 					$.fn.ringChart = function(curr, total, numText, color) {
-						var zoom = window.adaptive.fontSize / 10
+						var zoom = window.adaptive.fontSize / 20
 						var canvasWH = zoom * 110/2
 						var canvasHH = zoom * 110/2
 						var lineW = zoom * 7
@@ -788,7 +791,7 @@
 										</div>
 										<div class="right">
 											<div>当日放款订单</div>
-											<div id="drfkdd" class="number-text">223</div>
+											<div id="drfkdd" class="number-text">--</div>
 										</div>
 									</div>
 									<div class="main-wrap">
@@ -798,7 +801,7 @@
 											</div>
 											<div class="text">
 												<div>当日复借金额</div>
-												<div id="drfjje-n" class="number-text">¥ 12344</div>
+												<div id="drfjje-n" class="number-text">--</div>
 											</div>
 										</div>
 										<div class="item">
@@ -807,7 +810,7 @@
 											</div>
 											<div class="text">
 												<div>当日复借订单</div>
-												<div id="drfjdd" class="number-text">12344</div>
+												<div id="drfjdd" class="number-text">--</div>
 											</div>
 										</div>
 										<div class="item left">
@@ -816,7 +819,7 @@
 											</div>
 											<div class="text">
 												<div>当日到期金额</div>
-												<div id="drdqje" class="number-text">¥ 12344</div>
+												<div id="drdqje" class="number-text">--</div>
 											</div>
 										</div>
 										<div class="item">
@@ -825,43 +828,43 @@
 											</div>
 											<div class="text">
 												<div>当日到期订单</div>
-												<div id="drdqdd" class="number-text">12344</div>
+												<div id="drdqdd" class="number-text">--</div>
 											</div>
 										</div>
 										<div class="sub-item left">
 											<div class="text">
 												<div>全额还款金额</div>
-												<div id="qehkje" class="number-text">12344</div>
+												<div id="qehkje" class="number-text">--</div>
 											</div>
 										</div>
 										<div class="sub-item">
 											<div class="text">
 												<div>全额还款订单</div>
-												<div id="eqhkdd" class="number-text">12344</div>
+												<div id="eqhkdd" class="number-text">--</div>
 											</div>
 										</div>
 										<div class="sub-item left">
 											<div class="text">
 												<div>当日展期金额</div>
-												<div id="drzqje" class="number-text">12344</div>
+												<div id="drzqje" class="number-text">--</div>
 											</div>
 										</div>
 										<div class="sub-item">
 											<div class="text">
 												<div>当日展期订单</div>
-												<div id="drzqdd" class="number-text">12344</div>
+												<div id="drzqdd" class="number-text">--</div>
 											</div>
 										</div>
 										<div class="sub-item left">
 											<div class="text">
 												<div>当日待收金额</div>
-												<div id="drdsje" class="number-text">12344</div>
+												<div id="drdsje" class="number-text">--</div>
 											</div>
 										</div>
 										<div class="sub-item">
 											<div class="text">
 												<div>当日待收订单</div>
-												<div id="drdsdd" class="number-text">12344</div>
+												<div id="drdsdd" class="number-text">--</div>
 											</div>
 										</div>
 										<div class="item left">
@@ -870,7 +873,7 @@
 											</div>
 											<div class="text">
 												<div>当日放款率</div>
-												<div id="drfkl" class="number-text">12344</div>
+												<div id="drfkl" class="number-text">--</div>
 											</div>
 										</div>
 										<div class="item">
@@ -879,7 +882,7 @@
 											</div>
 											<div class="text">
 												<div>当日通过率</div>
-												<div id="drtgl" class="number-text">12344</div>
+												<div id="drtgl" class="number-text">--</div>
 											</div>
 										</div>
 										<div class="item left">
@@ -888,7 +891,7 @@
 											</div>
 											<div class="text">
 												<div>当日回款率</div>
-												<div id="drhkl" class="number-text">12344</div>
+												<div id="drhkl" class="number-text">--</div>
 											</div>
 										</div>
 									</div>
