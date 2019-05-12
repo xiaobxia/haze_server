@@ -408,4 +408,6 @@ public interface IBorrowOrderService {
     List<String> getUserIdList();
 
     List<String> getUserIdList2();
+
+    List<String> getUserIdWaitList();
 }

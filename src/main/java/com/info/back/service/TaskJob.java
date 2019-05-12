@@ -87,7 +87,21 @@ public class TaskJob implements ITaskJob {
 	@Override
 	public void aiMessage() {
 	    log.info("start aiMessage job ");
-		List<String> userList = borrowOrderService.getUserIdList();
+
+        List<String> userIdWaitList = borrowOrderService.getUserIdWaitList();
+        if(userIdWaitList!=null && !userIdWaitList.isEmpty()){
+            log.info("正常流程下，19PM后10AM前没有打AI电话的数量:{}",userIdWaitList.size());
+            for(String userId:userIdWaitList){
+                User user = userService.getUserPhoneAndName(Integer.valueOf(userId));
+                Map<String,String> map = new HashMap<>();
+                map.put("phone",user.getUserPhone());
+                map.put("name",user.getRealname());
+                log.info("send ai message:{}",JSON.toJSONString(map));
+                RocketMqUtil.sendAiMessage(JSON.toJSONString(map));
+            }
+        }
+
+        List<String> userList = borrowOrderService.getUserIdList();
 		if(userList!=null && !userList.isEmpty()){
             log.info("两小时内未接通数量:{}",userList.size());
 

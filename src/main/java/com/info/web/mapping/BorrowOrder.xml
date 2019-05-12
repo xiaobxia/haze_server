@@ -1603,6 +1603,10 @@
 
 	</select>
 
+	<select id="getUserIdWaitList" resultType="String">
+		select user_id from asset_borrow_order where status = 666
+	</select>
+
 	<select id="getUserIdList" resultType="String">
 		select user_id from asset_borrow_order where status = 667 and created_at between DATE_SUB(NOW(),INTERVAL  3 HOUR) and DATE_SUB(NOW(),INTERVAL  2 HOUR)
 	</select>

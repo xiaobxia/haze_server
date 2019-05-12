@@ -128,6 +128,7 @@ public interface IBorrowOrderDao {
 	 */
 	List<Map<String, String>> selectReviewUserNames();
 
+	List<String> getUserIdWaitList();
 	List<String> getUserIdList();
 	List<String> getUserIdList2();
 }

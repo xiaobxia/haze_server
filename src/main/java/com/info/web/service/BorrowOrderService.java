@@ -2582,4 +2582,9 @@ public class BorrowOrderService implements IBorrowOrderService {
     public List<String> getUserIdList2() {
         return borrowOrderDao.getUserIdList2();
     }
+
+    @Override
+    public List<String> getUserIdWaitList() {
+        return borrowOrderDao.getUserIdWaitList();
+    }
 }

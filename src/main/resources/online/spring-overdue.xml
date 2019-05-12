@@ -427,7 +427,8 @@
     </bean>
     <bean id="aiMessageTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="aiMessage"/>
-        <property name="cronExpression" value="0 0 0/1 * * ?"/>
+        <property name="cronExpression" value="0 0 10-19 * * ? "/>
+        <!--<property name="cronExpression" value="0 0 0/1 * * ?"/>-->
     </bean>
 
 
