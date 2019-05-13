@@ -68,7 +68,7 @@
 		 ]]>  
    	 </select>
 	<select id="findAllPendingRepayMoney" resultType="map" parameterType="Integer">
-     select IFNULL(sum(repayment_amount),0) as money,count(id) as countnumber
+     select IFNULL(sum(repayment_amount),0) as money,IFNULL(sum(repaymented_amount),0) as repaymentedAmount,count(id) as countnumber
       from  asset_repayment where 1=1
       <if test="_parameter ==1">
 		  and status in (23,30,34);
@@ -81,7 +81,7 @@
 	  </if>
 	</select>
 	<select id="findTodayMoneyCount" resultType="map" parameterType="Integer">
-		select IFNULL(sum(repayment_amount),0) as money,IFNULL(count(id),0) as countNumber
+		select IFNULL(sum(repayment_amount),0) as money,IFNULL(sum(repaymented_amount),0) as repaymentedAmount,IFNULL(count(id),0) as countNumber
 		from asset_repayment  where YEARWEEK( DATE_FORMAT( repayment_time, '%Y-%m-%d' ) ) = YEARWEEK( DATE_FORMAT( NOW( ), '%Y-%m-%d' ) )
           <if test="_parameter != null and _parameter != ''">
 			  and status =#{status}
@@ -103,7 +103,7 @@
 		FROM
 			asset_repayment
 		WHERE
-			repayment_time BETWEEN ( SELECT date_sub( curdate( ), INTERVAL 2 DAY ) )
+			YEARWEEK( DATE_FORMAT( repayment_time, '%Y-%m-%d' ) ) BETWEEN ( SELECT date_sub( curdate( ), INTERVAL 2 DAY ) )
 			AND DATE_FORMAT( NOW( ), '%Y-%m-%d' )
 	</select>
 	<select id="extendToday" resultType="map">
