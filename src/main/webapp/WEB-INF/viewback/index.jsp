@@ -38,7 +38,7 @@
 		}
 
 		#leftside,#container,#splitBar,#splitBarProxy {
-			top: 90px
+			top: 85px
 		}
 	</style>
 	<style>
@@ -53,7 +53,7 @@
 			display: inline-block;
 			width: 52.5rem;
 			vertical-align: top;
-			margin-right: 4.5rem;
+			margin-right: 12.5rem;
 		}
 		.index-page-wrap .right-main {
 			display: inline-block;
@@ -282,6 +282,29 @@
 			height: 0.6rem;
 		}
 	</style>
+	<style>
+		.logo-wrap {
+			height: 85px;
+			width: 205px;
+			line-height: 85px;
+			text-align: center;
+		}
+		.logo-wrap img {
+			display: inline-block;
+			width: 114px;
+			height: auto;
+			vertical-align: middle;
+		}
+		.header-wrap {
+			position: absolute;
+			left: 0;
+			top: 0;
+			height: 85px;
+			width: 100%;
+			box-sizing: border-box;
+			padding-left: 205px;
+		}
+	</style>
 	<script src="${basePath }/js/dwz.ui.js" type="text/javascript"></script>
 	<script src="${basePath }/js/speedup.js" type="text/javascript"></script>
 	<script src="${basePath }/js/jquery-1.7.2.js" type="text/javascript"></script>
@@ -339,7 +362,7 @@
 					var baseFontSize = 20
 					// 和width有关
 					var winWidth = $('.index-page-wrap').innerWidth(true)
-					var fontScale = winWidth / 1720
+					var fontScale = winWidth / 1920
 					document.documentElement.style.fontSize = (baseFontSize * fontScale) + 'px'
 					window.adaptive = {
 						winWidth: winWidth,
@@ -555,41 +578,37 @@
 <body scroll="no">
 <div id="layout">
 	<div id="header">
-		<div class="headerNav">
-			<a class="logo" href="javascript:void(0)"></a>
-			<ul class="nav">
-				<li id="switchEnvBox"><a href="javascript:"
-										 style="color: black;">${BACK_USER.userAccount},您好!
-					欢迎登录后台管理平台</a></li>
-				<c:if test="${BACK_USER.id eq 10000}">
-					<li><a style="color: black;"
-						   href="updateCache" target="ajaxTodo">刷新系统缓存</a></li>
-				</c:if>
-				<li><a style="color: black;"
-					   href="user/updateUserPassword?type=toJsp" target="dialog" mask="true"
-					   width="600">修改密码</a></li>
-				<li><a style="color: black;" href="logout">退出</a></li>
-
-			</ul>
-			<ul class="themeList" id="themeList">
-				<li theme="default"><div class="selected">蓝色</div></li>
-				<li theme="green"><div>绿色</div></li>
-				<li theme="purple"><div>紫色</div></li>
-				<li theme="silver"><div>银色</div></li>
-				<li theme="azure"><div>天蓝</div></li>
-			</ul>
+		<div class="logo-wrap">
+			<img src="${basePath }/images/logo.png" alt="">
 		</div>
+		<div class="header-wrap">
+			<div class="headerNav">
+				<ul class="nav">
+					<li id="switchEnvBox"><a href="javascript:"
+					>${BACK_USER.userAccount},您好!
+						欢迎登录后台管理平台</a></li>
+					<c:if test="${BACK_USER.id eq 10000}">
+						<li><a
+								href="updateCache" target="ajaxTodo">刷新系统缓存</a></li>
+					</c:if>
+					<li><a
+							href="user/updateUserPassword?type=toJsp" target="dialog" mask="true"
+							width="600">修改密码</a></li>
+					<li><a href="logout">退出</a></li>
 
-		<div id="navMenu">
-			<ul>
-				<c:forEach items="${menuModuleList}" var="item" varStatus="count">
-					<li <c:if test="${count.count==1}">  class="selected" </c:if> >
-						<a href="${item.moduleUrl}?myId=${item.id}">
-							<span>${item.moduleName}</span>
-						</a>
-					</li>
-				</c:forEach>
-			</ul>
+				</ul>
+			</div>
+			<div id="navMenu">
+				<ul>
+					<c:forEach items="${menuModuleList}" var="item" varStatus="count">
+						<li <c:if test="${count.count==1}">  class="selected" </c:if> >
+							<a href="${item.moduleUrl}?myId=${item.id}">
+								<span>${item.moduleName}</span>
+							</a>
+						</li>
+					</c:forEach>
+				</ul>
+			</div>
 		</div>
 	</div>
 

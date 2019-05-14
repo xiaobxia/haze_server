@@ -38,7 +38,7 @@
 		}
 
 		#leftside,#container,#splitBar,#splitBarProxy {
-			top: 90px
+			top: 85px
 		}
 	</style>
 	<script src="${basePath }/js/dwz.ui.js" type="text/javascript"></script>
