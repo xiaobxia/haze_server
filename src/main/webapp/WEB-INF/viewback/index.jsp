@@ -182,7 +182,7 @@
 		}
 		.notice-wrap {
 			border: 0.15rem solid #528DFF;
-			border-radius: 0.4rem;
+			border-radius: 1rem;
 		}
 		.notice-wrap .title.title-active{
 			background-color: #528DFF;
