@@ -92,8 +92,9 @@
 .grid .gridHeader { background:#EEE;}
 .grid { background:#FFF;}
 .grid table { border-color:#d0d0d0;}
-.grid .gridHeader, .grid .gridHeader th { border-color:#d0d0d0; background:#f0eff0 url(./images/grid/tableth.png) repeat-x;}
+.grid .gridHeader, .grid .gridHeader th { border-color:#d0d0d0;}
 .grid table th div { border-left-color:#EEE; border-right-color:#d0d0d0;}
+.grid table th div.gridCol { height: 36px; line-height: 36px; font-size: 16px;}
 .grid table td { border-color:#ededed;}
 
 .grid .resizeMarker, .grid .resizeProxy { background:url(./images/grid/resizeCol.png) repeat-y;}

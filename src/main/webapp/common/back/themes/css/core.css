@@ -223,16 +223,16 @@ a:hover {text-decoration:underline;}
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #1D2437;
+    background: #ccc;
     border-radius: 4px
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #1D2437;
+    background: #ccc;
 }
 
 ::-webkit-scrollbar-track-piece:decrement, ::-webkit-scrollbar-track-piece:increment {
-    background: rgb(60, 90, 130);
+    background: #ddd;
 }
 
 /* Accordion */
@@ -316,9 +316,9 @@ a:hover {text-decoration:underline;}
 .grid table { border:0; border-collapse:collapse;table-layout:fixed;}
 .grid .gridHeader th { padding:0 3px; border-style:solid; border-width:0 1px 1px 0; vertical-align:top; white-space:nowrap; line-height:21px; cursor:default;}
 .grid .gridHeader th.hover, .grid .gridHeader th.thSelected { background-position:0 -50px;}
-.grid .gridTbody td { border-right:solid 1px #ededed; overflow:hidden; padding:0 3px; border-bottom:solid 1px #ededed; vertical-align:middle; line-height:21px;}
-.grid .gridTbody td div { display:block; overflow:hidden; height:21px; white-space:nowrap; line-height:21px;}
-.grid .gridTbody td div a{line-height:21px;}
+.grid .gridTbody td { border-right:solid 1px #ededed; overflow:hidden; padding:0 3px; border-bottom:solid 1px #ededed; vertical-align:middle; line-height:30px; font-size: 14px;}
+.grid .gridTbody td div { display:block; overflow:hidden; height:30px; white-space:nowrap; line-height:30px;}
+.grid .gridTbody td div a{line-height:30px;}
 
 .grid .gridRow { border-style:solid; border-width:0 0 1px 0; cursor:default;}
 .grid .gridRow td.tdLast { padding:0 4px 0 5px; border-right:solid 1px;}
@@ -337,9 +337,9 @@ a:hover {text-decoration:underline;}
 
 /* CSS Table */
 table.list {border-collapse:collapse; border:solid 1px #ededed;}
-table.list thead tr {background:url("../default/images/grid/tableth.png") repeat-x scroll 0 0 #F0EFF0;}
-table.list th {padding:1px 2px; line-height:21px; border-right: solid 1px #D0D0D0; border-bottom:solid 1px #D0D0D0; font-weight:bolder; }
-table.list td {padding:1px 2px; line-height:21px; border-right:solid 1px #ededed;}
+table.list thead tr {background-color:#F0EFF0;}
+table.list th {padding:1px 2px; line-height:36px; border-right: solid 1px #D0D0D0; border-bottom:solid 1px #D0D0D0; font-weight:bolder; font-size: 16px;}
+table.list td {padding:1px 2px; line-height:36px; border-right:solid 1px #ededed;font-size: 14px;}
 table.list th.asc, .grid .gridHeader th.asc{background-position: 100% 0; background:url(../default/images/order_up.gif) no-repeat right; cursor:pointer;}
 table.list th.desc, .grid .gridHeader th.desc{background-position: 100% 0; background:url(../default/images/order_down.gif) no-repeat right; cursor:pointer;}
 table.list tbody {background-color:#fff;}
