@@ -479,7 +479,7 @@ public class BackStatisticService implements IBackStatisticService {
         myPageReportInfo.setAllLoanCount(map.get("borrowCount") == null ?0:(long) map.get("borrowCount") );
 		//总已还款金额 // 总已还款笔数
 		map=sendMoneyStatisticDao.findAllPendingRepayMoney(1);
-		myPageReportInfo.setAllRepayMoney(optimic(map,"money"));
+		myPageReportInfo.setAllRepayMoney(optimic(map,"repaymentedAmount"));
 		myPageReportInfo.setAllRepayCount(map.get("countnumber") == null ?0:(long) map.get("countnumber"));
         //总待回款金额//总待回款笔数
 		map=sendMoneyStatisticDao.findAllPendingRepayMoney(2);
@@ -534,7 +534,7 @@ public class BackStatisticService implements IBackStatisticService {
 		myPageReportInfo.setApplyCount(applyCountToday);
         //当日到期金额/当日应还金额
 		map=sendMoneyStatisticDao.findTodayMoneyCount(null);
-        myPageReportInfo.setPendingRepayMoney(optimic(map,"money"));
+        myPageReportInfo.setPendingRepayMoney(optimic(map,"repaymentedAmount"));
         myPageReportInfo.setPendingRepayCount(map.get("countNumber") == null?0:(long) map.get("countNumber"));
         //当日已还款金额/全额还款金额  //当日已还款订单/当日到期订单
 		map=sendMoneyStatisticDao.findTodayMoneyCount(30);
