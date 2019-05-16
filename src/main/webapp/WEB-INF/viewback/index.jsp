@@ -47,7 +47,7 @@
 		}
 		.index-page-wrap {
 			position: relative;
-			padding: 2rem;
+			padding: 3rem 4rem;
 		}
 		.index-page-wrap .left-main {
 			display: inline-block;
@@ -187,13 +187,14 @@
 		.notice-wrap .title.title-active{
 			background-color: #528DFF;
 			border-radius: 0.5rem 0.8rem 0 0;
+			padding: 1.5rem 1.5rem 1.5rem 3rem;
 		}
 		.notice-wrap .title.title-active-2{
 			background-color: #75A4FF;
 			border-radius: 0;
 		}
 		.notice-wrap .title{
-			padding: 1.5rem 1.5rem 1.5rem 3rem;
+			padding: 1rem 1.5rem 1rem 3rem;
 			background-color: #89B1FF;
 			color: #fff;
 			font-size: 1.1rem;
@@ -362,7 +363,7 @@
 					var baseFontSize = 20
 					// 和width有关
 					var winWidth = $('.index-page-wrap').innerWidth(true)
-					var fontScale = winWidth / 1920
+					var fontScale = 0.95 * winWidth / 1920
 					document.documentElement.style.fontSize = (baseFontSize * fontScale) + 'px'
 					window.adaptive = {
 						winWidth: winWidth,
