@@ -47,13 +47,13 @@
 		}
 		.index-page-wrap {
 			position: relative;
-			padding: 3rem 4rem;
+			padding: 1.5rem 4rem;
 		}
 		.index-page-wrap .left-main {
 			display: inline-block;
-			width: 52.5rem;
+			width: 59rem;
 			vertical-align: top;
-			margin-right: 12.5rem;
+			margin-right: 6.5rem;
 		}
 		.index-page-wrap .right-main {
 			display: inline-block;
@@ -81,7 +81,7 @@
 			background-color: #fff;
 			box-shadow: 0 0 20px rgb(223, 223, 223);
 			border-radius: 0.3rem;
-			width: 24.6rem;
+			width: 28rem;
 			height: 7.5rem;
 		}
 		.circle-card.left {
@@ -97,13 +97,13 @@
 		.circle-card .detail-wrap {
 			display: inline-block;
 			text-align: right;
-			width: 15rem;
+			width: 19rem;
 			vertical-align: top;
 		}
 		.circle-card .detail-wrap .number{
 			font-size: 2.5rem;
 			font-weight: 400;
-			margin-bottom: 2.5px;
+			margin-bottom: 0.2rem;
 		}
 		.number.blue {
 			color: #528DFF;
@@ -128,7 +128,7 @@
 			background-color: #fff;
 			box-shadow: 0 0 20px rgb(223, 223, 223);
 			border-radius: 0.4rem;
-			width: 52.5rem;
+			width: 58.5rem;
 			height: 13rem;
 			font-size: 1.2rem;
 			color: #888888;
@@ -175,7 +175,7 @@
 			background-color: #F85252;
 		}
 		.info-card .info-item.left{
-			margin-right: 2rem;
+			margin-right: 6rem;
 		}
 		.info-card .text-tag {
 
@@ -187,14 +187,14 @@
 		.notice-wrap .title.title-active{
 			background-color: #528DFF;
 			border-radius: 0.5rem 0.8rem 0 0;
-			padding: 1.5rem 1.5rem 1.5rem 3rem;
+			padding: 1.2rem 1.5rem 1.2rem 3rem;
 		}
 		.notice-wrap .title.title-active-2{
 			background-color: #75A4FF;
 			border-radius: 0;
 		}
 		.notice-wrap .title{
-			padding: 1rem 1.5rem 1rem 3rem;
+			padding: 0.7rem 1.5rem 0.7rem 3rem;
 			background-color: #89B1FF;
 			color: #fff;
 			font-size: 1.1rem;
@@ -225,7 +225,7 @@
 		}
 		.notice-wrap .item {
 			box-sizing: border-box;
-			padding: 1rem 0 0.5rem 0;
+			padding: 0.5rem 0 0.5rem 0;
 			display: inline-block;
 			width: 8.5rem;
 			border-bottom: 1px solid rgb(233,233,233);
@@ -612,7 +612,6 @@
 			</div>
 		</div>
 	</div>
-
 	<div id="leftside">
 		<div id="sidebar_s">
 			<div class="collapse">

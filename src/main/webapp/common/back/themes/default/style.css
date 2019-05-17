@@ -74,7 +74,7 @@
 .tree .selected { background-color:#1D2437;}
 
 /* Accordion */
-.accordion .accordionHeader h2 {font-size: 17px;}
+.accordion .accordionHeader h2 {font-size: 17px; position: relative;}
 .accordion .accordionHeader, .accordion .accordionHeader h2, .accordion .accordionHeader h2 span { color:#fff;}
 .accordion { background-color:#32374A;}
 .accordion .accordionHeader { }
