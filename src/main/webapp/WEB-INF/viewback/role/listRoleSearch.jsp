@@ -12,7 +12,7 @@
 			<div>
 				<c:if test="${empty params.roleId}">
 					<div layoutH="14"
-						style="float: left; display: block; overflow: auto; width: 240px; border: solid 1px #CCC; line-height: 21px; background: #fff">
+						style="float: left; display: block; overflow: auto; width: 240px; border: solid 1px #CCC; line-height: 21px; background: #32374A;">
 						<ul class='tree treeFolder collapse'>
 							<li>
 								${roleList }
