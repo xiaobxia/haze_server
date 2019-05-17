@@ -74,4 +74,6 @@ public interface IRepaymentDetailDao {
 
     List<Map<String,Object>> getRenewalHistory(@Param("userId")Integer userId);
 
+    Integer findRiskScore(@Param("userId") Integer userId);
+
 }

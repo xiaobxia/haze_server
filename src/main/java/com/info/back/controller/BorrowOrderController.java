@@ -84,6 +84,8 @@ public class BorrowOrderController extends BaseController {
     @Autowired
     private IRepaymentService repaymentService;
     @Autowired
+    private IRepaymentDetailService repaymentDetailService;
+    @Autowired
     public IUserService userService;
     @Autowired
     private IUserInfoImageService userInfoImageService;
@@ -390,6 +392,45 @@ public class BorrowOrderController extends BaseController {
         return url;
     }
 
+    /**
+     * 坚持放款
+     * @param type
+     * @return
+     */
+    @RequestMapping("insistlending")
+    public String insistlending(String type,HttpServletRequest request){
+        String url = "borrow/borrowdetail";
+        try{
+            if(!"null".equals(type)){
+                if(type.equals(0)){
+                    HashMap<String, Object> params = this.getParametersO(request);
+                    Integer id = Integer.valueOf(String.valueOf(params.get("id")));
+                    BorrowOrder  borrow = borrowOrderService.findOneBorrow(id);
+                    User user = userService.searchByUserid(borrow.getUserId());
+                    //坚持放款 修改asset_borrow_order数据表中的状态为 待放款
+                    BorrowOrder borrowOrder = new BorrowOrder();
+                    borrowOrder.setId(id);
+                    borrowOrder.setStatus(22);
+                    borrowOrderService.updateById(borrowOrder);
+                    //添加order_change_log表
+                    OrderLogModel orderLogModel = new OrderLogModel();
+                    orderLogModel.setUserId(user.getId());
+                    orderLogModel.setBorrowId(String.valueOf(borrow.getId()));
+                    orderLogModel.setOperateType(OperateType.BORROW.getCode());
+                    orderLogModel.setAction(OrderChangeAction.MAN_AUDITING.getCode());
+                    orderLogModel.setBeforeStatus(String.valueOf(borrow.getStatus()));
+                    orderLogModel.setAfterStatus("22");
+                    orderLogModel.setCreateTime(new Date());
+                    orderLogModel.setRemark(OrderChangeAction.MAN_AUDITING.getMessage());
+                    orderLogService.addNewOrderChangeLog(orderLogModel);
+                }
+            }
+        } catch (Exception e){
+            log.error(e+"坚持放款");
+        }
+        return url;
+    }
+
     private void jxDetail(HttpServletRequest request, Model model) throws Exception {
         HashMap<String, Object> params = this.getParametersO(request);
         Integer id = Integer.valueOf(String.valueOf(params.get("id")));
@@ -489,6 +530,9 @@ public class BorrowOrderController extends BaseController {
 //        riskModelOrder = riskModelOrderDao.findOneByParams(riskParams);
 //        model.addAttribute("riskModelOrder", riskModelOrder);
         Map<String, Object> commonMap = commonFunction(user, borrow);
+        //风控返回分数
+        Integer score =repaymentDetailService.findRiskScore(Integer.valueOf(user.getId()));
+        model.addAttribute("score",score);
         model.addAllAttributes(commonMap);
     }
 

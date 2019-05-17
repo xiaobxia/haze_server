@@ -119,12 +119,20 @@
 							});
 							</script>
 							</c:when>
+							<c:when test="${cfg.inputType == 'radio'}">
+                                ${cfg.sysName} :<input type="${cfg.inputType}" value="${cfg.sysValue}" class="${cfg.limitCode}" >
+								<script>
+                                    $(document).ready(function() {
+
+									})
+								</script>
+							</c:when>
 							<c:otherwise>
 								<input type="text" ${cfg.limitCode }  name="list[${count.index }].sysValue"
 									value="${cfg.sysValue }" />
 								<span
 									style="float: left; width: 540px; padding: 0 5px; line-height: 21px;">${cfg.remark
-									}</span>
+								}</span>
 							</c:otherwise>
 						</c:choose>
 					</p>

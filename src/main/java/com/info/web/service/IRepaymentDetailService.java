@@ -98,4 +98,6 @@ public interface IRepaymentDetailService {
 
 	int assignBackMoneyStatisticsCount(HashMap<String,Object> params);
 
+	Integer findRiskScore(Integer userId);
+
 }

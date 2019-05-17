@@ -117,6 +117,12 @@ public class RepaymentDetailService implements IRepaymentDetailService {
     public int assignBackMoneyStatisticsCount(HashMap<String, Object> params) {
         return repaymentDetailDao.assignBackMoneyStatisticsCount(params);
     }
+
+    @Override
+    public Integer findRiskScore(Integer userId) {
+        return repaymentDetailDao.findRiskScore(userId);
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public PageConfig<Map<String, Object>> assignBackMoneyStatistics(HashMap<String, Object> params) {

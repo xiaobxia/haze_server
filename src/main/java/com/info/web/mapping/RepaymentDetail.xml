@@ -1233,4 +1233,7 @@
         WHERE d.`status` != 2 and DATE_FORMAT(d.`created_at`,  '%Y-%m-%d %H') &gt;= #{startTime} AND  DATE_FORMAT(d.`created_at`,  '%Y-%m-%d %H') &lt;= #{endTime} and (r.`status` != 30 and r.`status` != 34)  and d.`remark` NOT LIKE '定时%'
         GROUP BY d.`asset_repayment_id`
     </select>
+    <select id="findRiskScore" resultType="Integer" parameterType="Integer">
+        select IFNULL(score,0) from  risk_record where  user_id=#{userId}
+    </select>
 </mapper>

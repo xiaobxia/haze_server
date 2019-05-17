@@ -1211,4 +1211,4 @@
     <update id="updateAssignDelFlag" parameterType="Integer" >
         update asset_borrow_assign set del_flg =1 where id =#{assignId}
     </update>
-</mapper>
+        </mapper>

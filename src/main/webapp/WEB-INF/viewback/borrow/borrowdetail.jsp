@@ -620,6 +620,23 @@
 						</table>
 					</td>
 				</tr>
+				<tr>
+					<td class="tdGround" style="width:180px;">排序风控返回系统分值:
+					<c:if test="${score == null}">
+						暂无分数
+					</c:if>
+						<c:if test="${score != null}">
+							${score}
+						</c:if>
+					</td>
+					<td style="width:180px;">
+					<div class="buttonActive">
+						<div class="buttonContent">
+							<button id="openMoney">仍要放款</button>
+						</div>
+					</div>
+				</td>
+				</tr>
 				</tbody>
 			</table>
 		</fieldset>
