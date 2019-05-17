@@ -24,7 +24,22 @@
 					}
 				});
 	});
+
 </script>
+		<script type="text/javascript">
+			$(".radioItem").change(
+					function() {
+						var id = $("input[name='radioopen']:checked").val();
+						if (id === 'list[0]') {
+							$("#radiosysValue0").val(1);
+							$("#radiosysValue1").val(0);
+						} else if (id === 'list[1]') {
+							$("#radiosysValue0").val(0);
+							$("#radiosysValue1").val(1);
+						}
+					}
+			)
+		</script>
 	</head>
 	<body>
 		<form method="post" action="cofigParams/enterCfg/${params.sysType }?myId=${params.myId}"
@@ -57,6 +72,10 @@
 								<span
 									style="float: left; width: 540px; padding: 0 5px; line-height: 21px;">${cfg.remark
 									}</span>
+							</c:when>
+							<c:when test="${cfg.inputType == 'radio'}">
+								<input type="hidden" id="radiosysValue${count.index }" name="list[${count.index }].sysValue" value="${cfg.sysValue}"/>
+								<input type="${cfg.inputType}" class="radioItem" value="list[${count.index }]" ${cfg.sysValue == 0 ? '' : 'checked'} name="radioopen"  ${cfg.limitCode }/>
 							</c:when>
 							<c:when test="${cfg.inputType == 'image' }">
 								<input type="file"    id="input${cfg.id }"		value="${cfg.sysValue }" />
