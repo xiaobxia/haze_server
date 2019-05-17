@@ -240,7 +240,7 @@ a:hover {text-decoration:underline;}
 .accordion .accordionHeader { display:block; overflow:hidden; background-repeat:repeat-x; cursor:pointer;}
 .accordion .accordionHeader h2 { display:block; overflow:hidden; padding:0 25px 0 40px; height:50px; line-height:50px;}
 .accordion .accordionHeader h2 span { float:right; display:block; overflow:hidden; text-indent:-1000px; width:12px; height:12px;margin-top: 17px;}
-.accordion .accordionContent { display:block; overflow:auto; border-style:solid; border-width:0 0 1px 0;}
+.accordion .accordionContent { display:block; overflow:auto;}
 
 .accordion .accordionHeader.hover { background-position:0 -25px;}
 .accordion .accordionHeader h2 { background-repeat:no-repeat; background-position:100% -50px;}
@@ -257,23 +257,18 @@ a:hover {text-decoration:underline;}
 .panel .grid { border-style:solid; border-width:0 1px;}
 .panel .panelBar { border-width:1px;}
 
-.panelBar { display:block; overflow:hidden; height:25px; border-style:solid; border-width:1px 0; background-repeat:repeat-x; }
+.panelBar { display:block; overflow:hidden; height:30px; border-style:solid; border-width:1px 0; line-height: 20px; padding: 5px 0;box-sizing: border-box;}
 
-.panelBar ul { padding:1px;}
-.panelBar li { float:left; display:block; overflow:hidden; height:23px; padding:0 0 0 5px;}
+.panelBar ul {}
+.panelBar li { float:left; display:block; overflow:hidden; height:20px; padding:0 0 0 5px;line-height: 20px;}
 .panelBar li.hover { background-position:0 -100px;}
 .panelBar li.hover a { background-position:100% -150px;}
 
 .panelBar .toolBar li, .panelBar .toolBar li.hover { padding:0 0 0 5px; background-position:0 -100px;}
-.panelBar .toolBar a, .panelBar .toolBar li.hover a { float:left; display:block; overflow:hidden; padding:0 5px 0 0; text-decoration:none; background-position:100% -150px;}
-.panelBar .toolBar span, .panelBar .toolBar li.hover span { float:left; display:block; overflow:hidden; height:23px; padding:0 0 0 20px; line-height:23px; cursor:pointer;}
+.panelBar .toolBar a, .panelBar .toolBar li.hover a { float:left; display:block; overflow:hidden; padding:0 20px 0 0; text-decoration:none; background-position:100% -150px;}
+.panelBar .toolBar span, .panelBar .toolBar li.hover span { float:left; display:block; overflow:hidden; height:20px; padding:0 0 0 20px; line-height:20px; cursor:pointer;}
 
-.panelBar .toolBar a.add span { background-position:0 -696px;}
-.panelBar .toolBar a.delete span { background-position:0 -746px;}
-.panelBar .toolBar a.edit span { background-position:0 -796px;}
-.panelBar .toolBar a.icon span { background-position:0 -846px;}
-
-.panelBar .toolBar li.line { display:block; overflow:hidden; width:12px; padding:0; text-indent:-1000px; background-position:5px -200px;}
+.panelBar .toolBar li.line { display:block; overflow:hidden; width:1px; padding:0; text-indent:-1000px; background-color: #667097;}
 
 .panelBar .pages { float:left; overflow:hidden; height:21px; padding:2px 5px;}
 .panelBar .pages span { float:left; line-height:21px;}
@@ -426,7 +421,7 @@ label.alt {display:block; overflow:hidden; position:absolute;line-height:20px}
 .buttonActive:hover { text-decoration:none; background-position:0 -300px;}
 .buttonActive:hover span { background-position:100% -350px;}
 .buttonActiveHover { background-position:0 -300px;}
-.buttonActiveHover .buttonContent { padding:0 5px 0 0; background-position:100% -350px;}
+.buttonActiveHover .buttonContent { padding:0 0 0 0; background-position:100% -350px;}
 
 .buttonDisabled, .buttonDisabled:hover { text-decoration:none; background-position:0 -400px;}
 .buttonDisabled span, .buttonDisabled:hover span { padding:0 10px 0 5px; background-position:100% -450px; cursor:default;}
@@ -500,7 +495,7 @@ body { overflow:hidden;}
 
 /* Pages default */
 .page { display:block; overflow:hidden;float:left; width:100%;}
-.pageHeader { display:block; overflow:auto; margin-bottom:1px; padding:11px 15px; border-style:solid; border-width:0 0 1px 0; position:relative;}
+.pageHeader { display:block; overflow:auto; margin-bottom:1px; padding:11px 15px; border-bottom: 1px solid #C7D3DD; position:relative;}
 .searchBar {}
 .searchBar ul.searchContent { display:block; overflow:hidden; height:25px;}
 .searchBar ul.searchContent li { float:left; display:block; overflow:hidden; width:300px; height:21px; padding:2px 0;}

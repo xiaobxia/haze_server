@@ -839,10 +839,9 @@
                 var borrow,auto,riskModelOrder,oldCustomerAdviceStr='',oldCustomerAdviceReason='',modelAdviceStr='',
                     modelScore='',verifyReviewRemark='',cutoff='',reviewUp='',reviewDown='',modelName='',borrowStatus=''
                     ,reviewStatus='';
-                borrow = data.borrow,auto = data.auto,riskModelOrder = data.riskModelOrder;
+                borrow = data.borrow || {},auto = data.auto || {},riskModelOrder = data.riskModelOrder;
                 borrowStatus = borrow.status;
                 verifyReviewRemark = borrow.verifyReviewRemark?borrow.verifyReviewRemark:'';
-
                 if(auto.oldCustomerAdvice != null && auto.oldCustomerAdvice != ''){
                     switch (auto.oldCustomerAdvice) {
                         case 'REVIEW': oldCustomerAdviceStr = '人工复审'; break;

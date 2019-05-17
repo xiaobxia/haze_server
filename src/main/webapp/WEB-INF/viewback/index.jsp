@@ -47,13 +47,13 @@
 		}
 		.index-page-wrap {
 			position: relative;
-			padding: 1.5rem 4rem;
+			padding: 1rem 4rem;
 		}
 		.index-page-wrap .left-main {
 			display: inline-block;
 			width: 59rem;
 			vertical-align: top;
-			margin-right: 6.5rem;
+			margin-right: 12rem;
 		}
 		.index-page-wrap .right-main {
 			display: inline-block;
@@ -219,7 +219,7 @@
 			left: 12rem;
 		}
 		.notice-wrap .main-wrap {
-			padding: 0 1.65rem 1rem 1.65rem;
+			padding: 0 1.65rem 0 1.65rem;
 			box-sizing: border-box;
 			color: #4C4C4C;
 		}
@@ -271,7 +271,7 @@
 			float: right;
 		}
 		.notice-wrap .sub-item .text {
-			margin-left: 3rem;
+			margin-left: 2rem;
 			font-size: 0.9rem;
 		}
 		.notice-wrap .sub-item .text div{
@@ -363,7 +363,7 @@
 					var baseFontSize = 20
 					// 和width有关
 					var winWidth = $('.index-page-wrap').innerWidth(true)
-					var fontScale = 0.95 * winWidth / 1920
+					var fontScale = 0.9 * winWidth / 1920
 					document.documentElement.style.fontSize = (baseFontSize * fontScale) + 'px'
 					window.adaptive = {
 						winWidth: winWidth,
