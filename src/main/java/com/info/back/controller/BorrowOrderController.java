@@ -398,17 +398,15 @@ public class BorrowOrderController extends BaseController {
      * @return
      */
     @RequestMapping("insistlending")
-    public String insistlending(String type,HttpServletRequest request){
+    public String insistlending(String type,String borrowId){
         try{
             if(!"null".equals(type)){
-                if(type.equals(0)){
-                    HashMap<String, Object> params = this.getParametersO(request);
-                    Integer id = Integer.valueOf(String.valueOf(params.get("id")));
-                    BorrowOrder  borrow = borrowOrderService.findOneBorrow(id);
+                if(type.equals("0")){
+                    BorrowOrder  borrow = borrowOrderService.findOneBorrow(Integer.valueOf(borrowId));
                     User user = userService.searchByUserid(borrow.getUserId());
                     //坚持放款 修改asset_borrow_order数据表中的状态为 待放款
                     BorrowOrder borrowOrder = new BorrowOrder();
-                    borrowOrder.setId(id);
+                    borrowOrder.setId(Integer.valueOf(borrowId));
                     borrowOrder.setStatus(22);
                     borrowOrderService.updateById(borrowOrder);
                     //添加order_change_log表
@@ -426,6 +424,7 @@ public class BorrowOrderController extends BaseController {
                 }
             }
         } catch (Exception e){
+            e.printStackTrace();
             log.error(e+"坚持放款");
             return "error";
         }

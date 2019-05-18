@@ -306,15 +306,17 @@
 
 	</style>
 	<script type="text/javascript">
-		$("#openMoney").click(
-			function() {
+		var borrowId =document.getElementById('borrowId').value;
+		console.log(borrowId);
+		$("#openMoney").click(function() {
 				if(confirm("确定仍要放款吗？"))
 				{
 					$.ajax({
 						url:"${pageContext.request.contextPath}/back/backBorrowOrder/insistlending",
 						method:'get',
 						data:{
-							"type": 0
+							"type": 0,
+							"borrowId":borrowId
 						},
 						success:function(status,data){
 							alert("已完成");
@@ -337,6 +339,7 @@
 					<td style="font-weight: bold">借款详情</td>
 					<td>
 						<table class="userTable">
+							<input input="hidden" value="${borrow.id}" id="borrowId">
 							<tr>
 								<td class="tdGround" style="width: 180px;">用户ID:</td>
 								<td>${user.id}</td>
@@ -344,7 +347,7 @@
 								<td colspan="2">${borrow.outTradeNo}</td>
 							</tr>
 							<tr>
-								<td class="tdGround" style="width: 180px;">借款期限:</td>
+								<td class="tdGround" style="width: 180px;">借款期限:${borrow.id}</td>
 								<td>${borrow.loanTerm }天</td>
 								<td class="tdGround" colspan="2">当前状态:</td>
 								<td colspan="2">${borrow.statusName }</td>
