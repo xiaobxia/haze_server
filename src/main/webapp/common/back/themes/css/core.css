@@ -270,7 +270,7 @@ a:hover {text-decoration:underline;}
 
 .panelBar .toolBar li.line { display:block; overflow:hidden; width:1px; padding:0; text-indent:-1000px; background-color: #667097;}
 
-.panelBar .pages { float:left; overflow:hidden; height:21px; padding:2px 5px;}
+.panelBar .pages { float:left; overflow:hidden; height:18px; padding:0 10px;}
 .panelBar .pages span { float:left; line-height:21px;}
 .panelBar .pages select { float:left; margin:0 3px; font-size:12px;}
 

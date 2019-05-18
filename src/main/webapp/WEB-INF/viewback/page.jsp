@@ -9,7 +9,7 @@
 <!-- 当前第几页 -->
 <input type="hidden" name="pageNum" value="${page.currentPage }" />
 
-	<div class="panelBar">
+	<div class="bottom-page">
 				<div class="pages">
 					<span>共${page.totalResultSize }条，共${page.totalPageNum }页，每页</span>
 				

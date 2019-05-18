@@ -156,7 +156,6 @@
 					<td>
 						<fmt:formatNumber pattern='###,###,##0.00' value="${repayment.backOrderId / 100.00}"/>
 					</td>
-
 					<td>
 							${ALL_REPAY_TYPE[repayment.repaymentType]}
 					</td>
