@@ -305,6 +305,25 @@
 
 
 	</style>
+	<script type="text/javascript">
+		$("#openMoney").click(
+			function() {
+				if(confirm("确定仍要放款吗？"))
+				{
+					$.ajax({
+						url:"${pageContext.request.contextPath}/back/backBorrowOrder/insistlending",
+						method:'get',
+						data:{
+							"type": 0
+						},
+						success:function(status,data){
+							alert("已完成");
+						}
+					});
+				}
+			}
+		)
+	</script>
 </head>
 <body>
 <div class="pageContent">

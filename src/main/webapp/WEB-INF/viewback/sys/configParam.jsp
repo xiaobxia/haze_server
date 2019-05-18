@@ -31,11 +31,11 @@
 					function() {
 						var id = $("input[name='radioopen']:checked").val();
 						if (id === 'list[0]') {
-							$("#radiosysValue0").val(1);
-							$("#radiosysValue1").val(0);
-						} else if (id === 'list[1]') {
 							$("#radiosysValue0").val(0);
 							$("#radiosysValue1").val(1);
+						} else if (id === 'list[1]') {
+							$("#radiosysValue0").val(1);
+							$("#radiosysValue1").val(0);
 						}
 					}
 			)
@@ -75,7 +75,7 @@
 							</c:when>
 							<c:when test="${cfg.inputType == 'radio'}">
 								<input type="hidden" id="radiosysValue${count.index }" name="list[${count.index }].sysValue" value="${cfg.sysValue}"/>
-								<input type="${cfg.inputType}" class="radioItem" value="list[${count.index }]" ${cfg.sysValue == 0 ? '' : 'checked'} name="radioopen"  ${cfg.limitCode }/>
+								<input type="${cfg.inputType}" class="radioItem" value="list[${count.index }]" ${cfg.sysValue == 1 ? '' : 'checked'} name="radioopen"  ${cfg.limitCode }/>
 							</c:when>
 							<c:when test="${cfg.inputType == 'image' }">
 								<input type="file"    id="input${cfg.id }"		value="${cfg.sysValue }" />
