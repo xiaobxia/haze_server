@@ -550,6 +550,8 @@ public class BackStatisticService implements IBackStatisticService {
 			//当日放款笔数/当日注册总数
 			DecimalFormat df = new DecimalFormat("0.00");
 			myPageReportInfo.setLoanPercentage(df.format(loanPercentage));
+		}else{
+			myPageReportInfo.setLoanPercentage("0.00");
 		}
 		if(applyCountToday != 0){
 			//当日通过率
@@ -557,6 +559,8 @@ public class BackStatisticService implements IBackStatisticService {
 			double passPercentage=(double)myPageReportInfo.getLoanCount()/(double)applyCountToday;
 			DecimalFormat df = new DecimalFormat("0.00");
 			myPageReportInfo.setPassPercentage(df.format(passPercentage));
+		}else{
+			myPageReportInfo.setPassPercentage("0.00");
 		}
 		//当日回款率
         Long repyCount = myPageReportInfo.getRepyCount();
@@ -566,7 +570,9 @@ public class BackStatisticService implements IBackStatisticService {
             double repayPercentage=(double)repyCount/(double)pendingCount;
 			DecimalFormat df = new DecimalFormat("0.00");
             myPageReportInfo.setRepayPercentage(df.format(repayPercentage));
-        }
+        }else{
+        	myPageReportInfo.setRepayPercentage("0.00");
+		}
 		//当日展期金额 当日展期订单数
         map = sendMoneyStatisticDao.extendToday();
         myPageReportInfo.setExtendMoney(optimic(map,"extendMoney"));
@@ -581,7 +587,9 @@ public class BackStatisticService implements IBackStatisticService {
             double allRegistPercentage = (double)todayRegCount / (double)regist;
 			DecimalFormat df = new DecimalFormat("0.00");
             myPageReportInfo.setAllRegistPercentage(df.format(allRegistPercentage));
-        }
+        }else{
+        	myPageReportInfo.setAllRegistPercentage("0.00");
+		}
 		return myPageReportInfo;
 	}
 

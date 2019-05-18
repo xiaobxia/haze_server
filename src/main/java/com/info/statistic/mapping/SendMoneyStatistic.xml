@@ -48,7 +48,7 @@
     </select>
 	<select id="applyCountToday" resultType="Integer">
 		  SELECT count(1) as borrowCountToday FROM asset_borrow_order t
-		WHERE status=0 and YEARWEEK( DATE_FORMAT( order_time, '%Y-%m-%d' ) ) = YEARWEEK( DATE_FORMAT( NOW( ), '%Y-%m-%d' ) )
+		WHERE   DATE_FORMAT( order_time, '%Y-%m-%d' ) = DATE_FORMAT( NOW( ), '%Y-%m-%d' )
 	</select>
 <!--    1.老用户当天申请的总数，创建时间是当天；2.老用户当天申请且状态不是待审核(被审过)；3.放款审核时间是当天且是通过状态-->
      <select id="findOldToday" resultType="Integer" parameterType="String">
@@ -82,7 +82,7 @@
 	</select>
 	<select id="findTodayMoneyCount" resultType="map" parameterType="Integer">
 		select IFNULL(sum(repayment_amount),0) as money,IFNULL(sum(repaymented_amount),0) as repaymentedAmount,IFNULL(count(id),0) as countNumber
-		from asset_repayment  where YEARWEEK( DATE_FORMAT( repayment_time, '%Y-%m-%d' ) ) = YEARWEEK( DATE_FORMAT( NOW( ), '%Y-%m-%d' ) )
+		from asset_repayment  where DATE_FORMAT( repayment_time, '%Y-%m-%d' ) =  DATE_FORMAT( NOW( ), '%Y-%m-%d' )
           <if test="_parameter != null and _parameter != ''">
 			  and status =#{status}
 		  </if>
@@ -103,7 +103,7 @@
 		FROM
 			asset_repayment
 		WHERE
-			YEARWEEK( DATE_FORMAT( repayment_time, '%Y-%m-%d' ) ) BETWEEN ( SELECT date_sub( curdate( ), INTERVAL 2 DAY ) )
+			 DATE_FORMAT( repayment_time, '%Y-%m-%d' ) BETWEEN ( SELECT date_sub( curdate( ), INTERVAL 2 DAY ) )
 			AND DATE_FORMAT( NOW( ), '%Y-%m-%d' )
 	</select>
 	<select id="extendToday" resultType="map">
@@ -113,7 +113,7 @@
 		FROM
 			asset_renewal_record
 		WHERE
-		YEARWEEK( DATE_FORMAT( old_repayment_time, '%Y-%m-%d' ) ) = YEARWEEK( DATE_FORMAT( NOW( ), '%Y-%m-%d' ) )
+		 DATE_FORMAT( old_repayment_time, '%Y-%m-%d' )  =  DATE_FORMAT( NOW( ), '%Y-%m-%d' )
 	</select>
 	<select id="reBorrow" resultType="map">
 		SELECT
@@ -124,7 +124,7 @@
 		WHERE
 			customer_type = 1
 			AND STATUS = 21
-			AND YEARWEEK( DATE_FORMAT( loan_time, '%Y-%m-%d' ) ) = YEARWEEK( DATE_FORMAT( NOW( ), '%Y-%m-%d' ) )
+			AND  DATE_FORMAT( loan_time, '%Y-%m-%d' ) =  DATE_FORMAT( NOW( ), '%Y-%m-%d' )
 	</select>
     <select id="loanMoneyToday" resultType="map">
 	SELECT
@@ -133,6 +133,6 @@
 	FROM
 		asset_repayment
 	WHERE
-		YEARWEEK( DATE_FORMAT( credit_repayment_time, '%Y-%m-%d' ) ) = YEARWEEK( DATE_FORMAT( NOW( ), '%Y-%m-%d' ) )
+		 DATE_FORMAT( credit_repayment_time, '%Y-%m-%d' ) = DATE_FORMAT( NOW( ), '%Y-%m-%d' )
 	</select>
 </mapper>
