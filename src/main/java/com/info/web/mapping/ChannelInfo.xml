@@ -375,8 +375,6 @@
 	</insert>
 
 	<update id="updateById" parameterType="com.info.web.pojo.ChannelInfo">
-
-
 		UPDATE channel_info
 		SET
 		channel_super_id = #{channelSuperId},
@@ -391,11 +389,9 @@
 		channel_password = #{channelPassword},
 		updated_at = NOW(),
 		rate_id = #{rateId},
-		remark =
-		#{remark},
+		remark = #{remark},
 		status = #{status}
 		WHERE id = #{id};
-
 	</update>
 <!--New 动态渠道-->
 	<select id="findAllUserList" resultMap="BaseResultMap" parameterType="HashMap">
@@ -464,4 +460,5 @@
 		select id,channel_name
 		from channel_info
 	</select>
+
 </mapper>

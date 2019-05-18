@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.info.web.pojo.ChannelInfo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository("channelInfoDao")
@@ -72,4 +73,5 @@ public interface IChannelInfoDao {
 	public Map<String,Object> selectChannelByUserId(Map<String, Object> map);
 
 	List<ChannelInfo> findAllChannels();
+
 }

@@ -205,4 +205,5 @@ public interface IChannelInfoService {
 	PageConfig<ChannelGetUserInfo> findChannelGetUserInfo(HashMap<String, Object> params);
 
 	public Map<String,Object> selectChannelByUserId(Map<String, Object> map);
+
 }

@@ -91,7 +91,9 @@
 					<th align="center" >
 						创建时间
 					</th>
-					 
+					 <th align="center">
+						 操作
+					 </th>
 				</tr>
 			</thead>
 			<tbody>
@@ -140,6 +142,14 @@
 						</td>
 						<td>
 							<fmt:formatDate value="${channel.createdAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
+						</td>
+						<td>
+							<c:if test="${channel.status == 1}">
+								<button onclick="updateStatus()">关闭</button>
+							</c:if>
+							<c:if test="${channel.status == 0}">
+								<button onclick="updateStatus()">开启</button>
+							</c:if>
 						</td>
 						 
 					</tr>
