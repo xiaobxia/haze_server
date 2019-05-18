@@ -339,7 +339,7 @@
 					<td style="font-weight: bold">借款详情</td>
 					<td>
 						<table class="userTable">
-							<input input="hidden" value="${borrow.id}" id="borrowId">
+							<input input="text" style="display:none"  value="${borrow.id}" id="borrowId">
 							<tr>
 								<td class="tdGround" style="width: 180px;">用户ID:</td>
 								<td>${user.id}</td>
