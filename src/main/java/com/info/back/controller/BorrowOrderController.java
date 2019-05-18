@@ -399,7 +399,6 @@ public class BorrowOrderController extends BaseController {
      */
     @RequestMapping("insistlending")
     public String insistlending(String type,HttpServletRequest request){
-        String url = "borrow/borrowdetail";
         try{
             if(!"null".equals(type)){
                 if(type.equals(0)){
@@ -423,12 +422,14 @@ public class BorrowOrderController extends BaseController {
                     orderLogModel.setCreateTime(new Date());
                     orderLogModel.setRemark(OrderChangeAction.MAN_AUDITING.getMessage());
                     orderLogService.addNewOrderChangeLog(orderLogModel);
+                    return "success";
                 }
             }
         } catch (Exception e){
             log.error(e+"坚持放款");
+            return "error";
         }
-        return url;
+        return "success";
     }
 
     private void jxDetail(HttpServletRequest request, Model model) throws Exception {
