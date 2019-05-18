@@ -145,10 +145,10 @@
 						</td>
 						<td>
 							<c:if test="${channel.status == 1}">
-								<button onclick="updateStatus()">关闭</button>
+								<button onclick="channelUpdateStatus('${channel.channelCode}',2)">关闭</button>
 							</c:if>
-							<c:if test="${channel.status == 0}">
-								<button onclick="updateStatus()">开启</button>
+							<c:if test="${channel.status == 2}">
+								<button onclick="channelUpdateStatus('${channel.channelCode}',1)">开启</button>
 							</c:if>
 						</td>
 						 
@@ -160,3 +160,19 @@
 		<%@ include file="../page.jsp"%>
 	</div>
 </form>
+
+<script type="text/javascript">
+	function channelUpdateStatus(channelCode, status) {
+		$.ajax({
+			url:"${pageContext.request.contextPath}/back/channel/updateStatus",
+			method:'POST',
+			data:{
+				"channleCode": channelCode,
+				"status": status
+			},
+			success:function(status,data){
+				return navTabSearch(this)
+			}
+		});
+	}
+</script>
