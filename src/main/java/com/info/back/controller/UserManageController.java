@@ -79,9 +79,11 @@ public class UserManageController extends BaseController{
 			if(StringUtils.isBlank(userPhone)){userPhone=null;}
 			if(StringUtils.isBlank(createTime)){createTime=null;}
 			if(StringUtils.isBlank(beginTime)){beginTime=null;}
+/*
 			if(!StringUtils.isBlank(userId)|| null!=userId || !StringUtils.isBlank(userPhone) || null!=userPhone || !StringUtils.isBlank(status) || null!=status || !StringUtils.isBlank(realname) || null!=realname || !StringUtils.isBlank(idNumber) || null!=idNumber|| !StringUtils.isBlank(createTime) || null!=createTime || !StringUtils.isBlank(beginTime) || null!=beginTime){
-				page=this.userService.getUserPage(params);		
-			}
+*/
+				page=this.userService.getUserPage(params);
+			//}
 			model.addAttribute("pm", page);
 			model.addAttribute("searchParams", params);//用于搜索框保留值
 
