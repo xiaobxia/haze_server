@@ -725,6 +725,7 @@ public class ChannelInfoController extends BaseController {
                             channelReport.setUvRate(df.format(uvRate));
                         }
                     }else{
+                        channelReport.setUvCount(0);
                         channelReport.setUvRate("0.00");
                     }
                     list.add(channelReport);

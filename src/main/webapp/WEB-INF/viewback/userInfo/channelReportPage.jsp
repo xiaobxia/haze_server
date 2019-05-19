@@ -274,12 +274,7 @@
 					<%--</td>--%>
 
 					<td>
-						<if test="${channel.uvCount == null}">
-							0
-						</if>
-						<if test="${channel.uvCount != null}">
 								${channel.uvCount}
-						</if>
 					</td>
 					<td>
 						${channel.uvRate}
