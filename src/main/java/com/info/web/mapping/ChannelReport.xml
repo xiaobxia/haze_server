@@ -949,7 +949,20 @@
 		FROM
 		channel_info a
 		LEFT JOIN channel_report b ON a.id = b.channelid
-		<include refid="Sql" />
+		where 1=1
+			<if test="channelCode != null and channelCode != ''">
+				and a.channel_code = #{channelCode}
+			</if>
+			<if test="beginTime !=null and beginTime !=''">
+				<![CDATA[ and b.report_date >= str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+			</if>
+			<if test="endTime !=null and endTime !=''">
+				<![CDATA[ and b.report_date <= str_to_date(#{endTime},'%Y-%m-%d') ]]>
+			</if>
+
+			<if test="countDate != null and countDate != ''">
+				and b.report_date = #{countDate}
+			</if>
 		ORDER BY report_date desc
 	</select>
 	<select id="findOutCount" resultType="Integer" parameterType="HashMap">
