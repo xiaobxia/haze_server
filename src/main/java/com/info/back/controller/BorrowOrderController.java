@@ -28,6 +28,7 @@ import com.info.risk.utils.autorisk.RiskCreditReasonUtil;
 import com.info.web.controller.BaseController;
 import com.info.web.dao.BorrowProductConfigDao;
 import com.info.web.dao.IUserContactsDao;
+import com.info.web.dao.IndexDao;
 import com.info.web.pojo.*;
 import com.info.web.service.*;
 import com.info.web.util.*;
@@ -122,6 +123,9 @@ public class BorrowOrderController extends BaseController {
     private DataWareHouseService dataWareHouseService;
     @Autowired
     private BorrowProductConfigDao productConfigDao;
+
+    @Autowired
+    private IndexDao indexDao;
 
 
     @RequestMapping("/addUserLimit")
@@ -400,33 +404,49 @@ public class BorrowOrderController extends BaseController {
     @RequestMapping("insistlending")
     public String insistlending(String type,String borrowId){
         try{
-            if(!"null".equals(type)){
-                if(type.equals("0")){
-                    BorrowOrder  borrow = borrowOrderService.findOneBorrow(Integer.valueOf(borrowId));
-                    User user = userService.searchByUserid(borrow.getUserId());
-                    //坚持放款 修改asset_borrow_order数据表中的状态为 待放款
-                    BorrowOrder borrowOrder = new BorrowOrder();
-                    borrowOrder.setId(Integer.valueOf(borrowId));
-                    borrowOrder.setStatus(22);
-                    borrowOrderService.updateById(borrowOrder);
-                    //添加order_change_log表
-                    OrderLogModel orderLogModel = new OrderLogModel();
-                    orderLogModel.setUserId(user.getId());
-                    orderLogModel.setBorrowId(String.valueOf(borrow.getId()));
-                    orderLogModel.setOperateType(OperateType.BORROW.getCode());
-                    orderLogModel.setAction(OrderChangeAction.MAN_AUDITING.getCode());
-                    orderLogModel.setBeforeStatus(String.valueOf(borrow.getStatus()));
-                    orderLogModel.setAfterStatus("22");
-                    orderLogModel.setCreateTime(new Date());
-                    orderLogModel.setRemark(OrderChangeAction.MAN_AUDITING.getMessage());
-                    orderLogService.addNewOrderChangeLog(orderLogModel);
-                    return "success";
+            if(StringUtils.isNotBlank(type) && "0".equals(type)){
+                BorrowOrder  borrow = borrowOrderService.findOneBorrow(Integer.valueOf(borrowId));
+                if (BorrowOrder.borrowStatusMap_kefangkuan.contains(borrow.getStatus())) {
+                    return "此状态不可操作放款";
                 }
+                User user = userService.searchByUserid(borrow.getUserId());
+                //坚持放款 修改asset_borrow_order数据表中的状态为 待放款
+                BorrowOrder borrowOrder = new BorrowOrder();
+                borrowOrder.setId(Integer.valueOf(borrowId));
+                borrowOrder.setVerifyReviewTime(new Date());
+                borrowOrder.setVerifyReviewUser("人工信审，人审放款");
+                borrowOrder.setStatus(22);
+                borrowOrderService.updateById(borrowOrder);
+
+                HashMap<String, Object> borrowMap = new HashMap<>();
+                borrowMap.put("USER_ID", user.getId());
+                borrowMap.put("BORROW_STATUS", "1");
+                indexDao.updateInfoUserInfoBorrowStatus(borrowMap);
+
+                User newUser = new User();
+                newUser.setId(user.getId());
+                int i = Integer.parseInt(user.getAmountAvailable()) - borrow.getMoneyAmount();
+                newUser.setAmountAvailable(String.valueOf(i));
+                userService.updateAmountAvailableByUserId(newUser);
+
+
+                //添加order_change_log表
+                OrderLogModel orderLogModel = new OrderLogModel();
+                orderLogModel.setUserId(user.getId());
+                orderLogModel.setBorrowId(String.valueOf(borrow.getId()));
+                orderLogModel.setOperateType(OperateType.BORROW.getCode());
+                orderLogModel.setAction(OrderChangeAction.MAN_AUDITING.getCode());
+                orderLogModel.setBeforeStatus(String.valueOf(borrow.getStatus()));
+                orderLogModel.setAfterStatus("22");
+                orderLogModel.setCreateTime(new Date());
+                orderLogModel.setRemark(OrderChangeAction.MAN_AUDITING.getMessage());
+                orderLogService.addNewOrderChangeLog(orderLogModel);
+                return "success";
             }
         } catch (Exception e){
             e.printStackTrace();
             log.error(e+"坚持放款");
-            return "error";
+            return "系统错误，请联系系统管理员";
         }
         return "success";
     }

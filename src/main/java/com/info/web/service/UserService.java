@@ -52,6 +52,11 @@ public class UserService implements IUserService {
 		return this.userDao.searchByUserid(id);
 	}
 
+	@Override
+	public int updateAmountAvailableByUserId(User user) {
+		return userDao.updateAmountAvailableByUserId(user);
+	}
+
 	/**
 	 * 根据ID查询用户
 	 */

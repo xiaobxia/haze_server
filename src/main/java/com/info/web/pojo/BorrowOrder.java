@@ -1,9 +1,7 @@
 package com.info.web.pojo;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class BorrowOrder {
 	private BigDecimal renewalPoundage;
@@ -365,6 +363,9 @@ public class BorrowOrder {
 //	 * 已还款
 //	 */
 //	public static final Map<Integer, String> borrowStatusMap_finish = new HashMap<Integer, String>();
+
+	public static final List<Integer> borrowStatusMap_kefangkuan = new ArrayList<>();
+
 //	
 	static {
 //	    //审核中
@@ -385,10 +386,16 @@ public class BorrowOrder {
 //		//已还款
 //		borrowStatusMap_finish.put(BorrowOrder.STATUS_YHK, finish);
 //		borrowStatusMap_finish.put(BorrowOrder.STATUS_YQYHK, finish);
-//		 
-//		
-//		
-//		
+
+
+		borrowStatusMap_kefangkuan.add(BorrowOrder.STATUS_HKZ);
+		borrowStatusMap_kefangkuan.add(BorrowOrder.STATUS_FKZ);
+		borrowStatusMap_kefangkuan.add(BorrowOrder.STATUS_YHK);
+		borrowStatusMap_kefangkuan.add(BorrowOrder.STATUS_KKSB);
+		borrowStatusMap_kefangkuan.add(BorrowOrder.STATUS_KKZ);
+		borrowStatusMap_kefangkuan.add(BorrowOrder.STATUS_BFHK);
+		borrowStatusMap_kefangkuan.add(BorrowOrder.STATUS_YQYHK);
+		borrowStatusMap_kefangkuan.add(BorrowOrder.STATUS_YYQ);
 	}
 
 	/**

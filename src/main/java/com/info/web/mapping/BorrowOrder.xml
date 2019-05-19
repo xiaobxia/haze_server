@@ -118,10 +118,10 @@
 		from asset_borrow_order abo
 		<include refid="selectSqlForFK" />
 	</select>
+	<!--<![CDATA[and abo.created_at < DATE_SUB(NOW(),INTERVAL  20 MINUTE) ]]>-->
 	<sql id="selectSqlForFK">
 		<where>
             1=1
-            <![CDATA[and abo.created_at < DATE_SUB(NOW(),INTERVAL  20 MINUTE) ]]>
 			<if test="borrowStatus!=null and borrowStatus!=''">
 				and abo.status=#{borrowStatus}
 			</if>

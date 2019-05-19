@@ -29,6 +29,8 @@ public interface IUserService {
 	 */
 	public User searchByUserid(int id);
 
+	int updateAmountAvailableByUserId(User user);
+
 	public User selectCollectionByUserId(int id);
 
 	/**
