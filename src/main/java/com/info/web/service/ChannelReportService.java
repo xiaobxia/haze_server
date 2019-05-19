@@ -105,9 +105,9 @@ public class ChannelReportService implements IChannelReportService {
             }else{
                 report.setRegistRatio("0.00");
             }
-            //下款率 放款比数/注册数
+            //下款率 放款比数/申请总数
             if(report.getRegisterCountResult() != 0){
-                double loanRate = report.getLoanCount()*(1.0)/report.getRegisterCountResult()*(1.0);
+                double loanRate = report.getLoanCount()*(1.0)/report.getBorrowApplyCount()*(1.0);
                 report.setLoanRatio(df.format(loanRate));
             }else{
                 report.setLoanRatio("0.00");
