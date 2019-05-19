@@ -10,6 +10,7 @@ import java.util.Map;
 import com.info.web.pojo.MyPageReportInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.stereotype.Service;
 
 import com.info.back.dao.IApplyBorrowStatisticDao;
@@ -529,9 +530,11 @@ public class BackStatisticService implements IBackStatisticService {
 		//当天用户注册数
 		long todayRegCount = registerStatisticDao.registerTodayCount();
 		myPageReportInfo.setRegistCount((int) todayRegCount);
-		//当天用户申请数
+		//当天用户申请笔数
 		Integer applyCountToday=sendMoneyStatisticDao.applyCountToday();
-		myPageReportInfo.setApplyCount(applyCountToday);
+		//当天用户申请人数
+		Integer applyUserCountToday =sendMoneyStatisticDao.applyUserCount();
+		myPageReportInfo.setApplyCount(applyUserCountToday == null?0:applyUserCountToday);
         //当日到期金额/当日应还金额
 		map=sendMoneyStatisticDao.findMoneyToday();
         myPageReportInfo.setPendingRepayMoney(optimic(map,"repaymentedAmount"));
@@ -555,7 +558,7 @@ public class BackStatisticService implements IBackStatisticService {
 		}
 		if(applyCountToday != 0){
 			//当日通过率
-			//当日放款笔数/当日申请总数
+			//当日放款笔数/当日申请总笔数
 			double passPercentage=(double)myPageReportInfo.getLoanCount()/(double)applyCountToday;
 			DecimalFormat df = new DecimalFormat("0.00");
 			myPageReportInfo.setPassPercentage(df.format(passPercentage));

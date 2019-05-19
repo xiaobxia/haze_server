@@ -29,6 +29,7 @@ public interface ISendMoneyStatisticDao {
 	Map<String,Object> findAllPendingRepayMoney(Integer param);
 	Map<String,Object> findTodayMoneyCount(Integer status);
 	Integer applyCountToday();
+	Integer applyUserCount();
 	BigDecimal lateMoney(@Param("fristNumber") Integer fristNumber, @Param("endNumbers") Integer endNumbers);
     BigDecimal threeMoney();
     Map<String,Object> extendToday();

@@ -50,6 +50,10 @@
 		  SELECT count(1) as borrowCountToday FROM asset_borrow_order t
 		WHERE   DATE_FORMAT( order_time, '%Y-%m-%d' ) = DATE_FORMAT( NOW( ), '%Y-%m-%d' )
 	</select>
+	<select id="applyUserCount" resultType="Integer">
+         SELECT count(DISTINCT user_id) as borrowUserCountToday FROM asset_borrow_order t
+		WHERE   DATE_FORMAT( order_time, '%Y-%m-%d' ) = DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+	</select>
 <!--    1.老用户当天申请的总数，创建时间是当天；2.老用户当天申请且状态不是待审核(被审过)；3.放款审核时间是当天且是通过状态-->
      <select id="findOldToday" resultType="Integer" parameterType="String">
 	  <![CDATA[ 
