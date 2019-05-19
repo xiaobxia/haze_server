@@ -81,9 +81,9 @@
 				<th align="center" >
 					运营商认证率
 				</th>
-				<th align="center" >
+				<%--<th align="center" >
 					淘宝认证人数率
-				</th>
+				</th>--%>
 				<%--<th align="center" >--%>
 				<%--芝麻认证人数--%>
 				<%--</th>--%>
@@ -120,6 +120,19 @@
 				<%--<th align="center" >--%>
 					<%--费用--%>
 				<%--</th>--%>
+
+				<th>
+					uv数量
+				</th>
+				<th>
+					uv转化率
+				</th>
+				<th>
+					qq占比
+				</th>
+				<th>
+					微信占比
+				</th>
 				<th align="center" >
 					更新时间
 				</th>
@@ -195,14 +208,14 @@
 							0.00
 						</c:if>
 					</td>
-					<td>
+					<%--<td>
 						<c:if test="${channel.zhimaCount gt 0 and channel.registerCount gt 0}">
 							<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.zhimaCount / channel.registerCount}" />
 						</c:if>
 						<c:if test="${channel.zhimaCount  eq 0 or channel.registerCount eq 0}">
 							0.00
 						</c:if>
-					</td>
+					</td>--%>
 					<%--<td>--%>
 							<%--${channel.alipayCount}--%>
 					<%--</td>--%>
@@ -259,6 +272,24 @@
 						<%--<fmt:formatNumber pattern='###,###,##0.00' value="${channel.channelMoney}"/>--%>
 
 					<%--</td>--%>
+
+					<td>
+						<if test="${channel.uvCount == null}">
+							0
+						</if>
+						<if test="${channel.uvCount != null}">
+								${channel.uvCount}
+						</if>
+					</td>
+					<td>
+						${channel.uvRate}
+					</td>
+					<td>
+						${channel.qqRate}
+					</td>
+					<td>
+						${channel.wechatRate}
+					</td>
 					<td>
 						<fmt:formatDate value="${channel.createdAt}"
 										pattern="yyyy-MM-dd HH:mm:ss" />

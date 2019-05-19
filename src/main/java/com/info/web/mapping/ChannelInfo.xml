@@ -460,5 +460,26 @@
 		select id,channel_name
 		from channel_info
 	</select>
-
+	<select id="findLoanCount" resultType="java.lang.Integer">
+		select count(id) as loanCount from asset_repayment where status = '21'
+		and DATE_FORMAT( credit_repayment_time, '%Y-%m-%d' ) =  DATE_FORMAT( #{loanTime}, '%Y-%m-%d' )
+		and user_id in (#{userId})
+	</select>
+	<select id="findRepayCount" resultType="java.lang.Integer">
+		select count(id) as repayCount from asset_repayment where status in ('23','30','34')
+		and DATE_FORMAT(repayment_real_time, '%Y-%m-%d' ) =  DATE_FORMAT( #{repayTime}, '%Y-%m-%d' )
+		and user_id in (#{userId})
+	</select>
+	<resultMap id="userList" type="java.lang.String" >
+		<result column="id" property="userId" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="findUserId" resultMap="userList" parameterType="java.lang.Integer">
+		select id from user_info where user_from=#{channeId}
+	</select>
+	<select id="findqqCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		SELECT COUNT(id) from user_info where qq_wechat=1 and user_from=#{channelId}
+	</select>
+	<select id="findWechatCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		SELECT COUNT(id) from user_info where qq_wechat=2 and user_from=#{channelId}
+	</select>
 </mapper>

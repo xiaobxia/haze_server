@@ -76,6 +76,13 @@ String path = request.getContextPath()+"";
                                             return new Date(value).format('yyyy-MM-dd');
                                         }
                                     }},
+
+                                {
+                                    field: 'uvCount',
+                                    title: 'uv数量',
+                                    width: 170,
+                                    align: 'center'
+                                },
                                 {
                                     field: 'registerCountResult',
                                     title: '注册量',
@@ -83,11 +90,53 @@ String path = request.getContextPath()+"";
                                     align: 'center'
                                 },
                                 {
-                                    field: 'attestationRealnameCount',
-                                    title: '实名认证',
-                                    width: 120,
+                                    field: 'borrowApplyCount',
+                                    title: '申请笔数',
+                                    width: 170,
+                                    align: 'center'
+                                },
+                                {
+                                    field: 'loanCount',
+                                    title: '放款笔数',
+                                    width: 170,
+                                    align: 'center'
+                                },
+                                {
+                                    field: 'repaymentCount',
+                                    title: '还款笔数',
+                                    width: 170,
+                                    align: 'center'
+                                },
+                                {
+                                    field: 'registRatio',
+                                    title: '注册率',
+                                    width: 170,
+                                    align: 'center'
+                                },
+                                {
+                                    field: 'applyRatio',
+                                    title: '申请率',
+                                    width: 170,
+                                    align: 'center'
+                                },
+                                {
+                                    field: 'loanRatio',
+                                    title: '下款率',
+                                    width: 170,
+                                    align: 'center'
+                                },
+                                {
+                                    field: 'repayRatio',
+                                    title: '回款率',
+                                    width: 170,
                                     align: 'center'
                                 }
+                               // {
+                                    //field: 'attestationRealnameCount',
+                                    //title: '实名认证',
+                                    //width: 120,
+                                   // align: 'center'
+                               // }
                                 // ,
                                 // {
                                 //     field: 'attestationBankCount',
@@ -188,7 +237,7 @@ String path = request.getContextPath()+"";
             cache: false,
             modal: true
         });
-        $('#dg2').datagrid({
+        /*$('#dg2').datagrid({
             url:'getRegisterUser?dateTime='+reportDate+'&channelid='+value,
             // rownumbers:true,
             columns:[[
@@ -227,8 +276,8 @@ String path = request.getContextPath()+"";
             // pagination:true,
             // pageSize:20,
             // pageList:[20,40,60,80]
-        });
-        $('#dg2').datagrid('load');
+        });*/
+        //$('#dg2').datagrid('load');
     }
 
     function search() {
@@ -298,4 +347,6 @@ String path = request.getContextPath()+"";
 <div>
     <table id="datagrid"></table>
 </div>
+<%--
 <div id="dd"><div id="dg2"></div></div>
+--%>

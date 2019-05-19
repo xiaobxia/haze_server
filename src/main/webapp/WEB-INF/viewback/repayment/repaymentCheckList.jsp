@@ -215,6 +215,5 @@
             + capitalType+"&repaymentType="+repaymentType
             + "&orderId="+orderId;
         $(obj).attr("href",toHref);
-
     }
 </script>

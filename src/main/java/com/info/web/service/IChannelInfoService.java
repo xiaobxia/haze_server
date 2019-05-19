@@ -1,11 +1,14 @@
 package com.info.web.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.info.web.pojo.*;
 import com.info.web.util.PageConfig;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 
 /**
  * 
@@ -206,4 +209,22 @@ public interface IChannelInfoService {
 
 	public Map<String,Object> selectChannelByUserId(Map<String, Object> map);
 
+	/**
+	 * 查询当天某类用户的放款笔数
+	 * @param loanTime
+	 * @param userId
+	 * @return
+	 */
+	Integer findLoanCount(Date loanTime, String userId);
+	/**
+	 * 查询当天某类用户的还款笔数
+	 * @param repayTime
+	 * @param userId
+	 * @return
+	 */
+	Integer findRepayCount(Date repayTime, String userId);
+
+	List<String> findUserId(Integer channelId);
+	Integer findqqCount(Integer channelId);
+	Integer findWechatCount(Integer channelId);
 }

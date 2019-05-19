@@ -27,6 +27,7 @@ public interface IPaginationDao<T> {
 	public PageConfig<T> findPage(final String listSql, final String countSql,
                                   final HashMap map, String type);
 
+
 	/**
 	 * 分页方法
 	 *

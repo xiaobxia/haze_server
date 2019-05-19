@@ -82,6 +82,7 @@ public class RepaymentService implements IRepaymentService {
 
     @Autowired
     private IBackDictionaryDao backDictionaryDao;
+
     @Autowired
     private OrderLogService orderLogService;
 

@@ -72,6 +72,14 @@ public class ChannelReport implements Serializable {
     private Integer dayBorrowSucCount;
     private Integer dayOverdueCount;
     /*--*/
+    private String qqRate;
+    private String wechatRate;
+    private String uvRate;
+    private Integer uvCount;
+    /**
+     * 2019、05/18新增
+     * @return
+     */
     public Integer getAndroidCount() {
         return androidCount;
     }
@@ -498,5 +506,37 @@ public class ChannelReport implements Serializable {
 
     public void setDayOverdueCount(Integer dayOverdueCount) {
         this.dayOverdueCount = dayOverdueCount;
+    }
+
+    public String getQqRate() {
+        return qqRate;
+    }
+
+    public void setQqRate(String qqRate) {
+        this.qqRate = qqRate;
+    }
+
+    public String getWechatRate() {
+        return wechatRate;
+    }
+
+    public void setWechatRate(String wechatRate) {
+        this.wechatRate = wechatRate;
+    }
+
+    public String getUvRate() {
+        return uvRate;
+    }
+
+    public void setUvRate(String uvRate) {
+        this.uvRate = uvRate;
+    }
+
+    public Integer getUvCount() {
+        return uvCount;
+    }
+
+    public void setUvCount(Integer uvCount) {
+        this.uvCount = uvCount;
     }
 }

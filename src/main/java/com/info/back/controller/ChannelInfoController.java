@@ -37,6 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -685,7 +686,6 @@ public class ChannelInfoController extends BaseController {
                 model.addAttribute("pm", pageConfig);
             }else{
                 PageConfig<ChannelReport> pageConfig = channelReportService.findPage(params);
-
 //                List<ChannelInfo> channelList = channelInfoService.findAll(chMap);
 //                ChannelInfo ciNatural = new ChannelInfo();
 //                ciNatural.setId(0);
@@ -699,8 +699,42 @@ public class ChannelInfoController extends BaseController {
 
 //                model.addAttribute("channelList", channelList);
                 List<ChannelSuperInfo> channelSuperInfos = channelInfoService.findSuperAll(chMap);
+                List<ChannelReport> list = new ArrayList<>();
+                //uv数量 微信占比 qq占比 uv转化
+               for(ChannelReport channelReport : pageConfig.getItems() ){
+                    Integer qqCount= channelInfoService.findqqCount(channelReport.getChannelid());
+                    if(qqCount != null && channelReport.getRegisterCount()!=null && channelReport.getRegisterCount()!=0){
+                        Double  qqRate = qqCount*(1.0)/channelReport.getRegisterCount()*(1.0);
+                        DecimalFormat df = new DecimalFormat("0.00");
+                        channelReport.setQqRate(df.format(qqRate));
+                    }else{
+                        channelReport.setQqRate("0.00");
+                    }
+                    Integer wechatCount = channelInfoService.findWechatCount(channelReport.getChannelid());
+                    if(wechatCount != null && channelReport.getRegisterCount()!=null && channelReport.getRegisterCount()!=0){
+                        Double wechatRate = wechatCount*(1.0)/channelReport.getRegisterCount()*(1.0);
+                        DecimalFormat df = new DecimalFormat("0.00");
+                        channelReport.setWechatRate(df.format(wechatRate));
+                    }else{
+                        channelReport.setWechatRate("0.00");
+                    }
+                    if(null !=channelReport.getUvCount() &&channelReport.getUvCount() !=0 ){
+                        if(null != channelReport.getRegisterCount()){
+                            Double uvRate = channelReport.getRegisterCount()*(1.0)/channelReport.getUvCount()*(1.0);
+                            DecimalFormat df = new DecimalFormat("0.00");
+                            channelReport.setUvRate(df.format(uvRate));
+                        }
+                    }else{
+                        channelReport.setUvRate("0.00");
+                    }
+                    list.add(channelReport);
+                }
+                pageConfig.setItems(list);
                 model.addAttribute("channelSuperInfos", channelSuperInfos);
                 model.addAttribute("pm", pageConfig);
+
+
+
             }
 
             if (checkFlag) {
@@ -853,16 +887,18 @@ public class ChannelInfoController extends BaseController {
             } else {
                 params.put("beginTime", DateUtil.getDateFormat(new Date(), "yyyy-MM-dd"));
             }
-            List<ChannelReportResult> reportResults = new ArrayList<>();
+           // List<ChannelReportResult> reportResults = new ArrayList<>();
+            List<OutChannelLook> reportResults = new ArrayList<>();
             String channelCode = AESUtil.decrypt(params.get("channelCode").toString(), AESUtil.KEY);
             params.put("channelCode", channelCode);
-            PageConfig<ChannelReport> pageConfig = channelReportService.findPage(getParams(params));
+            //PageConfig<OutChannelLook> pageConfig = channelReportService.findPageOut(getParams(params));
+            PageConfig<OutChannelLook> pageConfig = channelReportService.findPageOut(getParams(params));
             String channelId = channelReportService.getChannelIdByCode(channelCode);
-            for (ChannelReport report : pageConfig.getItems()) {
+         /*   for (ChannelReport report : pageConfig.getItems()) {
                 ChannelReportResult reportResult;
-                /*
+                *//*
                  * 当天实时查询
-                 */
+                 *//*
                 if(DateUtil.getDateFormat("yyyy-MM-dd").equals(DateUtil.getDateFormat(report.getReportDate(),"yyyy-MM-dd"))){
                     report.setRegisterCount(channelReportService.getRegisterNow(channelId));
                     report.setDayRealnameCount(channelReportService.getRegisterRealNow(channelId));
@@ -872,8 +908,10 @@ public class ChannelInfoController extends BaseController {
 
                 }
                 reportResults.add(reportResult);
-            }
+            }*/
             renderJsonToPage(response, getResultPageConfig(pageConfig, reportResults));
+
+
         } catch (Exception e) {
             log.error("getChannelReportData error:{}", e);
         }
@@ -961,6 +999,12 @@ public class ChannelInfoController extends BaseController {
     }
 
 
+    /**
+     *对外推广渠道
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("toAppointChannelReport")
     public String toAppointChannelReport(HttpServletRequest request, Model model) {
         String aesChannelCode = request.getParameter("aesCode");
@@ -979,6 +1023,7 @@ public class ChannelInfoController extends BaseController {
                 model.addAttribute("msg", "渠道不存在!");
                 return "error";
             }
+            //渠道名称
             model.addAttribute("channelName", channelInfo.getChannelName());
             model.addAttribute("channelCode", aesChannelCode);
             return url;

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.info.web.pojo.ChannelInfo;
 import com.info.web.pojo.ChannelReport;
+import com.info.web.pojo.OutChannelLook;
 
 public interface IChannelReportDao {
 	int getRegisterNow(String channelId);
@@ -115,4 +116,8 @@ public interface IChannelReportDao {
 	List<Map<String,Object>> dayOverdueRepayedCount(Map<String, Object> param);
 
 	List<Map<String,Object>> dayOverdueRenewalCount(Map<String, Object> param);
+
+	Integer findOutCount(Map<String, Object> params);
+
+	List<OutChannelLook> findOut(Map<String, Object> params);
 }

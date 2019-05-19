@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.info.web.pojo.ChannelReport;
+import com.info.web.pojo.OutChannelLook;
 import com.info.web.util.PageConfig;
 
 
@@ -59,5 +60,7 @@ public interface IChannelReportService {
 	 * @return int
 	 */
 	int getRegisterRealNow(String channelId);
+
+	public PageConfig<OutChannelLook> findPageOut(HashMap<String, Object> params);
 
 }

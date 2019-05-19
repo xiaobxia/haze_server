@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.info.constant.Constant;
 import com.info.web.dao.IChannelReportDao;
 import com.info.web.dao.IPaginationDao;
-import com.info.web.pojo.BorrowOrder;
-import com.info.web.pojo.ChannelInfo;
-import com.info.web.pojo.ChannelRate;
-import com.info.web.pojo.ChannelReport;
+import com.info.web.pojo.*;
 import com.info.web.util.DateUtil;
 import com.info.web.util.FastJsonUtils;
 import com.info.web.util.PageConfig;
@@ -23,6 +20,7 @@ import redis.clients.jedis.JedisCluster;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -71,6 +69,57 @@ public class ChannelReportService implements IChannelReportService {
         PageConfig<ChannelReport> pageConfig;
         pageConfig = paginationDao.findPage("findAll", "findAllCount", params,
                 "web");
+        return pageConfig;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public PageConfig<OutChannelLook> findPageOut(HashMap<String, Object> params){
+        params.put(Constant.NAME_SPACE, "ChannelReport");
+        PageConfig<OutChannelLook> pageConfig;
+        pageConfig = paginationDao.findPage("findOut", "findOutCount", params,
+                "web");
+        List<OutChannelLook> list = new ArrayList<OutChannelLook>();
+        //循环处理数据
+        for (OutChannelLook report : pageConfig.getItems()) {
+            //通过渠道id 查询出所涉及的用户
+             List<String> idList=channelInfoService.findUserId(report.getId());
+             String userId = String.join(",",idList);
+            //放款笔数
+             int loanCount =channelInfoService.findLoanCount(report.getReportDate(),userId);
+             report.setLoanCount(loanCount);
+            //还款笔数
+            int repayCount =channelInfoService.findRepayCount(report.getReportDate(),userId);
+            report.setRepaymentCount(repayCount);
+            //注册率 注册数量/
+            int uvCount = report.getUvCount();
+            int registCount = report.getRegisterCountResult();
+            if(uvCount != 0){
+                double registRatio = uvCount*(1.0)/registCount*(1.0);
+                DecimalFormat df = new DecimalFormat("0.00");
+                report.setRegistRatio(df.format(registRatio));
+            }else{
+                report.setRegistRatio("0.00");
+            }
+            //下款率 放款比数/申请比数
+            if(report.getBorrowApplyCount() != 0){
+                double loanRate = loanCount*(1.0)/report.getBorrowApplyCount()*(1.0);
+                DecimalFormat df = new DecimalFormat("0.00");
+                report.setLoanRatio(df.format(loanRate));
+            }else{
+                report.setLoanRatio("0.00");
+            }
+            //回款率 还款笔数/放款笔数
+            if(loanCount != 0){
+                double repayRate = repayCount*(1.0)/loanCount*(1.0);
+                DecimalFormat df = new DecimalFormat("0.00");
+                report.setRepayRatio(df.format(repayRate));
+            }else{
+                report.setRepayRatio("0.00");
+            }
+            list.add(report);
+        }
+        pageConfig.setItems(list);
         return pageConfig;
     }
 

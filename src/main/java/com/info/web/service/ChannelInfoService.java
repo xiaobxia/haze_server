@@ -11,6 +11,7 @@ import com.info.web.pojo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -305,4 +306,30 @@ public class ChannelInfoService implements IChannelInfoService {
 	public Map<String,Object> selectChannelByUserId(Map<String,Object> map){
 		return channelInfoDao.selectChannelByUserId(map);
 	}
+
+	@Override
+	public Integer findLoanCount(Date loanTime, String userId) {
+		return channelInfoDao.findLoanCount(loanTime,userId);
+	}
+
+	@Override
+	public Integer findRepayCount(Date repayTime, String userId) {
+       return channelInfoDao.findRepayCount(repayTime,userId);
+	}
+
+	@Override
+	public List<String> findUserId(@Param("channeId") Integer channeId) {
+		return channelInfoDao.findUserId(channeId);
+	}
+
+	@Override
+	public Integer findqqCount(Integer channelId) {
+		return channelInfoDao.findqqCount(channelId);
+	}
+
+	@Override
+	public Integer findWechatCount(Integer channelId) {
+		return channelInfoDao.findWechatCount(channelId);
+	}
+
 }

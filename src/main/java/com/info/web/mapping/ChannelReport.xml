@@ -46,11 +46,11 @@
 		<result column="borrow_suc_out_count" property="borrowSucOutCount"/>
 		<result column="pass_rate_out" property="passRateOut"/>
 		<result column="borrow_rate_out" property="borrowRateOut"/>
+		<result column="uv_count" property="uvCount" jdbcType="INTEGER"/>
 	</resultMap>
-
 	<sql id="Base_Column_List">
 		report_date,register_count,android_count,ios_count,pc_count,attestation_realname_count,attestation_bank_count,contact_count,jxl_count,alipay_count,zhima_count,
-		company_count,borrow_apply_count,borrow_suc_count,borrow_suc_count,pass_rate,into_money,new_into_money,old_into_money,approve_error_count,channelid,borrow_rate,created_at
+		company_count,borrow_apply_count,borrow_suc_count,borrow_suc_count,pass_rate,into_money,new_into_money,old_into_money,approve_error_count,channelid,borrow_rate,created_at,uv_count
 	</sql>
 
 
@@ -104,7 +104,7 @@
 
 	</select>
 	<select id="findAll" resultMap="BaseResultMap" parameterType="HashMap">
-		SELECT a.*,b.channel_name AS channelName,c.channel_super_name AS channelSuperName FROM channel_report a
+		SELECT a.*,b.channel_name AS channelName,c.channel_super_name AS channelSuperName,IFNULL(a.uv_count,0) as uvCount,a.channelid as channelid FROM channel_report a
 		LEFT JOIN channel_info b ON a.channelid = b.id
 		LEFT JOIN channel_super_info c ON b.channel_super_id = c.id
 		<include refid="Sql" />
@@ -938,4 +938,23 @@
 		where arr.asset_repayment_id = a.id and arr.status = 1
 		and DATE(arr.created_at) = date(#{startDate}) and arr.plan_late_fee = a.late_fee_apr*10) GROUP BY u.user_from
 	</select>
+	<select id="findOut" resultType="com.info.web.pojo.OutChannelLook" parameterType="HashMap">
+		SELECT
+		a.id AS channelId,
+		b.report_date as reportDate,
+		a.channel_name AS channelName,
+		IFNULL( b.uv_count, 0 ) AS uvCount,
+		IFNULL( b.register_count, 0 ) AS registerCountResult,
+		IFNULL( borrow_apply_count, 0 ) AS borrowApplyCount
+		FROM
+		channel_info a
+		LEFT JOIN channel_report b ON a.id = b.channelid
+		<include refid="Sql" />
+		ORDER BY report_date desc
+	</select>
+	<select id="findOutCount" resultType="Integer" parameterType="HashMap">
+		select count(1) FROM channel_info a
+		LEFT JOIN channel_report b ON a.id = b.channelid
+	</select>
+
 </mapper>
