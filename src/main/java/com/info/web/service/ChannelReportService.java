@@ -95,12 +95,12 @@ public class ChannelReportService implements IChannelReportService {
                  int applyCount = channelInfoService.findApplyCount(report.getReportDate(),idList);
                  report.setBorrowApplyCount(applyCount);
              }
-            //注册率 点击数量/注册数量
+            //注册率 注册数量/点击数量
             int uvCount = report.getUvCount();
             int registCount = report.getRegisterCountResult();
             DecimalFormat df = new DecimalFormat("0.00");
             if(uvCount != 0){
-                double registRatio = uvCount*(1.0)/registCount*(1.0);
+                double registRatio = registCount*(1.0)/uvCount*(1.0);
                 report.setRegistRatio(df.format(registRatio));
             }else{
                 report.setRegistRatio("0.00");
