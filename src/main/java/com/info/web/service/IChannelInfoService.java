@@ -215,16 +215,17 @@ public interface IChannelInfoService {
 	 * @param userId
 	 * @return
 	 */
-	Integer findLoanCount(Date loanTime, String userId);
+	Integer findLoanCount(Date loanTime, List<String> userId);
 	/**
 	 * 查询当天某类用户的还款笔数
 	 * @param repayTime
 	 * @param userId
 	 * @return
 	 */
-	Integer findRepayCount(Date repayTime, String userId);
+	Integer findRepayCount(Date repayTime, List<String> userId);
 
 	List<String> findUserId(Integer channelId);
 	Integer findqqCount(Integer channelId);
 	Integer findWechatCount(Integer channelId);
+	Integer findApplyCount(Date applyTime, List<String> userId);
 }

@@ -84,38 +84,47 @@ public class ChannelReportService implements IChannelReportService {
         for (OutChannelLook report : pageConfig.getItems()) {
             //通过渠道id 查询出所涉及的用户
              List<String> idList=channelInfoService.findUserId(report.getId());
-             String userId = String.join(",",idList);
-            //放款笔数
-             int loanCount =channelInfoService.findLoanCount(report.getReportDate(),userId);
-             report.setLoanCount(loanCount);
-            //还款笔数
-            int repayCount =channelInfoService.findRepayCount(report.getReportDate(),userId);
-            report.setRepaymentCount(repayCount);
-            //注册率 注册数量/
+             if(idList.size()>0){
+                 //放款笔数
+                 int loanCount =channelInfoService.findLoanCount(report.getReportDate(),idList);
+                 report.setLoanCount(loanCount);
+                 //还款笔数
+                 int repayCount =channelInfoService.findRepayCount(report.getReportDate(),idList);
+                 report.setRepaymentCount(repayCount);
+                 //当日申请笔数
+                 int applyCount = channelInfoService.findApplyCount(report.getReportDate(),idList);
+                 report.setBorrowApplyCount(applyCount);
+             }
+            //注册率 点击数量/注册数量
             int uvCount = report.getUvCount();
             int registCount = report.getRegisterCountResult();
+            DecimalFormat df = new DecimalFormat("0.00");
             if(uvCount != 0){
                 double registRatio = uvCount*(1.0)/registCount*(1.0);
-                DecimalFormat df = new DecimalFormat("0.00");
                 report.setRegistRatio(df.format(registRatio));
             }else{
                 report.setRegistRatio("0.00");
             }
-            //下款率 放款比数/申请比数
-            if(report.getBorrowApplyCount() != 0){
-                double loanRate = loanCount*(1.0)/report.getBorrowApplyCount()*(1.0);
-                DecimalFormat df = new DecimalFormat("0.00");
+            //下款率 放款比数/注册数
+            if(report.getRegisterCountResult() != 0){
+                double loanRate = report.getLoanCount()*(1.0)/report.getRegisterCountResult()*(1.0);
                 report.setLoanRatio(df.format(loanRate));
             }else{
                 report.setLoanRatio("0.00");
             }
             //回款率 还款笔数/放款笔数
-            if(loanCount != 0){
-                double repayRate = repayCount*(1.0)/loanCount*(1.0);
-                DecimalFormat df = new DecimalFormat("0.00");
+            if(report.getLoanCount() != 0){
+                double repayRate = report.getRepaymentCount()*(1.0)/report.getLoanCount()*(1.0);
                 report.setRepayRatio(df.format(repayRate));
             }else{
                 report.setRepayRatio("0.00");
+            }
+            //申请率 申请笔数/注册总数
+            if(report.getRegisterCountResult() != 0){
+                double applyRate = report.getBorrowApplyCount() * (1.0)/report.getRegisterCountResult()*(1.0);
+                report.setApplyRatio(df.format(applyRate));
+            }else{
+                report.setApplyRatio("0.00");
             }
             list.add(report);
         }

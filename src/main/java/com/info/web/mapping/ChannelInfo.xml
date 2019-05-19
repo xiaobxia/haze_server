@@ -460,15 +460,30 @@
 		select id,channel_name
 		from channel_info
 	</select>
-	<select id="findLoanCount" resultType="java.lang.Integer">
-		select count(id) as loanCount from asset_repayment where status = '21'
-		and DATE_FORMAT( credit_repayment_time, '%Y-%m-%d' ) =  DATE_FORMAT( #{loanTime}, '%Y-%m-%d' )
-		and user_id in (#{userId})
+	<select id="findLoanCount" resultType="java.lang.Integer" >
+		select count(id) as loanCount from asset_repayment where status in('21','23','30')
+		and DATE_FORMAT(credit_repayment_time,'%Y-%m-%d') =DATE_FORMAT(#{loanTime},'%Y-%m-%d')
+		and user_id in
+		<foreach collection="userId" item="userId" separator="," open="(" close=")">
+			#{userId}
+		</foreach>
 	</select>
 	<select id="findRepayCount" resultType="java.lang.Integer">
 		select count(id) as repayCount from asset_repayment where status in ('23','30','34')
-		and DATE_FORMAT(repayment_real_time, '%Y-%m-%d' ) =  DATE_FORMAT( #{repayTime}, '%Y-%m-%d' )
-		and user_id in (#{userId})
+		and DATE_FORMAT(repayment_real_time,'%Y-%m-%d') =DATE_FORMAT(#{repayTime},'%Y-%m-%d')
+		and user_id in
+		<foreach collection="userId" item="userId" separator="," open="(" close=")">
+			#{userId}
+		</foreach>
+	</select>
+	<select id="findApplyCount" resultType="java.lang.Integer">
+		SELECT count(1) as borrowCountToday FROM asset_borrow_order t
+		WHERE   DATE_FORMAT( order_time, '%Y-%m-%d' ) = DATE_FORMAT(#{applyTime}, '%Y-%m-%d' )
+		and user_id in
+		<foreach collection="userId" item="userId" separator="," open="(" close=")">
+			#{userId}
+		</foreach>
+
 	</select>
 	<resultMap id="userList" type="java.lang.String" >
 		<result column="id" property="userId" jdbcType="VARCHAR" />

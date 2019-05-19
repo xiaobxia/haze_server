@@ -940,7 +940,7 @@
 	</select>
 	<select id="findOut" resultType="com.info.web.pojo.OutChannelLook" parameterType="HashMap">
 		SELECT
-		a.id AS channelId,
+		a.id AS id,
 		b.report_date as reportDate,
 		a.channel_name AS channelName,
 		IFNULL( b.uv_count, 0 ) AS uvCount,

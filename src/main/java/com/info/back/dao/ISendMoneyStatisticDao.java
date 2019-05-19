@@ -33,4 +33,5 @@ public interface ISendMoneyStatisticDao {
     BigDecimal threeMoney();
     Map<String,Object> extendToday();
     Map<String,Object> reBorrow();
+	Map<String,Object> findMoneyToday();
 }

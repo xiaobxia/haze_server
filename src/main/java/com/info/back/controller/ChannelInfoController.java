@@ -909,7 +909,7 @@ public class ChannelInfoController extends BaseController {
                 }
                 reportResults.add(reportResult);
             }*/
-            renderJsonToPage(response, getResultPageConfig(pageConfig, reportResults));
+            renderJsonToPage(response, getResultPageConfig(pageConfig, pageConfig.getItems()));
 
 
         } catch (Exception e) {
@@ -1008,6 +1008,7 @@ public class ChannelInfoController extends BaseController {
     @RequestMapping("toAppointChannelReport")
     public String toAppointChannelReport(HttpServletRequest request, Model model) {
         String aesChannelCode = request.getParameter("aesCode");
+        //String channelCode = request.getParameter("aesCode");
         String url = "userInfo/appointChannelReport";
         try {
             if (StringUtils.isEmpty(aesChannelCode)) {

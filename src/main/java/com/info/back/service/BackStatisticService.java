@@ -533,7 +533,7 @@ public class BackStatisticService implements IBackStatisticService {
 		Integer applyCountToday=sendMoneyStatisticDao.applyCountToday();
 		myPageReportInfo.setApplyCount(applyCountToday);
         //当日到期金额/当日应还金额
-		map=sendMoneyStatisticDao.findTodayMoneyCount(null);
+		map=sendMoneyStatisticDao.findMoneyToday();
         myPageReportInfo.setPendingRepayMoney(optimic(map,"repaymentedAmount"));
         myPageReportInfo.setPendingRepayCount(map.get("countNumber") == null?0:(long) map.get("countNumber"));
         //当日已还款金额/全额还款金额  //当日已还款订单/当日到期订单
@@ -564,9 +564,9 @@ public class BackStatisticService implements IBackStatisticService {
 		}
 		//当日回款率
         Long repyCount = myPageReportInfo.getRepyCount();
-        Long pendingCount = myPageReportInfo.getPendingRepayCount();
+        Long pendingCount = myPageReportInfo.getLoanCount();
         if(pendingCount != 0){
-        	//当日成功汇款笔数/当日应还款笔数
+        	//当日成功汇款笔数/当日放款笔数
             double repayPercentage=(double)repyCount/(double)pendingCount;
 			DecimalFormat df = new DecimalFormat("0.00");
             myPageReportInfo.setRepayPercentage(df.format(repayPercentage));

@@ -76,7 +76,6 @@ String path = request.getContextPath()+"";
                                             return new Date(value).format('yyyy-MM-dd');
                                         }
                                     }},
-
                                 {
                                     field: 'uvCount',
                                     title: 'uv数量',

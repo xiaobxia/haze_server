@@ -11,6 +11,7 @@ import com.info.web.pojo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.http.client.utils.DateUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -308,12 +309,12 @@ public class ChannelInfoService implements IChannelInfoService {
 	}
 
 	@Override
-	public Integer findLoanCount(Date loanTime, String userId) {
-		return channelInfoDao.findLoanCount(loanTime,userId);
+	public Integer findLoanCount(Date loanTime, List<String> userId) {
+		return channelInfoDao.findLoanCount(loanTime, userId);
 	}
 
 	@Override
-	public Integer findRepayCount(Date repayTime, String userId) {
+	public Integer findRepayCount(Date  repayTime, List<String> userId) {
        return channelInfoDao.findRepayCount(repayTime,userId);
 	}
 
@@ -331,5 +332,10 @@ public class ChannelInfoService implements IChannelInfoService {
 	public Integer findWechatCount(Integer channelId) {
 		return channelInfoDao.findWechatCount(channelId);
 	}
+
+    @Override
+    public Integer findApplyCount(Date applyTime, List<String> userId) {
+        return channelInfoDao.findApplyCount(applyTime,userId);
+    }
 
 }
