@@ -402,6 +402,7 @@ public class BorrowOrderController extends BaseController {
      * @return
      */
     @RequestMapping("insistlending")
+    @ResponseBody
     public String insistlending(String type,String borrowId){
         try{
             if(StringUtils.isNotBlank(type) && "0".equals(type)){
@@ -426,7 +427,7 @@ public class BorrowOrderController extends BaseController {
                 User newUser = new User();
                 newUser.setId(user.getId());
                 int i = Integer.parseInt(user.getAmountAvailable()) - borrow.getMoneyAmount();
-                newUser.setAmountAvailable(String.valueOf(i));
+                newUser.setAmountAvailable(String.valueOf(i<=0?0:i));
                 userService.updateAmountAvailableByUserId(newUser);
 
 
