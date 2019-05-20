@@ -646,7 +646,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="tdGround" style="width:180px;">排序风控返回系统分值:
+					<td class="tdGround" style="width:180px;">风控返回参考分:
 					<c:if test="${score == null}">
 						暂无分数
 					</c:if>
