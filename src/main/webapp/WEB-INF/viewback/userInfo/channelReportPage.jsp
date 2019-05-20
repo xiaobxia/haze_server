@@ -133,6 +133,24 @@
 				<th>
 					微信占比
 				</th>
+				<th>
+					申请笔数
+				</th>
+				<th>
+					放款笔数
+				</th>
+				<th>
+					还款笔数
+				</th>
+				<th>
+					注册率
+				</th>
+				<th>
+					放款率
+				</th>
+				<th>
+					回款率
+				</th>
 				<th align="center" >
 					更新时间
 				</th>
@@ -285,6 +303,24 @@
 					<td>
 						${channel.wechatRate}
 					</td>
+					<td>
+							${channel.borrowApplyCount}
+						</td>
+						<td>
+							${channel.loanCount}
+						</td>
+						<td>
+							 ${channel.repaymentCount}
+						</td>
+						<td>
+							 ${channel.registRatio}
+						</td>
+						<td>
+						    ${channel.loanRatio}
+						</td>
+						<td>
+							 ${channel.repayRatio}
+						</td>
 					<td>
 						<fmt:formatDate value="${channel.createdAt}"
 										pattern="yyyy-MM-dd HH:mm:ss" />

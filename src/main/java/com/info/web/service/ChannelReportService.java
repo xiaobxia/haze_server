@@ -79,8 +79,11 @@ public class ChannelReportService implements IChannelReportService {
         PageConfig<OutChannelLook> pageConfig;
         pageConfig = paginationDao.findPage("findOut", "findOutCount", params,
                 "web");
+       /* OutChannelLook outChannelLook = new OutChannelLook();
+        outChannelLook.setId(0);
+        pageConfig.getItems().set(pageConfig.getItems().size()+1,outChannelLook);*/
         List<OutChannelLook> list = new ArrayList<OutChannelLook>();
-        //循环处理数据
+        //循环处理数据 rengyao fangkuan
         for (OutChannelLook report : pageConfig.getItems()) {
             //通过渠道id 查询出所涉及的用户
              List<String> idList=channelInfoService.findUserId(report.getId());
@@ -107,7 +110,7 @@ public class ChannelReportService implements IChannelReportService {
             }
             //下款率 放款比数/申请总数
             if(report.getRegisterCountResult() != 0){
-                double loanRate = report.getLoanCount()*(1.0)/report.getBorrowApplyCount()*(1.0);
+                double loanRate = report.getLoanCount()*(1.0)/report.getRegisterCountResult()*(1.0);
                 report.setLoanRatio(df.format(loanRate));
             }else{
                 report.setLoanRatio("0.00");
@@ -128,6 +131,7 @@ public class ChannelReportService implements IChannelReportService {
             }
             list.add(report);
         }
+        //自然流量的统计
         pageConfig.setItems(list);
         return pageConfig;
     }
@@ -248,7 +252,6 @@ public class ChannelReportService implements IChannelReportService {
                 param.put("channelids", channelids);
                 // 注册量
                 List<Map<String, Object>> registerCountMap = channelReportDao.findRegisterCount(param);
-
 //						channelReport.setRegisterCount(1);
                 for (Map<String, Object> map : registerCountMap) {
                     Object val = map.get("userFrom");
@@ -258,7 +261,17 @@ public class ChannelReportService implements IChannelReportService {
                         jedisCluster.set("channelReport_" + channelReporta.getChannelid(), FastJsonUtils.toJson(channelReporta).toString());
                     }
                 }
-
+                //统计每天uv 数量
+                List<Map<String,Object>> uvCountMap = channelReportDao.findUvCount(param);
+                for(Map<String,Object> map : uvCountMap){
+                    Object val = map.get("channelId");
+                    ChannelReport channelReporta = (ChannelReport) JSONObject.toBean(JSONObject.fromObject(jedisCluster.get("channelReport_" + val)), ChannelReport.class);
+                    if(channelReporta != null){
+                        channelReporta.setUvCount(map.get("uvCount") == null ? 0 : Integer.parseInt(map.get("uvCount").toString()));
+                        //jedisCluster.del("channelReport_" + channelReporta.getChannelid());
+                        jedisCluster.set("channelReport_" + channelReporta.getChannelid(), FastJsonUtils.toJson(channelReporta).toString());
+                    }
+                }
                 //android注册量
                 List<Map<String, Object>> androidCountMap = channelReportDao.findAndroidCount(param);
 //						channelReport.setAndroidCount(1);
@@ -270,8 +283,6 @@ public class ChannelReportService implements IChannelReportService {
                         jedisCluster.set("channelReport_" + channelReporta.getChannelid(), FastJsonUtils.toJson(channelReporta).toString());
                     }
                 }
-
-
                 //ios注册量
                 List<Map<String, Object>> iosCountMap = channelReportDao.findIosCount(param);
 //						channelReport.setIosCount(1);
@@ -713,10 +724,8 @@ public class ChannelReportService implements IChannelReportService {
                     }
                 }
 
-
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-//						
+//
                 for (ChannelReport list : lists) {
                     Integer channelId = list.getChannelid();
                     HashMap<String, Object> queryMap = new HashMap<>();

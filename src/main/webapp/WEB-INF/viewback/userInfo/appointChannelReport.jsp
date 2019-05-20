@@ -76,18 +76,18 @@ String path = request.getContextPath()+"";
                                             return new Date(value).format('yyyy-MM-dd');
                                         }
                                     }},
-                                {
+                                /*{
                                     field: 'uvCount',
                                     title: 'uv数量',
                                     width: 170,
                                     align: 'center'
-                                },
+                                },*/
                                 {
                                     field: 'registerCountResult',
                                     title: '注册量',
                                     width: 170,
                                     align: 'center'
-                                },
+                                }/*,
                                 {
                                     field: 'borrowApplyCount',
                                     title: '申请笔数',
@@ -129,7 +129,7 @@ String path = request.getContextPath()+"";
                                     title: '回款率',
                                     width: 170,
                                     align: 'center'
-                                }
+                                }*/
                                // {
                                     //field: 'attestationRealnameCount',
                                     //title: '实名认证',

@@ -296,7 +296,15 @@
 		and <![CDATA[a.create_time > #{startDate} and a.create_time < #{startDateChangeEnd}]]>
 		GROUP BY a.user_from
 	</select>
-
+   <select id="findUvCount" resultType="java.util.LinkedHashMap" parameterType="HashMap">
+	   select channelid as channelId,uv_count as uvCount from channel_report
+	   where channelid IN
+	   <foreach item="item" index="index" collection="channelids"
+				open="(" separator="," close=")">
+		   #{item}
+	   </foreach>
+	   and <![CDATA[report_date >= #{startDate} and report_date < #{startDateChangeEnd}]]>
+   </select>
 	<select id="findAndroidCount" resultType="java.util.LinkedHashMap"
 			parameterType="HashMap">
 		SELECT a.user_from as userFrom,COUNT(1) as count
@@ -762,7 +770,8 @@
 		borrow_apply_out_count,
 		borrow_suc_out_count,
 		pass_rate_out,
-		borrow_rate_out)
+		borrow_rate_out,
+		uv_count)
 		VALUES (
 		#{reportDate},
 		#{registerCount},
@@ -805,7 +814,8 @@
 		#{borrowApplyOutCount},
 		#{borrowSucOutCount},
 		#{passRateOut},
-		#{borrowRateOut}
+		#{borrowRateOut},
+		#{uvCount}
 		);
 	</insert>
 	<delete id="deleteByChannelReport" parameterType="com.info.web.pojo.ChannelReport">

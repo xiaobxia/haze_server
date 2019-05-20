@@ -76,6 +76,16 @@ public class ChannelReport implements Serializable {
     private String wechatRate;
     private String uvRate;
     private Integer uvCount;
+    //放款笔数
+    private int loanCount;
+    //还款笔数
+    private int repaymentCount;
+    //注册率
+    private String registRatio;
+    //下款率
+    private String loanRatio;
+    //回款率
+    private String repayRatio;
     /**
      * 2019、05/18新增
      * @return
@@ -538,5 +548,49 @@ public class ChannelReport implements Serializable {
 
     public void setUvCount(Integer uvCount) {
         this.uvCount = uvCount;
+    }
+
+    public void setBorrowApplyCount(int borrowApplyCount) {
+        this.borrowApplyCount = borrowApplyCount;
+    }
+
+    public int getLoanCount() {
+        return loanCount;
+    }
+
+    public void setLoanCount(int loanCount) {
+        this.loanCount = loanCount;
+    }
+
+    public int getRepaymentCount() {
+        return repaymentCount;
+    }
+
+    public void setRepaymentCount(int repaymentCount) {
+        this.repaymentCount = repaymentCount;
+    }
+
+    public String getRegistRatio() {
+        return registRatio;
+    }
+
+    public void setRegistRatio(String registRatio) {
+        this.registRatio = registRatio;
+    }
+
+    public String getLoanRatio() {
+        return loanRatio;
+    }
+
+    public void setLoanRatio(String loanRatio) {
+        this.loanRatio = loanRatio;
+    }
+
+    public String getRepayRatio() {
+        return repayRatio;
+    }
+
+    public void setRepayRatio(String repayRatio) {
+        this.repayRatio = repayRatio;
     }
 }

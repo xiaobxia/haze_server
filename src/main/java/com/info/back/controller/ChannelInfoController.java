@@ -686,6 +686,7 @@ public class ChannelInfoController extends BaseController {
                 model.addAttribute("pm", pageConfig);
             }else{
                 PageConfig<ChannelReport> pageConfig = channelReportService.findPage(params);
+                PageConfig<OutChannelLook> pageConfigs = channelReportService.findPageOut(params);
 //                List<ChannelInfo> channelList = channelInfoService.findAll(chMap);
 //                ChannelInfo ciNatural = new ChannelInfo();
 //                ciNatural.setId(0);
@@ -700,8 +701,8 @@ public class ChannelInfoController extends BaseController {
 //                model.addAttribute("channelList", channelList);
                 List<ChannelSuperInfo> channelSuperInfos = channelInfoService.findSuperAll(chMap);
                 List<ChannelReport> list = new ArrayList<>();
-                //uv数量 微信占比 qq占比 uv转化
                for(ChannelReport channelReport : pageConfig.getItems() ){
+                   //qq占比
                     Integer qqCount= channelInfoService.findqqCount(channelReport.getChannelid());
                     if(qqCount != null && channelReport.getRegisterCount()!=null && channelReport.getRegisterCount()!=0){
                         Double  qqRate = qqCount*(1.0)/channelReport.getRegisterCount()*(1.0);
@@ -710,6 +711,7 @@ public class ChannelInfoController extends BaseController {
                     }else{
                         channelReport.setQqRate("0.00");
                     }
+                    //微信占比
                     Integer wechatCount = channelInfoService.findWechatCount(channelReport.getChannelid());
                     if(wechatCount != null && channelReport.getRegisterCount()!=null && channelReport.getRegisterCount()!=0){
                         Double wechatRate = wechatCount*(1.0)/channelReport.getRegisterCount()*(1.0);
@@ -718,6 +720,7 @@ public class ChannelInfoController extends BaseController {
                     }else{
                         channelReport.setWechatRate("0.00");
                     }
+                   //uv转化
                     if(null !=channelReport.getUvCount() &&channelReport.getUvCount() !=0 ){
                         if(null != channelReport.getRegisterCount()){
                             Double uvRate = channelReport.getRegisterCount()*(1.0)/channelReport.getUvCount()*(1.0);
@@ -728,8 +731,18 @@ public class ChannelInfoController extends BaseController {
                         channelReport.setUvCount(0);
                         channelReport.setUvRate("0.00");
                     }
-                    list.add(channelReport);
-                }
+                    for(OutChannelLook outChannelLook : pageConfigs.getItems()){
+                        if(outChannelLook.getId() == channelReport.getChannelid()){
+                            channelReport.setBorrowApplyCount(outChannelLook.getBorrowApplyCount());
+                            channelReport.setLoanCount(outChannelLook.getLoanCount());
+                            channelReport.setRepaymentCount(outChannelLook.getRepaymentCount());
+                            channelReport.setRegistRatio(outChannelLook.getRegistRatio());
+                            channelReport.setLoanRatio(outChannelLook.getLoanRatio());
+                            channelReport.setRepayRatio(outChannelLook.getRepayRatio());
+                        }
+                    }
+                   list.add(channelReport);
+               }
                 pageConfig.setItems(list);
                 model.addAttribute("channelSuperInfos", channelSuperInfos);
                 model.addAttribute("pm", pageConfig);
@@ -888,18 +901,18 @@ public class ChannelInfoController extends BaseController {
             } else {
                 params.put("beginTime", DateUtil.getDateFormat(new Date(), "yyyy-MM-dd"));
             }
-           // List<ChannelReportResult> reportResults = new ArrayList<>();
-            List<OutChannelLook> reportResults = new ArrayList<>();
+           List<ChannelReportResult> reportResults = new ArrayList<>();
+           // List<OutChannelLook> reportResults = new ArrayList<>();
             String channelCode = AESUtil.decrypt(params.get("channelCode").toString(), AESUtil.KEY);
             params.put("channelCode", channelCode);
+            PageConfig<ChannelReport> pageConfig = channelReportService.findPage(getParams(params));
             //PageConfig<OutChannelLook> pageConfig = channelReportService.findPageOut(getParams(params));
-            PageConfig<OutChannelLook> pageConfig = channelReportService.findPageOut(getParams(params));
             String channelId = channelReportService.getChannelIdByCode(channelCode);
-         /*   for (ChannelReport report : pageConfig.getItems()) {
+            for (ChannelReport report : pageConfig.getItems()) {
                 ChannelReportResult reportResult;
-                *//*
+                /*
                  * 当天实时查询
-                 *//*
+                 */
                 if(DateUtil.getDateFormat("yyyy-MM-dd").equals(DateUtil.getDateFormat(report.getReportDate(),"yyyy-MM-dd"))){
                     report.setRegisterCount(channelReportService.getRegisterNow(channelId));
                     report.setDayRealnameCount(channelReportService.getRegisterRealNow(channelId));
@@ -909,7 +922,7 @@ public class ChannelInfoController extends BaseController {
 
                 }
                 reportResults.add(reportResult);
-            }*/
+            }
             renderJsonToPage(response, getResultPageConfig(pageConfig, pageConfig.getItems()));
 
 
@@ -1780,4 +1793,10 @@ public class ChannelInfoController extends BaseController {
         }
         return "userInfo/channelInfoPage";
     }
+    @RequestMapping("testChannelReport")
+    public String testChannelReport(){
+        String nowTime = null;
+        channelReportService.saveChannelReport(nowTime);
+        return "success";
+    };
 }

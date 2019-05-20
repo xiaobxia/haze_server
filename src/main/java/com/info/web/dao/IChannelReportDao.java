@@ -61,6 +61,7 @@ public interface IChannelReportDao {
 
 	
 	public List<Map<String, Object>> findRegisterCount(Map<String, Object> param);
+	public List<Map<String,Object>> findUvCount(Map<String,Object> param);
 	public List<Map<String, Object>> findRealNameCount(Map<String, Object> param);
 	public List<Map<String, Object>> findJXLCount(Map<String, Object> param);
 	public List<Map<String, Object>> findTDCount(Map<String, Object> param);
