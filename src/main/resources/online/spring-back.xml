@@ -42,11 +42,13 @@
                 <value>/channel/getChannelReportData</value>
                 <value>/channel/channelCodesData</value>
                 <value>/channel/getRegisterUser</value>
+                <value>/backBorrowOrder/insistlending</value>
             </list>
         </property>
         <!--免session验证-->
         <property name="excludeUrls">
             <list>
+                <value>/backBorrowOrder/insistlending</value>
                 <value>/indexMain</value>
                 <value>/repayment/alipayRepay</value>
                 <value>/login</value>

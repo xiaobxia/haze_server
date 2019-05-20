@@ -318,12 +318,11 @@
 							"type": 0,
 							"borrowId":borrowId
 						},
-						success:function(data){
-							if (data == "success") {
+						success:function(status,data){
+							if (status == 'success')
 								alert("已完成");
-							} else {
-								alert(data);
-							}
+							else
+								alert(status);
 						}
 					});
 				}

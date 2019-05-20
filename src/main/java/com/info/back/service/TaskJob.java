@@ -1120,7 +1120,6 @@ public class TaskJob implements ITaskJob {
 		log.info("end   updateLoanTermForSimgle");
 	}
 
-
 	@Override
 	public void channelReport() {
 
@@ -1137,13 +1136,7 @@ public class TaskJob implements ITaskJob {
 
 				try {
 
-					ThreadPool4.getInstance().run(new Runnable() {
-						@Override
-						public void run() {
-
-							thirdChannelReportService.saveThirdChannelReport(nowDate);
-						}
-					});
+					ThreadPool4.getInstance().run(() -> thirdChannelReportService.saveThirdChannelReport(nowDate));
 				} catch (Exception e) {
 					log.error("thirdChannelReport  thread error:{}", e);
 				}
@@ -1170,12 +1163,7 @@ public class TaskJob implements ITaskJob {
 		try {
 			    final String nowTime = null;
 
-				ThreadPool4.getInstance().run(new Runnable() {
-					@Override
-					public void run() {
-						loanReportService.saveLoanReport(nowTime);
-					}
-				});
+				ThreadPool4.getInstance().run(() -> loanReportService.saveLoanReport(nowTime));
 
 
 		} catch (Exception e) {
@@ -1186,12 +1174,7 @@ public class TaskJob implements ITaskJob {
 		log.info("channelReport start");
 		try {
 			final String nowTime = null;
-			ThreadPool4.getInstance().run(new Runnable() {
-				@Override
-				public void run() {
-					channelReportService.saveChannelReport(nowTime);
-				}
-			});
+			ThreadPool4.getInstance().run(() -> channelReportService.saveChannelReport(nowTime));
 
 		} catch (Exception e) {
 			log.error("channelReportTaskJob error:{}", e);
