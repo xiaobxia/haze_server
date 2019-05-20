@@ -53,7 +53,7 @@
 			display: inline-block;
 			width: 59rem;
 			vertical-align: top;
-			margin-right: 12rem;
+			margin-right: 10rem;
 		}
 		.index-page-wrap .right-main {
 			display: inline-block;
