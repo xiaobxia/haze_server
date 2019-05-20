@@ -197,7 +197,7 @@ body, #splitBar { background:#32374A;}
     background-color: #32374A;
 }
 
-.formBar .button, .formBar .buttonActive, .formBar .buttonDisabled {margin-left: 20px}
+.formBar .button, .formBar .buttonActive, .formBar .buttonDisabled, .formBar .buttonHover {margin-left: 20px; padding: 0 18px;}
 /* Pages default */
 .page .pageHeader, .formBar { background-color: #EBF0F5;}
 .page .searchBar label { color:#183152;}
