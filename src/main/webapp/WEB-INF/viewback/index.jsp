@@ -430,7 +430,7 @@
 						context.textBaseline = 'middle';
 						var text=numText;
 						var tw=context.measureText(text).width;
-						context.fillText(text,canvasWH-tw/2, canvasHH + 2);
+						context.fillText(text,canvasWH-tw/2, canvasHH + (2 * zoom));
 						// 绘制背景圆
 						context.save();
 						context.beginPath();
