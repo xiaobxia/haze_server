@@ -86,4 +86,6 @@ public interface IBackUserDao {
     List<BackUser> selectBackUserByIds(@Param("ids")String[] ids);
 
 	BackUser findByUserId(Integer userId);
+
+	String selectSuperAdminStrByRoleId(@Param("roleId") Integer roleId);
 }

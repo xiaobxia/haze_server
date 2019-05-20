@@ -114,4 +114,6 @@ public interface IBackUserService {
 
 	BackUser selectUserById(Integer userId);
 
+	boolean loginUserIsSuperAdmin(String userId);
+
 }

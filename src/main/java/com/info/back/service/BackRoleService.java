@@ -31,12 +31,15 @@ public class BackRoleService implements IBackRoleService {
     @Autowired
     private IBackRoleModuleDao backRoleModuleDao;
 
+    @Autowired
+    private IBackUserService backUserService;
+
     @Override
     public List<BackTree> findRoleTree(HashMap<String, Object> params) {
         if (params.containsKey("userId")
                 // && Constant.ADMINISTRATOR_ID.intValue() == Integer.valueOf(
                 // String.valueOf(params.get("userId"))).intValue()
-                && SpringUtils.loginUserIsSuperAdmin(String.valueOf(params.get("userId")))) {
+                && backUserService.loginUserIsSuperAdmin(String.valueOf(params.get("userId")))) {
             return backRoleDao.findAdminRoleTree(params);
         } else {
             // showUserListByRoleId(id);
@@ -51,7 +54,7 @@ public class BackRoleService implements IBackRoleService {
         if (params.containsKey("userId")
                 // && Constant.ADMINISTRATOR_ID.intValue() == Integer.valueOf(
                 // String.valueOf(params.get("userId"))).intValue()
-                && SpringUtils.loginUserIsSuperAdmin(String.valueOf(params.get("userId")))
+                && backUserService.loginUserIsSuperAdmin(String.valueOf(params.get("userId")))
 
                 ) {
             pageConfig = paginationDao.findPage("findAdminAll", "findAdminCount", params, "back");
@@ -80,7 +83,7 @@ public class BackRoleService implements IBackRoleService {
             backRole.setRoleAddip(RequestUtils.getIpAddr());
         }
         backRoleDao.insert(backRole);
-        if (SpringUtils.loginUserIsSuperAdmin(String.valueOf(userId))) {
+        if (backUserService.loginUserIsSuperAdmin(String.valueOf(userId))) {
             BackUserRole backUserRole = new BackUserRole();
             backUserRole.setRoleId(backRole.getId());
             backUserRole.setUserId(userId);

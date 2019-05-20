@@ -129,7 +129,7 @@ public class AdminContextInterceptor extends HandlerInterceptorAdapter {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN);
                 return false;
             }
-            if (!SpringUtils.loginUserIsSuperAdmin(String.valueOf(user.getId()))) {
+            if (!backUserService.loginUserIsSuperAdmin(String.valueOf(user.getId()))) {
                 String u;
                 int i;
                 i = uri.indexOf("/");

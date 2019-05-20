@@ -131,4 +131,16 @@ public class BackUserService implements IBackUserService {
 	public BackUser selectUserById(Integer userId){
 		return backUserDao.findByUserId(userId);
 	}
+
+	@Override
+	public boolean loginUserIsSuperAdmin(String userId) {
+		String s = backUserDao.selectSuperAdminStrByRoleId(10001);
+		String admins[]=s.split(",",-1);
+		for(String admin:admins){
+			if(userId.equals(admin)){
+				return true;
+			}
+		}
+		return false;
+	}
 }

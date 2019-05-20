@@ -36,13 +36,16 @@ public class BackModuleService implements IBackModuleService {
 	@Autowired
 	private IPaginationDao paginationDao;
 
+	@Autowired
+	private IBackUserService backUserService;
+
 	@Override
 	public List<BackModule> findAllModule(HashMap<String, Object> params) {
 		List<BackModule> list = new ArrayList<>();
 		//userId条件 && 是否超级管理员
 		if (params.containsKey("userId") 
 //				&& Constant.ADMINISTRATOR_ID.intValue() == Integer.valueOf(String.valueOf(params.get("userId"))).intValue()
-				&&	SpringUtils.loginUserIsSuperAdmin(String.valueOf(params.get("userId")))
+				&&	backUserService.loginUserIsSuperAdmin(String.valueOf(params.get("userId")))
 				) {
 			//获取超级管理员的所有菜单
 			list = backModuleDao.findAdminAll(params);
@@ -59,7 +62,7 @@ public class BackModuleService implements IBackModuleService {
 	public List<BackTree> findModuleTree(HashMap<String, Object> params) {
 		if (params.containsKey("userId") &&
 
-				SpringUtils.loginUserIsSuperAdmin(String.valueOf(params.get("userId")))) {
+				backUserService.loginUserIsSuperAdmin(String.valueOf(params.get("userId")))) {
 			return backModuleDao.findAdminTree(params);
 		} else {
 			return backModuleDao.findUserTree(params);
@@ -70,7 +73,7 @@ public class BackModuleService implements IBackModuleService {
 	public PageConfig<BackModule> findPage(HashMap<String, Object> params) {
 		params.put(Constant.NAME_SPACE, "BackModule");
 		PageConfig<BackModule> pageConfig = new PageConfig<BackModule>();
-		if (params.containsKey("userId") && SpringUtils.loginUserIsSuperAdmin(String.valueOf(params.get("userId")))) {
+		if (params.containsKey("userId") && backUserService.loginUserIsSuperAdmin(String.valueOf(params.get("userId")))) {
 			pageConfig = paginationDao.findPage("findAdminAll", "findAdminCount", params, "back");
 		} else {
 			pageConfig = paginationDao.findPage("findUserAll", "findUserCount", params, "back");

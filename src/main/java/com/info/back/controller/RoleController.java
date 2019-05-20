@@ -112,7 +112,7 @@ public class RoleController extends BaseController {
 				} else {
 					// if (userId.intValue() == Constant.ADMINISTRATOR_ID
 					// .intValue()) {
-					if (SpringUtils.loginUserIsSuperAdmin(String.valueOf(userId))) {
+					if (backUserService.loginUserIsSuperAdmin(String.valueOf(userId))) {
 						backRole.setRoleSuper(0);
 					} else {
 						backRole.setRoleSuper(backRoleService.findRoleTree(params).get(0).getPid());
@@ -206,7 +206,7 @@ public class RoleController extends BaseController {
 				List<BackTree> userAll = backModuleService.findModuleTree(params);
 				List<BackTree> haveList = new ArrayList<BackTree>();
 				Integer id = Integer.valueOf(params.get("id").toString());
-				if (SpringUtils.loginUserIsSuperAdmin(String.valueOf(id))) {
+				if (backUserService.loginUserIsSuperAdmin(String.valueOf(id))) {
 					haveList.addAll(userAll);
 				} else {
 					haveList = backRoleService.getTreeByRoleId(id);
