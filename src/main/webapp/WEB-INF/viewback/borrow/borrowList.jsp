@@ -199,7 +199,7 @@
                 <th align="center">
                     子类型
                 </th>
-                <th align="center">
+                <th align="center" class="loanStatusTitle">
                     状态
                 </th>
                 <th align="center">
@@ -268,7 +268,7 @@
                     <td>
                             ${appName}
                     </td>
-                    <td>
+                    <td class="loanStatusName">
                             ${borrow.statusName }
                     </td>
                     <td>${borrow.channelName}</td>
@@ -359,4 +359,9 @@
         }
     }
 
+    if (renderLoanStatusName) {
+        setTimeout(function () {
+            renderLoanStatusName()
+        }, 200)
+    }
 </script>

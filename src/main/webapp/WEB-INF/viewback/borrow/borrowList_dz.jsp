@@ -91,7 +91,7 @@
                 <th align="center">放款时间</th>
 
                 <th align="center">子类型</th>
-                <th align="center">状态</th>
+                <th align="center" class="loanStatusTitle">状态</th>
                 <!-- 						<th align="center"  > -->
                 <!-- 							操作 -->
                 <!-- 						</th> -->
@@ -123,7 +123,7 @@
 
 
                     <td>${appName}</td>
-                    <td>放款成功 <%--  ${borrow.statusName }	 --%>
+                    <td class="loanStatusName">放款成功 <%--  ${borrow.statusName }	 --%>
                     </td>
                     <!-- 									<td> -->
                         <%--  	<a href="backBorrowOrder/getBorrowDetailById?selectId=${borrow.id }&parentId=${params.myId}"  target="dialog"  width="810" height="550" >查看</a> --%>
@@ -180,5 +180,10 @@
         var toHref = href + "&capitalType=" + capitalType + "&outTradeNo=" + outTradeNo + "&realname=" + realname + "&userPhone=" + userPhone + "&companyName=" + companyName + "&startloanTime=" + startloanTime + "&endloanTime=" + endloanTime;
 
         $(obj).attr("href", toHref);
+    }
+    if (renderLoanStatusName) {
+        setTimeout(function () {
+            renderLoanStatusName()
+        }, 200)
     }
 </script>

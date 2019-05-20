@@ -130,7 +130,7 @@
 					<th align="center">放款时间</th>
 					<th align="center">更新时间</th>
 					<th align="center">子类型</th>
-					<th align="center">状态</th>
+					<th align="center" class="loanStatusTitle">状态</th>
 					<th align="center">放款状态</th>
 					<th align="center">放款备注</th>
 					<!-- 						<th align="center"  > -->
@@ -174,7 +174,7 @@
 								pattern="yyyy-MM-dd HH:mm:ss" /></td>
 
 						<td>${appName }</td>
-						<td>${borrow.statusName }</td>
+						<td class="loanStatusName">${borrow.statusName }</td>
 						<td>${borrow.paystatusRemark }</td>
 						<td>${borrow.payRemark }</td>
 						<!-- 									<td> -->
@@ -293,4 +293,10 @@
             });
         }
     }
+
+	if (renderLoanStatusName) {
+		setTimeout(function () {
+			renderLoanStatusName()
+		}, 200)
+	}
 </script>

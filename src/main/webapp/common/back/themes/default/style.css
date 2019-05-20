@@ -306,3 +306,11 @@ body, #splitBar { background:#32374A;}
 .bottom-page .pagination li.jumpto .goto {
     display: none;
 }
+
+.status-tag {
+    color: #fff !important;
+    line-height: 1 !important;
+    height: auto !important;
+    padding: 5px 10px !important;
+    border-radius: 5px !important;
+}

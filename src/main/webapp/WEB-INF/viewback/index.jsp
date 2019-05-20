@@ -571,8 +571,39 @@
 					initIndexPage(data)
 				}, 100)
 			});
-        });
 
+
+        });
+		function renderLoanStatusName() {
+			$('.loanStatusName').each(function () {
+				var text = $(this).text().trim();
+				console.log('in')
+				var color = '#aaa'
+				var textColorMap = {
+					'正常已还款': '#1E6BFF',
+					'逾期已还款': '#6298FF',
+					'初审通过待复审': '#28C189',
+					'复审通过待还款审核': '#10AA72',
+					'待AI验证': '#02945E',
+					'放款中': '#008554',
+					'扣款中': '#7899D9',
+					'待机审': '#FF9600',
+					'已逾期': '#FF9600'
+				}
+				if (text.indexOf('驳回') !== -1) {
+					color = '#313743'
+				} else if (text.indexOf('失败') !== -1) {
+					color = '#F85252'
+				} else {
+					color = textColorMap[text]
+				}
+				$(this).html('<div class="status-tag" style="background-color:' + color + ';"><span>' + text + '</span></div>')
+				$(this).attr('style', '')
+			})
+			$('.loanStatusTitle').each(function () {
+				$(this).attr('style', '')
+			})
+		}
 
 	</script>
 </head>

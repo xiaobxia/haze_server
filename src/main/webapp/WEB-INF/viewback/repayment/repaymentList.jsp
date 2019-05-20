@@ -124,7 +124,7 @@
 					<th align="center" >
 						逾期天数
 					</th>
-					<th align="center"  >
+					<th align="center">
 						状态
 					</th>
 				</tr>

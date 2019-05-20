@@ -94,7 +94,7 @@
 						</th>
 						
 						 
-						<th align="center"  >
+						<th align="center">
 								状态
 						</th>
 						<th align="center"  >
