@@ -602,6 +602,8 @@
 					color = '#313743'
 				} else if (text.indexOf('失败') !== -1) {
 					color = '#F85252'
+				} else if (text.indexOf('成功') !== -1) {
+					color = '#008554'
 				} else {
 					color = textColorMap[text]
 				}
