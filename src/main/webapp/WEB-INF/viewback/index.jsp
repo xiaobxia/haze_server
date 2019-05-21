@@ -559,6 +559,14 @@
 						drhklImg = '<img class="up-down-icon" src="${basePath }/images/shouyeimg/箭头1.png">'
 					}
 					$('#drhkl').html(indexInfo.repayPercentage + '%' + drhklImg)
+					var drfjlImg = ''
+                    if (indexInfo.repayPercentage > 0) {
+                        drfjlImg = '<img class="up-down-icon" src="${basePath }/images/shouyeimg/箭头2.png">'
+                    }
+                    if (indexInfo.repayPercentage < 0) {
+                        drfjlImg = '<img class="up-down-icon" src="${basePath }/images/shouyeimg/箭头1.png">'
+                    }
+                    $('#drfjlImg').html(indexInfo.reBorrowReate + '%' + drfjlImg)
 				}
 
 				renderNumber(data.indexInfo || {})
@@ -944,6 +952,15 @@
 												<div id="drhkl" class="number-text">--</div>
 											</div>
 										</div>
+										<div class="item">
+												<div class="icon">
+													<img src="${basePath }/images/shouyeimg/当日复借率.png" alt="">
+												</div>
+												<div class="text">
+													<div>当日复借率</div>
+													<div id="drfjlImg" class="number-text">--</div>
+												</div>
+											</div>
 									</div>
 								</div>
 							</div>

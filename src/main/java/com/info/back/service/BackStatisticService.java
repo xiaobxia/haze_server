@@ -547,11 +547,11 @@ public class BackStatisticService implements IBackStatisticService {
 		map=sendMoneyStatisticDao.findTodayMoneyCount(21);
 		myPageReportInfo.setPendingMoney(optimic(map,"money"));
         myPageReportInfo.setPendingCount(map.get("countNumber") == null ?0:(long) map.get("countNumber"));
+		DecimalFormat df = new DecimalFormat("0.00");
 		//当日放款率
 		if(todayRegCount != 0){
 			double loanPercentage=(double)myPageReportInfo.getLoanCount()/(double)todayRegCount;
 			//当日放款笔数/当日注册总数
-			DecimalFormat df = new DecimalFormat("0.00");
 			myPageReportInfo.setLoanPercentage(df.format(loanPercentage));
 		}else{
 			myPageReportInfo.setLoanPercentage("0.00");
@@ -560,7 +560,6 @@ public class BackStatisticService implements IBackStatisticService {
 			//当日通过率
 			//当日放款笔数/当日申请总笔数
 			double passPercentage=(double)myPageReportInfo.getLoanCount()/(double)applyCountToday;
-			DecimalFormat df = new DecimalFormat("0.00");
 			myPageReportInfo.setPassPercentage(df.format(passPercentage));
 		}else{
 			myPageReportInfo.setPassPercentage("0.00");
@@ -571,7 +570,6 @@ public class BackStatisticService implements IBackStatisticService {
         if(pendingCount != 0){
         	//当日成功汇款笔数/当日放款笔数
             double repayPercentage=(double)repyCount/(double)pendingCount;
-			DecimalFormat df = new DecimalFormat("0.00");
             myPageReportInfo.setRepayPercentage(df.format(repayPercentage));
         }else{
         	myPageReportInfo.setRepayPercentage("0.00");
@@ -584,11 +582,17 @@ public class BackStatisticService implements IBackStatisticService {
         map = sendMoneyStatisticDao.reBorrow();
         myPageReportInfo.setReBorrowMoney(optimic(map,"reBorrowMoney"));
         myPageReportInfo.setReBorrowCount(map.get("reBorrowCount") == null?0:(long) map.get("reBorrowCount"));
+		//当日复借率 当日复借成功订单数/当日放款订单数
+		if(pendingCount != 0){
+           double reBorrowRate = (double)myPageReportInfo.getReBorrowCount()/(double)pendingCount;
+           myPageReportInfo.setReBorrowReate(df.format(reBorrowRate));
+		}else{
+			myPageReportInfo.setReBorrowReate("0.00");
+		}
 		//总用户注册百分比
         Long regist = sumCount - todayRegCount;
         if(!"null".equals(todayRegCount) && regist != 0){
             double allRegistPercentage = (double)todayRegCount / (double)regist;
-			DecimalFormat df = new DecimalFormat("0.00");
             myPageReportInfo.setAllRegistPercentage(df.format(allRegistPercentage));
         }else{
         	myPageReportInfo.setAllRegistPercentage("0.00");
