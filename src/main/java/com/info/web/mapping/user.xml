@@ -864,4 +864,8 @@
 		WHERE 1=1 and bu.id = #{id}
 		ORDER BY bu.id
 	</select>
+
+	<select id="selectGxbReportDataHtml" parameterType="java.lang.Integer" resultType="java.lang.String">
+		select gxb_report_url from risk_record where user_id = #{userId}
+	</select>
 </mapper>

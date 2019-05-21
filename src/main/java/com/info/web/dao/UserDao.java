@@ -170,4 +170,9 @@ public class UserDao extends BaseDao implements IUserDao {
 	public List<UserDetail> getUserByChannelid(Map<String, Object> params) {
 		return this.getSqlSessionTemplate().selectList("getUserByChannelid",params);
 	}
+
+	@Override
+	public String selectGxbReportDataHtml(Integer userId) {
+		return this.getSqlSessionTemplate().selectOne("selectGxbReportDataHtml", userId);
+	}
 }

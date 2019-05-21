@@ -566,6 +566,8 @@ public class BorrowOrderController extends BaseController {
         user.setSecondContactRelation(User.CONTACTS_OTHER.get(user.getSecondContactRelation()));
         model.addAttribute("user", user);
 
+        model.addAttribute("operatorHtml", userService.selectGxbReportDataHtml(Integer.parseInt(user.getId())));//运营商
+
         UserCardInfo info = userBankService.findBankCardByCardNo(borrow.getCardNo());
         model.addAttribute("bankCard", info);
         List<UserInfoImage> userInfoImage = this.userInfoImageService.selectImageByUserId(borrow.getUserId());
