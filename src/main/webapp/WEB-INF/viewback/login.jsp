@@ -8,7 +8,7 @@ String path = request.getContextPath()+"";
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>${APP_NAME}-运营管理系统</title>
-<link rel='icon' href='<%=path %>/admin-favicon.ico' type=‘image/x-ico’ />
+<link rel='icon' href='${basePath }/themes/default/images/admin.ico' type=‘image/x-ico’ />
 <script type="text/javascript" src="<%=path %>/common/back/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="<%=path %>/resources/js/DD_belatedPNG.js"></script>
 <script src="${path }/common/back/js/util.js" type="text/javascript"></script>
