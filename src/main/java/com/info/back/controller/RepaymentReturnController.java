@@ -3,11 +3,14 @@ package com.info.back.controller;
 import static com.info.web.pojo.BorrowOrder.STATUS_YHK;
 import static com.info.web.pojo.BorrowOrder.STATUS_YQYHK;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.info.web.service.IRepaymentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,6 +48,8 @@ public class RepaymentReturnController extends BaseController {
 	@Autowired
 	private IRenewalRecordService renewalRecordService;
 
+	@Autowired
+	private IRepaymentService repaymentService;
 
 	@RequestMapping("getRepaymentReturnPage")
 	public String getRepaymentPage(HttpServletRequest request, Integer[] statuses, Model model) {
@@ -61,6 +66,25 @@ public class RepaymentReturnController extends BaseController {
 			}
 			params.put("statuses", statuses);
 			PageConfig<RepaymentDetail> pageConfig = repaymentDetailService.repaymentDetilList(params);
+			List<RepaymentDetail> list = new ArrayList<RepaymentDetail>();
+			for(RepaymentDetail repaymentDetail : pageConfig.getItems()){
+				//查询用户成功借款次数
+				Integer loanSucCount = repaymentService.userBorrowCount(null,repaymentDetail.getUserId());
+				//该用户在还款表中无记录
+				if(loanSucCount != null && loanSucCount < 1 ){
+					repaymentDetail.setLoanCount("首借");
+				}else{
+					Integer loanCount = repaymentService.userBorrowCount(99999,repaymentDetail.getUserId());
+					//该用户在还款表中 没有已还款的记录 但是在还款表中有且仅有一条数据
+					if(loanCount < 1){
+						repaymentDetail.setLoanCount("首借");
+					}else{
+						repaymentDetail.setLoanCount(loanCount.toString());
+					}
+				}
+				list.add(repaymentDetail);
+			}
+			pageConfig.setItems(list);
 			model.addAttribute("pm", pageConfig);
 			model.addAttribute("params", params);
 
@@ -81,6 +105,25 @@ public class RepaymentReturnController extends BaseController {
 				
 			}
 			PageConfig<RenewalRecord> pageConfig = renewalRecordService.renewalList(params);
+			List<RenewalRecord> list= new ArrayList<RenewalRecord>();
+			for(RenewalRecord renewalRecord : pageConfig.getItems()){
+				//查询用户成功借款次数
+				Integer loanSucCount = repaymentService.userBorrowCount(null,renewalRecord.getUserId());
+				//该用户在还款表中无记录
+				if(loanSucCount != null && loanSucCount < 1 ){
+					renewalRecord.setLoanCount("首借");
+				}else{
+					Integer loanCount = repaymentService.userBorrowCount(99999,renewalRecord.getUserId());
+					//该用户在还款表中 没有已还款的记录 但是在还款表中有且仅有一条数据
+					if(loanCount < 1){
+						renewalRecord.setLoanCount("首借");
+					}else{
+						renewalRecord.setLoanCount(loanCount.toString());
+					}
+				}
+				list.add(renewalRecord);
+			}
+			pageConfig.setItems(list);
 			model.addAttribute("pm", pageConfig);
 			model.addAttribute("params", params);
 

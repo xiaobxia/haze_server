@@ -89,6 +89,8 @@ public class BorrowOrderCheckingExt {
 
     private String remark;
     private Integer packetId;
+    //成功还款次数
+    private String loanCount;
     
     /**
      * 招财猫
@@ -453,5 +455,13 @@ public class BorrowOrderCheckingExt {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getLoanCount() {
+        return loanCount;
+    }
+
+    public void setLoanCount(String loanCount) {
+        this.loanCount = loanCount;
     }
 }

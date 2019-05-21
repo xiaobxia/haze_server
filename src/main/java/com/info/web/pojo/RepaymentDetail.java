@@ -111,6 +111,8 @@ public class RepaymentDetail {
 
 	//还款渠道
 	private Integer repaymentChannel;
+    //成功还款次数
+	private String loanCount;
 
 	/**
 	 * 获取支付类型
@@ -395,4 +397,12 @@ public class RepaymentDetail {
 	public void setRepaymentChannel(Integer repaymentChannel) {
 		this.repaymentChannel = repaymentChannel;
 	}
+
+    public String getLoanCount() {
+        return loanCount;
+    }
+
+    public void setLoanCount(String loanCount) {
+        this.loanCount = loanCount;
+    }
 }

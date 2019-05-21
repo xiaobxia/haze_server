@@ -62,8 +62,11 @@
 					<th align="center" >
 						手机号
 					</th>
-					<th align="center"  >
+					<%--<th align="center"  >
 						是否是老用户
+					</th>--%>
+					<th align="center">
+						成功还款次数
 					</th>
 					<th align="center" >
 						借款到账金额
@@ -112,9 +115,12 @@
 						<td>
 							${renewal.userPhone }
 						</td>
-						<td>
+						<%--<td>
 							<c:if test="${renewal.customerType == '0'}">新用户</c:if>
 							<c:if test="${renewal.customerType == '1'}">老用户</c:if>
+						</td>--%>
+						<td>
+							${renewal.loanCount}
 						</td>
 						<td>
 							<fmt:formatNumber pattern='###,###,##0.00' value="${renewal.repaymentPrincipal / 100.00}"/>

@@ -221,6 +221,7 @@ public class BorrowOrderController extends BaseController {
             }
             PageConfig<BorrowOrder> pageConfig = borrowOrderService.findPage(params);
             if (pageConfig != null && pageConfig.getItems() != null) {
+
                 //新建一个信息的list
                 List<BorrowOrder> newBorroList = new ArrayList<>();
                 List<BorrowOrder> borrowOrderList = pageConfig.getItems();
@@ -237,7 +238,20 @@ public class BorrowOrderController extends BaseController {
                     } else {
                         borrowOrder.setChannelName(channelResutlMap.get("channel_name") == null ? null : channelResutlMap.get("channel_name").toString());
                     }
-
+                      //查询用户成功借款次数
+                    Integer loanSucCount = repaymentService.userBorrowCount(null,borrowOrder.getUserId());
+                    //该用户在还款表中无记录
+                    if(loanSucCount != null && loanSucCount < 1 ){
+                        borrowOrder.setLoanCount("首借");
+                    }else{
+                        Integer loanCount = repaymentService.userBorrowCount(99999,borrowOrder.getUserId());
+                        //该用户在还款表中 没有已还款的记录
+                        if(loanCount < 1){
+                            borrowOrder.setLoanCount("首借");
+                        }else{
+                            borrowOrder.setLoanCount(loanCount.toString());
+                        }
+                    }
 //                    RiskModelOrder riskOrder = riskModelOrderService.findRiskOrderByBrdId(borrowOrder.getId());
 //                    if (null != riskOrder) {
 //                        Integer inflexibleAdvice = riskOrder.getInflexibleAdvice();
@@ -373,6 +387,25 @@ public class BorrowOrderController extends BaseController {
             }
 
             PageConfig<BorrowOrder> pageConfig = borrowOrderService.findPage(params);
+            List<BorrowOrder> list = new ArrayList<BorrowOrder>();
+            for(BorrowOrder borrowOrder : pageConfig.getItems()){
+                //查询用户成功借款次数
+                Integer loanSucCount = repaymentService.userBorrowCount(null,borrowOrder.getUserId());
+                //该用户在还款表中无记录
+                if(loanSucCount != null && loanSucCount < 1 ){
+                    borrowOrder.setLoanCount("首借");
+                }else{
+                    Integer loanCount = repaymentService.userBorrowCount(99999,borrowOrder.getUserId());
+                    //该用户在还款表中 没有已还款的记录 但是在还款表中有且仅有一条数据
+                    if(loanCount < 1){
+                        borrowOrder.setLoanCount("首借");
+                    }else{
+                        borrowOrder.setLoanCount(loanCount.toString());
+                    }
+                }
+                list.add(borrowOrder);
+            }
+            pageConfig.setItems(list);
             model.addAttribute("pm", pageConfig);
             model.addAttribute("params", params);// 用于搜索框保留值
             String appName = PropertiesUtil.get("APP_NAME");
@@ -1434,7 +1467,7 @@ public class BorrowOrderController extends BaseController {
             response.setContentType("application/msexcel");// 定义输出类型
             SXSSFWorkbook workbook = new SXSSFWorkbook(10000);
 
-            String[] titles = {"序号", "订单号", "姓名", "手机号", "是否是老用户", "借款金额(元)", "天数", "服务费利率(万分之一)", "手续费", "到账金额", "下单时间", "放款时间", "子类型", "状态",
+            String[] titles = {"序号", "订单号", "姓名", "手机号", /*"是否是老用户"*/"成功放款次数", "借款金额(元)", "天数", "服务费利率(万分之一)", "手续费", "到账金额", "下单时间", "放款时间", "子类型", "状态",
                     "放款状态", "放款备注"};
             for (int i = 1; i <= total; i++) {
                 params.put(Constant.CURRENT_PAGE, i);
@@ -1447,7 +1480,23 @@ public class BorrowOrderController extends BaseController {
                     conList[1] = borrowOrder.getOutTradeNo();
                     conList[2] = borrowOrder.getRealname();
                     conList[3] = borrowOrder.getUserPhone();
+                    //查询用户成功借款次数
+                    Integer loanSucCount = repaymentService.userBorrowCount(null,borrowOrder.getUserId());
+                    //该用户在还款表中无记录
+                    if(loanSucCount != null && loanSucCount < 1 ){
+                        conList[4] = "首借";
+                    }else{
+                        Integer loanCount = repaymentService.userBorrowCount(99999,borrowOrder.getUserId());
+                        //该用户在还款表中 没有已还款的记录 但是在还款表中有且仅有一条数据
+                        if(loanCount < 1){
+                            conList[4] = "首借";
+                        }else{
+                            conList[4] = loanCount.toString();
+                        }
+                    }
+/*
                     conList[4] = conList[3] = borrowOrder.getCustomerTypeName();
+*/
                     conList[5] = new BigDecimal(borrowOrder.getMoneyAmount()).divide(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP);
                     conList[6] = borrowOrder.getLoanTerm() + "天";
                     conList[7] = new BigDecimal(borrowOrder.getApr()).divide(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP);
@@ -1905,6 +1954,25 @@ public class BorrowOrderController extends BaseController {
         try {
             HashMap<String, Object> params = getParametersO(request);
             PageConfig<BorrowOrderChecking> pageConfig = borrowOrderService.findBorrowOrderCheckPage(params);
+            List<BorrowOrderChecking> list = new ArrayList<>();
+            for(BorrowOrderChecking borrowOrderChecking : pageConfig.getItems()){
+                //查询用户成功借款次数
+                Integer loanSucCount = repaymentService.userBorrowCount(null,borrowOrderChecking.getUserId());
+                //该用户在还款表中无记录
+                if(loanSucCount != null && loanSucCount < 1 ){
+                    borrowOrderChecking.setLoanCount("首借");
+                }else{
+                    Integer loanCount = repaymentService.userBorrowCount(99999,borrowOrderChecking.getUserId());
+                    //该用户在还款表中 没有已还款的记录
+                    if(loanCount < 1){
+                        borrowOrderChecking.setLoanCount("首借");
+                    }else{
+                        borrowOrderChecking.setLoanCount(loanCount.toString());
+                    }
+                }
+                list.add(borrowOrderChecking);
+            }
+            pageConfig.setItems(list);
             model.addAttribute("pm", pageConfig);
             model.addAttribute("allstatus", BorrowOrderChecking.allstatus);
             model.addAttribute("capitalTypeMap", BorrowOrderChecking.capitalTypeMap);
@@ -1921,6 +1989,25 @@ public class BorrowOrderController extends BaseController {
         try {
             HashMap<String, Object> params = getParametersO(request);
             PageConfig<BorrowOrderCheckingExt> pageConfig = borrowOrderService.findBorrowOrderCheckExtPage(params);
+            List<BorrowOrderCheckingExt> list = new ArrayList<>();
+            for(BorrowOrderCheckingExt borrowOrderCheckingExt : pageConfig.getItems()){
+                //查询用户成功借款次数
+                Integer loanSucCount = repaymentService.userBorrowCount(null,borrowOrderCheckingExt.getUserId());
+                //该用户在还款表中无记录
+                if(loanSucCount != null && loanSucCount < 1 ){
+                    borrowOrderCheckingExt.setLoanCount("首借");
+                }else{
+                    Integer loanCount = repaymentService.userBorrowCount(99999,borrowOrderCheckingExt.getUserId());
+                    //该用户在还款表中 没有已还款的记录
+                    if(loanCount < 1){
+                        borrowOrderCheckingExt.setLoanCount("首借");
+                    }else{
+                        borrowOrderCheckingExt.setLoanCount(loanCount.toString());
+                    }
+                }
+                list.add(borrowOrderCheckingExt);
+            }
+            pageConfig.setItems(list);
             model.addAttribute("pm", pageConfig);
             model.addAttribute("allstatus", BorrowOrderChecking.allstatus);
             model.addAttribute("capitalTypeMap", BorrowOrderCheckingExt.capitalZCMTypeMap);
@@ -1954,7 +2041,7 @@ public class BorrowOrderController extends BaseController {
             ExcelUtil.setFileDownloadHeader(request, response, "资产信息附表统计.xls");
             response.setContentType("application/msexcel");// 定义输出类型
             SXSSFWorkbook workbook = new SXSSFWorkbook(10000);
-            String[] titles = {"借款订单ID", "姓名", "手机号码", "身份证", "银行卡号", "是否老用户", "借款金额", "借款期限", "实际到账金额", "放款时间", "资产所属", "更新时间"};
+            String[] titles = {"借款订单ID", "姓名", "手机号码", "身份证", "银行卡号", /*"是否老用户"*/"成功还款次数", "借款金额", "借款期限", "实际到账金额", "放款时间", "资产所属", "更新时间"};
             for (int i = 1; i <= total; i++) {
                 params.put(Constant.CURRENT_PAGE, i);
                 PageConfig<BorrowOrderCheckingExt> pm = borrowOrderService.findBorrowOrderCheckExtPage(params);
@@ -1972,7 +2059,21 @@ public class BorrowOrderController extends BaseController {
                     // }else{
                     // conList[3] = "老用户用户";
                     // }
-                    conList[5] = User.customerTypes.get(borrowOrder.getCustomerType() + "");
+                    //查询用户成功借款次数
+                    Integer loanSucCount = repaymentService.userBorrowCount(null,borrowOrder.getUserId());
+                    //该用户在还款表中无记录
+                    if(loanSucCount != null && loanSucCount < 1 ){
+                        conList[5] = "首借";
+                    }else{
+                        Integer loanCount = repaymentService.userBorrowCount(99999,borrowOrder.getUserId());
+                        //该用户在还款表中 没有已还款的记录 但是在还款表中有且仅有一条数据
+                        if(loanCount < 1){
+                            conList[5] = "首借";
+                        }else{
+                            conList[5] = loanCount.toString();
+                        }
+                    }
+                    //conList[5] = User.customerTypes.get(borrowOrder.getCustomerType() + "");
                     conList[6] = new BigDecimal(borrowOrder.getMoneyAmount()).divide(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP);
                     conList[7] = borrowOrder.getLoanTerm() + "天";
                     conList[8] = new BigDecimal(borrowOrder.getIntoMoney()).divide(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP);
@@ -2018,7 +2119,7 @@ public class BorrowOrderController extends BaseController {
             ExcelUtil.setFileDownloadHeader(request, response, "资产信息统计.xls");
             response.setContentType("application/msexcel");// 定义输出类型
             SXSSFWorkbook workbook = new SXSSFWorkbook(10000);
-            String[] titles = {"借款订单ID", "姓名", "手机号码", "身份证", "银行卡号", "是否老用户", "借款金额", "借款期限", "实际到账金额", "放款时间", "资产所属", "更新时间"};
+            String[] titles = {"借款订单ID", "姓名", "手机号码", "身份证", "银行卡号", /*"是否老用户"*/"成功还款次数", "借款金额", "借款期限", "实际到账金额", "放款时间", "资产所属", "更新时间"};
             for (int i = 1; i <= total; i++) {
                 params.put(Constant.CURRENT_PAGE, i);
                 PageConfig<BorrowOrderChecking> pm = borrowOrderService.findBorrowOrderCheckPage(params);
@@ -2036,7 +2137,21 @@ public class BorrowOrderController extends BaseController {
                     // }else{
                     // conList[3] = "老用户用户";
                     // }
-                    conList[5] = User.customerTypes.get(borrowOrder.getCustomerType() + "");
+                    //查询用户成功借款次数
+                    Integer loanSucCount = repaymentService.userBorrowCount(null,borrowOrder.getUserId());
+                    //该用户在还款表中无记录
+                    if(loanSucCount != null && loanSucCount < 1 ){
+                        conList[5] = "首借";
+                    }else{
+                        Integer loanCount = repaymentService.userBorrowCount(99999,borrowOrder.getUserId());
+                        //该用户在还款表中 没有已还款的记录 但是在还款表中有且仅有一条数据
+                        if(loanCount < 1){
+                            conList[5] = "首借";
+                        }else{
+                            conList[5] = loanCount.toString();
+                        }
+                    }
+                    //conList[5] = User.customerTypes.get(borrowOrder.getCustomerType() + "");
                     conList[6] = new BigDecimal(borrowOrder.getMoneyAmount()).divide(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP);
                     conList[7] = borrowOrder.getLoanTerm() + "天";
                     conList[8] = new BigDecimal(borrowOrder.getIntoMoney()).divide(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP);

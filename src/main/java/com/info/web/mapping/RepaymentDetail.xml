@@ -28,7 +28,6 @@
         <result column="repayment_time" property="repaymentTime" jdbcType="TIMESTAMP" />
         <result column="repayment_real_time" property="repaymentRealTime" jdbcType="TIMESTAMP" />
         <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
-
     </resultMap>
     <resultMap id="ResultMapWithBLOBs" type="com.info.web.pojo.RepaymentDetail" extends="BaseResultMap" >
         <result column="repayment_img" property="repaymentImg" jdbcType="LONGVARCHAR" />
@@ -506,6 +505,7 @@
     </select>
     <select id="repaymentDetilList" resultMap="ResultMap" parameterType="map">
         select rd.id,
+        u.id as userId,
         u.realname as realname,
         u.user_phone as user_phone,
         u.customer_type as customer_type,
