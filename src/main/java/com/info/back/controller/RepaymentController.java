@@ -90,6 +90,25 @@ public class RepaymentController extends BaseController {
             }
             params.put("statuses", statuses);
             PageConfig<Repayment> pageConfig = repaymentService.findPage(params);
+            List<Repayment> list = new ArrayList<>();
+            for(Repayment repayment : pageConfig.getItems()){
+                //查询用户成功借款次数
+                Integer loanSucCount = repaymentService.userBorrowCount(null,repayment.getUserId());
+                //该用户在还款表中无记录
+                if(loanSucCount != null && loanSucCount < 1 ){
+                    repayment.setLoanCount("首借");
+                }else{
+                    Integer loanCount = repaymentService.userBorrowCount(99999,repayment.getUserId());
+                    //该用户在还款表中 没有已还款的记录 但是在还款表中有且仅有一条数据
+                    if(loanCount < 1){
+                        repayment.setLoanCount("首借");
+                    }else{
+                        repayment.setLoanCount(loanCount.toString());
+                    }
+                }
+                list.add(repayment);
+            }
+            pageConfig.setItems(list);
             model.addAttribute("pm", pageConfig);
 
         } catch (Exception e) {
@@ -132,6 +151,25 @@ public class RepaymentController extends BaseController {
 
             }else {
                 PageConfig<Repayment> pageConfig = repaymentService.findWriteOffPage(params);
+                List<Repayment> list = new ArrayList<>();
+                for(Repayment repayment : pageConfig.getItems()){
+                    //查询用户成功借款次数
+                    Integer loanSucCount = repaymentService.userBorrowCount(null,repayment.getUserId());
+                    //该用户在还款表中无记录
+                    if(loanSucCount != null && loanSucCount < 1 ){
+                        repayment.setLoanCount("首借");
+                    }else{
+                        Integer loanCount = repaymentService.userBorrowCount(99999,repayment.getUserId());
+                        //该用户在还款表中 没有已还款的记录 但是在还款表中有且仅有一条数据
+                        if(loanCount < 1){
+                            repayment.setLoanCount("首借");
+                        }else{
+                            repayment.setLoanCount(loanCount.toString());
+                        }
+                    }
+                    list.add(repayment);
+                }
+                pageConfig.setItems(list);
                 model.addAttribute("pm", pageConfig);
             }
 
@@ -154,6 +192,25 @@ public class RepaymentController extends BaseController {
 //			atuses=30&statuses=34&myId=209
             params.put("statuses", statuses);
             PageConfig<Repayment> pageConfig = repaymentService.findPage(params);
+            List<Repayment> list = new ArrayList<>();
+            for(Repayment repayment : pageConfig.getItems()){
+                //查询用户成功借款次数
+                Integer loanSucCount = repaymentService.userBorrowCount(null,repayment.getUserId());
+                //该用户在还款表中无记录
+                if(loanSucCount != null && loanSucCount < 1 ){
+                    repayment.setLoanCount("首借");
+                }else{
+                    Integer loanCount = repaymentService.userBorrowCount(99999,repayment.getUserId());
+                    //该用户在还款表中 没有已还款的记录 但是在还款表中有且仅有一条数据
+                    if(loanCount < 1){
+                        repayment.setLoanCount("首借");
+                    }else{
+                        repayment.setLoanCount(loanCount.toString());
+                    }
+                }
+                list.add(repayment);
+            }
+            pageConfig.setItems(list);
             model.addAttribute("pm", pageConfig);
 
         } catch (Exception e) {
@@ -660,7 +717,7 @@ public class RepaymentController extends BaseController {
             response.setContentType("application/msexcel");// 定义输出类型
             SXSSFWorkbook workbook = new SXSSFWorkbook(10000);
 
-            String[] titles = {"序号", "姓名", "手机号", "是否是老用户", "借款到账金额", "服务费", "总需要还款金额", "已还金额", "放款时间", "预期还款时间", "逾期天数", "状态"};
+            String[] titles = {"序号", "姓名", "手机号", /*"是否是老用户"*/"成功还款次数", "借款到账金额", "服务费", "总需要还款金额", "已还金额", "放款时间", "预期还款时间", "逾期天数", "状态"};
             for (int i = 1; i <= total; i++) {
                 params.put(Constant.CURRENT_PAGE, i);
                 PageConfig<Repayment> pm = repaymentService.findPage(params);
@@ -671,10 +728,24 @@ public class RepaymentController extends BaseController {
                     conList[0] = repayment.getId();
                     conList[1] = repayment.getRealname();
                     conList[2] = repayment.getUserPhone();
-                    if (0 == (repayment.getCustomerType())) {
+                   /* if (0 == (repayment.getCustomerType())) {
                         conList[3] = "新用户";
                     } else {
                         conList[3] = "老用户";
+                    }*/
+                    //查询用户成功借款次数
+                    Integer loanSucCount = repaymentService.userBorrowCount(null,repayment.getUserId());
+                    //该用户在还款表中无记录
+                    if(loanSucCount != null && loanSucCount < 1 ){
+                        conList[3] = "首借";
+                    }else{
+                        Integer loanCount = repaymentService.userBorrowCount(99999,repayment.getUserId());
+                        //该用户在还款表中 没有已还款的记录 但是在还款表中有且仅有一条数据
+                        if(loanCount < 1){
+                            conList[3] = "首借";
+                        }else{
+                            conList[3] = loanCount.toString();
+                        }
                     }
                     conList[4] = repayment.getRepaymentPrincipal() / 100.00;
                     conList[5] = repayment.getRepaymentInterest() / 100.00;
@@ -726,7 +797,7 @@ public class RepaymentController extends BaseController {
             response.setContentType("application/msexcel");// 定义输出类型
             SXSSFWorkbook workbook = new SXSSFWorkbook(10000);
 
-            String[] titles = {"序号", "姓名", "手机号", "是否是老用户", "借款到账金额", "服务费", "总需要还款金额", "已还金额", "放款时间", "还款时间", "预期还款时间", "状态"};
+            String[] titles = {"序号", "姓名", "手机号", /*"是否是老用户"*/"成功还款次数", "借款到账金额", "服务费", "总需要还款金额", "已还金额", "放款时间", "还款时间", "预期还款时间", "状态"};
             for (int i = 1; i <= total; i++) {
                 params.put(Constant.CURRENT_PAGE, i);
                 PageConfig<Repayment> pm = repaymentService.findPage(params);
@@ -737,10 +808,24 @@ public class RepaymentController extends BaseController {
                     conList[0] = repayment.getId();
                     conList[1] = repayment.getRealname();
                     conList[2] = repayment.getUserPhone();
-                    if (0 == (repayment.getCustomerType())) {
+                   /* if (0 == (repayment.getCustomerType())) {
                         conList[3] = "新用户";
                     } else {
                         conList[3] = "老用户";
+                    }*/
+                    //查询用户成功借款次数
+                    Integer loanSucCount = repaymentService.userBorrowCount(null,repayment.getUserId());
+                    //该用户在还款表中无记录
+                    if(loanSucCount != null && loanSucCount < 1 ){
+                        conList[3] = "首借";
+                    }else{
+                        Integer loanCount = repaymentService.userBorrowCount(99999,repayment.getUserId());
+                        //该用户在还款表中 没有已还款的记录 但是在还款表中有且仅有一条数据
+                        if(loanCount < 1){
+                            conList[3] = "首借";
+                        }else{
+                            conList[3] = loanCount.toString();
+                        }
                     }
                     conList[4] = repayment.getRepaymentPrincipal() / 100.00;
                     conList[5] = repayment.getRepaymentInterest() / 100.00;

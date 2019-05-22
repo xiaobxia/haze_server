@@ -686,14 +686,14 @@ public class ChannelInfoController extends BaseController {
                 model.addAttribute("pm", pageConfig);
             }else{
                 PageConfig<ChannelReport> pageConfig = channelReportService.findPage(params);
-                PageConfig<OutChannelLook> pageConfigs = channelReportService.findPageOut(params);
+                //PageConfig<OutChannelLook> pageConfigs = channelReportService.findPageOut(params);
 //                List<ChannelInfo> channelList = channelInfoService.findAll(chMap);
 //                ChannelInfo ciNatural = new ChannelInfo();
 //                ciNatural.setId(0);
 //                ciNatural.setChannelName("自然流量");
 //                channelList.add(ciNatural);
 //
-//                for (int i = channelList.size() - 1; i > 0; i--) {
+//                for (int i = channelList.size() - 1; i > 0; i--) {fuck
 //                    channelList.set(i, channelList.get(i - 1));
 //                }
 //                channelList.set(0, ciNatural);
@@ -731,7 +731,7 @@ public class ChannelInfoController extends BaseController {
                         channelReport.setUvCount(0);
                         channelReport.setUvRate("0.00");
                     }
-                    for(OutChannelLook outChannelLook : pageConfigs.getItems()){
+                    /*for(OutChannelLook outChannelLook : pageConfigs.getItems()){
                         if(outChannelLook.getId() == channelReport.getChannelid()){
                             channelReport.setBorrowApplyCount(outChannelLook.getBorrowApplyCount());
                             channelReport.setLoanCount(outChannelLook.getLoanCount());
@@ -740,7 +740,7 @@ public class ChannelInfoController extends BaseController {
                             channelReport.setLoanRatio(outChannelLook.getLoanRatio());
                             channelReport.setRepayRatio(outChannelLook.getRepayRatio());
                         }
-                    }
+                    }*/
                    list.add(channelReport);
                }
                 pageConfig.setItems(list);

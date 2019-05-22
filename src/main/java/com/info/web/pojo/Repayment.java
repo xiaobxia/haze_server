@@ -76,6 +76,8 @@ public class Repayment implements Serializable {
     private List<RenewalRecord> renewalRecords;
 
     private RiskModelOrder riskModelOrder;
+    //用户成功放款次数
+    private String loanCount;
 
 //    private String customerType;
 
@@ -369,6 +371,13 @@ public class Repayment implements Serializable {
         this.userPhone = userPhone;
     }
 
+    public String getLoanCount() {
+        return loanCount;
+    }
+
+    public void setLoanCount(String loanCount) {
+        this.loanCount = loanCount;
+    }
 
     @Override
     public String toString() {

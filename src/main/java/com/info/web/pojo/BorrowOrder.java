@@ -78,7 +78,8 @@ public class BorrowOrder {
 	private String cfcaContractId;
 
 	private String projectNameVal;
-
+	//用户放款次数
+    private String loanCount;
 
 	//用户借款设备类型
 	private String clientType;//1、android 2、ios 3、wap
@@ -1104,6 +1105,14 @@ public class BorrowOrder {
 
 	public void setRenewalFee(BigDecimal renewalFee) {
 		this.renewalFee = renewalFee;
+	}
+
+	public String getLoanCount() {
+		return loanCount;
+	}
+
+	public void setLoanCount(String loanCount) {
+		this.loanCount = loanCount;
 	}
 }
 

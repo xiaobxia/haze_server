@@ -111,4 +111,6 @@ public interface IUserDao {
 	String getLastClassDate();
 
 	List<UserDetail> getUserByChannelid(Map<String,Object> params);
+
+	String selectGxbReportDataHtml(Integer userId);
 }

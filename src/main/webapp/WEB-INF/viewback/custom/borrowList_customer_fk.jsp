@@ -49,7 +49,8 @@
 					<th align="center">姓名</th>
 					<th align="center">手机号</th>
 					<th align="center">地域</th>
-					<th align="center">是否是老用户</th>
+					<%--<th align="center">是否是老用户</th>--%>
+					<th align="center">成功还款次数</th>
 					<th align="center">借款金额(元)</th>
 					<th align="center">天数</th>
 					<th align="center">服务费利率(万分之一)</th>
@@ -81,7 +82,10 @@
 						<td>${borrow.realname}</td>
 						<td>${borrow.userPhone }</td>
 						<td>${borrow.area }</td>
-						<td>${borrow.customerTypeName}</td>
+						<%--<td>${borrow.customerTypeName}</td>--%>
+						<td>
+							${borrow.loanCount}
+						</td>
 						<td><fmt:formatNumber type="number"
 								value="${borrow.moneyAmount/100}" pattern="0.00"
 								maxFractionDigits="2" /></td>

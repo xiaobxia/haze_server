@@ -68,7 +68,8 @@
 					<th align="left">订单号</th>
 					<th align="center">姓名</th>
 					<th align="center">手机号</th>
-					<th align="center">是否是老用户</th>
+					<%--<th align="center">是否是老用户</th>--%>
+					<th>成功还款次数</th>
 					<th align="center">借款金额(元)</th>
 					<th align="center">借款期限</th>
 					<th align="center">服务费利率(万分之一)</th>
@@ -91,9 +92,10 @@
 						<td>${borrow.assetOrderId}</td>
 						<td>${borrow.realname}</td>
 						<td>${borrow.userPhone }</td>
-						<td><c:if test="${borrow.customerType ==0}">新用户</c:if> <c:if
+						<%--<td><c:if test="${borrow.customerType ==0}">新用户</c:if> <c:if
 								test="${borrow.customerType ==1}">老用户</c:if></td>
-						<td>
+						<td>--%>
+						<td>${borrow.loanCount}</td>
 							<%--  							${borrow.moneyAmount/100 } --%> <fmt:formatNumber
 								type="number" value="${borrow.moneyAmount/100}" pattern="0.00"
 								maxFractionDigits="0" />

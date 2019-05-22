@@ -146,4 +146,6 @@ public interface IRepaymentDao {
     String getClientByUserId(@Param("userId")Integer userId);
 
     void updateAssignDelFlag(@Param("assignId")Integer assignId);
+
+    Integer userBorrowCount(@Param("status") Integer status,@Param("userId") Integer userId);
 }

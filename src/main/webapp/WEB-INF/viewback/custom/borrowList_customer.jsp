@@ -70,8 +70,11 @@
                 <th align="center">
                     区域
                 </th>
-                <th align="center">
+                <%--<th align="center">
                     是否是老用户
+                </th>--%>
+                <th align="center">
+                    成功还款次数
                 </th>
                 <th align="center">
                     借款金额(元)
@@ -130,8 +133,11 @@
                             ${borrow.area }
 
                     </td>
-                    <td>
+                   <%-- <td>
                             ${borrow.customerTypeName}
+                    </td>--%>
+                    <td>
+                        ${borrow.loanCount}
                     </td>
                     <td>
                             <%--  							${borrow.moneyAmount/100 } --%>

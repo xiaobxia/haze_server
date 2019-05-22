@@ -186,4 +186,9 @@ public class UserService implements IUserService {
 	public List<Integer> getRoleByUserId(Integer id){
 		return userDao.getRoleByUserId(id);
 	}
+
+	@Override
+	public String selectGxbReportDataHtml(Integer userId) {
+		return userDao.selectGxbReportDataHtml(userId);
+	}
 }

@@ -151,4 +151,6 @@ public interface IUserService {
 	public HashMap<String,Object> selectPushId(Integer userId);
 
 	List<Integer> getRoleByUserId(Integer id);
+
+	String selectGxbReportDataHtml(Integer userId);
 }
