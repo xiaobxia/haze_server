@@ -171,7 +171,8 @@
 				"status": status
 			},
 			success:function(status,data){
-				return navTabSearch(this)
+				$('#pagerForm').submit()
+				// return navTabSearch(this)
 			}
 		});
 	}

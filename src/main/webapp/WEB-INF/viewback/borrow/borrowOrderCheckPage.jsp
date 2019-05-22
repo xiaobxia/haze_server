@@ -95,7 +95,7 @@
 						<%--<td><c:if test="${borrow.customerType ==0}">新用户</c:if> <c:if
 								test="${borrow.customerType ==1}">老用户</c:if></td>
 						<td>--%>
-						<td>${borrow.loanCount}</td>
+						<td class="loanSuccessCount">${borrow.loanCount}</td>
 							<%--  							${borrow.moneyAmount/100 } --%> <fmt:formatNumber
 								type="number" value="${borrow.moneyAmount/100}" pattern="0.00"
 								maxFractionDigits="0" />
@@ -150,5 +150,10 @@
 		var toHref=href+"&realname="+realname+"&userPhone="+userPhone+"&status="+borrowStatus+"&capitalType="+capitalType+"&beginTime="+beginTime+"&endTime="+endTime;
  
 		$(obj).attr("href",toHref);
+	}
+	if (renderLoanSuccessCount) {
+		setTimeout(function () {
+			renderLoanSuccessCount()
+		}, 200)
 	}
 </script>

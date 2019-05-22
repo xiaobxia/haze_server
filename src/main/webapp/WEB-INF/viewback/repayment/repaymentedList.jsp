@@ -149,7 +149,7 @@
 							<c:if test="${repayment.customerType == '0'}">新用户</c:if>
 							<c:if test="${repayment.customerType == '1'}">老用户</c:if>
 						</td>--%>
-						<td>
+						<td class="loanSuccessCount">
 							${repayment.loanCount}
 						</td>
 						<td>
@@ -199,5 +199,10 @@
 		var toHref = href + "&userAccountLike=" + userAccountLike + "&userMobileLike=" + userMobileLike + "&repaymentedTimeStart=" + repaymentedTimeStart + "&repaymentedTimeEnd=" + repaymentedTimeEnd + statuses;
 		$(obj).attr("href",toHref);
 		return true;
+	}
+	if (renderLoanSuccessCount) {
+		setTimeout(function () {
+			renderLoanSuccessCount()
+		}, 200)
 	}
 </script>

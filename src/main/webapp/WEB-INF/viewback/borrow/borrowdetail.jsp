@@ -6,6 +6,7 @@
 	String path = request.getContextPath();
 	String basePath = path + "/common/back";
 %>
+<c:set var="basePath" value="<%=basePath%>"></c:set>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
 <html>
@@ -339,7 +340,7 @@
 			width: 2.2222222222222223rem;
 			height: 2.2222222222222223rem;
 			display: inline-block;
-			vertical-align: middle;
+			vertical-align: top;
 		}
 		.detail-card .sub-title {
 			margin: 1.6666666666666667rem 0;
@@ -370,6 +371,9 @@
 			padding-bottom: 2.2222222222222223rem;
 			border-bottom: 1px solid #C4C4C4;
 			position: relative;
+		}
+		.detail-card .block-row:last-child {
+			border-bottom: none;
 		}
 		.view-detail-btn {
 			padding: 0.5555555555555556rem 1.1111111111111112rem;
@@ -418,6 +422,7 @@
 		}
 		.sh-card .bz-card p {
 			margin: 0;
+			height: auto;
 			min-height: 1em;
 			font-size: 0.8888888888888888rem;
 		}
@@ -518,7 +523,7 @@
 			<div class="detail-card">
 				<div class="title-wrap">
 					<div class="title">
-						<img src="${basePath }/images/loandetail/借款信息.png" alt="">
+						<img src="${basePath}/images/loandetail/借款信息.png" alt="">
 						<span class="main-text">借款信息</span>
 						<span class="sub-text">(订单号:${borrow.outTradeNo})</span>
 					</div>
@@ -575,7 +580,7 @@
 			<div class="detail-card">
 				<div class="title-wrap">
 					<div class="title">
-						<img src="${basePath }/images/loandetail/个人信息.png" alt="">
+						<img src="${basePath}/images/loandetail/个人信息.png" alt="">
 						<span class="main-text">个人信息</span>
 						<span class="sub-text">(账号创建时间:<fmt:formatDate value="${user.createTime}"
 																	   pattern="yyyy-MM-dd HH:mm:ss" />)</span>
@@ -639,7 +644,7 @@
 									<td>${user.companyAddress}</td>
 								</tr>
 							</table>
-							<div class="imgs-block">
+							<div class="imgs-block identity">
 								<div class="id-img-wrap">
 									<c:if test="${user.idcardImgZ!=null}">
 										<img class="imgPreview" src="${APP_IMG_URL['APP_IMG_URL']}${user.idcardImgZ}"/>
@@ -723,7 +728,7 @@
 			<div class="detail-card">
 				<div class="title-wrap">
 					<div class="title">
-						<img src="${basePath }/images/loandetail/征信查询.png" alt="">
+						<img src="${basePath}/images/loandetail/征信信息.png" alt="">
 						<span class="main-text">征信查询</span>
 						<span class="sub-text">(订单号:${borrow.outTradeNo})</span>
 					</div>
@@ -815,6 +820,9 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div>
+    ${operatorHtml}
 </div>
 <%@include file="popUpWindow.jsp"%>
 </body>

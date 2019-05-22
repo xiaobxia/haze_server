@@ -119,7 +119,7 @@
 							<c:if test="${renewal.customerType == '0'}">新用户</c:if>
 							<c:if test="${renewal.customerType == '1'}">老用户</c:if>
 						</td>--%>
-						<td>
+						<td class="loanSuccessCount">
 							${renewal.loanCount}
 						</td>
 						<td>
@@ -193,4 +193,10 @@
 		var toHref = href + "&userAccountLike=" + userAccountLike + "&userMobileLike=" + userMobileLike + "&overdueStatus=" + overdueStatus + statuses;
 		$(obj).attr("href",toHref);
 	}
+
+if (renderLoanSuccessCount) {
+	setTimeout(function () {
+		renderLoanSuccessCount()
+	}, 200)
+}
 </script>

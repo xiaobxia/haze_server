@@ -83,7 +83,7 @@
 						<td>${borrow.userPhone }</td>
 						<td>${borrow.area }</td>
 						<%--<td>${borrow.customerTypeName}</td>--%>
-						<td>
+						<td class="loanSuccessCount">
 							${borrow.loanCount}
 						</td>
 						<td><fmt:formatNumber type="number"
@@ -227,4 +227,9 @@
             });
         }
     }
+	if (renderLoanSuccessCount) {
+		setTimeout(function () {
+			renderLoanSuccessCount()
+		}, 200)
+	}
 </script>

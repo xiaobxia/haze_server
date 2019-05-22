@@ -179,4 +179,9 @@
 	if("${message}"){
 		alertMsg.error(${message});
 	}
+	if (renderLoanSuccessCount) {
+		setTimeout(function () {
+			renderLoanSuccessCount()
+		}, 200)
+	}
 </script>

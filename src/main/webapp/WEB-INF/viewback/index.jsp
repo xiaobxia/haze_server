@@ -579,13 +579,10 @@
 					initIndexPage(data)
 				}, 100)
 			});
-
-
         });
 		function renderLoanStatusName() {
 			$('.loanStatusName').each(function () {
 				var text = $(this).text().trim();
-				console.log('in')
 				var color = '#aaa'
 				var textColorMap = {
 					'正常已还款': '#1E6BFF',
@@ -615,6 +612,20 @@
 			})
 		}
 
+        function renderLoanSuccessCount() {
+            $('.loanSuccessCount').each(function () {
+                var text = $(this).text().trim();
+                var color = '#FF9000'
+                if (text.indexOf('首借') !== -1) {
+                    color = '#28C189'
+                }
+                $(this).html('<div class="status-tag" style="background-color:' + color + ';"><span>' + text + '</span></div>')
+                $(this).attr('style', '')
+            })
+            $('.loanSuccessCountTitle').each(function () {
+                $(this).attr('style', '')
+            })
+        }
 	</script>
 </head>
 <body scroll="no">
