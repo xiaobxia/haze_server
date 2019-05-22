@@ -583,7 +583,7 @@
 		function renderLoanStatusName() {
 			$('.loanStatusName').each(function () {
 				var text = $(this).text().trim();
-				var color = '#aaa'
+				var color = ''
 				var textColorMap = {
 					'正常已还款': '#1E6BFF',
 					'逾期已还款': '#6298FF',
@@ -601,9 +601,12 @@
 					color = '#F85252'
 				} else if (text.indexOf('成功') !== -1) {
 					color = '#008554'
+				} else if (text.indexOf('通过') !== -1) {
+					color = '#02945E'
 				} else {
 					color = textColorMap[text]
 				}
+				color = color || '#aaa'
 				$(this).html('<div class="status-tag" style="background-color:' + color + ';"><span>' + text + '</span></div>')
 				$(this).attr('style', '')
 			})

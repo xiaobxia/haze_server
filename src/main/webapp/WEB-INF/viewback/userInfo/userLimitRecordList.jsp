@@ -156,7 +156,7 @@
 							</td>
 						
 						 
-									<td>
+									<td class="loanStatusName">
  						${borrow.statusName }
 							</td>
 									<td>
@@ -182,6 +182,12 @@
 	if (renderLoanSuccessCount) {
 		setTimeout(function () {
 			renderLoanSuccessCount()
+		}, 200)
+	}
+
+	if (renderLoanStatusName) {
+		setTimeout(function () {
+			renderLoanStatusName()
 		}, 200)
 	}
 </script>
