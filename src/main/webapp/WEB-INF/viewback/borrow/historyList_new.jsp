@@ -81,7 +81,7 @@
             </c:if>
             <td>
                     <%--<c:if test="${appName eq borrow.orderTypeName }">--%>
-                <span class="showRisk" onclick="riskModel('${borrow.id}','${borrow.projectName}')">查看</span>
+                <span class="showRisk green-click-btn" onclick="riskModel('${borrow.id}','${borrow.projectName}')">查看</span>
                     <%--</c:if>--%>
             </td>
         </tr>

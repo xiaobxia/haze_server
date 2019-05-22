@@ -542,3 +542,15 @@ body, #splitBar { background:#32374A;}
 .report-bth {
     float: right;
 }
+
+.green-click-btn {
+    padding: 0.5555555555555556rem 1.1111111111111112rem;
+    color: #00832E!important;
+    background:#A5D3B5;
+    border:1px solid #00832E;
+    border-radius:0.2222222222222222rem;
+    cursor: pointer;
+}
+.green-click-btn a {
+    color: #00832E!important;
+}
