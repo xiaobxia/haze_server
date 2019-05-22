@@ -1783,7 +1783,7 @@ public class ChannelInfoController extends BaseController {
     }
 
     @RequestMapping("updateStatus")
-    public String updateStatus(String channleCode,Integer status){
+    public void updateStatus(String channleCode,Integer status){
         try{
             ChannelInfo channelInfo = channelInfoService.findChannelCode(channleCode);
             channelInfo.setStatus(status);
@@ -1791,7 +1791,6 @@ public class ChannelInfoController extends BaseController {
         }catch(Exception e){
            log.error("开启或者关闭渠道"+e);
         }
-        return "userInfo/channelInfoPage";
     }
     @RequestMapping("testChannelReport")
     public String testChannelReport(){

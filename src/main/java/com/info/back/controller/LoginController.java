@@ -1,6 +1,5 @@
 package com.info.back.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.info.back.dao.IBackUserDao;
 import com.info.back.service.IBackUserService;
@@ -157,8 +156,11 @@ public class LoginController extends BaseController {
 								serviceResult.setMsg("请一分钟后再尝试发送");
 							} else {
 								//生成验证码
+								String rand = "123456";
 								// 6位固定长度
-								String rand = String.valueOf(Math.random()).substring(2).substring(0, 6);
+								if ("online".equals(PropertiesUtil.get("profile"))) {
+									rand = String.valueOf(Math.random()).substring(2).substring(0, 6);
+								}
 								//发送验证码
 								if (SendSmsUtil.sendSmsCL(userPhone, rand)) {
 									//保存用户手机号1分钟，避免1分钟内重复请求
