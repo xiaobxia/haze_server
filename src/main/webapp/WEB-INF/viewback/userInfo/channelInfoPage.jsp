@@ -163,17 +163,10 @@
 
 <script type="text/javascript">
 	function channelUpdateStatus(channelCode, status) {
-		$.ajax({
-			url:"${pageContext.request.contextPath}/back/channel/updateStatus",
-			method:'POST',
-			data:{
-				"channleCode": channelCode,
-				"status": status
-			},
-			success:function(status,data){
+		$.getJSON("${pageContext.request.contextPath}/back/channel/updateStatus?channleCode="+channelCode+"&status="+status, function(data) {
+			setTimeout(function () {
 				$('#pagerForm').submit()
-				// return navTabSearch(this)
-			}
+			}, 100)
 		});
 	}
 </script>
