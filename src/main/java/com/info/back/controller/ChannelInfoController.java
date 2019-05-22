@@ -1783,14 +1783,18 @@ public class ChannelInfoController extends BaseController {
     }
 
     @RequestMapping("updateStatus")
-    public void updateStatus(String channleCode,Integer status){
+    public void updateStatus(String channleCode,Integer status,HttpServletResponse response){
+        Map<String, Object> params = new HashMap<String,Object>();
         try{
             ChannelInfo channelInfo = channelInfoService.findChannelCode(channleCode);
             channelInfo.setStatus(status);
             channelInfoService.updateById(channelInfo);
+            params.put("result",0);
         }catch(Exception e){
            log.error("开启或者关闭渠道"+e);
+           params.put("result",1);
         }
+        SpringUtils.renderJson(response, params);
     }
     @RequestMapping("testChannelReport")
     public String testChannelReport(){
