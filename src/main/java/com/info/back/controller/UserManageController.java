@@ -213,6 +213,9 @@ public class UserManageController extends BaseController{
 		user.setFristContactRelation(User.CONTACTS_FAMILY.get(user.getFristContactRelation()));
 		user.setSecondContactRelation(User.CONTACTS_OTHER.get(user.getSecondContactRelation()));
 		model.addAttribute("user",user);
+
+        model.addAttribute("operatorHtml", userService.selectGxbReportDataHtml(Integer.parseInt(user.getId())));//运营商
+
 		BorrowOrder borrowOrderLastest = borrowOrderService.selectBorrowOrderUseId(Integer.parseInt(params.get("id")));
 		model.addAttribute("borrow", borrowOrderLastest);
 

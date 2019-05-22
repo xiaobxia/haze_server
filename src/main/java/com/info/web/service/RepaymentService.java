@@ -920,4 +920,9 @@ public class RepaymentService implements IRepaymentService {
 	public void updateAssignDelFlag(Integer assignId) {
 		repaymentDao.updateAssignDelFlag(assignId);
 	}
+
+	@Override
+	public Integer userBorrowCount(Integer status,Integer userId) {
+		return repaymentDao.userBorrowCount(status,userId);
+	}
 }

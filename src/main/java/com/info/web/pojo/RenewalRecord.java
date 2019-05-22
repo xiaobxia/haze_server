@@ -73,7 +73,10 @@ public class RenewalRecord {
     private Long returnMoney;
     //实际打款时间
     private String realRenewalDate;
+    //成功还款次数
+    private String loanCount;
     public static final Map<Integer, String> RENEWAL_STATUS = new HashMap<Integer, String>();
+
     /**
      * 付款中
      */
@@ -396,5 +399,13 @@ public class RenewalRecord {
 
     public void setRealRenewalDate(String realRenewalDate) {
         this.realRenewalDate = realRenewalDate;
+    }
+
+    public String getLoanCount() {
+        return loanCount;
+    }
+
+    public void setLoanCount(String loanCount) {
+        this.loanCount = loanCount;
     }
 }

@@ -239,6 +239,8 @@ public interface IRepaymentService {
 	String selectBorrowOrderIdByAssignId(Integer assignId);
 
 	void updateAssignDelFlag(Integer assignId);
+	//查找用户借款次数
+	Integer userBorrowCount(Integer status,Integer userId);
 
 }
 

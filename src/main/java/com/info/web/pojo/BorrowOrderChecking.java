@@ -74,6 +74,8 @@ public class BorrowOrderChecking {
     public static Integer STATUS_TSSB=3;
 
     private String remark;
+   //成功还款次数
+    private String loanCount;
     
     public static final Map<String, String> banksequenceMap = new HashMap<String, String>();
     static{
@@ -389,5 +391,13 @@ public class BorrowOrderChecking {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getLoanCount() {
+        return loanCount;
+    }
+
+    public void setLoanCount(String loanCount) {
+        this.loanCount = loanCount;
     }
 }
