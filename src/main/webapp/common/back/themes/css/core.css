@@ -123,7 +123,7 @@ a:hover {text-decoration:underline;}
 .alert .toolBar .button, .alert .toolBar .buttonActive { margin-left:5px;}
 
 .alert .alertFooter_c { display:block; overflow:hidden; height:5px;}
-.alert .alertFooter { padding-left:5px; background-position:0 0;}
+.alert .alertFooter { display: none; padding-left:5px; background-position:0 0;}
 .alert .alertFooter_r { padding-right:5px; background-position:100% -50px;}
 .alert .alertFooter_c { padding:0; background-position:0 -100px; background-repeat:repeat-x;}
 
