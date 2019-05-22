@@ -1,6 +1,5 @@
 package com.info.back.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.info.back.dao.IBackUserDao;
 import com.info.back.service.IBackUserService;
@@ -20,11 +19,9 @@ import com.info.web.util.DateUtil;
 import com.info.web.util.SendSmsUtil;
 import com.info.web.util.encrypt.AESUtil;
 import com.info.web.util.encrypt.MD5coding;
-import javafx.application.Application;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
