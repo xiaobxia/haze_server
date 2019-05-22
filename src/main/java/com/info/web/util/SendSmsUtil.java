@@ -2,6 +2,7 @@ package com.info.web.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.info.back.utils.PropertiesUtil;
 import com.info.back.utils.SmsConfigConstant;
 import com.info.constant.Constant;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +48,9 @@ public class SendSmsUtil {
      */
 	public static boolean sendSmsCL(String telephone, String sms){
 		loger.info("sendSms:" + telephone + "   sms=" + sms);
+        if (!"online".equals(PropertiesUtil.get("profile"))) {
+            return true;
+        }
         return cloudsp(telephone, templateld, sms, account, pswd, sign);
 	}
 

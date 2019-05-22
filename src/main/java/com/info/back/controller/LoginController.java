@@ -20,9 +20,11 @@ import com.info.web.util.DateUtil;
 import com.info.web.util.SendSmsUtil;
 import com.info.web.util.encrypt.AESUtil;
 import com.info.web.util.encrypt.MD5coding;
+import javafx.application.Application;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -157,8 +159,11 @@ public class LoginController extends BaseController {
 								serviceResult.setMsg("请一分钟后再尝试发送");
 							} else {
 								//生成验证码
+								String rand = "123456";
 								// 6位固定长度
-								String rand = String.valueOf(Math.random()).substring(2).substring(0, 6);
+								if ("online".equals(PropertiesUtil.get("profile"))) {
+									rand = String.valueOf(Math.random()).substring(2).substring(0, 6);
+								}
 								//发送验证码
 								if (SendSmsUtil.sendSmsCL(userPhone, rand)) {
 									//保存用户手机号1分钟，避免1分钟内重复请求
