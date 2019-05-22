@@ -169,7 +169,7 @@
                 </table>
             </div>
         </div>
-        <div class="panelBar">
+        <div>
             <jsp:include page="${BACK_URL}/rightSubList">
                 <jsp:param value="${params.myId}" name="parentId"/>
             </jsp:include>

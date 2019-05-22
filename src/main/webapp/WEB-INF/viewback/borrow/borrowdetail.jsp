@@ -306,190 +306,6 @@
 
 
 	</style>
-	<style type="text/css">
-		.detail-card {
-			position: relative;
-			margin-bottom: 2.4444444444444446rem;
-			padding: 1.6666666666666667rem 1.1111111111111112rem;
-			border-radius:0.5555555555555556rem;
-			box-shadow: 0 0 1.1111111111111112rem rgba(215,230,245,1);
-		}
-		.detail-card .title-wrap {
-			height: 2.7777777777777777rem;
-			line-height: 2.7777777777777777rem;
-			margin-bottom: 1.6666666666666667rem;
-		}
-		.detail-card .title {
-			display: inline-block;
-			border-bottom: 1px solid #1E6BFF;
-			vertical-align: middle;
-			height: 2.7777777777777777rem;
-			line-height: 2.7777777777777777rem;
-		}
-		.detail-card .title .main-text {
-			font-size: 1.2222222222222223rem;
-			color: #1E6BFF;
-			margin: 0 0 0 0.5555555555555556rem;
-		}
-		.detail-card .title .sub-text {
-			font-size: 1rem;
-			color: #151926;
-			margin-left: 1.9444444444444444rem;
-		}
-		.detail-card .title img {
-			width: 2.2222222222222223rem;
-			height: 2.2222222222222223rem;
-			display: inline-block;
-			vertical-align: top;
-		}
-		.detail-card .sub-title {
-			margin: 1.6666666666666667rem 0;
-			color: #1E6BFF;
-			font-size: 1.2222222222222223rem;
-		}
-		.detail-card .sub-block {
-		}
-		.detail-card .force-loan {
-			float: right;
-			height: 2.7777777777777777rem;
-			line-height: 2.7777777777777777rem;
-		}
-		.detail-card .force-loan .text {
-			color: #FF0000;
-			font-size: 1rem;
-		}
-		.detail-card .force-loan .btn {
-			margin-left: 1.6666666666666667rem;
-			padding: 0.5555555555555556rem 1.1111111111111112rem;
-			color: #FF0000;
-			background:rgba(250,189,189,1);
-			border:1px solid rgba(255,0,0,1);
-			border-radius:0.2222222222222222rem;
-			cursor: pointer;
-		}
-		.detail-card .block-row {
-			padding-bottom: 2.2222222222222223rem;
-			border-bottom: 1px solid #C4C4C4;
-			position: relative;
-		}
-		.detail-card .block-row:last-child {
-			border-bottom: none;
-		}
-		.view-detail-btn {
-			padding: 0.5555555555555556rem 1.1111111111111112rem;
-			color: #00832E;
-			background:#A5D3B5;
-			border:1px solid #00832E;
-			border-radius:0.2222222222222222rem;
-			cursor: pointer;
-		}
-		.blue-click-btn {
-			padding: 0.5555555555555556rem 1.1111111111111112rem;
-			color: #1E6BFF!important;
-			background:#C8DEF4;
-			border:1px solid #1E6BFF;
-			border-radius:0.2222222222222222rem;
-			cursor: pointer;
-		}
-		.blue-click-btn a {
-			color: #1E6BFF!important;
-		}
-		.sh-card {
-			display: inline-block;
-		}
-		.sh-card .text-block {
-			display: inline-block;
-			box-sizing: border-box;
-			vertical-align: top;
-			text-align: center;
-			width: 10rem;
-			margin-right: 2.2222222222222223rem;
-		}
-		.sh-card .bz-card {
-			display: inline-block;
-			box-sizing: border-box;
-			padding: 1rem 1.1111111111111112rem;
-			width:22.22222222222222rem;
-			background:rgba(227,237,248,1);
-			border-radius:0.5555555555555556rem;
-			vertical-align: top;
-		}
-		.sh-card .bz-card h4 {
-			margin: 0 0 0.5555555555555556rem 0;
-			font-size: 0.8888888888888888rem;
-			color: #000;
-			font-weight: 600;
-		}
-		.sh-card .bz-card p {
-			margin: 0;
-			height: auto;
-			min-height: 1em;
-			font-size: 0.8888888888888888rem;
-		}
-		.sh-card .text-block .text-title {
-			color: #000;
-			font-size: 0.8888888888888888rem;
-			margin-bottom: 2.2222222222222223rem;
-		}
-		.sh-card .text-block .text-text {
-			color: #001E71;
-			font-size: 0.8888888888888888rem;
-		}
-		.sh-card.right {
-			position: absolute;
-			right: 0;
-		}
-		.imgs-block {
-			margin-top: 1.6666666666666667rem;
-			text-align: center;
-		}
-		.id-img-wrap {
-			display: inline-block;
-			margin-right: 11.11111111111111rem;
-			width:20rem;
-			height:9.277777777777779rem;
-			background:rgba(227,237,248,1);
-			border:1px solid rgba(215,230,245,1);
-			border-radius:0.5555555555555556rem;
-			overflow: hidden;
-		}
-		.id-img-wrap:last-child {
-			margin-right: 0;
-		}
-		.id-img-wrap img {
-			width: 100%;
-			height: 100%;
-		}
-
-		.detail-table {
-			width: 100%;
-		}
-		.detail-table th, .detail-table td{
-			font-size: 0.8888888888888888rem;
-			padding: 0.6666666666666666rem 0;
-			min-width: 0;
-			box-sizing: border-box;
-			text-overflow: ellipsis;
-			vertical-align: middle;
-			position: relative;
-			text-align: center;
-		}
-		.detail-table td{
-			padding: 0.6666666666666666rem 0;
-			min-width: 0;
-			box-sizing: border-box;
-			text-overflow: ellipsis;
-			vertical-align: middle;
-			position: relative;
-			text-align: center;
-			color: #001E71;
-		}
-		.half-block {
-			width: 49%;
-			display: inline-block;
-			vertical-align: top;
-		}
-	</style>
 	<script type="text/javascript">
 		var borrowId =document.getElementById('borrowId').value;
 		console.log(borrowId);
@@ -519,7 +335,7 @@
 <div class="pageContent">
 	<div class="pageFormContent" layoutH="50" style="overflow: auto;">
 		<input input="text" style="display:none"  value="${borrow.id}" id="borrowId">
-		<div style="position: relative">
+		<div class="detail-page-main" style="position: relative">
 			<div class="detail-card">
 				<div class="title-wrap">
 					<div class="title">
@@ -579,6 +395,7 @@
 			</div>
 			<div class="detail-card">
 				<div class="title-wrap">
+					<div id="report-btn" class="report-bth blue-click-btn">运营商报告</div>
 					<div class="title">
 						<img src="${basePath}/images/loandetail/个人信息.png" alt="">
 						<span class="main-text">个人信息</span>
@@ -821,9 +638,23 @@
 		</div>
 	</div>
 </div>
-<div>
-    ${operatorHtml}
-</div>
 <%@include file="popUpWindow.jsp"%>
 </body>
 </html>
+
+<div id="operatorHtml">
+	<iframe src="${operatorHtml}">
+		<p>您的浏览器不支持  iframe 标签。</p>
+	</iframe>
+	<span id="operatorHtml-close" class="blue-click-btn">关闭</span>
+</div>
+</body>
+</html>
+<script>
+	$('#report-btn').click(function () {
+		$('#operatorHtml').show()
+	})
+	$('#operatorHtml-close').click(function () {
+		$('#operatorHtml').hide()
+	})
+</script>

@@ -65,7 +65,6 @@
 					<th align="center">金额(元)</th>
 					<th align="center">创建时间</th>
 					<th align="center">状态</th>
-					<th align="center">放款状态</th>
 					<th align="center">放款备注</th>
 					<th align="center">更新时间</th>
 					<th align="center">放款时间</th>

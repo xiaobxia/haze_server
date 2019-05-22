@@ -106,8 +106,8 @@ a:hover {text-decoration:underline;}
 /* Alert */
 /*.alert { overflow:hidden; position:absolute; z-index:101; width:300px; top:0}*/
 .alert { overflow:hidden; z-index:1011; display:block; width:300px; margin-left:-150px; position:absolute; top:0; left:50%;}
-.alert .alertContent { display:block; overflow:hidden; padding:5px 5px 1px 5px; border-style:solid; border-width:0 1px;}
-.alert .alertInner { display:block; padding:0 9px 9px 9px; text-align:left; border-style:solid; border-width:1px;}
+.alert .alertContent { display:block; overflow:hidden;background-color: #fff}
+.alert .alertInner { display:block; padding:0 9px 9px 9px; text-align:left;}
 .alert .alertInner .msg { margin:10px; max-height: 200px; overflow: auto; line-height: 1.3em}
 .alert h1 { display:block; overflow:hidden; height:30px; margin-bottom:10px; padding:0 0 0 25px; line-height:30px; border-style:solid; border-width:0 0 1px 0; line-height:30px;}
 .alert .error h1 { background-position:2px -42px;}
@@ -117,7 +117,7 @@ a:hover {text-decoration:underline;}
 .alert .confirm h1 { background-position:2px 8px;}
 .alert p { margin:10px;}
 
-.alert .toolBar { display:block; overflow:hidden; height:25px; padding-top:5px; text-align:right;}
+.alert .toolBar { display:block; overflow:hidden; height:25px; padding:5px 10px; text-align:right;}
 .alert .toolBar ul { float:right;}
 .alert .toolBar li { float:left;}
 .alert .toolBar .button, .alert .toolBar .buttonActive { margin-left:5px;}

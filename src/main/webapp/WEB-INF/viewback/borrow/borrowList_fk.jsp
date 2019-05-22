@@ -64,15 +64,15 @@
 							<%--</c:forEach>--%>
 						<%--</select>--%>
 					<%--</td>--%>
-					<td>放款时间：
-						<input type="text" name="startloanTime" id="startloanTime" value="${params.startloanTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
-						到<input type="text" name="endloanTime" id="endloanTime" value="${params.endloanTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
-					</td>
 
 					<td>
 						借款金额:
 						<select id = "productAmount" name = "productAmount"></select>
 						<input type="hidden" value="${params.productAmount}" id="product_amount_choosed"/>
+					</td>
+					<td>放款时间：
+						<input type="text" name="startloanTime" id="startloanTime" value="${params.startloanTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
+						到<input type="text" name="endloanTime" id="endloanTime" value="${params.endloanTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
 					</td>
                     <td>状态： <select name="borrowStatus"  id="borrowStatus">
                         <option value="">全部</option>
@@ -132,7 +132,6 @@
 					<th align="center">更新时间</th>
 					<th align="center">子类型</th>
 					<th align="center" class="loanStatusTitle">状态</th>
-					<th align="center">放款状态</th>
 					<th align="center">放款备注</th>
 					<!-- 						<th align="center"  > -->
 					<!-- 							操作 -->
@@ -177,7 +176,6 @@
 
 						<td>${appName }</td>
 						<td class="loanStatusName">${borrow.statusName }</td>
-						<td>${borrow.paystatusRemark }</td>
 						<td>${borrow.payRemark }</td>
 						<!-- 									<td> -->
 						<%--  	<a href="backBorrowOrder/getBorrowDetailById?selectId=${borrow.id }&parentId=${params.myId}"  target="dialog"  width="810" height="550" >查看</a> --%>
