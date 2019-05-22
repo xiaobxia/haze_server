@@ -186,6 +186,7 @@ function todo(sessionstatus){
 	}
 	if(msg !=null){
 		alert(msg);
+		console.log('in reload')
 		window.location.reload();
 	}
 }

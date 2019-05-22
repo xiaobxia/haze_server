@@ -123,7 +123,8 @@ $.ajaxSetup({
     complete:function(XMLHttpRequest,textStatus){
             var sessionstatus=XMLHttpRequest.getResponseHeader("statusCode");//通过XMLHttpRequest取得响应头，sessionstatus，  
             if(sessionstatus != null && sessionstatus=="301"){ 
-                        //如果超时就处理 ，指定要跳转的页面  
+                        //如果超时就处理 ，指定要跳转的页面
+                console.log('in reload')
                                 window.location.reload();   
                         }   
              }   

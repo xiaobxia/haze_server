@@ -145,10 +145,10 @@
 						</td>
 						<td>
 							<c:if test="${channel.status == 1}">
-								<button class="tag-button close" onclick="channelUpdateStatus('${channel.channelCode}',2)">关闭</button>
+								<button class="tag-button close-s" onclick="channelUpdateStatus('${channel.channelCode}',2)">关闭</button>
 							</c:if>
 							<c:if test="${channel.status == 2}">
-								<button class="tag-button open" onclick="channelUpdateStatus('${channel.channelCode}',1)">开启</button>
+								<button class="tag-button open-s" onclick="channelUpdateStatus('${channel.channelCode}',1)">开启</button>
 							</c:if>
 						</td>
 						 

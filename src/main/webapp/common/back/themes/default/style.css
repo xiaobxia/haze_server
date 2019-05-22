@@ -233,12 +233,12 @@ body, #splitBar { background:#32374A;}
     border-radius: 4px;
     color: #FFF;
 }
-.tag-button.open {
+.tag-button.open-s {
     color: #fff;
     background-color: #67c23a;
     border-color: #67c23a;
 }
-.tag-button.close {
+.tag-button.close-s {
     color: #fff;
     background-color: #909399;
     border-color: #909399;
