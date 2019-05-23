@@ -6,6 +6,7 @@ import java.util.Map;
 import com.info.web.pojo.ChannelInfo;
 import com.info.web.pojo.ChannelReport;
 import com.info.web.pojo.OutChannelLook;
+import com.info.web.pojo.OveChannelInfo;
 
 public interface IChannelReportDao {
 	int getRegisterNow(String channelId);
@@ -121,4 +122,10 @@ public interface IChannelReportDao {
 	Integer findOutCount(Map<String, Object> params);
 
 	List<OutChannelLook> findOut(Map<String, Object> params);
+
+    List<OveChannelInfo> findBaseChannelInfo(Map<String, Object> params);
+
+    Integer findBaseChannelInfoCount(Map<String,Object> params);
+
+	Integer findOveChannel(Integer channelId);
 }

@@ -337,5 +337,4 @@ public class ChannelInfoService implements IChannelInfoService {
     public Integer findApplyCount(Date applyTime, List<String> userId) {
         return channelInfoDao.findApplyCount(applyTime,userId);
     }
-
 }

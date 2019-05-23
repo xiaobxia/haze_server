@@ -4,6 +4,7 @@ import com.info.back.utils.ServiceResult;
 import com.info.risk.pojo.RiskCreditUser;
 import com.info.web.pojo.*;
 import com.info.web.util.PageConfig;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.HashMap;
 import java.util.List;
@@ -410,4 +411,9 @@ public interface IBorrowOrderService {
     List<String> getUserIdList2();
 
     List<String> getUserIdWaitList();
+
+    Integer findOveChannle(List<String> userList,List<Integer> statusList,String loanTime,Integer userType);
+
+    Integer findExtendChannel(List<String> userList,String loanTime);
+
 }

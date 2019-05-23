@@ -77,7 +77,7 @@ public class ChannelReport implements Serializable {
     private String uvRate;
     private Integer uvCount;
     //放款笔数
-    private int loanCount;
+    private int loanCount = 0;
     //还款笔数
     private int repaymentCount;
     //注册率

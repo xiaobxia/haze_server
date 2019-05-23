@@ -634,7 +634,7 @@ public class ChannelInfoController extends BaseController {
         return flag;
     }
 
-    /**
+   /**
      * 推广统计(渠道)
      *
      * @param request req
@@ -741,6 +741,28 @@ public class ChannelInfoController extends BaseController {
                             channelReport.setRepayRatio(outChannelLook.getRepayRatio());
                         }
                     }*/
+                    //申请笔数 放款笔数 放款率
+                   List<String> idList=channelInfoService.findUserId(channelReport.getId());
+                   if(idList.size()>0) {
+                       DecimalFormat df = new DecimalFormat("0.00");
+                       //放款笔数
+                       int loanCount = channelInfoService.findLoanCount(channelReport.getReportDate(), idList);
+                       channelReport.setLoanCount(loanCount);
+                       //申请笔数
+                       int applyCount = channelInfoService.findApplyCount(channelReport.getReportDate(), idList);
+                       channelReport.setBorrowApplyCount(applyCount);
+                       //放款率 放款笔数/当日总注册数
+                       if(channelReport.getRegisterCount() != 0){
+                           double loanRate = channelReport.getLoanCount()*(1.0)/channelReport.getRegisterCount()*(1.0);
+                           channelReport.setLoanRatio(df.format(loanRate));
+                       }else{
+                           channelReport.setLoanRatio("0.00");
+                       }
+                   }else{
+                       channelReport.setLoanCount(0);
+                       channelReport.setBorrowApplyCount(0);
+                       channelReport.setLoanRatio("0.00");
+                   }
                    list.add(channelReport);
                }
                 pageConfig.setItems(list);
@@ -1796,10 +1818,41 @@ public class ChannelInfoController extends BaseController {
         }
         SpringUtils.renderJson(response, params);
     }
-    @RequestMapping("testChannelReport")
+    /*@RequestMapping("testChannelReport")
     public String testChannelReport(){
         String nowTime = null;
         channelReportService.saveChannelReport(nowTime);
         return "success";
-    };
+    };*/
+    //渠道逾期统计
+    @RequestMapping("getOveChannelCount")
+    public String oveChannelCount(HttpServletRequest request,
+                                  Model model){
+        HashMap<String, Object> params = getParametersO(request);
+        HashMap<String, Object> chMap = new HashMap<>();
+        BackUser backUser = this.loginAdminUser(request);
+        dealParamMap(params, chMap, backUser);
+        boolean checkFlag = false;
+        String channelNameNatural = params.get("channelName") == null ? "" : params.get("channelName").toString();
+        String channelidNatural = params.get("channelid") == null ? "" : params.get("channelid").toString();
+        if (params.get("channelName") != null && "自然流量".contains(params.get("channelName").toString())) {
+            if (params.get("channelid") == null || "0".equals(params.get("channelid"))) {
+                params.remove("channelName");
+                params.put("channelid", "0");
+                checkFlag = true;
+            }
+        }
+        List<ChannelSuperInfo> channelSuperInfos = channelInfoService.findSuperAll(chMap);
+        PageConfig<OveChannelInfo> pageConfig = channelReportService.findOveChannelId(params);
+        model.addAttribute("channelSuperInfos", channelSuperInfos);
+        model.addAttribute("pm",pageConfig);
+        if (checkFlag) {
+            params.remove("channelid");
+            params.put("channelName", channelNameNatural);
+            params.put("channelid", channelidNatural);
+        }
+        // 用于搜索框保留值
+        model.addAttribute("params", params);
+        return "userInfo/channelOvePage";
+    }
 }

@@ -48,6 +48,23 @@
 		<result column="borrow_rate_out" property="borrowRateOut"/>
 		<result column="uv_count" property="uvCount" jdbcType="INTEGER"/>
 	</resultMap>
+	<resultMap id="Base_Channel_Ove" type="com.info.web.pojo.OveChannelInfo">
+      <result column="channelId" property="channelId"/>
+		<result column="channelSuperName" property="channelSuperName"/>
+		<result column="channelName" property="channelName"/>
+		<result column="loanTime" property="loanTime"/>
+		<result column="firstLoanCount" property="firstLoanCount"/>
+		<result column="firstRepayCount" property="firstRepayCount"/>
+		<result column="firstOveRate" property="firstOveRate"/>
+		<result column="reLoanCount" property="reLoanCount"/>
+		<result column="reRepayCount" property="reRepayCount"/>
+		<result column="reOveRate" property="reOveRate"/>
+		<result column="extendCount" property="extendCount"/>
+		<result column="allLoanCount" property="allLoanCount"/>
+		<result column="allRepayCount" property="allRepayCount"/>
+		<result column="allOveRate" property="allOveRate"/>
+		<result column="channelStatus" property="channelStatus"/>
+	</resultMap>
 	<sql id="Base_Column_List">
 		report_date,register_count,android_count,ios_count,pc_count,attestation_realname_count,attestation_bank_count,contact_count,jxl_count,alipay_count,zhima_count,
 		company_count,borrow_apply_count,borrow_suc_count,borrow_suc_count,pass_rate,into_money,new_into_money,old_into_money,approve_error_count,channelid,borrow_rate,created_at,uv_count
@@ -979,5 +996,65 @@
 		select count(1) FROM channel_info a
 		LEFT JOIN channel_report b ON a.id = b.channelid
 	</select>
+	<select id="findBaseChannelInfo" resultMap="Base_Channel_Ove" parameterType="HashMap">
+		SELECT
+			IFNULL( c.id, 0 ) AS channelId,
+			r.report_date AS loanTime,
+			IFNULL( s.channel_super_name, "自然流量" ) AS channelSuperName,
+			IFNULL( c.channel_name, "自然流量" ) AS channelName,
+			IFNULL( c.STATUS, 1 ) AS channelStatus
+		FROM
+			channel_report r
+			LEFT JOIN channel_info c ON r.channelid = c.id
+			LEFT JOIN channel_super_info s ON s.id = c.channel_super_id
+		where 1=1
+			<if test="channelid != null and channelid != ''">
+				and a.channelid= #{channelid}
+			</if>
+			<if test="channelCode != null and channelCode != ''">
+				and c.channel_code = #{channelCode}
+			</if>
+			<if test="channelName != null and channelName != ''">
+				and c.channel_name= #{channelName}
+			</if>
 
+			<if test="beginTime !=null and beginTime !=''">
+				<![CDATA[ and r.report_date >= str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+			</if>
+			<if test="endTime !=null and endTime !=''">
+				<![CDATA[ and r.report_date <= str_to_date(#{endTime},'%Y-%m-%d') ]]>
+			</if>
+		ORDER BY
+			r.report_date DESC
+	</select>
+	<select id="findBaseChannelInfoCount" resultType="Integer" parameterType="HashMap">
+		SELECT
+			count(r.id)
+		FROM
+			channel_report r
+			LEFT JOIN channel_info c ON r.channelid = c.id
+			LEFT JOIN channel_super_info s ON s.id = c.channel_super_id
+		where 1=1
+		<if test="channelid != null and channelid != ''">
+			and a.channelid= #{channelid}
+		</if>
+		<if test="channelCode != null and channelCode != ''">
+			and c.channel_code = #{channelCode}
+		</if>
+		<if test="channelName != null and channelName != ''">
+			and c.channel_name= #{channelName}
+		</if>
+
+		<if test="beginTime !=null and beginTime !=''">
+			<![CDATA[ and r.report_date >= str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+		</if>
+		<if test="endTime !=null and endTime !=''">
+			<![CDATA[ and r.report_date <= str_to_date(#{endTime},'%Y-%m-%d') ]]>
+		</if>
+		ORDER BY
+			r.report_date DESC
+	</select>
+	<select id="findOveChannel" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select ifNULL(ROUND((IFNULL(SUM(late_day_count),0) /IFNULL(SUM(register_count),0)*100),2),0) FROM channel_report  where channelid =#{channelId}
+	</select>
 </mapper>

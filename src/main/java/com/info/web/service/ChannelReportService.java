@@ -1,6 +1,7 @@
 package com.info.web.service;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.parser.deserializer.AbstractDateDeserializer;
 import com.info.constant.Constant;
 import com.info.web.dao.IChannelReportDao;
 import com.info.web.dao.IPaginationDao;
@@ -38,6 +39,8 @@ public class ChannelReportService implements IChannelReportService {
     private JedisCluster jedisCluster;
     @Autowired
     private IChannelInfoService channelInfoService;
+    @Autowired
+    private IBorrowOrderService iBorrowOrderService;
 
     // Redis key前缀
     private final static String CHANNEL_REPORT = "channel_report";
@@ -886,5 +889,64 @@ public class ChannelReportService implements IChannelReportService {
 //        type = "borrowApplySuc";
 //        dealUlhData(borrowApplySucCountMap, type);
 //    }
-
+      @Override
+      public PageConfig<OveChannelInfo> findOveChannelId(HashMap<String, Object> params){
+        Map<String,Object> map = new HashMap<>();
+          //先查询出所有渠道基本信息
+          params.put(Constant.NAME_SPACE, "ChannelReport");
+          PageConfig<OveChannelInfo> pageConfig;
+          pageConfig = paginationDao.findPage("findBaseChannelInfo", "findBaseChannelInfoCount", params, "web");
+          List<OveChannelInfo> list = new ArrayList<OveChannelInfo>();
+          for(OveChannelInfo oveChannelInfo : pageConfig.getItems()){
+              //根据渠道id 查询该渠道的所有用户id
+              List<String> idList=channelInfoService.findUserId(oveChannelInfo.getChannelId());
+              DecimalFormat df = new DecimalFormat("0.00");
+              if(idList.size()>0){
+                  //查询首放数量
+                 Integer firstLoanCount = iBorrowOrderService.findOveChannle(idList, new ArrayList<Integer>(){{
+                      add(21);
+                  }}, oveChannelInfo.getLoanTime(),0);
+                 oveChannelInfo.setFirstLoanCount(firstLoanCount);
+                 //查询首放已还数量
+                  Integer firstRepayCount = iBorrowOrderService.findOveChannle(idList,new ArrayList<Integer>(){{
+                      add(30);add(34);
+                  }},oveChannelInfo.getLoanTime(),0);
+                  oveChannelInfo.setFirstRepayCount(firstRepayCount);
+                  //首放逾期率 (首放数量-首放已还数量)/首放数量
+                  if(oveChannelInfo.getFirstLoanCount() != 1){
+                      double firstOveRate = (oveChannelInfo.getFirstLoanCount()-oveChannelInfo.getFirstRepayCount())*(1.0)/oveChannelInfo.getFirstLoanCount()*(1.0);
+                      oveChannelInfo.setFirstOveRate(df.format(firstOveRate));
+                  }
+                  //复借数量
+                  Integer reLoanCount = iBorrowOrderService.findOveChannle(idList, new ArrayList<Integer>(){{
+                      add(21);
+                  }},oveChannelInfo.getLoanTime(),1);
+                  oveChannelInfo.setReLoanCount(reLoanCount);
+                  //复借已还数量
+                  Integer reRepayCount = iBorrowOrderService.findOveChannle(idList, new ArrayList<Integer>(){{
+                      add(30);add(34);
+                  }},oveChannelInfo.getLoanTime(),1);
+                  //复借逾期率 (复借数量-复借已还数量)/复借数量
+                  if(oveChannelInfo.getReLoanCount() != 0){
+                      double  reOveRate = (oveChannelInfo.getReLoanCount()-oveChannelInfo.getReRepayCount())*(1.0)/oveChannelInfo.getReLoanCount()*(1.0);
+                      oveChannelInfo.setReOveRate(df.format(reOveRate));
+                  }
+                  //展期数量
+                  Integer extendCount = iBorrowOrderService.findExtendChannel(idList,oveChannelInfo.getLoanTime());
+                  oveChannelInfo.setExtendCount(extendCount);
+                  //总放量 展期数量+首放数量+复借数量
+                  Integer allLoanCount = oveChannelInfo.getFirstLoanCount()+oveChannelInfo.getReLoanCount()+oveChannelInfo.getExtendCount();
+                  oveChannelInfo.setAllLoanCount(allLoanCount);
+                  //总还量 首还数量+复还数量
+                  Integer allRepayCount = oveChannelInfo.getFirstRepayCount()+oveChannelInfo.getReRepayCount();
+                  oveChannelInfo.setAllRepayCount(allRepayCount);
+                 //总逾期率
+                 Integer allOveRate = channelReportDao.findOveChannel(oveChannelInfo.getChannelId());
+                 oveChannelInfo.setAllOveRate(allOveRate.toString());
+              }
+              list.add(oveChannelInfo);
+          }
+          pageConfig.setItems(list);
+          return pageConfig;
+        }
 }
