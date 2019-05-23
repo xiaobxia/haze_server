@@ -95,9 +95,9 @@
 				<th align="center">
 					总逾期率
 				</th>
-				<th align="center" >
+				<%--<th align="center" >
 					渠道状态
-				</th>
+				</th>--%>
 			</tr>
 			</thead>
 			<tbody>
@@ -117,7 +117,9 @@
 					<td>${channel.allLoanCount }</td>
 					<td>${channel.allRepayCount }</td>
 					<td>${channel.allOveRate }</td>
+<%--
 					<td>${channel.channelStatus }</td>
+--%>
 				</tr>
 			</c:forEach>
 			</tbody>

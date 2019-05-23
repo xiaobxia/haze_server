@@ -67,4 +67,19 @@ public class ConfigParamController extends BaseController {
 		model.addAttribute("params", params);
 		return url;
 	}
+
+	@RequestMapping("goProductList")
+	public String getProductList(){
+      return "sys/productList";
+	}
+
+	@RequestMapping("goextendList")
+	public String getextendList(){
+		return "sys/extendList";
+	}
+
+	@RequestMapping("goLimitList")
+	public String getLimitList(){
+		return "sys/limitList";
+	}
 }
