@@ -59,6 +59,71 @@
         .tdGround img:hover {
             width: 550px;
         }
+        /*图片资料-查看大图弹窗*/
+        .view-larger{
+            display: none;
+        }
+        .view-larger .overlay{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,.6);
+            z-index: 999;
+        }
+        .view-larger .o-header{
+            margin: 8px 0;
+            background: #000;
+            padding: 8px 40px 13px;
+            text-align: center;
+        }
+        .view-larger .o-header p{
+            color: #eee;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-top: 5px;
+        }
+        .view-larger .o-header p span{
+            font-size: 14px;
+            color: #fff;
+        }
+        .view-larger .o-header a.close{
+            color: #fff;
+            font-size: 28px;
+            position: absolute;
+            right: 40px;
+            top: 15px;
+        }
+        .view-larger .o-middle img{
+            position: fixed;
+            top: 50%;
+            margin-top: -20px;
+            z-index: 100000;
+            cursor: pointer;
+        }
+        .view-larger .o-middle img.left {
+            left: 10%;
+        }
+        .view-larger .o-middle img.right {
+            right: 10%;
+        }
+        .view-larger .img-group{
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            z-index: 100000;
+            display: none;
+        }
+        .view-larger .img-group img{
+            border: 3px solid #DDDDDD;
+            float: left;
+            width: auto;
+            height:auto;
+            max-height: 550px;
+            max-width: 670px;
+        }
     </style>
 </head>
 <body>
@@ -308,9 +373,120 @@
     <span id="operatorHtml-close" class="blue-click-btn">关闭</span>
 </div>
 <div id="operatorHtml-url" style="display: none;">${operatorHtml}</div>
+<div class="view-larger pre-view-l">
+    <div class="overlay">
+        <div class="o-header">
+            <p class="fl count-status">0/0</p>
+            <a href="javascript:void(0);" class="close fr">×</a>
+            <div class="clear"></div>
+        </div>
+        <div class="o-middle">
+            <img src="http://finance.tan66.com/static/default/img/jiaxi/tu_bg_l.png" class="left" alt="上一张" />
+            <img src="http://finance.tan66.com/static/default/img/jiaxi/tu_bg_r.png" class="right" alt="下一张" />
+        </div>
+        <div class="img-group">
+            <img src="http://finance.tan66.com/static/default/temp/crowd-product.jpg" alt="">
+        </div>
+    </div>
+</div>
 </body>
 </html>
 <script>
+    $(function(){
+        $.fn.imgshow = function() {
+            this.each(function() {
+                var l = $(this).find("img");
+                var j = 0;
+                var m = 0;
+                var n = "";
+                var i = "";
+                l.click(function() {
+                    var k = "";
+                    l.each(function(e, d) {
+                        $(d).attr("eq", e);
+                        var c = $(this).attr("data-original");
+                        if (!c) {
+                            k += "<img src='" + $(this).attr("src") + "' />"
+                        } else {
+                            k += "<img src='" + c + "' />"
+                        }
+                    });
+                    $(".img-group").html("");
+                    $(".img-group").html(k);
+                    i = ".img-group";
+                    $(".view-larger").show();
+                    n = $(this);
+                    m = parseInt(n.attr("eq"));
+                    j = l.length;
+                    $(i + " img")[m].onload = function() {
+                        a(i, m, n.attr("title"))
+                    }
+                });
+                function a(v, h, c) {
+                    c = c || "";
+                    h += 1;
+                    var d = $(v + " img");
+                    $(v).show();
+                    //$(".title-status").html(c);
+                    $(".count-status").html(h + "/" + j);
+                    d.css({
+                        display: "none",
+                        width: "auto",
+                        height: "auto"
+                    });
+                    d.eq(m).show();
+                    var u = d.eq(m).height();
+                    var f = d.eq(m).width();
+                    var e = $(window).height() - 100;
+                    var w = $(window).width() - 350;
+                    if (u > e) {
+                        d.eq(m).height(e)
+                    } else {
+                        if (f > w) {
+                            d.eq(m).width(w)
+                        }
+                    }
+                    var t = d.eq(m).height() / 2;
+                    var g = d.eq(m).width() / 2;
+                    $(v).stop(true, true).animate({
+                        "margin-top": "-" + t + "px",
+                        "margin-left": "-" + g + "px"
+                    }, 0)
+                }
+                $(".o-middle .left").click(function(e) {
+                    e.stopPropagation();
+                    if (m <= 0) {
+                        return
+                    }
+                    m -= 1;
+                    a(i, m, n.attr("title"))
+                });
+                $(".o-middle .right").click(function(e) {
+                    e.stopPropagation();
+                    if (m >= j - 1) {
+                        return
+                    }
+                    m += 1;
+                    a(i, m, n.attr("title"))
+                });
+                $(".view-larger .lager-colse").click(function(e) {
+                    e.stopPropagation();
+                    $("body").css("overflow", "auto");
+                    $(".view-larger").hide();
+                    $(".img-group").hide()
+                })
+
+                $(".overlay").on("mouseover",function(){
+                    $(this).css("cursor","url(../static/default/img/zoom_out.cur),auto");
+                }).on("click",function(){
+                    $("body").css("overflow", "auto");
+                    $(".view-larger").hide();
+                    $(".img-group").hide()
+                });
+            })
+        }
+        $(".identity").imgshow();
+    });
     $('#report-btn').click(function () {
         var url = $('#operatorHtml-url').text().trim();
         if (url) {
