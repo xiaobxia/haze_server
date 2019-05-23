@@ -307,11 +307,17 @@
     </iframe>
     <span id="operatorHtml-close" class="blue-click-btn">关闭</span>
 </div>
+<div id="operatorHtml-url" style="display: none;">${operatorHtml}</div>
 </body>
 </html>
 <script>
     $('#report-btn').click(function () {
-        $('#operatorHtml').show()
+        var url = $('#operatorHtml-url').text().trim();
+        if (url) {
+            $('#operatorHtml').show()
+        } else {
+            alert('该用户未生成运营商报告')
+        }
     })
     $('#operatorHtml-close').click(function () {
         $('#operatorHtml').hide()
