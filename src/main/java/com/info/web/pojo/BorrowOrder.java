@@ -192,7 +192,7 @@ public class BorrowOrder {
 	
  
 	static {
-		orderTypes.put(1, "信和宝");
+		orderTypes.put(1, "多米优");
 		orderTypes.put(0, "其它平台");
 
 		loanMethed.put(0, "天");
