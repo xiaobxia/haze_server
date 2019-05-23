@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class ProductDetail {
 	private Integer productId;//产品id
+	private String productName;//产品名称
 	private BigDecimal borrowAmount;//产品金额
 	private BigDecimal totalFeeRate;//总费率
 	private BigDecimal lateFee;//滞纳金
@@ -24,6 +25,7 @@ public class ProductDetail {
 	private Integer extendMoney;//续期费用
 	private Integer extendStatus;//续期状态 0 开启 1 关闭
 	private String extendRemark;//续期备注
+	private Integer extendDay;//续期天数
 
 	public Integer getProductId() {
 		return productId;
@@ -169,10 +171,27 @@ public class ProductDetail {
 		this.extendRemark = extendRemark;
 	}
 
+	public Integer getExtendDay() {
+		return extendDay;
+	}
+
+	public void setExtendDay(Integer extendDay) {
+		this.extendDay = extendDay;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductDetail{" +
 				"productId=" + productId +
+				", productName='" + productName + '\'' +
 				", borrowAmount=" + borrowAmount +
 				", totalFeeRate=" + totalFeeRate +
 				", lateFee=" + lateFee +
@@ -190,6 +209,7 @@ public class ProductDetail {
 				", extendMoney=" + extendMoney +
 				", extendStatus=" + extendStatus +
 				", extendRemark='" + extendRemark + '\'' +
+				", extendDay=" + extendDay +
 				'}';
 	}
 }

@@ -2,7 +2,10 @@ package com.info.web.pojo;
 
 
 
+
 import java.io.Serializable;
+import java.security.Timestamp;
+import java.util.Date;
 
 /**
  * 提额表
@@ -14,8 +17,9 @@ public class BackLimit implements Serializable {
     private Integer limitStatus;//提额至？个产品
     private Integer limitProductId;//提额状态 0 开启 1 关闭
     private String limitRemark;//备注
-    private String productName;//tie
-
+    private String limiitProductName;//产品名称
+    private Date createDate;//创建时间
+    private Date updateDate;//更新时间
     public Integer getId() {
         return id;
     }
@@ -64,11 +68,27 @@ public class BackLimit implements Serializable {
         this.limitRemark = limitRemark;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getLimiitProductName() {
+        return limiitProductName;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setLimiitProductName(String limiitProductName) {
+        this.limiitProductName = limiitProductName;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 }

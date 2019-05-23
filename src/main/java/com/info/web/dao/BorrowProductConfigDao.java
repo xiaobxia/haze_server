@@ -107,7 +107,22 @@ public interface BorrowProductConfigDao {
     ProductDetail getProductDetail(@Param("id") Integer id);
 
     List<BackExtend> getExtendList( HashMap<String,Object> params);
+
     Integer getExtendCount( HashMap<String,Object> params);
 
     List<BackLimit> getLimitList(HashMap<String,Object> params);
+
+    Integer getLimitListCount(HashMap<String,Object> params);
+
+    void addLimit(BackLimit backLimit);
+
+    void updateLimit(BackLimit backLimit);
+
+    void addExtend(BackExtend backExtend);
+
+    void updateExtend(BackExtend backExtend);
+
+    BackExtend findExtend(Integer id);
+
+    BackLimit findLimit(Integer id);
 }
