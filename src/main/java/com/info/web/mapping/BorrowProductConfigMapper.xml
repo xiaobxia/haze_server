@@ -22,6 +22,47 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER"/>
+    <result column="extend_id" property="extendId" jdbcType="INTEGER"/>
+    <result column="limit_id" property="limitId" jdbcType="INTEGER"/>
+  </resultMap>
+  <resultMap id="productDetailMap" type="com.info.web.pojo.ProductDetail">
+    <result column="productId" property="productId" jdbcType="INTEGER" />
+    <result column="borrowAmount" property="borrowAmount" jdbcType="DECIMAL" />
+    <result column="totalFeeRate" property="totalFeeRate" jdbcType="DECIMAL" />
+    <result column="lateFee" property="lateFee" jdbcType="DECIMAL" />
+    <result column="extendId" property="extendId" jdbcType="INTEGER" />
+    <result column="limitId" property="limitId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="lateFee" property="lateFee" jdbcType="DECIMAL" />
+    <result column="extendName" property="extendName" jdbcType="VARCHAR" />
+    <result column="limitName" property="limitName" jdbcType="VARCHAR" />
+    <result column="limitCount" property="limitCount" jdbcType="INTEGER" />
+    <result column="limitProductId" property="limitProductId" jdbcType="INTEGER" />
+    <result column="limiitProductName" property="limiitProductName" jdbcType="VARCHAR" />
+    <result column="limitStatus" property="limitStatus" jdbcType="INTEGER" />
+    <result column="limitRemark" property="limitRemark" jdbcType="VARCHAR" />
+    <result column="extendCount" property="extendCount" jdbcType="INTEGER"/>
+    <result column="extendMoney" property="extendMoney" jdbcType="INTEGER"/>
+    <result column="extendStatus" property="extendStatus" jdbcType="INTEGER"/>
+    <result column="extendRemark" property="extendRemark" jdbcType="VARCHAR"/>
+  </resultMap>
+  <resultMap id="extendResult" type="com.info.web.pojo.BackExtend">
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="extend_name" property="extendName" jdbcType="VARCHAR" />
+    <result column="extend_count" property="extendCount" jdbcType="INTEGER"/>
+    <result column="extend_money" property="extendMoney" jdbcType="INTEGER"/>
+    <result column="extend_status" property="extendStatus" jdbcType="INTEGER"/>
+    <result column="remark" property="remark" jdbcType="VARCHAR"/>
+  </resultMap>
+  <resultMap id="limitResult" type="com.info.web.pojo.BackLimit">
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="productName" property="productName" jdbcType="VARCHAR"></result>
+    <result column="limit_name" property="limitName" jdbcType="VARCHAR" />
+    <result column="limit_count" property="limitCount" jdbcType="INTEGER" />
+    <result column="limit_product_id" property="limitProductId" jdbcType="INTEGER" />
+    <result column="limit_status" property="limitStatus" jdbcType="INTEGER" />
+    <result column="limit_remark" property="limitRemark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     <!--
@@ -30,7 +71,7 @@
     -->
     id, borrow_amount, total_fee_rate, borrow_interest, turst_trial, platform_licensing,
     collect_channel_fee, account_manager_fee, late_fee, renewal_fee, renewal_poundage,
-    borrow_day, deal_flag, create_time, update_time, remark
+    borrow_day, deal_flag, create_time, update_time, remark,status,extend_id,limit_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     <!--
@@ -60,13 +101,13 @@
       collect_channel_fee, account_manager_fee, late_fee,
       renewal_fee, renewal_poundage, borrow_day,
       deal_flag, create_time, update_time,
-      remark)
+      remark,limit_id,extend_id,status)
     values (#{id,jdbcType=INTEGER}, #{borrowAmount,jdbcType=DECIMAL}, #{totalFeeRate,jdbcType=DECIMAL},
       #{borrowInterest,jdbcType=DECIMAL}, #{turstTrial,jdbcType=DECIMAL}, #{platformLicensing,jdbcType=DECIMAL},
       #{collectChannelFee,jdbcType=DECIMAL}, #{accountManagerFee,jdbcType=DECIMAL}, #{lateFee,jdbcType=DECIMAL},
       #{renewalFee,jdbcType=DECIMAL}, #{renewalPoundage,jdbcType=DECIMAL}, #{borrowDay,jdbcType=INTEGER},
       #{dealFlag,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
-      #{remark,jdbcType=VARCHAR})
+      #{remark,jdbcType=VARCHAR},#{limitId},#{extendId},#{status})
   </insert>
   <insert id="insertSelective" parameterType="com.info.web.pojo.BorrowProductConfig" >
     <!--
@@ -123,6 +164,15 @@
       <if test="remark != null" >
         remark,
       </if>
+      <if test="limitId != null and limitId != ''">
+        limit_id,
+      </if>
+      <if test="extendId != null and extendId != ''">
+        extend_id,
+      </if>
+      <if test="status != null and status != ''">
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -172,6 +222,15 @@
       </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="limitId != null and limitId != ''">
+        #{limitId}
+      </if>
+      <if test="extendId != null and extendId != ''">
+        #{extendId}
+      </if>
+      <if test="status != null and status != ''">
+        #{status}
       </if>
     </trim>
   </insert>
@@ -227,6 +286,15 @@
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
       </if>
+      <if test="limitId != null and limitId != ''">
+        limit_id = #{limitId}
+      </if>
+      <if test="extendId != null and extendId != ''">
+       extend_id = #{extendId}
+      </if>
+      <if test="status != null and status != ''">
+        status = #{status}
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -250,7 +318,10 @@
       deal_flag = #{dealFlag,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      remark = #{remark,jdbcType=VARCHAR}
+      remark = #{remark,jdbcType=VARCHAR},
+      limit_id = #{limitId},
+      extend_id = #{extendId},
+      status = #{status}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
@@ -346,4 +417,95 @@
       where borrow_amount = #{amount}
       and borrow_day = #{borrowDay}
     </select>
+    <select id="getProductList" resultMap="productDetailMap" parameterType="HashMap">
+      SELECT
+          a.id AS productId,
+          borrow_amount AS borrowAmount,
+          total_fee_rate AS totalFeeRate,
+          late_fee AS lateFee,
+          borrow_day AS borrowDay,
+          b.extend_name as extendName,
+          b.extend_count as extendCount,
+          b.extend_money as extendMoney,
+          b.extend_status as extendStatus,
+          c.limit_name as limitName,
+          c.limit_count as limitCount,
+          c.limit_product_id as limitProductId,
+          (select borrow_amount from borrow_product_config where id = c.limit_product_id ) as limiitProductName,
+          c.limit_status as limitStatus,
+          a.status as status
+      FROM
+          borrow_product_config  a
+          left join back_extend  b on a.extend_id = b.id
+          LEFT JOIN back_limit c on c.id = a.limit_id
+      WHERE
+          deal_flag = 'n'
+        <if test="productId != null and productId != ''">
+          and a.id = #{productId}
+        </if>
+        <if test="borrowAmount != null and borrowAmount != ''">
+          and borrow_amount = #{borrowAmount}
+        </if>
+        <if test="status != null and status != ''">
+          and a.status=#{status}
+        </if>
+    </select>
+  <select id="getProductDetail" resultType="com.info.web.pojo.ProductDetail" parameterType="java.lang.Integer">
+   SELECT
+            a.id AS productId,
+            borrow_amount AS borrowAmount,
+            total_fee_rate AS totalFeeRate,
+            late_fee AS lateFee,
+            borrow_day AS borrowDay,
+            b.extend_name as extendName,
+            b.extend_count as extendCount,
+            b.extend_money as extendMoney,
+            b.extend_status as extendStatus,
+            c.limit_name as limitName,
+            c.limit_count as limitCount,
+            c.limit_product_id as limitProductId,
+            (select borrow_amount from borrow_product_config where id = c.limit_product_id ) as limiitProductName,
+            c.limit_status as limitStatus,
+            a.status as status
+        FROM
+            borrow_product_config  a
+            left join back_extend  b on a.extend_id = b.id
+            LEFT JOIN back_limit c on c.id = a.limit_id
+        WHERE
+            deal_flag = 'n'
+            and a.id = #{id}
+  </select>
+  <select id="getProductListCount" resultType="java.lang.Integer" parameterType="HashMap">
+    SELECT
+     count(a.id)
+    FROM
+    borrow_product_config  a
+    left join back_extend  b on a.extend_id = b.id
+    LEFT JOIN back_limit c on c.id = a.limit_id
+    WHERE
+    deal_flag = 'n'
+    <if test="productId != null and productId != ''">
+      and a.id = #{productId}
+    </if>
+    <if test="borrowAmount != null and borrowAmount != ''">
+      and borrow_amount = #{borrowAmount}
+    </if>
+    <if test="status != null and status != ''">
+      and a.status=#{status}
+    </if>
+  </select>
+  <select id="getExtendList" resultMap="extendResult" parameterType="HashMap">
+  select id,extend_name,extend_count,extend_money,extend_status,remark from back_extend
+  where 1=1
+  <if test="extendName != null and extendName !=''">
+     and extend_name =#{extendName}
+  </if>
+  </select>
+  <select id="getExtendCount" resultType="java.lang.Integer" parameterType="HashMap">
+  select count(id) from back_extend where extend_name =#{extendName}
+  </select>
+  <select id="getLimitList" resultMap="limitResult" parameterType="HashMap">
+    select id,limit_name,limit_count,limit_product_id,(select borrow_amount from borrow_product_config
+    where id= limit_product_id)as productName,limit_status,limit_remark from back_limit
+  </select>
 </mapper>

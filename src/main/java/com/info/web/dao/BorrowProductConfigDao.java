@@ -1,6 +1,9 @@
 package com.info.web.dao;
 
+import com.info.web.pojo.BackExtend;
+import com.info.web.pojo.BackLimit;
 import com.info.web.pojo.BorrowProductConfig;
+import com.info.web.pojo.ProductDetail;
 import org.apache.ibatis.annotations.Param;
 
 import java.math.BigDecimal;
@@ -96,4 +99,15 @@ public interface BorrowProductConfigDao {
     BorrowProductConfig queryMaxLimitProduct(Map params);
 
     BorrowProductConfig queryByBorrowDayAndAmount(@Param("amount") BigDecimal amount, @Param("borrowDay") int borrowDay);
+
+    List<ProductDetail> getProductList( HashMap<String, Object> params);
+
+    Integer getProductListCount( HashMap<String,Object> params);
+
+    ProductDetail getProductDetail(@Param("id") Integer id);
+
+    List<BackExtend> getExtendList( HashMap<String,Object> params);
+    Integer getExtendCount( HashMap<String,Object> params);
+
+    List<BackLimit> getLimitList(HashMap<String,Object> params);
 }
