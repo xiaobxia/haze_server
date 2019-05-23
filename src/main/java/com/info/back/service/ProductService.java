@@ -94,6 +94,7 @@ public class ProductService implements  IProductService {
     @Override
     public void addLimit(BackLimit backLimit) {
         backLimit.setCreateDate(new Date());
+        backLimit.setLimitStatus(0);
         borrowProductConfigDao.addLimit(backLimit);
     }
 
@@ -106,6 +107,7 @@ public class ProductService implements  IProductService {
     @Override
     public void addExtend(BackExtend backExtend) {
         backExtend.setCreateDate(new Date());
+        backExtend.setExtendStatus(0);
         borrowProductConfigDao.addExtend(backExtend);
     }
 
