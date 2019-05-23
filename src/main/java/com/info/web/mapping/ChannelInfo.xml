@@ -497,4 +497,5 @@
 	<select id="findWechatCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
 		SELECT COUNT(id) from user_info where qq_wechat=2 and user_from=#{channelId}
 	</select>
+
 </mapper>

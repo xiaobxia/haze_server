@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.info.web.pojo.ChannelInfo;
 import com.info.web.pojo.OutChannelLook;
+import com.info.web.pojo.OveChannelInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.stereotype.Repository;

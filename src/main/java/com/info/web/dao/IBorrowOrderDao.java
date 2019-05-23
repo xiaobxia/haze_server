@@ -131,4 +131,7 @@ public interface IBorrowOrderDao {
 	List<String> getUserIdWaitList();
 	List<String> getUserIdList();
 	List<String> getUserIdList2();
+	//针对某些id查询符合某些状态的总数
+	Integer findOveChannle(@Param("userList")List<String> userList,@Param("statusList") List<Integer> statusList,@Param("loanTime") String loanTime, @Param("userType") Integer userType);
+	Integer findExtendChannel(@Param("userList") List<String> userList,@Param("loanTime") String loanTime);
 }

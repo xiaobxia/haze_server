@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.info.web.pojo.ChannelReport;
 import com.info.web.pojo.OutChannelLook;
+import com.info.web.pojo.OveChannelInfo;
 import com.info.web.util.PageConfig;
 
 
@@ -63,4 +64,5 @@ public interface IChannelReportService {
 
 	public PageConfig<OutChannelLook> findPageOut(HashMap<String, Object> params);
 
+	public PageConfig<OveChannelInfo> findOveChannelId(HashMap<String, Object> params);
 }

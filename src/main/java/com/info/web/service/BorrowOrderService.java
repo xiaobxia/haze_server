@@ -2587,4 +2587,15 @@ public class BorrowOrderService implements IBorrowOrderService {
     public List<String> getUserIdWaitList() {
         return borrowOrderDao.getUserIdWaitList();
     }
+
+    @Override
+    public Integer findOveChannle(List<String> userList, List<Integer> statusList,String loanTime,Integer userType) {
+        return borrowOrderDao.findOveChannle(userList,statusList,loanTime,userType);
+    }
+
+    @Override
+    public Integer findExtendChannel(List<String> userList, String loanTime) {
+        return borrowOrderDao.findExtendChannel(userList,loanTime);
+    }
+
 }

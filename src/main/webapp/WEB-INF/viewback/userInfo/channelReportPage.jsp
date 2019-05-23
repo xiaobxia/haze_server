@@ -93,12 +93,15 @@
 				<%--<th align="center" >--%>
 					<%--黑名单人数--%>
 				<%--</th>--%>
+				<th align="center">申请笔数</th>
 				<th align="center" >
 					申请借款率
 				</th>
 				<th align="center" >
 					申请成功率
 				</th>
+				<th align="center">放款笔数</th>
+				<th align="center">放款率</th>
 				<%--<th align="center" >--%>
 					<%--借款率%--%>
 				<%--</th>--%>
@@ -251,15 +254,23 @@
 					<%--</td>--%>
 					<td>
 						<c:if test="${channel.borrowApplyCount gt 0 and channel.registerCount gt 0}">
+							${channel.borrowApplyCount}
+						</c:if>
+						<c:if test="${channel.borrowApplyCount  eq 0 or channel.registerCount eq 0}">
+							0
+						</c:if>
+					</td>
+					<td>
+						<c:if test="${channel.borrowApplyCount gt 0 and channel.registerCount gt 0}">
 							<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.borrowApplyCount / channel.registerCount}" />
 						</c:if>
 						<c:if test="${channel.borrowApplyCount  eq 0 or channel.registerCount eq 0}">
 							0.00
 						</c:if>
 					</td>
-					<%--<td>--%>
-							<%--${channel.borrowSucCount}--%>
-					<%--</td>--%>
+					<%--<td>
+							${channel.borrowSucCount}
+					</td>--%>
 					<td>
 						<c:if test="${channel.borrowSucCount gt 0 and channel.registerCount gt 0}">
 							<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.borrowSucCount / channel.registerCount}" />
@@ -267,6 +278,12 @@
 						<c:if test="${channel.borrowSucCount  eq 0 or channel.registerCount eq 0}">
 							0.00
 						</c:if>
+					</td>
+					<td>
+							${channel.loanCount}
+					</td>
+					<td>
+							${channel.loanRatio}
 					</td>
 					<%--<td>--%>
 							<%--${channel.borrowRate}--%>
