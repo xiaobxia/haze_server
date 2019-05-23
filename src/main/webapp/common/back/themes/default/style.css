@@ -38,10 +38,10 @@
 /* Alert */
 .alert .alertFooter, .alert .alertFooter_r, .alert .alertFooter_c { background:url(./images/alert/alertpanel.png) no-repeat;}
 .alert .alertContent {}
-.alert .warn .alertInner { border-color:#e83e09; background:#fefacf;}
+.alert .warn .alertInner { background-color: #fff}
 .alert .error .alertInner { background-color: #fff}
-.alert .correct .alertInner, .alert .info .alertInner { border-color:#b8d0d6; background:#fefacf;}
-.alert .confirm .alertInner { border-color:#b8d0d6; background:#fefacf;}
+.alert .correct .alertInner, .alert .info .alertInner { background-color: #fff}
+.alert .confirm .alertInner { background-color: #fff}
 .alert h1 { border-color:#CCC; background:url(./images/alert/alertpanel_icon.png) no-repeat;}
 
 /* Dialog */
