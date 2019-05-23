@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.info.back.service.IProductService;
 import com.info.web.pojo.*;
 import com.info.web.util.PageConfig;
+import com.sun.org.apache.bcel.internal.generic.MONITORENTER;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -236,6 +237,18 @@ public class ConfigParamController extends BaseController {
 			model.addAttribute("result","error");
 		}
 		return model;
+	}
+
+	/**
+	 * 设置为默认产品
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+    @RequestMapping("openOrCloseProduct")
+	public Model openOrCloseProduct(Integer id,Model model){
+         	model = iProductService.openOrCloseProduct(id,model);
+	        return model;
 	}
 	/**
 	 * 续期列表

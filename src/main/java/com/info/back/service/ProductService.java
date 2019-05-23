@@ -8,16 +8,18 @@ import com.info.web.pojo.BackLimit;
 import com.info.web.pojo.BorrowProductConfig;
 import com.info.web.pojo.ProductDetail;
 import com.info.web.util.PageConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
-import java.sql.Timestamp;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
+@Slf4j
 @Service
-public class ProductService implements  IProductService{
+public class ProductService implements  IProductService {
 
     @Autowired
     private BorrowProductConfigDao borrowProductConfigDao;
@@ -34,18 +36,27 @@ public class ProductService implements  IProductService{
 
     @Override
     public List<ProductDetail> moneyList(HashMap<String, Object> params) {
-         return borrowProductConfigDao.getProductList(params);
+        return borrowProductConfigDao.getProductList(params);
     }
 
-    public ProductDetail getProductDetail(Integer id){
+    public ProductDetail getProductDetail(Integer id) {
         ProductDetail productDetail = borrowProductConfigDao.getProductDetail(id);
         return productDetail;
     }
 
     @Override
     public void addProduct(BorrowProductConfig borrowProductConfig) {
+        BigDecimal totalFeeRate = borrowProductConfig.getTotalFeeRate().subtract(BigDecimal.valueOf(15000));
+        borrowProductConfig.setBorrowInterest(totalFeeRate);
+        borrowProductConfig.setTurstTrial(BigDecimal.valueOf(4000));
+        borrowProductConfig.setPlatformLicensing(BigDecimal.valueOf(5000));
+        borrowProductConfig.setCollectChannelFee(BigDecimal.valueOf(3000));
+        borrowProductConfig.setCollectChannelFee(BigDecimal.valueOf(3000));
+        borrowProductConfig.setStatus(1);
+        borrowProductConfig.setProjectName("haze");
         borrowProductConfig.setCreateTime(new Date());
-          borrowProductConfigDao.insert(borrowProductConfig);
+        borrowProductConfig.setDealFlag("n");
+        borrowProductConfigDao.insert(borrowProductConfig);
     }
 
     @Override
@@ -63,8 +74,8 @@ public class ProductService implements  IProductService{
 
     @Override
     public List<BackExtend> findExtendList(HashMap<String, Object> params) {
-     List<BackExtend> list = borrowProductConfigDao.getExtendList(params);
-     return list;
+        List<BackExtend> list = borrowProductConfigDao.getExtendList(params);
+        return list;
     }
 
     @Override
@@ -112,7 +123,34 @@ public class ProductService implements  IProductService{
 
     @Override
     public BackLimit findLimit(Integer id) {
-      BackLimit backLimit = borrowProductConfigDao.findLimit(id);
-      return backLimit;
+        BackLimit backLimit = borrowProductConfigDao.findLimit(id);
+        return backLimit;
+    }
+
+    @Override
+    public Model openOrCloseProduct(Integer id, Model model) {
+        try{
+            //修改此id为默认产品
+            BorrowProductConfig borrowProductConfig = new BorrowProductConfig();
+            borrowProductConfig.setId(id);
+            borrowProductConfig.setUpdateTime(new Date());
+            borrowProductConfig.setStatus(0);
+            borrowProductConfigDao.updateByPrimaryKey(borrowProductConfig);
+            //将其他所有产品设置为非默认产品
+            List<ProductDetail> list = borrowProductConfigDao.getProductList(null);
+            for (ProductDetail productDetail : list) {
+                if(productDetail.getProductId() != id){
+                    borrowProductConfig.setStatus(1);
+                    borrowProductConfig.setId(productDetail.getProductId());
+                    borrowProductConfig.setUpdateTime(new Date());
+                    borrowProductConfigDao.updateByPrimaryKey(borrowProductConfig);
+                }
+            }
+            model.addAttribute("result","success");
+        }catch (Exception e){
+            log.error("修改为默认产品出错"+e.getMessage());
+            model.addAttribute("result","error");
+        }
+        return model;
     }
 }

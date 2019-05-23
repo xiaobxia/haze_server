@@ -48,7 +48,7 @@
     <result column="extendStatus" property="extendStatus" jdbcType="INTEGER"/>
     <result column="extendRemark" property="extendRemark" jdbcType="VARCHAR"/>
     <result column="extendDay" property="extendDay" jdbcType="INTEGER"/>
-    <result column="product_name" property="productName" jdbcType="VARCHAR"/>
+    <result column="productName" property="productName" jdbcType="VARCHAR"/>
   </resultMap>
   <resultMap id="extendResult" type="com.info.web.pojo.BackExtend">
     <result column="id" property="id" jdbcType="INTEGER" />
@@ -452,7 +452,8 @@
           c.limit_product_id as limitProductId,
           (select borrow_amount from borrow_product_config where id = c.limit_product_id ) as limiitProductName,
           c.limit_status as limitStatus,
-          a.status as status
+          a.status as status,
+          a.borrow_day as borrowDay
       FROM
           borrow_product_config  a
           left join back_extend  b on a.extend_id = b.id
@@ -490,7 +491,8 @@
             b.extend_day as extendDay,
             (select product_name from borrow_product_config where id = c.limit_product_id ) as limiitProductName,
             c.limit_status as limitStatus,
-            a.status as status
+            a.status as status,
+            a.borrow_day as borrowDay
         FROM
             borrow_product_config  a
             left join back_extend  b on a.extend_id = b.id
@@ -602,7 +604,7 @@
       limit_status = #{limitStatus},
     </if>
     <if test="updateDate != null and updateDate !=''">
-      update_date = #{updateDate}
+      update_date = #{updateDate},
     </if>
     </set>
     where id = #{id}

@@ -26,6 +26,7 @@ public class ProductDetail {
 	private Integer extendStatus;//续期状态 0 开启 1 关闭
 	private String extendRemark;//续期备注
 	private Integer extendDay;//续期天数
+	private Integer borrowDay;//借款期限
 
 	public Integer getProductId() {
 		return productId;
@@ -187,6 +188,14 @@ public class ProductDetail {
 		this.productName = productName;
 	}
 
+	public Integer getBorrowDay() {
+		return borrowDay;
+	}
+
+	public void setBorrowDay(Integer borrowDay) {
+		this.borrowDay = borrowDay;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductDetail{" +
@@ -210,6 +219,7 @@ public class ProductDetail {
 				", extendStatus=" + extendStatus +
 				", extendRemark='" + extendRemark + '\'' +
 				", extendDay=" + extendDay +
+				", borrowDay=" + borrowDay +
 				'}';
 	}
 }
