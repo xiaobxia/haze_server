@@ -53,117 +53,74 @@
 		<table class="table" style="width: 100%;" layoutH="112" nowrapTD="false">
 			<thead>
 			<tr>
-				<th align="center"  >
-					序列
+				<th align="center" >
+					渠道id
 				</th>
 				<th align="center" >
-					渠道商
+					渠道商名称
 				</th>
 				<th align="center" >
 					渠道名称
 				</th>
 				<th align="center"  >
-					日期
+					还款日期
 				</th>
 				<th align="center">
-					注册量
-				</th>
-
-				<th align="center" >
-					实名率
-				</th>
-				<%--<th align="center" >--%>
-				<%--绑卡人数--%>
-				<%--</th>--%>
-				<th align="center" >
-					紧急联系人认证率
+					首放数量
 				</th>
 				<th align="center" >
-					运营商认证率
-				</th>
-				<%--<th align="center" >
-					淘宝认证人数率
-				</th>--%>
-				<%--<th align="center" >--%>
-				<%--芝麻认证人数--%>
-				<%--</th>--%>
-				<%--<th align="center" >--%>
-				<%--工作信息--%>
-				<%--</th>--%>
-				<%--<th align="center" >--%>
-				<%--黑名单人数--%>
-				<%--</th>--%>
-				<th align="center">申请笔数</th>
-				<th align="center" >
-					申请借款率
+					首放已还数量
 				</th>
 				<th align="center" >
-					申请成功率
+					首放逾期率
 				</th>
-				<th align="center">放款笔数</th>
-				<th align="center">放款率</th>
-				<%--<th align="center" >--%>
-				<%--借款率%--%>
-				<%--</th>--%>
-				<%--<th align="center" >--%>
-				<%--通过率%--%>
-				<%--</th>--%>
-				<%--<th align="center" orderField="newIntoMoneyDesc" class="asc" >--%>
-				<%--新用户放款金额--%>
-				<%--</th>--%>
 				<th align="center" >
-					新用户首逾量
+					复借放款数量
 				</th>
-				<%--<th align="center" >--%>
-				<%--老用户放款金额--%>
-				<%--</th>--%>
 				<th align="center" >
-					逾期人数
+					复借已还数量
 				</th>
-				<%--<th align="center" >--%>
-				<%--费用--%>
-				<%--</th>--%>
-
-				<th>
-					uv数量
+				<th align="center">
+					复借率
 				</th>
-				<th>
-					uv转化率
-				</th>
-				<th>
-					qq占比
-				</th>
-				<th>
-					微信占比
-				</th>
-				<%--<th>
-					申请笔数
-				</th>
-				<th>
-					放款笔数
-				</th>
-				<th>
-					还款笔数
-				</th>
-				<th>
-					注册率
-				</th>
-				<th>
-					放款率
-				</th>
-				<th>
-					回款率
-				</th>--%>
 				<th align="center" >
-					更新时间
+					展期数量
 				</th>
-				<!-- 					<th align="center" > -->
-				<!-- 						授信失败人数 -->
-				<!-- 					</th> -->
-
-
+				<th align="center" >
+					总放量
+				</th>
+				<th align="center">
+					总还量
+				</th>
+				<th align="center">
+					总逾期率
+				</th>
+				<th align="center" >
+					渠道状态
+				</th>
 			</tr>
 			</thead>
+			<tbody>
+			<c:forEach var="channel" items="${pm.items }" varStatus="status">
+				<tr target="channelId" rel="${channel.channelId }">
+					<td>${channel.channelId}</td>
+					<td>${channel.channelSuperName}</td>
+					<td>${channel.channelName}</td>
+					<td>${channel.loanTime }</td>
+					<td>${channel.firstLoanCount }</td>
+					<td>${channel.firstRepayCount }</td>
+					<td>${channel.firstOveRate }</td>
+					<td>${channel.reLoanCount }</td>
+					<td>${channel.reRepayCount }</td>
+					<td>${channel.reOveRate }</td>
+					<td>${channel.extendCount }</td>
+					<td>${channel.allLoanCount }</td>
+					<td>${channel.allRepayCount }</td>
+					<td>${channel.allOveRate }</td>
+					<td>${channel.channelStatus }</td>
+				</tr>
+			</c:forEach>
+			</tbody>
 		</table>
 		<c:set var="page" value="${pm }"></c:set>
 		<%@ include file="../page.jsp"%>

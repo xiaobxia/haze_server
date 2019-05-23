@@ -585,7 +585,7 @@
 				var text = $(this).text().trim();
 				var color = ''
 				var textColorMap = {
-					'正常已还款': '#1E6BFF',
+                    '正常已还款': '#1E6BFF',
 					'逾期已还款': '#6298FF',
 					'初审通过待复审': '#28C189',
 					'复审通过待还款审核': '#10AA72',
