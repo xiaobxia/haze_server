@@ -603,6 +603,8 @@
 					color = '#008554'
 				} else if (text.indexOf('通过') !== -1) {
 					color = '#02945E'
+				} else if (text.indexOf('待还款') !== -1) {
+					color = '#008554'
 				} else {
 					color = textColorMap[text]
 				}

@@ -127,7 +127,7 @@
 					<th align="center" >
 						逾期天数
 					</th>
-					<th align="center">
+					<th align="center" class="loanStatusTitle">
 						状态
 					</th>
 				</tr>
@@ -172,7 +172,7 @@
 						<td>
 							${repayment.lateDay }
 						</td>
-						<td>
+						<td class="loanStatusName">
 							${BORROW_STATUS_ALL[repayment.status]}
 						</td>
 					</tr>
@@ -214,6 +214,11 @@
 	if (renderLoanSuccessCount) {
 		setTimeout(function () {
 			renderLoanSuccessCount()
+		}, 200)
+	}
+	if (renderLoanStatusName) {
+		setTimeout(function () {
+			renderLoanStatusName()
 		}, 200)
 	}
 </script>
