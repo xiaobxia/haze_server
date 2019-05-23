@@ -83,7 +83,7 @@ String path = request.getContextPath()+"";
                                     align: 'center'
                                 },*/
                                 {
-                                    field: 'registerCountResult',
+                                    field: 'registerCount',
                                     title: '注册量',
                                     width: 170,
                                     align: 'center'
