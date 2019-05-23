@@ -913,7 +913,7 @@ public class ChannelReportService implements IChannelReportService {
                   }},oveChannelInfo.getLoanTime(),0);
                   oveChannelInfo.setFirstRepayCount(firstRepayCount);
                   //首放逾期率 (首放数量-首放已还数量)/首放数量
-                  if(oveChannelInfo.getFirstLoanCount() != 1){
+                  if(oveChannelInfo.getFirstLoanCount() != 0){
                       double firstOveRate = (oveChannelInfo.getFirstLoanCount()-oveChannelInfo.getFirstRepayCount())*(1.0)/oveChannelInfo.getFirstLoanCount()*(1.0);
                       oveChannelInfo.setFirstOveRate(df.format(firstOveRate));
                   }
