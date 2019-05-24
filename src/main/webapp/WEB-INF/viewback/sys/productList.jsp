@@ -57,6 +57,9 @@
                     产品ID
                 </th>
                 <th>
+                    产品名称
+                </th>
+                <th>
                     产品金额
                 </th>
                 <th>
@@ -69,32 +72,55 @@
                     服务费
                 </th>
                 <th>
+                    滞纳金
+                </th>
+                <th>
+                    借款期限
+                </th>
+                <th>
                     是否默认
                 </th>
                 <th>
                     默认管理
                 </th>
+                <th>
+                    备注
+                </th>
             </tr>
             </thead>
             <tbody>
             <c:forEach var="product" items="${pm.items }" varStatus="status">
-                <tr target="productId" rel="${product.productId }">
+                <tr target="id" rel="${product.productId }">
                     <td>
                             ${product.productId}
                     </td>
                     <td>
-                            ${product.borrowAmount}
+                            ${product.productName}
                     </td>
                     <td>
-                            ${product.borrowAmount * (1 - product.totalFeeRate)}
+                        <fmt:formatNumber type="number" value="${product.borrowAmount/100}" pattern="0.00"
+                                          maxFractionDigits="0"/>
                     </td>
                     <td>
-                            ${product.totalFeeRate}
+                        <fmt:formatNumber type="number" value="${product.borrowAmount * (1 - product.totalFeeRate/100000)/100}" pattern="0.00"
+                                          maxFractionDigits="0"/>
                     </td>
                     <td>
-                            ${product.totalFeeRate * product.borrowAmount}
+                        <fmt:formatNumber type="number" value="${product.totalFeeRate/1000}" pattern="0.00"
+                                          maxFractionDigits="2"/>%
+                    </td>
+                    <td>
+                        <fmt:formatNumber type="number" value="${product.totalFeeRate * product.borrowAmount / 10000000}" pattern="0.00"
+                                          maxFractionDigits="0"/>
+                    </td>
+                    <td>
+                        <fmt:formatNumber type="number" value="${product.lateFee/100}" pattern="0.00"
+                                          maxFractionDigits="0"/>
+                    </td>
+                    <td>
+                            ${product.borrowDay}
+                    </td>
 
-                    </td>
                     <td>
                         <c:choose>
                             <c:when test="${product.status == 0}">
@@ -114,6 +140,9 @@
                                 <span>置为是</span>
                             </c:otherwise>
                         </c:choose>
+                    </td>
+                    <td>
+                            ${product.borrowDay}
                     </td>
                 </tr>
             </c:forEach>

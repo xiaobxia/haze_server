@@ -137,8 +137,8 @@ public class BorrowProductConfig implements Serializable {
     private String remark;//备注
 
     private Integer status;//状态 0默认 1 非默认
-
     private Integer extendId; //续期id
+
 
     private Integer limitId; //提额id
 

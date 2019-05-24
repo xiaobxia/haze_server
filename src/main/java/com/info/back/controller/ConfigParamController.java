@@ -74,7 +74,7 @@ public class ConfigParamController extends BaseController {
 		return url;
 	}
 
-	/**
+     /**
 	 * 指向产品页面
 	 * @return
 	 */
@@ -85,6 +85,7 @@ public class ConfigParamController extends BaseController {
         model.addAttribute("productMoneyList",list);
 		PageConfig<ProductDetail>  pageConfig = iProductService.getProductList(params);
 		model.addAttribute("pm",pageConfig);
+		model.addAttribute("params",params);
       return "sys/productList";
 	}
 
@@ -99,6 +100,7 @@ public class ConfigParamController extends BaseController {
 		model.addAttribute("pm",pageConfig);
 	    List<BackExtend> list = iProductService.findExtendList(params);
 	    model.addAttribute("extendList",list);
+		model.addAttribute("params",params);
 		return "sys/extendList";
 	}
 
@@ -113,6 +115,7 @@ public class ConfigParamController extends BaseController {
 		model.addAttribute("pm",pageConfig);
 	    List<BackLimit> list = iProductService.findLimitList(params);
 	    model.addAttribute("limitList",list);
+		model.addAttribute("params",params);
 		return "sys/limitList";
 	}
     /**
@@ -127,6 +130,7 @@ public class ConfigParamController extends BaseController {
             model.addAttribute("limitList",limitList);
             model.addAttribute("extendList",extendList);
             model.addAttribute("productDetail",productDetail);
+			model.addAttribute("id",id);
             return "sys/addOrUpdateProduct";
         }
        return "sys/addOrUpdateProduct";
