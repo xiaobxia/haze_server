@@ -546,7 +546,7 @@
     select id as id ,extend_name as extendName,extend_count as extendCount,extend_money as extendMoney,extend_status as extendStatus,remark as remark,extend_day as extendDay from back_extend where id= #{id}
   </select>
   <select id="findLimit" resultType="com.info.web.pojo.BackLimit" parameterType="java.lang.Integer">
-    select select id,limit_name,limit_count,limit_product_id,(select product_name from borrow_product_config
+    select  id,limit_name,limit_count,limit_product_id,(select product_name from borrow_product_config
     where id= limit_product_id)as limiitProductName,limit_status,limit_remark from back_limit
     where 1=1 and id = #{id}
   </select>
