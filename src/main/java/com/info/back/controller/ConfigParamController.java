@@ -79,9 +79,12 @@ public class ConfigParamController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("goProductList")
-	public String getProductList(Model model,HashMap<String,Object> params){
+	public String getProductList(Model model,HttpServletRequest request){
+		HashMap<String, Object> params = getParametersO(request);
         List<ProductDetail> list = iProductService.moneyList(params);
         model.addAttribute("productMoneyList",list);
+		PageConfig<ProductDetail>  pageConfig = iProductService.getProductList(params);
+		model.addAttribute("pm",pageConfig);
       return "sys/productList";
 	}
 
@@ -90,7 +93,10 @@ public class ConfigParamController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("goextendList")
-	public String getextendList(Model model,HashMap<String,Object> params){
+	public String getextendList(Model model,HttpServletRequest request){
+		HashMap<String, Object> params = getParametersO(request);
+		PageConfig<BackExtend> pageConfig = iProductService.getExtendList(params);
+		model.addAttribute("pm",pageConfig);
 	    List<BackExtend> list = iProductService.findExtendList(params);
 	    model.addAttribute("extendList",list);
 		return "sys/extendList";
@@ -101,7 +107,10 @@ public class ConfigParamController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("goLimitList")
-	public String getLimitList(Model model,HashMap<String,Object> params){
+	public String getLimitList(Model model,HttpServletRequest request){
+		HashMap<String, Object> params = getParametersO(request);
+		PageConfig<BackLimit> pageConfig = iProductService.getLimitList(params);
+		model.addAttribute("pm",pageConfig);
 	    List<BackLimit> list = iProductService.findLimitList(params);
 	    model.addAttribute("limitList",list);
 		return "sys/limitList";
@@ -174,15 +183,15 @@ public class ConfigParamController extends BaseController {
 	 * 产品列表
 	 * @param model
 	 * @return
-	 */
-    @RequestMapping(value="getProductList")
+	 *//*
+    @RequestMapping(value="getProductList")//getProductList
 	@ResponseBody
 	public Model getProductList(Model  model,HttpServletRequest request){
 		HashMap<String, Object> params = getParametersO(request);
 		PageConfig<ProductDetail>  pageConfig = iProductService.getProductList(params);
 		model.addAttribute("pm",pageConfig);
 		return model;
-	}
+	}*/
 
 	/**
 	 * 查看产品详情
@@ -254,7 +263,7 @@ public class ConfigParamController extends BaseController {
 	 * 续期列表
 	 * @param model
 	 * @return
-	 */
+	 *//*
 	@RequestMapping(value="getExtendList")
 	@ResponseBody
 	public Model getExtendList(Model  model,HttpServletRequest request){
@@ -262,7 +271,7 @@ public class ConfigParamController extends BaseController {
 	    PageConfig<BackExtend> pageConfig = iProductService.getExtendList(params);
 	    model.addAttribute("pm",pageConfig);
 		return model;
-	}
+	}*/
 
     /**
      * 添加续期
@@ -302,7 +311,7 @@ public class ConfigParamController extends BaseController {
 	 * 提额列表
 	 * @param model
 	 * @return
-	 */
+	 *//*
 	@RequestMapping(value="getLimitList")
 	@ResponseBody
 	public Model getLimitList(Model  model,HttpServletRequest request){
@@ -310,7 +319,7 @@ public class ConfigParamController extends BaseController {
         PageConfig<BackLimit> pageConfig = iProductService.getLimitList(params);
         model.addAttribute("pm",pageConfig);
 		return model;
-	}
+	}*/
     /**
      * 添加提额
      * @param backLimit
