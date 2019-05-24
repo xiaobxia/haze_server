@@ -142,8 +142,6 @@
     function setPStatus(id, status) {
         $.ajax({
             type : "post",
-            dataType: 'json',
-            contentType:"application/json;charset=utf-8",
             data:{
                 "id":id,
                 extendStatus: status

@@ -159,8 +159,6 @@
     function setPStatus(id) {
         $.ajax({
             type : "post",
-            dataType: 'json',
-            contentType:"application/json;charset=utf-8",
             data:{
                 "id":id
             },
@@ -179,8 +177,6 @@
         if(confirm("确定要删除吗？")) {
             $.ajax({
                 type : "post",
-                dataType: 'json',
-                contentType:"application/json;charset=utf-8",
                 data:{
                     "id":id,
                     dealFlag: 'y'
