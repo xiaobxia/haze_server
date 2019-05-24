@@ -578,12 +578,12 @@
   </select>
   <insert id="addLimit" parameterType="com.info.web.pojo.BackLimit">
     insert into back_limit
-    id,
+    (id,
     limit_name,
     limit_count,
     limit_product_id,
     limit_status,
-    create_date,
+    create_date)
     values (
     #{id},
     #{limitName},
@@ -616,14 +616,14 @@
   </update>
   <insert id="addExtend" parameterType="com.info.web.pojo.BackExtend">
    insert into back_extend
-   id,
+   (id,
    extend_name,
    extend_count,
    extend_money,
    extend_status,
    remark,
    extend_day,
-   create_date
+   create_date)
    VALUES (
    #{id},
    #{extendName},
