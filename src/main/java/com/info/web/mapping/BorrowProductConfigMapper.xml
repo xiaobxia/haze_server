@@ -453,7 +453,10 @@
           (select borrow_amount from borrow_product_config where id = c.limit_product_id ) as limiitProductName,
           c.limit_status as limitStatus,
           a.status as status,
-          a.borrow_day as borrowDay
+          a.borrow_day as borrowDay,
+          a.extend_id as extendId,
+          a.limit_id as limitId
+
       FROM
           borrow_product_config  a
           left join back_extend  b on a.extend_id = b.id
@@ -492,7 +495,9 @@
             (select product_name from borrow_product_config where id = c.limit_product_id ) as limiitProductName,
             c.limit_status as limitStatus,
             a.status as status,
-            a.borrow_day as borrowDay
+            a.borrow_day as borrowDay,
+            a.extend_id as extendId,
+            a.limit_id as limitId
         FROM
             borrow_product_config  a
             left join back_extend  b on a.extend_id = b.id
@@ -546,13 +551,13 @@
     select id as id ,extend_name as extendName,extend_count as extendCount,extend_money as extendMoney,extend_status as extendStatus,remark as remark,extend_day as extendDay from back_extend where id= #{id}
   </select>
   <select id="findLimit" resultType="com.info.web.pojo.BackLimit" parameterType="java.lang.Integer">
-    select  id,limit_name,limit_count,limit_product_id,(select product_name from borrow_product_config
-    where id= limit_product_id)as limiitProductName,limit_status,limit_remark from back_limit
+    select  id as id,limit_name as limitName,limit_count as limitCount,limit_product_id as limitProductId,(select product_name from borrow_product_config
+    where id= limit_product_id)as limiitProductName,limit_status as limitStatus,limit_remark as limitRemark from back_limit
     where 1=1 and id = #{id}
   </select>
   <select id="getLimitList" resultMap="limitResult" parameterType="HashMap">
-    select id,limit_name,limit_count,limit_product_id,(select product_name from borrow_product_config
-    where id= limit_product_id)as limiitProductName,limit_status,limit_remark from back_limit
+    select id as id,limit_name as limitName,limit_count as limitCount,limit_product_id as limitProductId,(select product_name from borrow_product_config
+    where id= limit_product_id)as limiitProductName,limit_status as limitStatus,limit_remark as limitRemark from back_limit
     where 1=1
     <if test="limitName != null">
       and limit_name = #{limitName}
