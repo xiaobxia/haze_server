@@ -306,9 +306,9 @@
       <if test="extendId != null">
        extend_id = #{extendId},
       </if>
-      <!--<if test="status != null">
+      <if test="status != null">
         status = #{status},
-      </if>-->
+      </if>
       <if test="productName != null">
         product_name = #{productName},
       </if>
