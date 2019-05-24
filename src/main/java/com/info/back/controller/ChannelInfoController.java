@@ -10,6 +10,7 @@ import com.info.back.pojo.UserDetail;
 import com.info.back.pojo.ezuiresult.ChannelCodes;
 import com.info.back.pojo.ezuiresult.ChannelReportResult;
 import com.info.back.service.IProductService;
+import com.info.back.service.ITaskJob;
 import com.info.back.service.TaskJob;
 import com.info.back.utils.*;
 import com.info.constant.Constant;
@@ -35,6 +36,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import redis.clients.jedis.JedisCluster;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -70,6 +72,9 @@ public class ChannelInfoController extends BaseController {
     private IAppMarketStaticsService appMarketStaticsService;
     @Autowired
     private IProductService iProductService;
+
+    @Resource
+    private ITaskJob taskJob;
 
     /**
      * 推广渠道分页
@@ -250,6 +255,7 @@ public class ChannelInfoController extends BaseController {
                 SpringUtils.renderDwzResult(response, true, "操作成功",
                         DwzResult.CALLBACK_CLOSECURRENT, params.get("parentId")
                                 .toString());
+                taskJob.channelReport();
             }
         } catch (Exception e) {
             erroMsg = "服务器异常，请稍后重试！";

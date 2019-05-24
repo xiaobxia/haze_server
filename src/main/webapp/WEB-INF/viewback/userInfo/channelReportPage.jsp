@@ -359,7 +359,20 @@
 	</div>
 </form>
 <script type="text/javascript">
+    /*$(function(){
+        $.ajax({
+            global: false,
+            type: "POST",
+            url: "task/channelReportLoad",
+            dataType: "json",
+            success: function (data) {
 
+            },
+            error: function () {
+
+            }
+        });
+    });*/
     function toChannelReportExcel(obj){
 
         var href=$(obj).attr("href");

@@ -35,6 +35,12 @@ public class TaskController {
         taskJob.everyDayUserQuota();
         log.info("everyDayUserQuota End");
     }
+    @RequestMapping("channelReportLoad")
+    public void channelReportLoad(){
+        log.info("自动加载渠道统计开始");
+        taskJob.channelReport();
+        log.info("自动加载渠道统计完毕");
+    }
 
 
 }

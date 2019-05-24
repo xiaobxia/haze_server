@@ -52,7 +52,7 @@
 					<dl>
 						<dt style="width: 100px;">
 							<label>
-								渠道商编码:
+								渠道编码:
 							</label>
 						</dt>
 						<dd>
