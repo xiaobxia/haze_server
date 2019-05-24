@@ -583,14 +583,16 @@
     limit_count,
     limit_product_id,
     limit_status,
-    create_date)
+    create_date,
+    limit_remark)
     values (
     #{id},
     #{limitName},
     #{limitCount},
     #{limitProductId},
     #{limitStatus},
-    #{createDate}
+    #{createDate},
+    #{limitRemark}
     )
   </insert>
   <update id="updateLimit" parameterType="com.info.web.pojo.BackLimit">
