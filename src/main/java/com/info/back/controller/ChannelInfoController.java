@@ -9,6 +9,7 @@ import com.info.back.pojo.AppMarketType;
 import com.info.back.pojo.UserDetail;
 import com.info.back.pojo.ezuiresult.ChannelCodes;
 import com.info.back.pojo.ezuiresult.ChannelReportResult;
+import com.info.back.service.IProductService;
 import com.info.back.service.TaskJob;
 import com.info.back.utils.*;
 import com.info.constant.Constant;
@@ -27,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -65,6 +67,8 @@ public class ChannelInfoController extends BaseController {
     ILoanMoneyReportService loanmoneyReportService;
     @Autowired
     private IAppMarketStaticsService appMarketStaticsService;
+    @Autowired
+    private IProductService iProductService;
 
     /**
      * 推广渠道分页
@@ -222,7 +226,6 @@ public class ChannelInfoController extends BaseController {
                 if (channelInfo.getId() != null) {
                     // 加密
                     String passWord = MD5coding.MD5(AESUtil.encrypt(channelInfo.getChannelPassword(), ""));
-
                     channelInfo.setChannelPassword(passWord);
                     channelInfoService.updateById(channelInfo);
                 } else {
@@ -333,13 +336,11 @@ public class ChannelInfoController extends BaseController {
                             User findUser = userService
                                     .searchUserByCheckTel(map);
                             if (findUser != null) {
-
                                 String inviteUserid = Base64Utils.encodeStr(findUser.getId());
                                 /*
                                  * 190301 用户注册链接渠道id加密
                                  */
                                 String userFrom = AESUtil.encrypt(params.get("channelId").toString(),AESUtil.KEY_USER_FROM);
-
                                 Map<String, String> keys = SysCacheUtils
                                         .getConfigParams(BackConfigParams.APP_IMG_URL);
                                 String appurl = keys.get("qrcode_URL");
@@ -360,7 +361,7 @@ public class ChannelInfoController extends BaseController {
                                 String relPath = backUrl+"/channel/toAppointChannelReport?aesCode="
                                         +AESUtil.encrypt(String.valueOf(params.get("channelCode")), AESUtil.KEY);
 
-                                params.put("userId", findUser.getId());
+                                //params.put("userId", findUser.getId());
                                 params.put("channelId", params.get("channelId"));
                                 String shortRelPath = getShortUrl(relPath);
                                 if(!"".equals(shortRelPath)){
@@ -1853,4 +1854,171 @@ public class ChannelInfoController extends BaseController {
         model.addAttribute("params", params);
         return "userInfo/channelOvePage";
     }
+    /**
+     * 查看产品详情
+     * @param model
+     * @param id
+     * @return
+     */
+    @RequestMapping(value="getProductDetail" , method= RequestMethod.POST)
+    @ResponseBody
+    public Model getProductDetail(Model model,Integer id,HashMap<String,Object> params){
+        ProductDetail productDetail = iProductService.getProductDetail(id);
+        List<BackLimit> limitList= iProductService.findLimitList(params);
+        List<BackExtend> extendList = iProductService.findExtendList(params);
+        model.addAttribute("limitList",limitList);
+        model.addAttribute("extendList",extendList);
+        model.addAttribute("productDetail",productDetail);
+        return model;
+    }
+
+    /**
+     * 添加产品
+     * @param borrowProductConfig
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="addProduct", method= RequestMethod.POST)
+    @ResponseBody
+    public Model addProduct(BorrowProductConfig borrowProductConfig,Model model){
+        try{
+            iProductService.addProduct(borrowProductConfig);
+            model.addAttribute("result", "success");
+        }catch (Exception e){
+            log.error("添加失败"+e);
+            model.addAttribute("result","error");
+        }
+        return model;
+    }
+    /**
+     * 修改产品
+     * @param borrowProductConfig
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="updateProduct" , method= RequestMethod.POST)
+    @ResponseBody
+    public Model updateProduct(BorrowProductConfig borrowProductConfig,Model model){
+        try{
+            iProductService.updateProduct(borrowProductConfig);
+            model.addAttribute("result","success");
+        }catch(Exception e){
+            log.error("修改失败"+e);
+            model.addAttribute("result","error");
+        }
+        return model;
+    }
+
+    /**
+     * 设置为默认产品
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="openOrCloseProduct" , method= RequestMethod.POST)
+    @ResponseBody
+    public Model openOrCloseProduct(Integer id,Model model){
+        model = iProductService.openOrCloseProduct(id,model);
+        return model;
+    }
+    /**
+     * 续期列表
+     * @param model
+     * @return
+     *//*
+	@RequestMapping(value="getExtendList")
+	@ResponseBody
+	public Model getExtendList(Model  model,HttpServletRequest request){
+        HashMap<String, Object> params = getParametersO(request);
+	    PageConfig<BackExtend> pageConfig = iProductService.getExtendList(params);
+	    model.addAttribute("pm",pageConfig);
+		return model;
+	}*/
+
+    /**
+     * 添加续期
+     * @param backExtend
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="addExtend",method= RequestMethod.POST)
+    @ResponseBody
+    public Model addExtend(BackExtend backExtend,Model model){
+        try{
+            iProductService.addExtend(backExtend);
+            model.addAttribute("result","success");
+        }catch(Exception e){
+            log.error("修改失败"+e);
+            model.addAttribute("result","error");
+        }
+        return model;
+    }
+    /**
+     * 修改续期
+     * @param backExtend
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="updateExtend",method= RequestMethod.POST)
+    @ResponseBody
+    public Model updateExtend(BackExtend backExtend,Model model){
+        try{
+            iProductService.updateExtend(backExtend);
+            model.addAttribute("result","success");
+        }catch(Exception e){
+            log.error("修改失败"+e);
+            model.addAttribute("result","error");
+        }
+        return model;
+    }
+    /**
+     * 提额列表
+     * @param model
+     * @return
+     *//*
+	@RequestMapping(value="getLimitList")
+	@ResponseBody
+	public Model getLimitList(Model  model,HttpServletRequest request){
+        HashMap<String, Object> params = getParametersO(request);
+        PageConfig<BackLimit> pageConfig = iProductService.getLimitList(params);
+        model.addAttribute("pm",pageConfig);
+		return model;
+	}*/
+    /**
+     * 添加提额
+     * @param backLimit
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="addBackLimit",method= RequestMethod.POST)
+    @ResponseBody
+    public Model addBackLimit(BackLimit backLimit,Model model){
+        try{
+            iProductService.addLimit(backLimit);
+            model.addAttribute("result", "success");
+        }catch (Exception e){
+            log.error("添加失败"+e);
+            model.addAttribute("result","error");
+        }
+        return model;
+    }
+    /**
+     * 修改提额
+     * @param backLimit
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="updateBackLimit",method= RequestMethod.POST)
+    @ResponseBody
+    public Model updateBackLimit(BackLimit backLimit,Model model){
+        try{
+            iProductService.updateLimit(backLimit);
+            model.addAttribute("result","success");
+        }catch(Exception e){
+            log.error("修改失败"+e);
+            model.addAttribute("result","error");
+        }
+        return model;
+    }
+
 }
