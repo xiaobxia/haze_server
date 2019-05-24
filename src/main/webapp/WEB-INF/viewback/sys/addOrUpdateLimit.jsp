@@ -24,6 +24,14 @@
             </c:if>
           onsubmit="return validateCallback(this, dialogAjaxDone);"
           class="pageForm required-validate">
+        <div class="form-item">
+            <span class="label">提额类型：</span>
+            <input type="text" name="limitName" value=""/>
+        </div>
+        <div class="form-item">
+            <span class="label">提额类型：</span>
+            <input type="text" name="limitName" value=""/>
+        </div>
         <input type="hidden" name="parentId" value="${params.parentId}" />
         <input type="hidden" name = "morCustomerIds" value="${params.morIds}"/>
         <input type="hidden" name = "nigCustomerIds" value="${params.nigIds}"/>
