@@ -63,7 +63,10 @@
                     还款几次可提额
                 </th>
                 <th>
-                    产品名称
+                    提额至产品
+                </th>
+                <th>
+                    提额至产品ID
                 </th>
                 <th>
                     备注
@@ -89,6 +92,7 @@
                             ${backLimit.limitCount}
                     </td>
                     <td> ${backLimit.limiitProductName}</td>
+                    <td>${backLimit.limitProductId}</td>
                     <td>
                             ${backLimit.limitRemark}
                     </td>

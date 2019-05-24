@@ -41,6 +41,16 @@
                 <span class="label">借款期限：</span>
                 <input type="text" name="p-borrowDay" id="borrowDay" value="${productDetail.borrowDay}"/>
             </div>
+            <div class="form-item">
+                <span class="label">提额：</span>
+                <select name="limitId" class="textInput">
+                    <option value="">全部</option>
+                    <c:forEach var="limitInfo" items="${limitList}">
+                        <option value="${limitInfo.id}"
+                                <c:if test="${limitInfo.id eq productDetail.limitId}">selected="selected"</c:if> >${limitInfo.id}</option>
+                    </c:forEach>
+                </select>
+            </div>
         </c:if>
         <c:if test="${empty id}">
             <div class="form-item">

@@ -27,7 +27,7 @@
                 <input type="text" name="p-limitCount" id="limitCount" value="${backLimit.limitCount}"/>
             </div>
             <div class="form-item">
-                <span class="label">产品名称：</span>
+                <span class="label">提额至产品：</span>
                 <select name="limitProductId" class="textInput">
                     <option value="">全部</option>
                     <c:forEach var="productInfo" items="${list}">
