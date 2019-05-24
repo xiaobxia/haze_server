@@ -22,6 +22,7 @@ import com.info.back.utils.SpringUtils;
 import com.info.web.controller.BaseController;
 import com.info.web.listener.IndexInit;
 import com.info.web.service.IBackConfigParamsService;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Slf4j
@@ -199,7 +200,7 @@ public class ConfigParamController extends BaseController {
 	 * @param id
 	 * @return
 	 */
-    @RequestMapping(value="getProductDetail")
+    @RequestMapping(value="getProductDetail" , method= RequestMethod.POST)
 	@ResponseBody
 	public Model getProductDetail(Model model,Integer id,HashMap<String,Object> params){
        ProductDetail productDetail = iProductService.getProductDetail(id);
@@ -217,7 +218,7 @@ public class ConfigParamController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="addProduct")
+	@RequestMapping(value="addProduct", method= RequestMethod.POST)
 	@ResponseBody
 	public Model addProduct(BorrowProductConfig borrowProductConfig,Model model){
 		try{
@@ -235,7 +236,7 @@ public class ConfigParamController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="updateProduct")
+	@RequestMapping(value="updateProduct" , method= RequestMethod.POST)
 	@ResponseBody
 	public Model updateProduct(BorrowProductConfig borrowProductConfig,Model model){
 		try{
@@ -254,7 +255,8 @@ public class ConfigParamController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-    @RequestMapping("openOrCloseProduct")
+    @RequestMapping(value="openOrCloseProduct" , method= RequestMethod.POST)
+	@ResponseBody
 	public Model openOrCloseProduct(Integer id,Model model){
          	model = iProductService.openOrCloseProduct(id,model);
 	        return model;
@@ -279,7 +281,8 @@ public class ConfigParamController extends BaseController {
      * @param model
      * @return
      */
-	@RequestMapping(value="addExtend")
+	@RequestMapping(value="addExtend",method= RequestMethod.POST)
+	@ResponseBody
 	public Model addExtend(BackExtend backExtend,Model model){
         try{
             iProductService.addExtend(backExtend);
@@ -296,7 +299,8 @@ public class ConfigParamController extends BaseController {
      * @param model
      * @return
      */
-    @RequestMapping(value="updateExtend")
+    @RequestMapping(value="updateExtend",method= RequestMethod.POST)
+	@ResponseBody
     public Model updateExtend(BackExtend backExtend,Model model){
         try{
             iProductService.updateExtend(backExtend);
@@ -326,7 +330,7 @@ public class ConfigParamController extends BaseController {
      * @param model
      * @return
      */
-    @RequestMapping(value="addBackLimit")
+    @RequestMapping(value="addBackLimit",method= RequestMethod.POST)
     @ResponseBody
     public Model addBackLimit(BackLimit backLimit,Model model){
         try{
@@ -344,7 +348,7 @@ public class ConfigParamController extends BaseController {
      * @param model
      * @return
      */
-    @RequestMapping(value="updateBackLimit")
+    @RequestMapping(value="updateBackLimit",method= RequestMethod.POST)
     @ResponseBody
     public Model updateBackLimit(BackLimit backLimit,Model model){
         try{
