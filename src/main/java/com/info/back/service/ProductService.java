@@ -51,7 +51,7 @@ public class ProductService implements  IProductService {
         borrowProductConfig.setTurstTrial(BigDecimal.valueOf(4000));
         borrowProductConfig.setPlatformLicensing(BigDecimal.valueOf(5000));
         borrowProductConfig.setCollectChannelFee(BigDecimal.valueOf(3000));
-        borrowProductConfig.setCollectChannelFee(BigDecimal.valueOf(3000));
+        borrowProductConfig.setAccountManagerFee(BigDecimal.valueOf(3000));
         borrowProductConfig.setStatus(1);
         borrowProductConfig.setProjectName("haze");
         borrowProductConfig.setCreateTime(new Date());
