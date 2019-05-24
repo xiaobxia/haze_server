@@ -95,7 +95,8 @@
                             ${backExtend.extendCount}
                     </td>
                     <td>
-                            ${backExtend.extendMoney}
+                        <fmt:formatNumber type="number" value="${backExtend.extendMoney / 100}" pattern="0.00"
+                                          maxFractionDigits="0"/>
                     </td>
                     <td>
                             ${backExtend.extendDay}
@@ -109,20 +110,20 @@
                     <td>
                         <c:choose>
                             <c:when test="${backExtend.extendStatus == 0}">
-                                <span>开</span>
+                                <span class="trueBtn">开</span>
                             </c:when>
                             <c:otherwise>
-                                <span>关</span>
+                                <span class="falseBtn">关</span>
                             </c:otherwise>
                         </c:choose>
                     </td>
                     <td>
                         <c:choose>
                             <c:when test="${backExtend.extendStatus == 0}">
-                                <span>关闭</span>
+                                <span class="setBtn" onclick="setPStatus('${backExtend.id}', 1)">关闭</span>
                             </c:when>
                             <c:otherwise>
-                                <span>开启</span>
+                                <span class="setBtn" onclick="setPStatus('${backExtend.id}', 0)">开启</span>
                             </c:otherwise>
                         </c:choose>
                     </td>
@@ -138,4 +139,23 @@
 </form>
 
 <script type="text/javascript">
+    function setPStatus(id, status) {
+        $.ajax({
+            type : "post",
+            dataType: 'json',
+            contentType:"application/json;charset=utf-8",
+            data:{
+                "id":id,
+                extendStatus: status
+            },
+            url : "channel/updateExtend",
+            success : function(ret) {
+                setTimeout(function () {
+                    $('#pagerForm').submit()
+                }, 100)
+            },
+            error:function(ret){
+            }
+        })
+    }
 </script>

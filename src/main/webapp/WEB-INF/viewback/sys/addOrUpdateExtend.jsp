@@ -34,6 +34,10 @@
                 <span class="label">续期天数：</span>
                 <input type="text" name="p-extendDay" id="extendDay" value="${backExtend.extendDay}"/>
             </div>
+            <div class="form-item">
+                <span class="label">备注：</span>
+                <textarea  rows="10" cols="80" name="p-remark" id="remark">${backExtend.remark}</textarea>
+            </div>
             <div class="formBar">
                 <ul>
                     <li><div class="buttonActive">
@@ -65,6 +69,10 @@
             <div class="form-item">
                 <span class="label">续期天数：</span>
                 <input type="text" name="p-extendDay" id="extendDay"/>
+            </div>
+            <div class="form-item">
+                <span class="label">备注：</span>
+                <textarea  rows="10" cols="80" name="p-remark" id="remark"/>
             </div>
             <div class="formBar">
                 <ul>
@@ -100,8 +108,9 @@
                 "id":$("[name='p-id']").val(),
                 "extendName":$("[name='p-extendName']").val(),
                 "extendCount":$("[name='p-extendCount']").val(),
-                "extendMoney":$("[name='p-extendMoney']").val(),
-                "extendDay":$("[name='p-extendDay']").val()
+                "extendMoney":$("[name='p-extendMoney']").val() * 100,
+                "extendDay":$("[name='p-extendDay']").val(),
+                "remark":$("[name='p-remark']").val()
             },
             url : postUrl,
             success : function(ret) {

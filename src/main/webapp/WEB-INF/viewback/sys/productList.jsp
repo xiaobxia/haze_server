@@ -83,6 +83,9 @@
                 <th>
                     默认管理
                 </th>
+                <th>
+                    操作
+                </th>
             </tr>
             </thead>
             <tbody>
@@ -182,7 +185,7 @@
                     "id":id,
                     dealFlag: 'y'
                 },
-                url : "channel/openOrCloseProduct",
+                url : "channel/updateProduct",
                 success : function(ret) {
                     setTimeout(function () {
                         $('#pagerForm').submit()

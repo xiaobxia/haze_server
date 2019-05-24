@@ -31,8 +31,8 @@
                 <select name="limitProductId" class="textInput">
                     <option value="">全部</option>
                     <c:forEach var="productInfo" items="${list}">
-                        <option value="${productInfo.limitProductId}"
-                                <c:if test="${productInfo.limitProductId eq backLimit.limitProductId}">selected="selected"</c:if> >${productInfo.limitProductId}</option>
+                        <option value="${productInfo.productId}"
+                                <c:if test="${productInfo.productId eq backLimit.limitProductId}">selected="selected"</c:if> >${productInfo.productId}</option>
                     </c:forEach>
                 </select>
             </div>
