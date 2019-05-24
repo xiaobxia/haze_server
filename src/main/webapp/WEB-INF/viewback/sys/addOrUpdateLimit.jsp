@@ -97,6 +97,12 @@
             url : postUrl,
             success : function(ret) {
                 if(ret.code == '200'){
+                    $('div[class="dialog"]').hide();
+                    $('div[class="shadow"]').hide();
+                    $('div[id="dialogBackground"]').hide();
+                    setTimeout(function () {
+                        $('#pagerForm-l').submit()
+                    }, 100)
                 }else{
                 }
             },
