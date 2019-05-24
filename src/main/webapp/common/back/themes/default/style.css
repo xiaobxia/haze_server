@@ -554,3 +554,21 @@ body, #splitBar { background:#32374A;}
 .green-click-btn a {
     color: #00832E!important;
 }
+
+.trueBtn {
+    padding: 5px 10px;
+    background-color: #10AA72;
+    color: #fff;
+}
+
+.falseBtn {
+    padding: 5px 10px;
+    background-color: #313743;
+    color: #fff;
+}
+
+.setBtn {
+    padding: 5px 20px;
+    background-color: #1E6BFF;
+    color: #fff;
+}

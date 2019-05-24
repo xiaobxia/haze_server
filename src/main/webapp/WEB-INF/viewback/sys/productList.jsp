@@ -121,20 +121,20 @@
                     <td>
                         <c:choose>
                             <c:when test="${product.status == 0}">
-                                <span>是</span>
+                                <span class="trueBtn">是</span>
                             </c:when>
                             <c:otherwise>
-                                <span>否</span>
+                                <span class="falseBtn">否</span>
                             </c:otherwise>
                         </c:choose>
                     </td>
                     <td>
                         <c:choose>
                             <c:when test="${product.status == 0}">
-                                <span>置为否</span>
+                                <span class="setBtn">置为否</span>
                             </c:when>
                             <c:otherwise>
-                                <span>置为是</span>
+                                <span class="setBtn">置为是</span>
                             </c:otherwise>
                         </c:choose>
                     </td>
