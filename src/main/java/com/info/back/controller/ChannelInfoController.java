@@ -1888,20 +1888,18 @@ public class ChannelInfoController extends BaseController {
     /**
      * 添加产品
      * @param borrowProductConfig
-     * @param model
      * @return
      */
     @RequestMapping(value="addProduct")
     @ResponseBody
-    public Model addProduct(BorrowProductConfig borrowProductConfig,Model model){
+    public Result addProduct(BorrowProductConfig borrowProductConfig){
         try{
             iProductService.addProduct(borrowProductConfig);
-            model.addAttribute("result", "success");
+            return Result.success();
         }catch (Exception e){
             log.error("添加失败"+e);
-            model.addAttribute("result","error");
+            return Result.error("添加失败");
         }
-        return model;
     }
     /**
      * 修改产品
@@ -1911,27 +1909,30 @@ public class ChannelInfoController extends BaseController {
      */
     @RequestMapping(value="updateProduct")
     @ResponseBody
-    public Model updateProduct(BorrowProductConfig borrowProductConfig,Model model){
+    public Result updateProduct(BorrowProductConfig borrowProductConfig){
         try{
             iProductService.updateProduct(borrowProductConfig);
-            model.addAttribute("result","success");
+            return Result.success();
         }catch(Exception e){
             log.error("修改失败"+e);
-            model.addAttribute("result","error");
+            return Result.error("修改失败");
         }
-        return model;
     }
 
     /**
      * 设置为默认产品
      * @param id
-     * @param model
      * @return
      */
     @RequestMapping(value="openOrCloseProduct")
-    public Model openOrCloseProduct(Integer id,Model model,HttpServletRequest request){
-        model = iProductService.openOrCloseProduct(id,model);
-        return model;
+    public Result openOrCloseProduct(Integer id){
+        try {
+            iProductService.openOrCloseProduct(id);
+            return Result.success();
+        } catch (Exception e) {
+            log.error("设置为默认产品"+e);
+            return Result.error("设置为默认产品出错");
+        }
     }
     /**
      * 续期列表
@@ -1950,38 +1951,34 @@ public class ChannelInfoController extends BaseController {
     /**
      * 添加续期
      * @param backExtend
-     * @param model
      * @return
      */
     @RequestMapping(value="addExtend")
     @ResponseBody
-    public Model addExtend(BackExtend backExtend,Model model){
+    public Result addExtend(BackExtend backExtend){
         try{
             iProductService.addExtend(backExtend);
-            model.addAttribute("result","success");
+            return Result.success();
         }catch(Exception e){
             log.error("修改失败"+e);
-            model.addAttribute("result","error");
+            return Result.error("修改失败");
         }
-        return model;
     }
     /**
      * 修改续期
      * @param backExtend
-     * @param model
      * @return
      */
     @RequestMapping(value="updateExtend")
     @ResponseBody
-    public Model updateExtend(BackExtend backExtend,Model model){
+    public Result updateExtend(BackExtend backExtend){
         try{
             iProductService.updateExtend(backExtend);
-            model.addAttribute("result","success");
+            return Result.success();
         }catch(Exception e){
             log.error("修改失败"+e);
-            model.addAttribute("result","error");
+            return Result.error("修改失败");
         }
-        return model;
     }
     /**
      * 提额列表
@@ -1999,38 +1996,34 @@ public class ChannelInfoController extends BaseController {
     /**
      * 添加提额
      * @param backLimit
-     * @param model
      * @return
      */
     @RequestMapping(value="addBackLimit")
     @ResponseBody
-    public Model addBackLimit(BackLimit backLimit,Model model){
+    public Result addBackLimit(BackLimit backLimit){
         try{
             iProductService.addLimit(backLimit);
-            model.addAttribute("result", "success");
+            return Result.success();
         }catch (Exception e){
             log.error("添加失败"+e);
-            model.addAttribute("result","error");
+            return Result.error("添加失败");
         }
-        return model;
     }
     /**
      * 修改提额
      * @param backLimit
-     * @param model
      * @return
      */
     @RequestMapping(value="updateBackLimit")
     @ResponseBody
-    public Model updateBackLimit(BackLimit backLimit,Model model){
+    public Result updateBackLimit(BackLimit backLimit){
         try{
             iProductService.updateLimit(backLimit);
-            model.addAttribute("result","success");
+            return Result.success();
         }catch(Exception e){
             log.error("修改失败"+e);
-            model.addAttribute("result","error");
+            return Result.error("修改失败");
         }
-        return model;
     }
     /**
      * 指向续期页面

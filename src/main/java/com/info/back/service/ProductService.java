@@ -130,7 +130,7 @@ public class ProductService implements  IProductService {
     }
 
     @Override
-    public Model openOrCloseProduct(Integer id, Model model) {
+    public void openOrCloseProduct(Integer id) throws Exception {
         try{
             //修改此id为默认产品
             BorrowProductConfig borrowProductConfig = new BorrowProductConfig();
@@ -148,11 +148,9 @@ public class ProductService implements  IProductService {
                     borrowProductConfigDao.updateByPrimaryKeySelective(borrowProductConfig);
                 }
             }
-            model.addAttribute("result","success");
         }catch (Exception e){
             log.error("修改为默认产品出错"+e.getMessage());
-            model.addAttribute("result","error");
+            throw new Exception("修改为默认产品出错");
         }
-        return model;
     }
 }

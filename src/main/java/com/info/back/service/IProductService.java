@@ -41,5 +41,5 @@ public interface IProductService{
 	void updateExtend(BackExtend backExtend);
 	BackExtend findExtend(Integer id);
 	BackLimit findLimit(Integer id);
-	Model openOrCloseProduct(Integer id, Model model);
+	void openOrCloseProduct(Integer id) throws Exception;
 }
