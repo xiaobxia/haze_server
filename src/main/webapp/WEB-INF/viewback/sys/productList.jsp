@@ -101,8 +101,12 @@
                         <fmt:formatNumber type="number" value="${product.borrowAmount/100}" pattern="0.00"
                                           maxFractionDigits="0"/>
                     </td>
-                    <td>
+                   <%-- <td>
                         <fmt:formatNumber type="number" value="${product.borrowAmount * (1 - product.totalFeeRate/100000)/100}" pattern="0.00"
+                                          maxFractionDigits="0"/>
+                    </td>--%>
+                    <td>
+                        <fmt:formatNumber type="number" value="${product.borrowAmount/100 - product.totalFeeRate/100}" pattern="0.00"
                                           maxFractionDigits="0"/>
                     </td>
                     <td>
@@ -142,7 +146,14 @@
                         </c:choose>
                     </td>
                     <td>
-                        <span class="deleteBtn" onclick="setPDelete('${product.productId }')">删除</span>
+                        <c:choose>
+                            <c:when test="${product.status == 0}">
+                                <span class="deleteBtn disabled">删除</span>
+                            </c:when>
+                            <c:otherwise>
+                                <span class="deleteBtn" onclick="setPDelete('${product.productId }')">删除</span>
+                            </c:otherwise>
+                        </c:choose>
                     </td>
                 </tr>
             </c:forEach>

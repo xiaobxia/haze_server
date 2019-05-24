@@ -587,6 +587,12 @@ body, #splitBar { background:#32374A;}
     color: #fff;
     cursor: pointer;
 }
+.deleteBtn.disabled {
+    padding: 5px 10px;
+    background-color: #bbb;
+    color: #fff;
+    cursor: not-allowed;
+}
 
 .pageContent.new {
     height: 100%;

@@ -21,6 +21,7 @@ import com.info.web.util.encrypt.AESUtil;
 import com.info.web.util.encrypt.MD5coding;
 import com.liquan.oss.OSSModel;
 import com.liquan.oss.OSSUpload;
+import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
@@ -1925,6 +1926,7 @@ public class ChannelInfoController extends BaseController {
      * @return
      */
     @RequestMapping(value="openOrCloseProduct")
+    @ResponseBody
     public Result openOrCloseProduct(Integer id){
         try {
             iProductService.openOrCloseProduct(id);
