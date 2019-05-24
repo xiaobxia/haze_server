@@ -2,6 +2,7 @@ package com.info.back.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -205,7 +206,7 @@ public class ConfigParamController extends BaseController {
 	 * @param model
 	 * @param id
 	 * @return
-	 */
+	 *//*
     @RequestMapping(value="getProductDetail" , method= RequestMethod.POST)
 	@ResponseBody
 	public Model getProductDetail(Model model,Integer id,HashMap<String,Object> params){
@@ -218,12 +219,12 @@ public class ConfigParamController extends BaseController {
        return model;
 	}
 
-	/**
+	*//**
 	 * 添加产品
 	 * @param borrowProductConfig
 	 * @param model
 	 * @return
-	 */
+	 *//*
 	@RequestMapping(value="addProduct", method= RequestMethod.POST)
 	@ResponseBody
 	public Model addProduct(BorrowProductConfig borrowProductConfig,Model model){
@@ -236,12 +237,12 @@ public class ConfigParamController extends BaseController {
 		}
 		return model;
 	}
-	/**
+	*//**
 	 * 修改产品
 	 * @param borrowProductConfig
 	 * @param model
 	 * @return
-	 */
+	 *//*
 	@RequestMapping(value="updateProduct" , method= RequestMethod.POST)
 	@ResponseBody
 	public Model updateProduct(BorrowProductConfig borrowProductConfig,Model model){
@@ -255,23 +256,23 @@ public class ConfigParamController extends BaseController {
 		return model;
 	}
 
-	/**
+	*//**
 	 * 设置为默认产品
 	 * @param id
 	 * @param model
 	 * @return
-	 */
+	 *//*
     @RequestMapping(value="openOrCloseProduct" , method= RequestMethod.POST)
 	@ResponseBody
 	public Model openOrCloseProduct(Integer id,Model model){
          	model = iProductService.openOrCloseProduct(id,model);
 	        return model;
 	}
-	/**
+	*//**
 	 * 续期列表
 	 * @param model
 	 * @return
-	 *//*
+	 *//**//*
 	@RequestMapping(value="getExtendList")
 	@ResponseBody
 	public Model getExtendList(Model  model,HttpServletRequest request){
@@ -279,14 +280,14 @@ public class ConfigParamController extends BaseController {
 	    PageConfig<BackExtend> pageConfig = iProductService.getExtendList(params);
 	    model.addAttribute("pm",pageConfig);
 		return model;
-	}*/
+	}*//*
 
-    /**
+    *//**
      * 添加续期
      * @param backExtend
      * @param model
      * @return
-     */
+     *//*
 	@RequestMapping(value="addExtend",method= RequestMethod.POST)
 	@ResponseBody
 	public Model addExtend(BackExtend backExtend,Model model){
@@ -299,12 +300,12 @@ public class ConfigParamController extends BaseController {
         }
         return model;
     }
-    /**
+    *//**
      * 修改续期
      * @param backExtend
      * @param model
      * @return
-     */
+     *//*
     @RequestMapping(value="updateExtend",method= RequestMethod.POST)
 	@ResponseBody
     public Model updateExtend(BackExtend backExtend,Model model){
@@ -317,11 +318,11 @@ public class ConfigParamController extends BaseController {
         }
         return model;
     }
-	/**
+	*//**
 	 * 提额列表
 	 * @param model
 	 * @return
-	 *//*
+	 *//**//*
 	@RequestMapping(value="getLimitList")
 	@ResponseBody
 	public Model getLimitList(Model  model,HttpServletRequest request){
@@ -329,13 +330,13 @@ public class ConfigParamController extends BaseController {
         PageConfig<BackLimit> pageConfig = iProductService.getLimitList(params);
         model.addAttribute("pm",pageConfig);
 		return model;
-	}*/
-    /**
+	}*//*
+    *//**
      * 添加提额
      * @param backLimit
      * @param model
      * @return
-     */
+     *//*
     @RequestMapping(value="addBackLimit",method= RequestMethod.POST)
     @ResponseBody
     public Model addBackLimit(BackLimit backLimit,Model model){
@@ -348,12 +349,12 @@ public class ConfigParamController extends BaseController {
         }
         return model;
     }
-    /**
+    *//**
      * 修改提额
      * @param backLimit
      * @param model
      * @return
-     */
+     *//*
     @RequestMapping(value="updateBackLimit",method= RequestMethod.POST)
     @ResponseBody
     public Model updateBackLimit(BackLimit backLimit,Model model){
@@ -365,6 +366,6 @@ public class ConfigParamController extends BaseController {
             model.addAttribute("result","error");
         }
         return model;
-    }
+    }*/
 
 }
