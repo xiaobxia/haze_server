@@ -98,9 +98,12 @@
             },
             url : postUrl,
             success : function(ret) {
-                if(ret.code == '200'){
-                }else{
-                }
+                $('div[class="dialog"]').hide();
+                $('div[class="shadow"]').hide();
+                $('div[id="dialogBackground"]').hide();
+                setTimeout(function () {
+                    $('#pagerForm-e').submit()
+                }, 100)
             },
             error:function(ret){
             }

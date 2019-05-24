@@ -27,12 +27,16 @@
                 <input type="text" name="l-limitCount" id="limitCount" value="${backLimit.limitCount}"/>
             </div>
             <div class="form-item">
+                <span class="label">备注：</span>
+                <input type="text" name="l-limitRemark" id="limitRemark" value="${backLimit.limitRemark}"/>
+            </div>
+            <div class="form-item">
                 <span class="label">提额至产品：</span>
                 <select name="l-limitProductId" class="textInput">
                     <option value="">全部</option>
                     <c:forEach var="productInfo" items="${list}">
                         <option value="${productInfo.productId}"
-                                <c:if test="${productInfo.productId eq backLimit.limitProductId}">selected="selected"</c:if> >${productInfo.productId}</option>
+                                <c:if test="${productInfo.productId eq backLimit.limitProductId}">selected="selected"</c:if> >${productInfo.productName}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -55,7 +59,7 @@
                 <select name="l-limitProductId" class="textInput">
                     <option value="">全部</option>
                     <c:forEach var="productInfo" items="${list}">
-                        <option value="${productInfo.productId}">${productInfo.productId}</option>
+                        <option value="${productInfo.productId}">${productInfo.productName}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -96,15 +100,12 @@
             },
             url : postUrl,
             success : function(ret) {
-                if(ret.code == '200'){
-                    $('div[class="dialog"]').hide();
-                    $('div[class="shadow"]').hide();
-                    $('div[id="dialogBackground"]').hide();
-                    setTimeout(function () {
-                        $('#pagerForm-l').submit()
-                    }, 100)
-                }else{
-                }
+                $('div[class="dialog"]').hide();
+                $('div[class="shadow"]').hide();
+                $('div[id="dialogBackground"]').hide();
+                setTimeout(function () {
+                    $('#pagerForm-l').submit()
+                }, 100)
             },
             error:function(ret){
             }

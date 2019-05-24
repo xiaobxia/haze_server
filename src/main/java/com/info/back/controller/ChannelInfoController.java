@@ -2059,12 +2059,12 @@ public class ChannelInfoController extends BaseController {
      */
     @RequestMapping("toAddOrUpdateProduct")
     public String toAddOrUpdateProduct(Integer id,Model model,HashMap<String,Object> params){
+        List<BackLimit> limitList= iProductService.findLimitList(params);
+        List<BackExtend> extendList = iProductService.findExtendList(params);
+        model.addAttribute("limitList",limitList);
+        model.addAttribute("extendList",extendList);
         if(id != null){
             ProductDetail productDetail = iProductService.getProductDetail(id);
-            List<BackLimit> limitList= iProductService.findLimitList(params);
-            List<BackExtend> extendList = iProductService.findExtendList(params);
-            model.addAttribute("limitList",limitList);
-            model.addAttribute("extendList",extendList);
             model.addAttribute("productDetail",productDetail);
             model.addAttribute("id",id);
             return "sys/addOrUpdateProduct";

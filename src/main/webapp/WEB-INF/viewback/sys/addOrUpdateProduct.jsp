@@ -43,11 +43,21 @@
             </div>
             <div class="form-item">
                 <span class="label">提额：</span>
-                <select name="limitId" class="textInput">
+                <select name="p-limitId" class="textInput">
                     <option value="">全部</option>
                     <c:forEach var="limitInfo" items="${limitList}">
                         <option value="${limitInfo.id}"
-                                <c:if test="${limitInfo.id eq productDetail.limitId}">selected="selected"</c:if> >${limitInfo.id}</option>
+                                <c:if test="${limitInfo.id eq productDetail.limitId}">selected="selected"</c:if> >${limitInfo.limitName}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <div class="form-item">
+                <span class="label">展期：</span>
+                <select name="p-extendId" class="textInput">
+                    <option value="">全部</option>
+                    <c:forEach var="extendInfo" items="${extendList}">
+                        <option value="${extendInfo.id}"
+                                <c:if test="${extendInfo.id eq productDetail.extendId}">selected="selected"</c:if> >${extendInfo.extendName}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -72,6 +82,24 @@
             <div class="form-item">
                 <span class="label">借款期限：</span>
                 <input type="text" name="p-borrowDay" id="borrowDay"/>
+            </div>
+            <div class="form-item">
+                <span class="label">提额：</span>
+                <select name="p-limitId" class="textInput">
+                    <option value="">全部</option>
+                    <c:forEach var="limitInfo" items="${limitList}">
+                        <option value="${limitInfo.id}">${limitInfo.limitName}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <div class="form-item">
+                <span class="label">展期：</span>
+                <select name="p-extendId" class="textInput">
+                    <option value="">全部</option>
+                    <c:forEach var="extendInfo" items="${extendList}">
+                        <option value="${extendInfo.id}">${extendInfo.extendName}</option>
+                    </c:forEach>
+                </select>
             </div>
         </c:if>
     </div>
@@ -107,13 +135,18 @@
                 "borrowAmount":$("[name='p-borrowAmount']").val() * 100,
                 "lateFee":$("[name='p-lateFee']").val() * 100,
                 "borrowDay":$("[name='p-borrowDay']").val(),
-                "totalFeeRate":($("[name='p-borrowAmount']").val() - $("[name='p-daozhang']").val()) * 100
+                "totalFeeRate":($("[name='p-borrowAmount']").val() - $("[name='p-daozhang']").val()) * 100,
+                "limitId":$("[name='p-limitId']").val(),
+                "extendId":$("[name='p-extendId']").val()
             },
             url : postUrl,
             success : function(ret) {
-                if(ret.code == '200'){
-                }else{
-                }
+                $('div[class="dialog"]').hide();
+                $('div[class="shadow"]').hide();
+                $('div[id="dialogBackground"]').hide();
+                setTimeout(function () {
+                    $('#pagerForm-p').submit()
+                }, 100)
             },
             error:function(ret){
             }
