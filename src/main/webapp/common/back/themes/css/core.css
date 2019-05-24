@@ -401,7 +401,7 @@ span.error { display:block; overflow:hidden; width:auto; height:21px; padding:0 
 label.alt {display:block; overflow:hidden; position:absolute;line-height:20px}
 
 /* Button */
-.button, .buttonActive, .buttonDisabled { float:left; display:block; overflow:hidden; height:25px; padding:0 18px;}
+.button, .buttonActive, .buttonDisabled { float:left; display:block; overflow:hidden; height:25px;}
 
 .button span, .buttonDisabled span, .buttonActive span,
 .button .buttonContent, .buttonHover, .buttonHover .buttonContent,
@@ -428,7 +428,7 @@ label.alt {display:block; overflow:hidden; position:absolute;line-height:20px}
 .buttonDisabled .buttonContent { padding:0 5px 0 0; background-position:100% -450px;}
 
 .button button, .buttonHover button,
-.buttonActive button, .buttonDisabled button { width:auto; height:25px; margin:0; padding:0 0 5px 0; border:0; font-size:12px; font-weight:bold; background:none; cursor:pointer;color: #fff;}
+.buttonActive button, .buttonDisabled button { width:auto; height:25px; margin:0; padding:0 0 5px 0; border:0; font-size:12px; font-weight:bold; background:none; cursor:pointer;color: #fff; padding: 0 18px;}
 .buttonDisabled button { cursor:default;}
 
 /* ----------------------------------------------------------------- Pages */

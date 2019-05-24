@@ -75,7 +75,7 @@
 				<%--	<th align="center"  >
 						是否是老用户
 					</th>--%>
-					<th>
+					<th align="center">
 						成功放款次数
 					</th>
 					<th align="center" >
@@ -129,7 +129,7 @@
 							<c:if test="${detail.customerType == '0'}">新用户</c:if>
 							<c:if test="${detail.customerType == '1'}">老用户</c:if>
 						</td>--%>
-						<td>
+						<td class="loanSuccessCount">
 							${detail.loanCount}
 						</td>
 						<td>
@@ -196,5 +196,10 @@
 		var overdueStatus=$("#overdueStatus").val();
 		var toHref = href + "&userAccountLike=" + userAccountLike + "&userMobileLike=" + userMobileLike + "&overdueStatus=" + overdueStatus + statuses;
 		$(obj).attr("href",toHref);
+	}
+	if (renderLoanSuccessCount) {
+		setTimeout(function () {
+			renderLoanSuccessCount()
+		}, 200)
 	}
 </script>

@@ -101,9 +101,12 @@ public class ConfigParamController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("goLimitList")
-	public String getLimitList(Model model,HashMap<String,Object> params){
+	public String getLimitList(Model model,HttpServletResponse response, HttpServletRequest request){
+		HashMap<String, Object> params = this.getParametersO(request);
 	    List<BackLimit> list = iProductService.findLimitList(params);
 	    model.addAttribute("limitList",list);
+	    System.out.println(list);
+		model.addAttribute("params",params);
 		return "sys/limitList";
 	}
     /**
@@ -306,7 +309,7 @@ public class ConfigParamController extends BaseController {
 	@RequestMapping(value="getLimitList")
 	@ResponseBody
 	public Model getLimitList(Model  model,HttpServletRequest request){
-        HashMap<String, Object> params = getParametersO(request);
+        HashMap<String, Object> params = this.getParametersO(request);
         PageConfig<BackLimit> pageConfig = iProductService.getLimitList(params);
         model.addAttribute("pm",pageConfig);
 		return model;

@@ -87,7 +87,7 @@
                     </td>
                     <td>
                         <c:choose>
-                            <c:when test="${status == 0}">
+                            <c:when test="${product.status == 0}">
                                 <span>是</span>
                             </c:when>
                             <c:otherwise>
@@ -97,11 +97,11 @@
                     </td>
                     <td>
                         <c:choose>
-                            <c:when test="${status == 0}">
-                                <span>是</span>
+                            <c:when test="${product.status == 0}">
+                                <span>置为否</span>
                             </c:when>
                             <c:otherwise>
-                                <span>否</span>
+                                <span>置为是</span>
                             </c:otherwise>
                         </c:choose>
                     </td>
