@@ -154,10 +154,11 @@ public class ConfigParamController extends BaseController {
      * @return
      */
     @RequestMapping("toAddOrUpdateExtend")
-    public String toAddOrUpdateExtend(Integer id,Model model){
+    public String toAddOrUpdateExtend(Integer id,Model model, HashMap<String,Object> params){
         if(id != null ){
            BackExtend backExtend = iProductService.findExtend(id);
            model.addAttribute("backExtend",backExtend);
+		   model.addAttribute("id",id);
            return "sys/addOrUpdateExtend";
         }
      return "sys/addOrUpdateExtend";
@@ -178,6 +179,7 @@ public class ConfigParamController extends BaseController {
             model.addAttribute("backLimit",backLimit);
             model.addAttribute("productDetail",productDetail);
             model.addAttribute("list",list);
+			model.addAttribute("id",id);
             return "sys/addOrUpdateLimit";
         }
         model.addAttribute("list",list);

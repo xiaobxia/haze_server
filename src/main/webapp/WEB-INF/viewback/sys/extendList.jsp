@@ -25,11 +25,11 @@
                     </td>
                     <td>
                         续期天数:
-                        <select name="extendName" class="textInput">
+                        <select name="extendDay" class="textInput">
                             <option value="">全部</option>
                             <c:forEach var="extendInfo" items="${extendList}">
-                                <option value="${extendInfo.extendName}"
-                                        <c:if test="${extendInfo.extendName eq params.extendName}">selected="selected"</c:if> >${extendInfo.extendName}</option>
+                                <option value="${extendInfo.extendDay}"
+                                        <c:if test="${extendInfo.extendDay eq params.extendDay}">selected="selected"</c:if> >${extendInfo.extendDay}</option>
                             </c:forEach>
                         </select>
                     </td>
@@ -68,6 +68,18 @@
                 <th>
                     续期天数
                 </th>
+                <th>
+                    续期次数
+                </th>
+                <th>
+                    备注
+                </th>
+                <th>
+                    状态
+                </th>
+                <th>
+                    状态管理
+                </th>
             </tr>
             </thead>
             <tbody>
@@ -92,8 +104,11 @@
                             ${backExtend.extendCount}
                     </td>
                     <td>
+                            ${backExtend.remark}
+                    </td>
+                    <td>
                         <c:choose>
-                            <c:when test="${backExtend.limitStatus == 0}">
+                            <c:when test="${backExtend.extendStatus == 0}">
                                 <span>开</span>
                             </c:when>
                             <c:otherwise>
@@ -103,7 +118,7 @@
                     </td>
                     <td>
                         <c:choose>
-                            <c:when test="${backExtend.limitStatus == 0}">
+                            <c:when test="${backExtend.extendStatus == 0}">
                                 <span>关闭</span>
                             </c:when>
                             <c:otherwise>

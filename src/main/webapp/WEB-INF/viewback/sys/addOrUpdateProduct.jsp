@@ -24,25 +24,22 @@
             </div>
             <div class="form-item">
                 <span class="label">产品金额：</span>
-                <input type="text" name="p-borrowAmount" id="borrowAmount" value="<fmt:formatNumber type="number" value="${product.borrowAmount/100}" pattern="0.00"
+                <input type="text" name="p-borrowAmount" id="borrowAmount" value="<fmt:formatNumber type="number" value="${productDetail.borrowAmount/100}" pattern="0.00"
                                           maxFractionDigits="0"/>"/>
             </div>
             <div class="form-item">
                 <span class="label">到账金额：</span>
-                <input type="text" name="p-daozhang" id="daozhang" value="<fmt:formatNumber type="number" value="${product.borrowAmount * (1 - product.totalFeeRate/100000)/100}" pattern="0.00"
+                <input type="text" name="p-daozhang" id="daozhang" value="<fmt:formatNumber type="number" value="${productDetail.borrowAmount * (1 - productDetail.totalFeeRate/100000)/100}" pattern="0.00"
                                           maxFractionDigits="0"/>"/>
             </div>
             <div class="form-item">
                 <span class="label">滞纳金：</span>
-                <input type="text" name="p-lateFee" id="lateFee" value="${productDetail.lateFee}"/>
+                <input type="text" name="p-lateFee" id="lateFee" value="<fmt:formatNumber type="number" value="${productDetail.lateFee/100}" pattern="0.00"
+                                          maxFractionDigits="0"/>"/>
             </div>
             <div class="form-item">
                 <span class="label">借款期限：</span>
                 <input type="text" name="p-borrowDay" id="borrowDay" value="${productDetail.borrowDay}"/>
-            </div>
-            <div class="form-item">
-                <span class="label">备注：</span>
-                <textarea  rows="10" cols="80" name="p-remark" id="remark" value="${productDetail.remark}"/>
             </div>
             <div class="formBar">
                 <ul>
@@ -80,10 +77,6 @@
                 <span class="label">借款期限：</span>
                 <input type="text" name="p-borrowDay" id="borrowDay"/>
             </div>
-            <div class="form-item">
-                <span class="label">备注：</span>
-                <textarea  rows="10" cols="80" name="p-remark" id="remark"/>
-            </div>
             <div class="formBar">
                 <ul>
                     <li><div class="buttonActive">
@@ -120,7 +113,6 @@
                 "borrowAmount":$("[name='p-borrowAmount']").val() * 100,
                 "lateFee":$("[name='p-lateFee']").val() * 100,
                 "borrowDay":$("[name='p-borrowDay']").val(),
-                "remark":$("[name='p-remark']").val(),
                 "totalFeeRate":($("[name='p-borrowAmount']").val() - $("[name='p-daozhang']").val()) * 100
             },
             url : postUrl,

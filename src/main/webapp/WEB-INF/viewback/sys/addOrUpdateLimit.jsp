@@ -15,42 +15,100 @@
 </head>
 <body>
 <div class="pageContent">
-    <form id="frm" method="post" enctype="multipart/form-data"
-            <c:if test="${not empty id}">
-                action="configParams/updateBackLimit"
-            </c:if>
-            <c:if test="${empty id}">
-                action="configParams/addBackLimit"
-            </c:if>
-          onsubmit="return validateCallback(this, dialogAjaxDone);"
-          class="pageForm required-validate">
-        <div class="form-item">
-            <span class="label">提额类型：</span>
-            <input type="text" name="limitName"/>
-        </div>
-        <div class="form-item">
-            <span class="label">还款几次可提额：</span>
-            <input type="text" name="limitCount"/>
-        </div>
-        <div class="form-item">
-            <span class="label">提额状态：</span>
-            <select name="limitStatus" class="textInput">
-                <option value="0">开启</option>
-                <option value="1">关闭</option>
-            </select>
-        </div>
-        <div class="form-item">
-            <span class="label">提额产品：</span>
-            <input type="text" name="limiitProductName"/>
-        </div>
-        <div class="form-item">
-            <span class="label">提额产品：</span>
-            <textarea  rows="10" cols="80" name="limiitProductName"/>
-        </div>
-    </form>
+    <div class="pageForm required-validate">
+        <c:if test="${not empty id}">
+            <input type="hidden" name="p-id" id="p-id" value="${id}"/>
+            <div class="form-item">
+                <span class="label">提额类型：</span>
+                <input type="text" name="p-limitName" id="limitName" value="${backLimit.limitName}"/>
+            </div>
+            <div class="form-item">
+                <span class="label">还款几次可提额：</span>
+                <input type="text" name="p-limitCount" id="limitCount" value="${backLimit.limitCount}"/>
+            </div>
+            <div class="form-item">
+                <span class="label">产品名称：</span>
+                <select name="limitProductId" class="textInput">
+                    <option value="">全部</option>
+                    <c:forEach var="productInfo" items="${list}">
+                        <option value="${productInfo.limitProductId}"
+                                <c:if test="${productInfo.limitProductId eq backLimit.limitProductId}">selected="selected"</c:if> >${productInfo.limitProductId}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <div class="formBar">
+                <ul>
+                    <li><div class="buttonActive">
+                        <div class="buttonContent">
+                            <button type="submit" id="p-submit">提交</button>
+                        </div>
+                    </div></li>
+                    <li><div class="button">
+                        <div class="buttonContent">
+                            <button type="button" class="close">取消</button>
+                        </div>
+                    </div></li>
+                </ul>
+            </div>
+        </c:if>
+        <c:if test="${empty id}">
+            <div class="form-item">
+                <span class="label">提额类型：</span>
+                <input type="text" name="p-limitName" id="limitName"/>
+            </div>
+            <div class="form-item">
+                <span class="label">还款几次可提额：</span>
+                <input type="text" name="p-limitCount" id="limitCount"/>
+            </div>
+            <div class="form-item">
+                <span class="label">备注：</span>
+                <textarea  rows="10" cols="80" name="p-limitRemark" id="limitRemark"/>
+            </div>
+            <div class="formBar">
+                <ul>
+                    <li><div class="buttonActive">
+                        <div class="buttonContent">
+                            <button type="submit" id="p-submit">提交</button>
+                        </div>
+                    </div></li>
+                    <li><div class="button">
+                        <div class="buttonContent">
+                            <button type="button" class="close">取消</button>
+                        </div>
+                    </div></li>
+                </ul>
+            </div>
+        </c:if>
+    </div>
 </div>
 </body>
 <script type="text/javascript">
-
+    <c:if test="${not empty id}">
+    var postUrl = "configParams/updateBackLimit"
+    </c:if>
+    <c:if test="${empty id}">
+    var postUrl = "configParams/addBackLimit"
+    </c:if>
+    $('#p-submit').click(function () {
+        $.ajax({
+            type : "post",
+            dataType: 'json',
+            contentType:"application/json;charset=utf-8",
+            data:{
+                "id":$("[name='p-id']").val(),
+                "limitName":$("[name='p-limitName']").val(),
+                "limitCount":$("[name='p-limitCount']").val(),
+                "limitRemark":$("[name='p-limitRemark']").val()
+            },
+            url : postUrl,
+            success : function(ret) {
+                if(ret.code == '200'){
+                }else{
+                }
+            },
+            error:function(ret){
+            }
+        })
+    })
 </script>
 </html>

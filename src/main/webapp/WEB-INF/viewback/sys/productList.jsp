@@ -83,9 +83,6 @@
                 <th>
                     默认管理
                 </th>
-                <th>
-                    备注
-                </th>
             </tr>
             </thead>
             <tbody>
@@ -140,9 +137,6 @@
                                 <span>置为是</span>
                             </c:otherwise>
                         </c:choose>
-                    </td>
-                    <td>
-                            ${product.borrowDay}
                     </td>
                 </tr>
             </c:forEach>
