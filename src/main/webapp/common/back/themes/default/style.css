@@ -571,4 +571,19 @@ body, #splitBar { background:#32374A;}
     padding: 5px 20px;
     background-color: #1E6BFF;
     color: #fff;
+    cursor: pointer;
+}
+
+.setBtn.disabled {
+    padding: 5px 20px;
+    background-color: #bbb;
+    color: #fff;
+    cursor: not-allowed;
+}
+
+.deleteBtn {
+    padding: 5px 10px;
+    background-color: #F85252;
+    color: #fff;
+    cursor: pointer;
 }

@@ -8,7 +8,7 @@
 <script type="text/javascript" src="${path}/resources/js/productAmount_choose.js"></script>
 
 <form id="pagerForm" onsubmit="return navTabSearch(this);"
-      action="configParams/goProductList?myId=${params.myId}" method="post">
+      action="channel/goProductList?myId=${params.myId}" method="post">
     <div class="pageHeader">
         <div class="searchBar">
             <table class="searchContent">
@@ -131,12 +131,15 @@
                     <td>
                         <c:choose>
                             <c:when test="${product.status == 0}">
-                                <span class="setBtn" onclick="setPStatus('${product.productId }', 1)">置为否</span>
+                                <span class="setBtn disabled">置为否</span>
                             </c:when>
                             <c:otherwise>
-                                <span class="setBtn" onclick="setPStatus('${product.productId }', 0)">置为是</span>
+                                <span class="setBtn" onclick="setPStatus('${product.productId }')">置为是</span>
                             </c:otherwise>
                         </c:choose>
+                    </td>
+                    <td>
+                        <span class="deleteBtn" onclick="setPDelete('${product.productId }')">删除</span>
                     </td>
                 </tr>
             </c:forEach>
@@ -150,16 +153,15 @@
 </form>
 
 <script type="text/javascript">
-    function setPStatus(id, status) {
+    function setPStatus(id) {
         $.ajax({
             type : "post",
             dataType: 'json',
             contentType:"application/json;charset=utf-8",
             data:{
-                "id":id,
-                "status":status
+                "id":id
             },
-            url : "channel/updateProduct",
+            url : "channel/openOrCloseProduct",
             success : function(ret) {
                 setTimeout(function () {
                     $('#pagerForm').submit()
@@ -168,5 +170,27 @@
             error:function(ret){
             }
         })
+    }
+
+    function setPDelete(id) {
+        if(confirm("确定要删除吗？")) {
+            $.ajax({
+                type : "post",
+                dataType: 'json',
+                contentType:"application/json;charset=utf-8",
+                data:{
+                    "id":id,
+                    dealFlag: 'y'
+                },
+                url : "channel/openOrCloseProduct",
+                success : function(ret) {
+                    setTimeout(function () {
+                        $('#pagerForm').submit()
+                    }, 100)
+                },
+                error:function(ret){
+                }
+            })
+        }
     }
 </script>
