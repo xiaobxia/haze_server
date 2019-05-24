@@ -534,7 +534,7 @@
   </if>
   </select>
   <select id="getExtendCount" resultType="java.lang.Integer" parameterType="HashMap">
-  select count(id) from back_extend where
+  select count(id) from back_extend where 1=1
     <if test="extendName != null and extendName !=''">
     and extend_name =#{extendName}
   </if>
