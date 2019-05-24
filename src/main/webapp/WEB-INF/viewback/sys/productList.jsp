@@ -110,11 +110,11 @@
                                           maxFractionDigits="0"/>
                     </td>
                     <td>
-                        <fmt:formatNumber type="number" value="${product.totalFeeRate/1000}" pattern="0.00"
+                        <fmt:formatNumber type="number" value="${product.totalFeeRate/product.borrowAmount*100}" pattern="0.00"
                                           maxFractionDigits="2"/>%
                     </td>
                     <td>
-                        <fmt:formatNumber type="number" value="${product.totalFeeRate * product.borrowAmount / 10000000}" pattern="0.00"
+                        <fmt:formatNumber type="number" value="${product.totalFeeRate/100}" pattern="0.00"
                                           maxFractionDigits="0"/>
                     </td>
                     <td>

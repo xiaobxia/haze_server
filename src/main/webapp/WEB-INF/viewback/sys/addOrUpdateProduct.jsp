@@ -29,7 +29,7 @@
             </div>
             <div class="form-item">
                 <span class="label">到账金额：</span>
-                <input type="text" name="p-daozhang" id="daozhang" value="<fmt:formatNumber type="number" value="${productDetail.borrowAmount * (1 - productDetail.totalFeeRate/100000)/100}" pattern="0.00"
+                <input type="text" name="p-daozhang" id="daozhang" value="<fmt:formatNumber type="number" value="${(productDetail.borrowAmount - productDetail.totalFeeRate) /100}" pattern="0.00"
                                           maxFractionDigits="0"/>"/>
             </div>
             <div class="form-item">

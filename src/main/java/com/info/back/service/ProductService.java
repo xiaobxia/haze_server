@@ -61,6 +61,7 @@ public class ProductService implements  IProductService {
 
     @Override
     public void updateProduct(BorrowProductConfig borrowProductConfig) {
+        //borrowProductConfig.setStatus(borrowProductConfigDao.selectByPrimaryKey(borrowProductConfig.getId()).getStatus());
         borrowProductConfig.setUpdateTime(new Date());
         borrowProductConfigDao.updateByPrimaryKeySelective(borrowProductConfig);
     }

@@ -68,9 +68,9 @@
                 <th>
                     续期天数
                 </th>
-                <th>
+                <%--<th>
                     续期次数
-                </th>
+                </th>--%>
                 <th>
                     备注
                 </th>
@@ -92,18 +92,18 @@
                             ${backExtend.extendName}
                     </td>
                     <td>
-                            ${backExtend.extendCount}
+                            ${backExtend.extendCount}次
                     </td>
                     <td>
                         <fmt:formatNumber type="number" value="${backExtend.extendMoney / 100}" pattern="0.00"
-                                          maxFractionDigits="0"/>
+                                          maxFractionDigits="0"/>元
                     </td>
                     <td>
-                            ${backExtend.extendDay}
+                            ${backExtend.extendDay}天
                     </td>
-                    <td>
+                    <%--<td>
                             ${backExtend.extendCount}
-                    </td>
+                    </td>--%>
                     <td>
                             ${backExtend.remark}
                     </td>
