@@ -1922,7 +1922,6 @@ public class ChannelInfoController extends BaseController {
     /**
      * 设置为默认产品
      * @param id
-     * @param model
      * @return
      */
     @RequestMapping(value="openOrCloseProduct")
@@ -1952,7 +1951,6 @@ public class ChannelInfoController extends BaseController {
     /**
      * 添加续期
      * @param backExtend
-     * @param model
      * @return
      */
     @RequestMapping(value="addExtend")
@@ -1969,7 +1967,6 @@ public class ChannelInfoController extends BaseController {
     /**
      * 修改续期
      * @param backExtend
-     * @param model
      * @return
      */
     @RequestMapping(value="updateExtend")
@@ -1999,7 +1996,6 @@ public class ChannelInfoController extends BaseController {
     /**
      * 添加提额
      * @param backLimit
-     * @param model
      * @return
      */
     @RequestMapping(value="addBackLimit")
@@ -2016,7 +2012,6 @@ public class ChannelInfoController extends BaseController {
     /**
      * 修改提额
      * @param backLimit
-     * @param model
      * @return
      */
     @RequestMapping(value="updateBackLimit")
@@ -2024,10 +2019,10 @@ public class ChannelInfoController extends BaseController {
     public Result updateBackLimit(BackLimit backLimit){
         try{
             iProductService.updateLimit(backLimit);
-            Result.success();
+            return Result.success();
         }catch(Exception e){
             log.error("修改失败"+e);
-            Result.error("修改失败");
+            return Result.error("修改失败");
         }
     }
     /**
