@@ -1906,20 +1906,20 @@ public class ChannelInfoController extends BaseController {
     /**
      * 修改产品
      * @param borrowProductConfig
-     * @param model
+     * @param
      * @return
      */
     @RequestMapping(value="updateProduct" , method= RequestMethod.POST)
     @ResponseBody
-    public Model updateProduct(BorrowProductConfig borrowProductConfig,Model model){
+    public String updateProduct(BorrowProductConfig borrowProductConfig){
         try{
             iProductService.updateProduct(borrowProductConfig);
-            model.addAttribute("result","success");
+            //model.addAttribute("result","success");
         }catch(Exception e){
             log.error("修改失败"+e);
-            model.addAttribute("result","error");
+            //model.addAttribute("result","error");
         }
-        return model;
+        return "success";
     }
 
     /**

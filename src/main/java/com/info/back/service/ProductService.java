@@ -135,9 +135,9 @@ public class ProductService implements  IProductService {
             //修改此id为默认产品
             BorrowProductConfig borrowProductConfig = new BorrowProductConfig();
             borrowProductConfig.setId(id);
-            borrowProductConfig.setUpdateTime(new Date());
             borrowProductConfig.setStatus(0);
-            borrowProductConfigDao.updateByPrimaryKey(borrowProductConfig);
+            borrowProductConfig.setUpdateTime(new Date());
+            borrowProductConfigDao.updateByPrimaryKeySelective(borrowProductConfig);
             //将其他所有产品设置为非默认产品
             List<ProductDetail> list = borrowProductConfigDao.getProductList(null);
             for (ProductDetail productDetail : list) {
