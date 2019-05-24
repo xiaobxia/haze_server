@@ -17,18 +17,18 @@
 <div class="pageContent new">
     <div class="pageForm required-validate">
         <c:if test="${not empty id}">
-            <input type="hidden" name="p-id" id="p-id" value="${id}"/>
+            <input type="hidden" name="l-id" id="l-id" value="${id}"/>
             <div class="form-item">
                 <span class="label">提额类型：</span>
-                <input type="text" name="p-limitName" id="limitName" value="${backLimit.limitName}"/>
+                <input type="text" name="l-limitName" id="limitName" value="${backLimit.limitName}"/>
             </div>
             <div class="form-item">
                 <span class="label">还款几次可提额：</span>
-                <input type="text" name="p-limitCount" id="limitCount" value="${backLimit.limitCount}"/>
+                <input type="text" name="l-limitCount" id="limitCount" value="${backLimit.limitCount}"/>
             </div>
             <div class="form-item">
                 <span class="label">提额至产品：</span>
-                <select name="limitProductId" class="textInput">
+                <select name="l-limitProductId" class="textInput">
                     <option value="">全部</option>
                     <c:forEach var="productInfo" items="${list}">
                         <option value="${productInfo.productId}"
@@ -40,19 +40,19 @@
         <c:if test="${empty id}">
             <div class="form-item">
                 <span class="label">提额类型：</span>
-                <input type="text" name="p-limitName" id="limitName"/>
+                <input type="text" name="l-limitName" id="limitName"/>
             </div>
             <div class="form-item">
                 <span class="label">还款几次可提额：</span>
-                <input type="text" name="p-limitCount" id="limitCount"/>
+                <input type="text" name="l-limitCount" id="limitCount"/>
             </div>
             <div class="form-item">
                 <span class="label">备注：</span>
-                <input type="text" name="p-limitRemark" id="limitRemark"/>
+                <input type="text" name="l-limitRemark" id="limitRemark"/>
             </div>
             <div class="form-item">
                 <span class="label">提额至产品：</span>
-                <select name="limitProductId" class="textInput">
+                <select name="l-limitProductId" class="textInput">
                     <option value="">全部</option>
                     <c:forEach var="productInfo" items="${list}">
                         <option value="${productInfo.productId}">${productInfo.productId}</option>
@@ -65,7 +65,7 @@
         <ul>
             <li><div class="buttonActive">
                 <div class="buttonContent">
-                    <button type="submit" id="p-submit">提交</button>
+                    <button type="submit" id="l-submit">提交</button>
                 </div>
             </div></li>
             <li><div class="button">
@@ -84,14 +84,15 @@
     <c:if test="${empty id}">
     var postUrl = "channel/addBackLimit"
     </c:if>
-    $('#p-submit').click(function () {
+    $('#l-submit').click(function () {
         $.ajax({
             type : "post",
             data:{
-                "id":$("[name='p-id']").val(),
-                "limitName":$("[name='p-limitName']").val(),
-                "limitCount":$("[name='p-limitCount']").val(),
-                "limitRemark":$("[name='p-limitRemark']").val()
+                "id":$("[name='l-id']").val(),
+                "limitName":$("[name='l-limitName']").val(),
+                "limitCount":$("[name='l-limitCount']").val(),
+                "limitRemark":$("[name='l-limitRemark']").val(),
+                "limitProductId": $("[name='l-limitProductId']").val()
             },
             url : postUrl,
             success : function(ret) {
