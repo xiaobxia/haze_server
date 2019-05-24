@@ -145,7 +145,7 @@ public class ProductService implements  IProductService {
                     borrowProductConfig.setStatus(1);
                     borrowProductConfig.setId(productDetail.getProductId());
                     borrowProductConfig.setUpdateTime(new Date());
-                    borrowProductConfigDao.updateByPrimaryKey(borrowProductConfig);
+                    borrowProductConfigDao.updateByPrimaryKeySelective(borrowProductConfig);
                 }
             }
             model.addAttribute("result","success");
