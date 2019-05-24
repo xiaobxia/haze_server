@@ -105,8 +105,6 @@
     $('#p-submit').click(function () {
         $.ajax({
             type : "post",
-            dataType: 'json',
-            contentType:"application/json;charset=utf-8",
             data:{
                 "id":$("[name='p-id']").val(),
                 "productName":$("[name='p-productName']").val(),
