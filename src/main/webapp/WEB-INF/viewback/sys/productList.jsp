@@ -8,21 +8,31 @@
 <script type="text/javascript" src="${path}/resources/js/productAmount_choose.js"></script>
 
 <form id="pagerForm" onsubmit="return navTabSearch(this);"
-      action="configParams/getProductList?myId=${params.myId}" method="post">
+      action="configParams/goProductList?myId=${params.myId}" method="post">
     <div class="pageHeader">
         <div class="searchBar">
             <table class="searchContent">
                 <tr>
-<%--                    <td>--%>
-<%--                        产品金额:--%>
-<%--                        <select name="borrowAmount" class="textInput">--%>
-<%--                            <option value="">全部</option>--%>
-<%--                            <c:forEach var="productInfo" items="${channelInfoList}">--%>
-<%--                                <option value="${channelInfo.id}"--%>
-<%--                                        <c:if test="${channelInfo.id eq params.channelInfoId}">selected="selected"</c:if> >${channelInfo.channelName}</option>--%>
-<%--                            </c:forEach>--%>
-<%--                        </select>--%>
-<%--                    </td>--%>
+                    <td>
+                        产品名称:
+                        <select name="productName" class="textInput">
+                            <option value="">全部</option>
+                            <c:forEach var="productInfo" items="${productMoneyList}">
+                                <option value="${productInfo.productName}"
+                                        <c:if test="${productInfo.productName eq params.productName}">selected="selected"</c:if> >${productInfo.productName}</option>
+                            </c:forEach>
+                        </select>
+                    </td>
+                    <td>
+                        产品金额:
+                        <select name="borrowAmount" class="textInput">
+                            <option value="">全部</option>
+                            <c:forEach var="productInfo" items="${productMoneyList}">
+                                <option value="${productInfo.borrowAmount}"
+                                        <c:if test="${productInfo.borrowAmount eq params.borrowAmount}">selected="selected"</c:if> >${productInfo.borrowAmount}</option>
+                            </c:forEach>
+                        </select>
+                    </td>
                     <td>
                         <div class="buttonActive">
                             <div class="buttonContent">

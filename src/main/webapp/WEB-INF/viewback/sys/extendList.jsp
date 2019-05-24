@@ -8,21 +8,31 @@
 <script type="text/javascript" src="${path}/resources/js/productAmount_choose.js"></script>
 
 <form id="pagerForm" onsubmit="return navTabSearch(this);"
-      action="configParams/goLimitList?myId=${params.myId}" method="post">
+      action="configParams/goextendList?myId=${params.myId}" method="post">
     <div class="pageHeader">
         <div class="searchBar">
             <table class="searchContent">
                 <tr>
-                    <%--                    <td>--%>
-                    <%--                        产品金额:--%>
-                    <%--                        <select name="borrowAmount" class="textInput">--%>
-                    <%--                            <option value="">全部</option>--%>
-                    <%--                            <c:forEach var="productInfo" items="${channelInfoList}">--%>
-                    <%--                                <option value="${channelInfo.id}"--%>
-                    <%--                                        <c:if test="${channelInfo.id eq params.channelInfoId}">selected="selected"</c:if> >${channelInfo.channelName}</option>--%>
-                    <%--                            </c:forEach>--%>
-                    <%--                        </select>--%>
-                    <%--                    </td>--%>
+                    <td>
+                        续期类型:
+                        <select name="extendName" class="textInput">
+                            <option value="">全部</option>
+                            <c:forEach var="extendInfo" items="${extendList}">
+                                <option value="${extendInfo.extendName}"
+                                        <c:if test="${extendInfo.extendName eq params.extendName}">selected="selected"</c:if> >${extendInfo.extendName}</option>
+                            </c:forEach>
+                        </select>
+                    </td>
+                    <td>
+                        续期天数:
+                        <select name="extendName" class="textInput">
+                            <option value="">全部</option>
+                            <c:forEach var="extendInfo" items="${extendList}">
+                                <option value="${extendInfo.extendName}"
+                                        <c:if test="${extendInfo.extendName eq params.extendName}">selected="selected"</c:if> >${extendInfo.extendName}</option>
+                            </c:forEach>
+                        </select>
+                    </td>
                     <td>
                         <div class="buttonActive">
                             <div class="buttonContent">

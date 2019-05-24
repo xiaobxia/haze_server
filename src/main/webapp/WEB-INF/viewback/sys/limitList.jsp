@@ -63,6 +63,9 @@
                     可提额次数
                 </th>
                 <th>
+                    备注
+                </th>
+                <th>
                     状态
                 </th>
                 <th>
@@ -78,6 +81,12 @@
                     </td>
                     <td>
                             ${backLimit.limitName}
+                    </td>
+                    <td>
+                            ${backLimit.limitCount}
+                    </td>
+                    <td>
+                            ${backLimit.limitRemark}
                     </td>
                     <td>
                         <c:choose>

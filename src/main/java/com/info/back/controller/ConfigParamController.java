@@ -79,9 +79,11 @@ public class ConfigParamController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("goProductList")
-	public String getProductList(Model model,HashMap<String,Object> params){
-        List<ProductDetail> list = iProductService.moneyList(params);
+	public String getProductList(Model model,HttpServletResponse response, HttpServletRequest request){
+		HashMap<String, Object> params = this.getParametersO(request);
+		List<ProductDetail> list = iProductService.moneyList(params);
         model.addAttribute("productMoneyList",list);
+		model.addAttribute("params",params);
       return "sys/productList";
 	}
 
@@ -90,9 +92,11 @@ public class ConfigParamController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("goextendList")
-	public String getextendList(Model model,HashMap<String,Object> params){
-	    List<BackExtend> list = iProductService.findExtendList(params);
+	public String getextendList(Model model,HttpServletResponse response, HttpServletRequest request){
+		HashMap<String, Object> params = this.getParametersO(request);
+		List<BackExtend> list = iProductService.findExtendList(params);
 	    model.addAttribute("extendList",list);
+		model.addAttribute("params",params);
 		return "sys/extendList";
 	}
 
