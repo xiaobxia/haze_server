@@ -131,10 +131,10 @@
                     <td>
                         <c:choose>
                             <c:when test="${product.status == 0}">
-                                <span class="setBtn">置为否</span>
+                                <span class="setBtn" onclick="setPStatus('${product.productId }', 1)">置为否</span>
                             </c:when>
                             <c:otherwise>
-                                <span class="setBtn">置为是</span>
+                                <span class="setBtn" onclick="setPStatus('${product.productId }', 0)">置为是</span>
                             </c:otherwise>
                         </c:choose>
                     </td>
@@ -150,4 +150,23 @@
 </form>
 
 <script type="text/javascript">
+    function setPStatus(id, status) {
+        $.ajax({
+            type : "post",
+            dataType: 'json',
+            contentType:"application/json;charset=utf-8",
+            data:{
+                "id":id,
+                "status":status
+            },
+            url : "channel/updateProduct",
+            success : function(ret) {
+                setTimeout(function () {
+                    $('#pagerForm').submit()
+                }, 100)
+            },
+            error:function(ret){
+            }
+        })
+    }
 </script>

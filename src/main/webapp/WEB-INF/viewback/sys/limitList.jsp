@@ -91,20 +91,20 @@
                     <td>
                         <c:choose>
                             <c:when test="${backLimit.limitStatus == 0}">
-                                <span>开</span>
+                                <span class="trueBtn">开</span>
                             </c:when>
                             <c:otherwise>
-                                <span>关</span>
+                                <span class="falseBtn">关</span>
                             </c:otherwise>
                         </c:choose>
                     </td>
                     <td>
                         <c:choose>
                             <c:when test="${backLimit.limitStatus == 0}">
-                                <span>关闭</span>
+                                <span class="setBtn" onclick="setPStatus('${backLimit.id }', 1)">关闭</span>
                             </c:when>
                             <c:otherwise>
-                                <span>开启</span>
+                                <span class="setBtn" onclick="setPStatus('${backLimit.id }', 0)">开启</span>
                             </c:otherwise>
                         </c:choose>
                     </td>
@@ -120,4 +120,23 @@
 </form>
 
 <script type="text/javascript">
+    function setPStatus(id, status) {
+        $.ajax({
+            type : "post",
+            dataType: 'json',
+            contentType:"application/json;charset=utf-8",
+            data:{
+                "id":id,
+                "limitStatus":status
+            },
+            url : "channel/updateBackLimit",
+            success : function(ret) {
+                setTimeout(function () {
+                    $('#pagerForm').submit()
+                }, 100)
+            },
+            error:function(ret){
+            }
+        })
+    }
 </script>
