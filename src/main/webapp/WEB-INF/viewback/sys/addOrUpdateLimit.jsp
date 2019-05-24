@@ -26,78 +26,26 @@
           class="pageForm required-validate">
         <div class="form-item">
             <span class="label">提额类型：</span>
-            <input type="text" name="limitName" value=""/>
+            <input type="text" name="limitName"/>
         </div>
         <div class="form-item">
-            <span class="label">提额类型：</span>
-            <input type="text" name="limitName" value=""/>
+            <span class="label">还款几次可提额：</span>
+            <input type="text" name="limitCount"/>
         </div>
-        <input type="hidden" name="parentId" value="${params.parentId}" />
-        <input type="hidden" name = "morCustomerIds" value="${params.morIds}"/>
-        <input type="hidden" name = "nigCustomerIds" value="${params.nigIds}"/>
-        <input type="hidden" name = "id" value="${params.id}"/>
-        <input type="hidden" name = "date" value="${params.date}"/>
-        <div class="pageFormContent" layoutH="50" style="overflow: auto;">
-            <p><label>日期:${params.date}</label></p>
-            <table class="paiban-box" style="width: 100%">
-                <tr>
-                    <th>
-                        班次
-                    </th>
-                    <th>
-                        客服
-                    </th>
-                </tr>
-                <tr>
-                    <td>早班</td>
-                    <td>
-                        <c:forEach items="${params.list }" var="user" varStatus="varStatus">
-                            <span class="input-box"><input type="checkbox" name="morCustomerName" value="${user.id}"/> ${user.userName}</span>
-                            <%--<c:if test="${not empty user}">--%>
-                            <%--<script type="text/javascript">--%>
-                            <%--$("input[name='customerName'][value='${user.id}']").attr("checked",true);--%>
-                            <%--</script>--%>
-                            <%--</c:if>--%>
-                        </c:forEach>
-                    </td>
-                </tr>
-                <tr>
-                    <td>晚班</td>
-                    <td>
-                        <c:forEach items="${params.list }" var="user" varStatus="varStatus">
-                            <span class="input-box"><input type="checkbox" name="nigCustomerName" value="${user.id}"/> ${user.userName}</span>
-                            <%--<c:if test="${not empty user}">--%>
-                            <%--<script type="text/javascript">--%>
-                            <%--$("input[name='customerName'][value='${user.id}']").attr("checked",true);--%>
-                            <%--</script>--%>
-                            <%--</c:if>--%>
-                        </c:forEach>
-                    </td>
-                </tr>
-
-            </table>
+        <div class="form-item">
+            <span class="label">提额状态：</span>
+            <select name="limitStatus" class="textInput">
+                <option value="0">开启</option>
+                <option value="1">关闭</option>
+            </select>
         </div>
-        <div class="formBar">
-            <ul>
-                <li>
-                    <div class="buttonActive">
-                        <div class="buttonContent">
-                            <button type="submit" onclick="commit()">
-                                保存
-                            </button>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="button">
-                        <div class="buttonContent">
-                            <button type="button" class="close">
-                                取消
-                            </button>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+        <div class="form-item">
+            <span class="label">提额产品：</span>
+            <input type="text" name="limiitProductName"/>
+        </div>
+        <div class="form-item">
+            <span class="label">提额产品：</span>
+            <textarea  rows="10" cols="80" name="limiitProductName"/>
         </div>
     </form>
 </div>
