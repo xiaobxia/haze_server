@@ -1930,9 +1930,8 @@ public class ChannelInfoController extends BaseController {
      */
     @RequestMapping(value="openOrCloseProduct" , method= RequestMethod.POST)
     @ResponseBody
-    public Model openOrCloseProduct(String id,Model model,HttpServletRequest request){
-        String user = request.getParameter("id");
-        model = iProductService.openOrCloseProduct(Integer.valueOf(id),model);
+    public Model openOrCloseProduct(Integer id,Model model,HttpServletRequest request){
+        model = iProductService.openOrCloseProduct(id,model);
         return model;
     }
     /**
