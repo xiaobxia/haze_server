@@ -86,10 +86,10 @@
 </body>
 <script type="text/javascript">
     <c:if test="${not empty id}">
-    var postUrl = "configParams/updateExtend"
+    var postUrl = "channel/updateExtend"
     </c:if>
     <c:if test="${empty id}">
-    var postUrl = "configParams/addExtend"
+    var postUrl = "channel/addExtend"
     </c:if>
     $('#p-submit').click(function () {
         $.ajax({

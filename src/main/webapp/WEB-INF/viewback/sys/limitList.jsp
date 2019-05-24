@@ -8,7 +8,7 @@
 <script type="text/javascript" src="${path}/resources/js/productAmount_choose.js"></script>
 
 <form id="pagerForm" onsubmit="return navTabSearch(this);"
-      action="configParams/goLimitList?myId=${params.myId}" method="post">
+      action="channel/goLimitList?myId=${params.myId}" method="post">
     <div class="pageHeader">
         <div class="searchBar">
             <table class="searchContent">

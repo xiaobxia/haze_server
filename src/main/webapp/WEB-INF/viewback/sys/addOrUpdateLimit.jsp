@@ -84,10 +84,10 @@
 </body>
 <script type="text/javascript">
     <c:if test="${not empty id}">
-    var postUrl = "configParams/updateBackLimit"
+    var postUrl = "channel/updateBackLimit"
     </c:if>
     <c:if test="${empty id}">
-    var postUrl = "configParams/addBackLimit"
+    var postUrl = "channel/addBackLimit"
     </c:if>
     $('#p-submit').click(function () {
         $.ajax({

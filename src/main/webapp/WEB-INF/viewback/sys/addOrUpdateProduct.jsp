@@ -97,16 +97,16 @@
 </body>
 <script type="text/javascript">
     <c:if test="${not empty id}">
-        var postUrl = "configParams/updateProduct"
+        var postUrl = "${pageContext.request.contextPath}/back/channel/updateProduct"
     </c:if>
     <c:if test="${empty id}">
-        var postUrl = "configParams/addProduct"
+        var postUrl = "${pageContext.request.contextPath}/back/channel/addProduct"
     </c:if>
     $('#p-submit').click(function () {
         $.ajax({
-            type : "post",
+            type : "POST",
+            url : postUrl,
             dataType: 'json',
-            contentType:"application/json;charset=utf-8",
             data:{
                 "id":$("[name='p-id']").val(),
                 "productName":$("[name='p-productName']").val(),
@@ -115,7 +115,6 @@
                 "borrowDay":$("[name='p-borrowDay']").val(),
                 "totalFeeRate":($("[name='p-borrowAmount']").val() - $("[name='p-daozhang']").val()) * 100
             },
-            url : postUrl,
             success : function(ret) {
                 if(ret.code == '200'){
                 }else{

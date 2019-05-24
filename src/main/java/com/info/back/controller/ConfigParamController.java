@@ -23,8 +23,6 @@ import com.info.back.utils.SpringUtils;
 import com.info.web.controller.BaseController;
 import com.info.web.listener.IndexInit;
 import com.info.web.service.IBackConfigParamsService;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Slf4j
 @Controller
@@ -77,24 +75,24 @@ public class ConfigParamController extends BaseController {
 	}
 
      /**
-	 * 指向产品页面
-	 * @return
-	 */
-	@RequestMapping("goProductList")
-	public String getProductList(Model model,HttpServletRequest request){
-		HashMap<String, Object> params = getParametersO(request);
+     * 指向产品页面
+     * @return
+     *//*
+    @RequestMapping("goProductList")
+    public String getProductList(Model model,HttpServletRequest request){
+        HashMap<String, Object> params = getParametersO(request);
         List<ProductDetail> list = iProductService.moneyList(params);
         model.addAttribute("productMoneyList",list);
-		PageConfig<ProductDetail>  pageConfig = iProductService.getProductList(params);
-		model.addAttribute("pm",pageConfig);
-		model.addAttribute("params",params);
-      return "sys/productList";
-	}
+        PageConfig<ProductDetail>  pageConfig = iProductService.getProductList(params);
+        model.addAttribute("pm",pageConfig);
+        model.addAttribute("params",params);
+        return "sys/productList";
+    }*/
 
 	/**
 	 * 指向续期页面
 	 * @return
-	 */
+	 *//*
 	@RequestMapping("goextendList")
 	public String getextendList(Model model,HttpServletRequest request){
 		HashMap<String, Object> params = getParametersO(request);
@@ -106,10 +104,10 @@ public class ConfigParamController extends BaseController {
 		return "sys/extendList";
 	}
 
-	/**
+	*//**
 	 * 指向提额页面
 	 * @return
-	 */
+	 *//*
 	@RequestMapping("goLimitList")
 	public String getLimitList(Model model,HttpServletRequest request){
 		HashMap<String, Object> params = getParametersO(request);
@@ -120,9 +118,9 @@ public class ConfigParamController extends BaseController {
 		model.addAttribute("params",params);
 		return "sys/limitList";
 	}
-    /**
+    *//**
      * 进入添加/修改产品页面
-     */
+     *//*
     @RequestMapping("toAddOrUpdateProduct")
     public String toAddOrUpdateProduct(Integer id,Model model,HashMap<String,Object> params){
         if(id != null){
@@ -138,10 +136,10 @@ public class ConfigParamController extends BaseController {
        return "sys/addOrUpdateProduct";
     }
 
-    /**
+    *//**
      * 进入产品详情页面
      * @return
-     */
+     *//*
     @RequestMapping("toProductDetail")
     public String toProductDetail(Model model,Integer id,HashMap<String,Object> params){
         ProductDetail productDetail = iProductService.getProductDetail(id);
@@ -149,11 +147,11 @@ public class ConfigParamController extends BaseController {
         return "sys/productDetail";
     }
 
-    /**
+    *//**
      * 进入添加或修改续期页面
      * @param
      * @return
-     */
+     *//*
     @RequestMapping("toAddOrUpdateExtend")
     public String toAddOrUpdateExtend(Integer id,Model model, HashMap<String,Object> params){
         if(id != null ){
@@ -165,11 +163,11 @@ public class ConfigParamController extends BaseController {
      return "sys/addOrUpdateExtend";
     }
 
-    /**
+    *//**
      * 进入添加或修改提额页面
      * @param id
      * @return
-     */
+     *//*
     @RequestMapping("toAddOrUpdateLimit")
     public String toAddOrUpdateLimit(Integer id,Model model){
         List<ProductDetail> list = iProductService.moneyList(null);
@@ -185,7 +183,7 @@ public class ConfigParamController extends BaseController {
         }
         model.addAttribute("list",list);
         return "sys/addOrUpdateLimit";
-    }
+    }*/
 
 	/**
 	 * 产品列表

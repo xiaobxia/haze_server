@@ -1871,7 +1871,20 @@ public class ChannelInfoController extends BaseController {
         model.addAttribute("productDetail",productDetail);
         return model;
     }
-
+    /**
+     * 指向产品页面
+     * @return
+     */
+    @RequestMapping("goProductList")
+    public String getProductList(Model model,HttpServletRequest request){
+        HashMap<String, Object> params = getParametersO(request);
+        List<ProductDetail> list = iProductService.moneyList(params);
+        model.addAttribute("productMoneyList",list);
+        PageConfig<ProductDetail>  pageConfig = iProductService.getProductList(params);
+        model.addAttribute("pm",pageConfig);
+        model.addAttribute("params",params);
+        return "sys/productList";
+    }
     /**
      * 添加产品
      * @param borrowProductConfig
@@ -2020,5 +2033,99 @@ public class ChannelInfoController extends BaseController {
         }
         return model;
     }
+    /**
+     * 指向续期页面
+     * @return
+     */
+    @RequestMapping("goextendList")
+    public String getextendList(Model model,HttpServletRequest request){
+        HashMap<String, Object> params = getParametersO(request);
+        PageConfig<BackExtend> pageConfig = iProductService.getExtendList(params);
+        model.addAttribute("pm",pageConfig);
+        List<BackExtend> list = iProductService.findExtendList(params);
+        model.addAttribute("extendList",list);
+        model.addAttribute("params",params);
+        return "sys/extendList";
+    }
 
+    /**
+     * 指向提额页面
+     * @return
+     */
+    @RequestMapping("goLimitList")
+    public String getLimitList(Model model,HttpServletRequest request){
+        HashMap<String, Object> params = getParametersO(request);
+        PageConfig<BackLimit> pageConfig = iProductService.getLimitList(params);
+        model.addAttribute("pm",pageConfig);
+        List<BackLimit> list = iProductService.findLimitList(params);
+        model.addAttribute("limitList",list);
+        model.addAttribute("params",params);
+        return "sys/limitList";
+    }
+    /**
+     * 进入添加/修改产品页面
+     */
+    @RequestMapping("toAddOrUpdateProduct")
+    public String toAddOrUpdateProduct(Integer id,Model model,HashMap<String,Object> params){
+        if(id != null){
+            ProductDetail productDetail = iProductService.getProductDetail(id);
+            List<BackLimit> limitList= iProductService.findLimitList(params);
+            List<BackExtend> extendList = iProductService.findExtendList(params);
+            model.addAttribute("limitList",limitList);
+            model.addAttribute("extendList",extendList);
+            model.addAttribute("productDetail",productDetail);
+            model.addAttribute("id",id);
+            return "sys/addOrUpdateProduct";
+        }
+        return "sys/addOrUpdateProduct";
+    }
+
+    /**
+     * 进入产品详情页面
+     * @return
+     */
+    @RequestMapping("toProductDetail")
+    public String toProductDetail(Model model,Integer id,HashMap<String,Object> params){
+        ProductDetail productDetail = iProductService.getProductDetail(id);
+        model.addAttribute("productDetail",productDetail);
+        return "sys/productDetail";
+    }
+
+    /**
+     * 进入添加或修改续期页面
+     * @param
+     * @return
+     */
+    @RequestMapping("toAddOrUpdateExtend")
+    public String toAddOrUpdateExtend(Integer id,Model model, HashMap<String,Object> params){
+        if(id != null ){
+            BackExtend backExtend = iProductService.findExtend(id);
+            model.addAttribute("backExtend",backExtend);
+            model.addAttribute("id",id);
+            return "sys/addOrUpdateExtend";
+        }
+        return "sys/addOrUpdateExtend";
+    }
+
+    /**
+     * 进入添加或修改提额页面
+     * @param id
+     * @return
+     */
+    @RequestMapping("toAddOrUpdateLimit")
+    public String toAddOrUpdateLimit(Integer id,Model model){
+        List<ProductDetail> list = iProductService.moneyList(null);
+        if(id != null){
+            BackLimit backLimit = iProductService.findLimit(id);
+            //查询产品详情
+            ProductDetail productDetail = iProductService.getProductDetail(backLimit.getLimitProductId());
+            model.addAttribute("backLimit",backLimit);
+            model.addAttribute("productDetail",productDetail);
+            model.addAttribute("list",list);
+            model.addAttribute("id",id);
+            return "sys/addOrUpdateLimit";
+        }
+        model.addAttribute("list",list);
+        return "sys/addOrUpdateLimit";
+    }
 }
