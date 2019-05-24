@@ -50,6 +50,15 @@
                 <span class="label">备注：</span>
                 <input type="text" name="p-limitRemark" id="limitRemark"/>
             </div>
+            <div class="form-item">
+                <span class="label">提额至产品：</span>
+                <select name="limitProductId" class="textInput">
+                    <option value="">全部</option>
+                    <c:forEach var="productInfo" items="${list}">
+                        <option value="${productInfo.productId}">${productInfo.productId}</option>
+                    </c:forEach>
+                </select>
+            </div>
         </c:if>
     </div>
     <div class="formBar">

@@ -7,7 +7,7 @@
 %>
 <script type="text/javascript" src="${path}/resources/js/productAmount_choose.js"></script>
 
-<form id="pagerForm" onsubmit="return navTabSearch(this);"
+<form id="pagerForm-p" onsubmit="return navTabSearch(this);"
       action="channel/goProductList?myId=${params.myId}" method="post">
     <div class="pageHeader">
         <div class="searchBar">
@@ -165,7 +165,7 @@
             url : "channel/openOrCloseProduct",
             success : function(ret) {
                 setTimeout(function () {
-                    $('#pagerForm').submit()
+                    $('#pagerForm-p').submit()
                 }, 100)
             },
             error:function(ret){
@@ -184,7 +184,7 @@
                 url : "channel/updateProduct",
                 success : function(ret) {
                     setTimeout(function () {
-                        $('#pagerForm').submit()
+                        $('#pagerForm-p').submit()
                     }, 200)
                 },
                 error:function(ret){

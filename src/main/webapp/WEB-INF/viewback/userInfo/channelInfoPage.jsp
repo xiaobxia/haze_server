@@ -6,7 +6,7 @@
 	String path = request.getContextPath();
 %>
 
-<form id="pagerForm" onsubmit="return navTabSearch(this);" action="channel/getChannelInfoPage?myId=${params.myId}" method="post">
+<form id="pagerForm-c" onsubmit="return navTabSearch(this);" action="channel/getChannelInfoPage?myId=${params.myId}" method="post">
 	<div class="pageHeader">
 		<div class="searchBar">
 			<table class="searchContent">
@@ -165,7 +165,7 @@
 	function channelUpdateStatus(channelCode, status) {
 		$.getJSON("${pageContext.request.contextPath}/back/channel/updateStatus?channleCode="+channelCode+"&status="+status, function(data) {
 			setTimeout(function () {
-				$('#pagerForm').submit()
+				$('#pagerForm-c').submit()
 			}, 100)
 		});
 	}
