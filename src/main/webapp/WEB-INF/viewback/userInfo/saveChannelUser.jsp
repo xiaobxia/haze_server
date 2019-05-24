@@ -24,12 +24,12 @@
 				<div class="pageFormContent" layoutH="50" style="overflow: auto;">
 				
 					<p style="width: 630px;">
-						<label>渠道:</label><label style="width: 170px;">${channelInfo.channelSuperName}</label>
-						<label>渠道编码:</label><label style="width: 170px;">${channelInfo.channelSuperCode }</label>
+						<label>渠道商:</label><label style="width: 170px;">${channelInfo.channelSuperName}</label>
+						<label>渠道商编码:</label><label style="width: 170px;">${channelInfo.channelSuperCode }</label>
 					</p>
 					<p style="width: 630px;">
-						<label>渠道商名称:</label><label style="width: 170px;">${channelInfo.channelName}</label>
-						<label>渠道商编码:</label><label style="width: 170px;">${channelInfo.channelCode}</label>
+						<label>渠道名称:</label><label style="width: 170px;">${channelInfo.channelName}</label>
+						<label>渠道编码:</label><label style="width: 170px;">${channelInfo.channelCode}</label>
 					</p>
 					<div class="divider"></div>
 					<p><label>手机:</label><input name="userPhone" value="${user.userPhone }"  type="text" class="required phone" alt="请输入手机" size="30"  /></p>
@@ -41,8 +41,8 @@
 					</p>
 					<div class="divider"></div>
 					
-					<p><label>默认密码:</label><label style="width: 230px;">${DEFAULT_PWD }，登录后请尽快修改密码。</label></p>
-					<div class="divider"></div>
+					<%--<p><label>默认密码:</label><label style="width: 230px;">${DEFAULT_PWD }，登录后请尽快修改密码。</label></p>
+					<div class="divider"></div>--%>
 					<p>
 					<label>真实姓名:</label><input name="realname" value="${user.realname }"
 								class="required" type="text" alt="请输入用户真实姓名" size="30" /></p>

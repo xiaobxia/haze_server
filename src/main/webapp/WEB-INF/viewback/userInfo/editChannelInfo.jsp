@@ -40,7 +40,7 @@
 					<dl style="width: 380px;">
 						<dt style="width: 100px;">
 							<label>
-								渠道商名称:
+								渠道名称:
 							</label>
 						</dt>
 						<dd>
