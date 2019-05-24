@@ -14,7 +14,7 @@
     </style>
 </head>
 <body>
-<div class="pageContent">
+<div class="pageContent new">
     <div class="pageForm required-validate">
         <c:if test="${not empty id}">
             <input type="hidden" name="p-id" id="p-id" value="${id}"/>
@@ -41,20 +41,6 @@
                 <span class="label">借款期限：</span>
                 <input type="text" name="p-borrowDay" id="borrowDay" value="${productDetail.borrowDay}"/>
             </div>
-            <div class="formBar">
-                <ul>
-                    <li><div class="buttonActive">
-                        <div class="buttonContent">
-                            <button type="submit" id="p-submit">提交</button>
-                        </div>
-                    </div></li>
-                    <li><div class="button">
-                        <div class="buttonContent">
-                            <button type="button" class="close">取消</button>
-                        </div>
-                    </div></li>
-                </ul>
-            </div>
         </c:if>
         <c:if test="${empty id}">
             <div class="form-item">
@@ -77,21 +63,21 @@
                 <span class="label">借款期限：</span>
                 <input type="text" name="p-borrowDay" id="borrowDay"/>
             </div>
-            <div class="formBar">
-                <ul>
-                    <li><div class="buttonActive">
-                        <div class="buttonContent">
-                            <button type="submit" id="p-submit">提交</button>
-                        </div>
-                    </div></li>
-                    <li><div class="button">
-                        <div class="buttonContent">
-                            <button type="button" class="close">取消</button>
-                        </div>
-                    </div></li>
-                </ul>
-            </div>
         </c:if>
+    </div>
+    <div class="formBar">
+        <ul>
+            <li><div class="buttonActive">
+                <div class="buttonContent">
+                    <button type="submit" id="p-submit">提交</button>
+                </div>
+            </div></li>
+            <li><div class="button">
+                <div class="buttonContent">
+                    <button type="button" class="close">取消</button>
+                </div>
+            </div></li>
+        </ul>
     </div>
 </div>
 </body>

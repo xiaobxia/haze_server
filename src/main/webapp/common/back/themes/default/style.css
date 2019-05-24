@@ -587,3 +587,27 @@ body, #splitBar { background:#32374A;}
     color: #fff;
     cursor: pointer;
 }
+
+.pageContent.new {
+    height: 100%;
+}
+.pageContent.new select{
+    width: 152px;
+}
+.pageContent.new .formBar{
+    position: absolute;
+    bottom: 0;
+    width: 99%;
+}
+.pageContent.new .pageForm{
+    padding: 20px 10px;
+}
+.form-item {
+    margin-bottom: 20px;
+}
+
+.form-item .label {
+    display: inline-block;
+    text-align: right;
+    width: 100px;
+}

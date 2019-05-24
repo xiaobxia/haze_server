@@ -185,7 +185,7 @@
                 success : function(ret) {
                     setTimeout(function () {
                         $('#pagerForm').submit()
-                    }, 100)
+                    }, 200)
                 },
                 error:function(ret){
                 }

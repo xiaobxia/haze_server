@@ -14,7 +14,7 @@
     </style>
 </head>
 <body>
-<div class="pageContent">
+<div class="pageContent new">
     <div class="pageForm required-validate">
         <c:if test="${not empty id}">
             <input type="hidden" name="p-id" id="p-id" value="${id}"/>
@@ -36,20 +36,6 @@
                     </c:forEach>
                 </select>
             </div>
-            <div class="formBar">
-                <ul>
-                    <li><div class="buttonActive">
-                        <div class="buttonContent">
-                            <button type="submit" id="p-submit">提交</button>
-                        </div>
-                    </div></li>
-                    <li><div class="button">
-                        <div class="buttonContent">
-                            <button type="button" class="close">取消</button>
-                        </div>
-                    </div></li>
-                </ul>
-            </div>
         </c:if>
         <c:if test="${empty id}">
             <div class="form-item">
@@ -62,23 +48,23 @@
             </div>
             <div class="form-item">
                 <span class="label">备注：</span>
-                <textarea  rows="10" cols="80" name="p-limitRemark" id="limitRemark"/>
-            </div>
-            <div class="formBar">
-                <ul>
-                    <li><div class="buttonActive">
-                        <div class="buttonContent">
-                            <button type="submit" id="p-submit">提交</button>
-                        </div>
-                    </div></li>
-                    <li><div class="button">
-                        <div class="buttonContent">
-                            <button type="button" class="close">取消</button>
-                        </div>
-                    </div></li>
-                </ul>
+                <input type="text" name="p-limitRemark" id="limitRemark"/>
             </div>
         </c:if>
+    </div>
+    <div class="formBar">
+        <ul>
+            <li><div class="buttonActive">
+                <div class="buttonContent">
+                    <button type="submit" id="p-submit">提交</button>
+                </div>
+            </div></li>
+            <li><div class="button">
+                <div class="buttonContent">
+                    <button type="button" class="close">取消</button>
+                </div>
+            </div></li>
+        </ul>
     </div>
 </div>
 </body>
