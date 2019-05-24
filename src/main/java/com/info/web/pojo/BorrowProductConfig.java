@@ -136,7 +136,7 @@ public class BorrowProductConfig implements Serializable {
      */
     private String remark;//备注
 
-    private Integer status;//状态 0默认 1 非默认
+    private int status;//状态 0默认 1 非默认
     private Integer extendId; //续期id
 
 
@@ -507,11 +507,11 @@ public class BorrowProductConfig implements Serializable {
         this.remark = remark == null ? null : remark.trim();
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

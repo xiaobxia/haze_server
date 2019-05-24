@@ -1860,7 +1860,7 @@ public class ChannelInfoController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value="getProductDetail" , method= RequestMethod.POST)
+    @RequestMapping(value="getProductDetail" )
     @ResponseBody
     public Model getProductDetail(Model model,Integer id,HashMap<String,Object> params){
         ProductDetail productDetail = iProductService.getProductDetail(id);
@@ -1891,7 +1891,7 @@ public class ChannelInfoController extends BaseController {
      * @param model
      * @return
      */
-    @RequestMapping(value="addProduct", method= RequestMethod.POST)
+    @RequestMapping(value="addProduct")
     @ResponseBody
     public Model addProduct(BorrowProductConfig borrowProductConfig,Model model){
         try{
@@ -1906,10 +1906,10 @@ public class ChannelInfoController extends BaseController {
     /**
      * 修改产品
      * @param borrowProductConfig
-     * @param model
+     * @param
      * @return
      */
-    @RequestMapping(value="updateProduct" , method= RequestMethod.POST)
+    @RequestMapping(value="updateProduct")
     @ResponseBody
     public Model updateProduct(BorrowProductConfig borrowProductConfig,Model model){
         try{
@@ -1928,8 +1928,7 @@ public class ChannelInfoController extends BaseController {
      * @param model
      * @return
      */
-    @RequestMapping(value="openOrCloseProduct" , method= RequestMethod.POST)
-    @ResponseBody
+    @RequestMapping(value="openOrCloseProduct")
     public Model openOrCloseProduct(Integer id,Model model,HttpServletRequest request){
         model = iProductService.openOrCloseProduct(id,model);
         return model;
@@ -1954,7 +1953,7 @@ public class ChannelInfoController extends BaseController {
      * @param model
      * @return
      */
-    @RequestMapping(value="addExtend",method= RequestMethod.POST)
+    @RequestMapping(value="addExtend")
     @ResponseBody
     public Model addExtend(BackExtend backExtend,Model model){
         try{
@@ -1972,7 +1971,7 @@ public class ChannelInfoController extends BaseController {
      * @param model
      * @return
      */
-    @RequestMapping(value="updateExtend",method= RequestMethod.POST)
+    @RequestMapping(value="updateExtend")
     @ResponseBody
     public Model updateExtend(BackExtend backExtend,Model model){
         try{
@@ -2003,7 +2002,7 @@ public class ChannelInfoController extends BaseController {
      * @param model
      * @return
      */
-    @RequestMapping(value="addBackLimit",method= RequestMethod.POST)
+    @RequestMapping(value="addBackLimit")
     @ResponseBody
     public Model addBackLimit(BackLimit backLimit,Model model){
         try{
@@ -2021,7 +2020,7 @@ public class ChannelInfoController extends BaseController {
      * @param model
      * @return
      */
-    @RequestMapping(value="updateBackLimit",method= RequestMethod.POST)
+    @RequestMapping(value="updateBackLimit")
     @ResponseBody
     public Model updateBackLimit(BackLimit backLimit,Model model){
         try{
