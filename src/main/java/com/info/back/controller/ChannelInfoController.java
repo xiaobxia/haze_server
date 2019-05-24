@@ -742,7 +742,7 @@ public class ChannelInfoController extends BaseController {
                         }
                     }*/
                     //申请笔数 放款笔数 放款率
-                   List<String> idList=channelInfoService.findUserId(channelReport.getId());
+                   List<String> idList=channelInfoService.findUserId(channelReport.getChannelid());
                    if(idList.size()>0) {
                        DecimalFormat df = new DecimalFormat("0.00");
                        //放款笔数
@@ -924,11 +924,9 @@ public class ChannelInfoController extends BaseController {
                 params.put("beginTime", DateUtil.getDateFormat(new Date(), "yyyy-MM-dd"));
             }
            List<ChannelReportResult> reportResults = new ArrayList<>();
-           // List<OutChannelLook> reportResults = new ArrayList<>();
             String channelCode = AESUtil.decrypt(params.get("channelCode").toString(), AESUtil.KEY);
             params.put("channelCode", channelCode);
             PageConfig<ChannelReport> pageConfig = channelReportService.findPage(getParams(params));
-            //PageConfig<OutChannelLook> pageConfig = channelReportService.findPageOut(getParams(params));
             String channelId = channelReportService.getChannelIdByCode(channelCode);
             for (ChannelReport report : pageConfig.getItems()) {
                 ChannelReportResult reportResult;

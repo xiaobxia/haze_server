@@ -25,6 +25,7 @@
     <result column="status" property="status" jdbcType="INTEGER"/>
     <result column="extend_id" property="extendId" jdbcType="INTEGER"/>
     <result column="limit_id" property="limitId" jdbcType="INTEGER"/>
+    <result column="product_name" property="productName" jdbcType="VARCHAR"/>
   </resultMap>
   <resultMap id="productDetailMap" type="com.info.web.pojo.ProductDetail">
     <result column="productId" property="productId" jdbcType="INTEGER" />
@@ -46,6 +47,8 @@
     <result column="extendMoney" property="extendMoney" jdbcType="INTEGER"/>
     <result column="extendStatus" property="extendStatus" jdbcType="INTEGER"/>
     <result column="extendRemark" property="extendRemark" jdbcType="VARCHAR"/>
+    <result column="extendDay" property="extendDay" jdbcType="INTEGER"/>
+    <result column="productName" property="productName" jdbcType="VARCHAR"/>
   </resultMap>
   <resultMap id="extendResult" type="com.info.web.pojo.BackExtend">
     <result column="id" property="id" jdbcType="INTEGER" />
@@ -53,16 +56,21 @@
     <result column="extend_count" property="extendCount" jdbcType="INTEGER"/>
     <result column="extend_money" property="extendMoney" jdbcType="INTEGER"/>
     <result column="extend_status" property="extendStatus" jdbcType="INTEGER"/>
+    <result column="extend_day" property="extendDay" jdbcType="INTEGER"/>
     <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
   </resultMap>
   <resultMap id="limitResult" type="com.info.web.pojo.BackLimit">
     <result column="id" property="id" jdbcType="INTEGER" />
-    <result column="productName" property="productName" jdbcType="VARCHAR"></result>
+    <result column="limiitProductName" property="limiitProductName" jdbcType="VARCHAR"></result>
     <result column="limit_name" property="limitName" jdbcType="VARCHAR" />
     <result column="limit_count" property="limitCount" jdbcType="INTEGER" />
     <result column="limit_product_id" property="limitProductId" jdbcType="INTEGER" />
     <result column="limit_status" property="limitStatus" jdbcType="INTEGER" />
     <result column="limit_remark" property="limitRemark" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
   </resultMap>
   <sql id="Base_Column_List" >
     <!--
@@ -101,13 +109,13 @@
       collect_channel_fee, account_manager_fee, late_fee,
       renewal_fee, renewal_poundage, borrow_day,
       deal_flag, create_time, update_time,
-      remark,limit_id,extend_id,status)
+      remark,limit_id,extend_id,status,product_name)
     values (#{id,jdbcType=INTEGER}, #{borrowAmount,jdbcType=DECIMAL}, #{totalFeeRate,jdbcType=DECIMAL},
       #{borrowInterest,jdbcType=DECIMAL}, #{turstTrial,jdbcType=DECIMAL}, #{platformLicensing,jdbcType=DECIMAL},
       #{collectChannelFee,jdbcType=DECIMAL}, #{accountManagerFee,jdbcType=DECIMAL}, #{lateFee,jdbcType=DECIMAL},
       #{renewalFee,jdbcType=DECIMAL}, #{renewalPoundage,jdbcType=DECIMAL}, #{borrowDay,jdbcType=INTEGER},
       #{dealFlag,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
-      #{remark,jdbcType=VARCHAR},#{limitId},#{extendId},#{status})
+      #{remark,jdbcType=VARCHAR},#{limitId},#{extendId},#{status},#{productName})
   </insert>
   <insert id="insertSelective" parameterType="com.info.web.pojo.BorrowProductConfig" >
     <!--
@@ -173,6 +181,9 @@
       <if test="status != null and status != ''">
         status,
       </if>
+      <if test="productName != null and productName != ''">
+        product_name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -224,13 +235,16 @@
         #{remark,jdbcType=VARCHAR},
       </if>
       <if test="limitId != null and limitId != ''">
-        #{limitId}
+        #{limitId},
       </if>
       <if test="extendId != null and extendId != ''">
-        #{extendId}
+        #{extendId},
       </if>
       <if test="status != null and status != ''">
-        #{status}
+        #{status},
+      </if>
+      <if test="productName != null and productName !=''">
+        #{productName},
       </if>
     </trim>
   </insert>
@@ -287,13 +301,16 @@
         remark = #{remark,jdbcType=VARCHAR},
       </if>
       <if test="limitId != null and limitId != ''">
-        limit_id = #{limitId}
+        limit_id = #{limitId},
       </if>
       <if test="extendId != null and extendId != ''">
-       extend_id = #{extendId}
+       extend_id = #{extendId},
       </if>
       <if test="status != null and status != ''">
-        status = #{status}
+        status = #{status},
+      </if>
+      <if test="productName != null and productName !=''">
+        product_name = #{productName},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -321,7 +338,8 @@
       remark = #{remark,jdbcType=VARCHAR},
       limit_id = #{limitId},
       extend_id = #{extendId},
-      status = #{status}
+      status = #{status},
+      product_name = #{productName}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
@@ -420,6 +438,7 @@
     <select id="getProductList" resultMap="productDetailMap" parameterType="HashMap">
       SELECT
           a.id AS productId,
+          a.product_name as productName,
           borrow_amount AS borrowAmount,
           total_fee_rate AS totalFeeRate,
           late_fee AS lateFee,
@@ -433,7 +452,8 @@
           c.limit_product_id as limitProductId,
           (select borrow_amount from borrow_product_config where id = c.limit_product_id ) as limiitProductName,
           c.limit_status as limitStatus,
-          a.status as status
+          a.status as status,
+          a.borrow_day as borrowDay
       FROM
           borrow_product_config  a
           left join back_extend  b on a.extend_id = b.id
@@ -449,10 +469,14 @@
         <if test="status != null and status != ''">
           and a.status=#{status}
         </if>
+      <if test="productName != null and productName !=''">
+        and product_name = #{productName}
+      </if>
     </select>
   <select id="getProductDetail" resultType="com.info.web.pojo.ProductDetail" parameterType="java.lang.Integer">
    SELECT
             a.id AS productId,
+             a.product_name as productName,
             borrow_amount AS borrowAmount,
             total_fee_rate AS totalFeeRate,
             late_fee AS lateFee,
@@ -464,9 +488,11 @@
             c.limit_name as limitName,
             c.limit_count as limitCount,
             c.limit_product_id as limitProductId,
-            (select borrow_amount from borrow_product_config where id = c.limit_product_id ) as limiitProductName,
+            b.extend_day as extendDay,
+            (select product_name from borrow_product_config where id = c.limit_product_id ) as limiitProductName,
             c.limit_status as limitStatus,
-            a.status as status
+            a.status as status,
+            a.borrow_day as borrowDay
         FROM
             borrow_product_config  a
             left join back_extend  b on a.extend_id = b.id
@@ -493,19 +519,142 @@
     <if test="status != null and status != ''">
       and a.status=#{status}
     </if>
+    <if test="productName != null and productName !=''">
+      and product_name = #{productName}
+    </if>
   </select>
   <select id="getExtendList" resultMap="extendResult" parameterType="HashMap">
-  select id,extend_name,extend_count,extend_money,extend_status,remark from back_extend
+  select id,extend_name,extend_count,extend_money,extend_status,remark,extend_day from back_extend
   where 1=1
   <if test="extendName != null and extendName !=''">
      and extend_name =#{extendName}
   </if>
+  <if test="extendDay != null and extendDay !=''">
+    and extend_day = #{extendDay}
+  </if>
   </select>
   <select id="getExtendCount" resultType="java.lang.Integer" parameterType="HashMap">
-  select count(id) from back_extend where extend_name =#{extendName}
+  select count(id) from back_extend where
+    <if test="extendName != null and extendName !=''">
+    and extend_name =#{extendName}
+  </if>
+    <if test="extendDay != null and extendDay !=''">
+      and extend_day = #{extendDay}
+    </if>
+  </select>
+  <select id="findExtend" resultType="com.info.web.pojo.BackExtend" parameterType="java.lang.Integer">
+    select id,extend_name,extend_count,extend_money,extend_status,remark,extend_day from back_extend where id= #{id}
+  </select>
+  <select id="findLimit" resultType="com.info.web.pojo.BackLimit" parameterType="java.lang.Integer">
+    select select id,limit_name,limit_count,limit_product_id,(select product_name from borrow_product_config
+    where id= limit_product_id)as limiitProductName,limit_status,limit_remark from back_limit
+    where 1=1 and id = #{id}
   </select>
   <select id="getLimitList" resultMap="limitResult" parameterType="HashMap">
-    select id,limit_name,limit_count,limit_product_id,(select borrow_amount from borrow_product_config
-    where id= limit_product_id)as productName,limit_status,limit_remark from back_limit
+    select id,limit_name,limit_count,limit_product_id,(select product_name from borrow_product_config
+    where id= limit_product_id)as limiitProductName,limit_status,limit_remark from back_limit
+    where 1=1
+    <if test="limitName != null and limitName != ''">
+      and limit_name = #{limitName}
+    </if>
+    <if test="limitCount != null and limitCount !=''">
+      and limit_count = #{limitCount}
+    </if>
   </select>
+  <select id="getLimitListCount" resultType="java.lang.Integer" parameterType="HashMap">
+    select count(id) from back_limit
+    where 1=1
+    <if test="limitName != null and limitName != ''">
+      and limit_name = #{limitName}
+    </if>
+    <if test="limitCount != null and limitCount !=''">
+      and limit_count = #{limitCount}
+    </if>
+  </select>
+  <insert id="addLimit" parameterType="com.info.web.pojo.BackLimit">
+    insert into back_limit
+    id,
+    limit_name,
+    limit_count,
+    limit_product_id,
+    limit_status,
+    create_date,
+    values (
+    #{id},
+    #{limitName},
+    #{limitCount},
+    #{limitProductId},
+    #{limitStatus},
+    #{createDate}
+    )
+  </insert>
+  <update id="updateLimit" parameterType="com.info.web.pojo.BackLimit">
+    update back_limit
+    <set>
+    <if test="limitName != null and limitName !=''">
+      limit_name = #{limitName},
+    </if>
+    <if test="limitCount != null and limitCount !=''">
+      limit_count = #{limitCount},
+    </if>
+    <if test="limitProductId != null and limitProductId != ''">
+      limit_product_id =#{limitProductId},
+    </if>
+    <if test="limitStatus != null and limitStatus != ''">
+      limit_status = #{limitStatus},
+    </if>
+    <if test="updateDate != null and updateDate !=''">
+      update_date = #{updateDate},
+    </if>
+    </set>
+    where id = #{id}
+  </update>
+  <insert id="addExtend" parameterType="com.info.web.pojo.BackExtend">
+   insert into back_extend
+   id,
+   extend_name,
+   extend_count,
+   extend_money,
+   extend_status,
+   remark,
+   extend_day,
+   create_date
+   VALUES (
+   #{id},
+   #{extendName},
+   #{extendCount},
+   #{extendMoney},
+   #{extendStatus},
+   #{remark},
+   #{extendDay},
+   #{createDate}
+   )
+  </insert>
+  <update id="updateExtend" parameterType="com.info.web.pojo.BackExtend">
+   update back_extend
+   <set>
+   <if test="extendName != null and  extendName != ''">
+     extend_name = #{extendName},
+   </if>
+    <if test="extendCount != null and  extendCount != ''">
+      extend_count = #{extendCount},
+    </if>
+    <if test="extendMoney != null and  extendMoney !=''">
+      extend_money = #{extendMoney},
+    </if>
+    <if test="extendStatus != null and  extendStatus != ''">
+      extend_status = #{extendStatus},
+    </if>
+    <if test="remark != null and  remark != ''">
+      remark = #{remark},
+    </if>
+    <if test="extendDay != null and  extendDay != ''">
+      extend_day =#{extendDay},
+    </if>
+    <if test="udpateDate != null and updateDate != '' ">
+     update_date = #{updateDate},
+    </if>
+   </set>
+    where id = #{id}
+  </update>
 </mapper>

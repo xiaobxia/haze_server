@@ -1017,7 +1017,9 @@
 			<if test="channelName != null and channelName != ''">
 				and c.channel_name= #{channelName}
 			</if>
-
+			<if test="superChannelId != null and superChannelId != ''">
+				and s.id= #{superChannelId}
+			</if>
 			<if test="beginTime !=null and beginTime !=''">
 				<![CDATA[ and r.report_date >= str_to_date(#{beginTime},'%Y-%m-%d') ]]>
 			</if>
@@ -1044,7 +1046,9 @@
 		<if test="channelName != null and channelName != ''">
 			and c.channel_name= #{channelName}
 		</if>
-
+		<if test="superChannelId != null and superChannelId != ''">
+			and s.id= #{superChannelId}
+		</if>
 		<if test="beginTime !=null and beginTime !=''">
 			<![CDATA[ and r.report_date >= str_to_date(#{beginTime},'%Y-%m-%d') ]]>
 		</if>

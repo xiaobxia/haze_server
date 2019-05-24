@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.info.back.service.IProductService;
 import com.info.web.pojo.*;
 import com.info.web.util.PageConfig;
-import com.sun.net.httpserver.Authenticator;
+import com.sun.org.apache.bcel.internal.generic.MONITORENTER;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -79,7 +79,9 @@ public class ConfigParamController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("goProductList")
-	public String getProductList(){
+	public String getProductList(Model model,HashMap<String,Object> params){
+        List<ProductDetail> list = iProductService.moneyList(params);
+        model.addAttribute("productMoneyList",list);
       return "sys/productList";
 	}
 
@@ -88,7 +90,9 @@ public class ConfigParamController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("goextendList")
-	public String getextendList(){
+	public String getextendList(Model model,HashMap<String,Object> params){
+	    List<BackExtend> list = iProductService.findExtendList(params);
+	    model.addAttribute("extendList",list);
 		return "sys/extendList";
 	}
 
@@ -97,9 +101,74 @@ public class ConfigParamController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("goLimitList")
-	public String getLimitList(){
+	public String getLimitList(Model model,HashMap<String,Object> params){
+	    List<BackLimit> list = iProductService.findLimitList(params);
+	    model.addAttribute("limitList",list);
 		return "sys/limitList";
 	}
+    /**
+     * 进入添加/修改产品页面
+     */
+    @RequestMapping("toAddOrUpdateProduct")
+    public String toAddOrUpdateProduct(Integer id,Model model,HashMap<String,Object> params){
+        if(id != null){
+            ProductDetail productDetail = iProductService.getProductDetail(id);
+            List<BackLimit> limitList= iProductService.findLimitList(params);
+            List<BackExtend> extendList = iProductService.findExtendList(params);
+            model.addAttribute("limitList",limitList);
+            model.addAttribute("extendList",extendList);
+            model.addAttribute("productDetail",productDetail);
+            return "sys/addOrUpdateProduct";
+        }
+       return "sys/addOrUpdateProduct";
+    }
+
+    /**
+     * 进入产品详情页面
+     * @return
+     */
+    @RequestMapping("toProductDetail")
+    public String toProductDetail(Model model,Integer id,HashMap<String,Object> params){
+        ProductDetail productDetail = iProductService.getProductDetail(id);
+        model.addAttribute("productDetail",productDetail);
+        return "sys/productDetail";
+    }
+
+    /**
+     * 进入添加或修改续期页面
+     * @param
+     * @return
+     */
+    @RequestMapping("toAddOrUpdateExtend")
+    public String toAddOrUpdateExtend(Integer id,Model model){
+        if(id != null ){
+           BackExtend backExtend = iProductService.findExtend(id);
+           model.addAttribute("backExtend",backExtend);
+           return "sys/addOrUpdateExtend";
+        }
+     return "sys/addOrUpdateExtend";
+    }
+
+    /**
+     * 进入添加或修改提额页面
+     * @param id
+     * @return
+     */
+    @RequestMapping("toAddOrUpdateLimit")
+    public String toAddOrUpdateLimit(Integer id,Model model){
+        List<ProductDetail> list = iProductService.moneyList(null);
+        if(id != null){
+            BackLimit backLimit = iProductService.findLimit(id);
+             //查询产品详情
+            ProductDetail productDetail = iProductService.getProductDetail(backLimit.getLimitProductId());
+            model.addAttribute("backLimit",backLimit);
+            model.addAttribute("productDetail",productDetail);
+            model.addAttribute("list",list);
+            return "sys/addOrUpdateLimit";
+        }
+        model.addAttribute("list",list);
+        return "sys/addOrUpdateLimit";
+    }
 
 	/**
 	 * 产品列表
@@ -121,7 +190,7 @@ public class ConfigParamController extends BaseController {
 	 * @param id
 	 * @return
 	 */
-    @RequestMapping(value="getProductDetail")//
+    @RequestMapping(value="getProductDetail")
 	@ResponseBody
 	public Model getProductDetail(Model model,Integer id,HashMap<String,Object> params){
        ProductDetail productDetail = iProductService.getProductDetail(id);
@@ -169,6 +238,18 @@ public class ConfigParamController extends BaseController {
 		}
 		return model;
 	}
+
+	/**
+	 * 设置为默认产品
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+    @RequestMapping("openOrCloseProduct")
+	public Model openOrCloseProduct(Integer id,Model model){
+         	model = iProductService.openOrCloseProduct(id,model);
+	        return model;
+	}
 	/**
 	 * 续期列表
 	 * @param model
@@ -176,10 +257,47 @@ public class ConfigParamController extends BaseController {
 	 */
 	@RequestMapping(value="getExtendList")
 	@ResponseBody
-	public Model getExtendList(Model  model){
-
+	public Model getExtendList(Model  model,HttpServletRequest request){
+        HashMap<String, Object> params = getParametersO(request);
+	    PageConfig<BackExtend> pageConfig = iProductService.getExtendList(params);
+	    model.addAttribute("pm",pageConfig);
 		return model;
 	}
+
+    /**
+     * 添加续期
+     * @param backExtend
+     * @param model
+     * @return
+     */
+	@RequestMapping(value="addExtend")
+	public Model addExtend(BackExtend backExtend,Model model){
+        try{
+            iProductService.addExtend(backExtend);
+            model.addAttribute("result","success");
+        }catch(Exception e){
+            log.error("修改失败"+e);
+            model.addAttribute("result","error");
+        }
+        return model;
+    }
+    /**
+     * 修改续期
+     * @param backExtend
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="updateExtend")
+    public Model updateExtend(BackExtend backExtend,Model model){
+        try{
+            iProductService.updateExtend(backExtend);
+            model.addAttribute("result","success");
+        }catch(Exception e){
+            log.error("修改失败"+e);
+            model.addAttribute("result","error");
+        }
+        return model;
+    }
 	/**
 	 * 提额列表
 	 * @param model
@@ -187,8 +305,47 @@ public class ConfigParamController extends BaseController {
 	 */
 	@RequestMapping(value="getLimitList")
 	@ResponseBody
-	public Model getLimitList(Model  model){
-
+	public Model getLimitList(Model  model,HttpServletRequest request){
+        HashMap<String, Object> params = getParametersO(request);
+        PageConfig<BackLimit> pageConfig = iProductService.getLimitList(params);
+        model.addAttribute("pm",pageConfig);
 		return model;
 	}
+    /**
+     * 添加提额
+     * @param backLimit
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="addBackLimit")
+    @ResponseBody
+    public Model addBackLimit(BackLimit backLimit,Model model){
+        try{
+            iProductService.addLimit(backLimit);
+            model.addAttribute("result", "success");
+        }catch (Exception e){
+            log.error("添加失败"+e);
+            model.addAttribute("result","error");
+        }
+        return model;
+    }
+    /**
+     * 修改提额
+     * @param backLimit
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="updateBackLimit")
+    @ResponseBody
+    public Model updateBackLimit(BackLimit backLimit,Model model){
+        try{
+            iProductService.updateLimit(backLimit);
+            model.addAttribute("result","success");
+        }catch(Exception e){
+            log.error("修改失败"+e);
+            model.addAttribute("result","error");
+        }
+        return model;
+    }
+
 }
