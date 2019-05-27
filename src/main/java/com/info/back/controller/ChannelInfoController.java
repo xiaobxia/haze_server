@@ -422,7 +422,7 @@ public class ChannelInfoController extends BaseController {
             /*
              * 新浪短链接
              */
-            String url1="http://api.t.sina.com.cn/short_url/shorten.json?source=2815391962"+"&url_long=" + encodeUrl;
+            String url1="http://api.t.sina.com.cn/short_url/shorten.json?source=4175490450"+"&url_long=" + encodeUrl;
             String resultStr = HttpUtil.doGet(url1,"UTF-8",null);
             JSONArray jsonArray = JSON.parseArray(resultStr);
             if(jsonArray!=null && jsonArray.size()>0){

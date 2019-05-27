@@ -73,9 +73,9 @@
 				<tr>
 					<th align="center">用户ID</th>
 					<th align="center">姓名</th>
-					<th align="center">公司名称</th>
+					<%--<th align="center">公司名称</th>--%>
 					<th align="center">联系方式</th>
-					<th align="center">生日</th>
+					<%--<th align="center">生日</th>--%>
 					<th align="center">性别</th>
 					<!-- <th align="center">类型</th>
 					<th align="center">状态</th>
@@ -89,14 +89,14 @@
 					<tr target="userId" rel="${user.id }">
 						<td align="center">${user.id }</td>
 						<td align="center">${user.realname}</td>
-						<td align="center">${user.company_name }</td>
+						<%--<td align="center">${user.company_name }</td>--%>
 						<td align="center">${user.user_phone }</td>
-						<td align="center">
+						<%--<td align="center">
 							<c:choose>
 								<c:when test="${user.id_number!=null && user.id_number!=''}">${fn:substring(user.id_number, 6, 10)}年${fn:substring(user.id_number, 10, 12)}月${fn:substring(user.id_number, 12, 14)}日</c:when>
 								<c:otherwise></c:otherwise>
 							</c:choose> 
-						</td>
+						</td>--%>
 						<td align="center">${user.user_sex }</td>
 						<%-- <td align="center">${user.user_type }</td>
 						<td align="center"></td> --%>

@@ -83,9 +83,9 @@
                 <th align="center"  >
                     注册用户数
                 </th>
-                <th align="center" >
+                <%--<th align="center" >
                     贷款余额
-                </th>
+                </th>--%>
                 <th align="center" >
                     核准率
                 </th>
@@ -120,9 +120,9 @@
                     <td>
                         ${data.registCount}
                     </td>
-                    <td>
+                    <%--<td>
                          ${data.loanBlance}
-                    </td>
+                    </td>--%>
                     <td>
                         <c:choose>
                             <c:when test="${params.get('customerTypeKey') == '' or params.get('customerTypeKey') == null}">

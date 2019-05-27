@@ -34,11 +34,11 @@
 	<![endif]-->
 	<style type="text/css">
 		#header {
-			height: 85px
+			height: 50px
 		}
 
 		#leftside,#container,#splitBar,#splitBarProxy {
-			top: 85px
+			top: 50px
 		}
 	</style>
 	<style>
@@ -285,9 +285,9 @@
 	</style>
 	<style>
 		.logo-wrap {
-			height: 85px;
+			height: 50px;
 			width: 205px;
-			line-height: 85px;
+			line-height: 50px;
 			text-align: center;
 		}
 		.logo-wrap img {
@@ -300,7 +300,7 @@
 			position: absolute;
 			left: 0;
 			top: 0;
-			height: 85px;
+			height: 50px;
 			width: 100%;
 			box-sizing: border-box;
 			padding-left: 205px;
@@ -656,7 +656,7 @@
 
 				</ul>
 			</div>
-			<div id="navMenu">
+			<%--<div id="navMenu">
 				<ul>
 					<c:forEach items="${menuModuleList}" var="item" varStatus="count">
 						<li <c:if test="${count.count==1}">  class="selected" </c:if> >
@@ -666,7 +666,7 @@
 						</li>
 					</c:forEach>
 				</ul>
-			</div>
+			</div>--%>
 		</div>
 	</div>
 	<div id="leftside">
@@ -693,6 +693,7 @@
 							</h2>
 						</c:if>
 					</div>
+
 					<div class="accordionContent">
 						<ul class="tree treeFolder">
 							<c:forEach items="${item.moduleList}" var="rightSubList">
