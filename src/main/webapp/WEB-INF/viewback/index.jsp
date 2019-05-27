@@ -939,7 +939,7 @@
 										<div>当日待收订单</div>
 										<div id="drdsdd" class="number-text">--</div>
 									</div>
-								git </div>
+								</div>
 								<div class="item left">
 									<div class="icon">
 										<img src="${basePath }/images/shouyeimg/当日放款率.png" alt="">
