@@ -54,6 +54,8 @@ public interface IChannelInfoService {
 	public ChannelInfo findOneChannelInfo(HashMap<String, Object> params);
 	public ChannelInfo findOneChannelInfoNew(HashMap<String, Object> params);
 
+	void saveChannelUrl(ChannelInfo channelInfo);
+
 	/**
 	 * 根据主键删除对象
 	 * 

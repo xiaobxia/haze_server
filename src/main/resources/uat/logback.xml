@@ -6,6 +6,7 @@
     <property name="LOG_FILENAME" value="server"/>
 
 
+    <logger name="com.info.web.dao" level="DEBUG"/>
     <logger name="org.apache.catalina.startup.DigesterFactory" level="ERROR"/>
     <logger name="org.apache.catalina.util.LifecycleBase" level="ERROR"/>
     <logger name="org.apache.coyote.http11.Http11NioProtocol" level="WARN"/>

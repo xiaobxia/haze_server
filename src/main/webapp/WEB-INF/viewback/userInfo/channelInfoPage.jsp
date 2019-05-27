@@ -91,9 +91,15 @@
 					<th align="center" >
 						创建时间
 					</th>
-					 <th align="center">
-						 操作
-					 </th>
+					<th align="center">
+						渠道链接
+					</th>
+					<th align="center">
+						推广链接
+					</th>
+					<th align="center">
+					 	操作
+					</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -131,6 +137,16 @@
 						</td>
 						<td>
 							${channel.channelRateName}
+						</td>
+						<td>
+							<c:if test="${not empty channel.channelUrl}">
+								<a href="${channel.channelUrl}" target="_blank" >查看渠道</a>
+							</c:if>
+						</td>
+						<td>
+							<c:if test="${not empty channel.promotionUrl}">
+								<a href="${channel.promotionUrl}" target="_blank" >查看URL</a>
+							</c:if>
 						</td>
 						<td>
 							<c:if test="${channel.status == 1 }">

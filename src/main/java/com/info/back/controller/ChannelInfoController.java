@@ -203,7 +203,6 @@ public class ChannelInfoController extends BaseController {
         HashMap<String, Object> params = this.getParametersO(request);
         String url = null;
         String erroMsg = null;
-
         try {
             /**
              * 是新增还是修改
@@ -230,10 +229,10 @@ public class ChannelInfoController extends BaseController {
                 channelInfo.setStatus(1);
                 // 更新或者添加操作
                 if (channelInfo.getId() != null) {
-                    // 加密
                     String passWord = MD5coding.MD5(AESUtil.encrypt(channelInfo.getChannelPassword(), ""));
                     channelInfo.setChannelPassword(passWord);
-                    channelInfoService.updateById(channelInfo);
+                    saveChannelUrl(request, channelInfo, params, true);
+
                 } else {
                     ChannelInfo codeChannelInfo;
                     HashMap<String, Object> queryMap = new HashMap<>();
@@ -251,6 +250,8 @@ public class ChannelInfoController extends BaseController {
 
                     channelInfo.setChannelPassword(passWord);
                     channelInfoService.insert(channelInfo);
+
+                    saveChannelUrl(request, channelInfo, params, false);
                 }
                 SpringUtils.renderDwzResult(response, true, "操作成功",
                         DwzResult.CALLBACK_CLOSECURRENT, params.get("parentId")
@@ -267,6 +268,28 @@ public class ChannelInfoController extends BaseController {
         model.addAttribute(MESSAGE, erroMsg);
         model.addAttribute("params", params);
         return url;
+    }
+
+    private void saveChannelUrl(HttpServletRequest request, ChannelInfo channelInfo, HashMap<String, Object> params, boolean updateFlag) {
+        String userFrom = AESUtil.encrypt(channelInfo.getId().toString(), AESUtil.KEY_USER_FROM);
+        Map<String, String> keys = SysCacheUtils
+                .getConfigParams(BackConfigParams.APP_IMG_URL);
+        String appurl = keys.get("qrcode_URL");
+        String qrurl = appurl
+                + request.getContextPath() + "/"
+                + "act/little-fish-register?user_from="
+                + userFrom;
+
+        String backUrl = keys.get("channel_URL");
+        String relPath = backUrl + "/channel/toAppointChannelReport?aesCode="
+                + AESUtil.encrypt(String.valueOf(params.get("channelCode")), AESUtil.KEY);
+        // 加密
+        channelInfo.setChannelUrl(getShortUrl(relPath));
+        channelInfo.setPromotionUrl(getShortUrl(qrurl));
+        if (updateFlag)
+            channelInfoService.updateById(channelInfo);
+        else
+            channelInfoService.saveChannelUrl(channelInfo);
     }
 
     /**

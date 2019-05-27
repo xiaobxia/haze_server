@@ -96,4 +96,6 @@ public interface IChannelInfoDao {
 	List<String> findUserId(@Param("channeId") Integer channeId);
     Integer findqqCount(@Param("channelId") Integer channelId);
     Integer findWechatCount(@Param("channelId") Integer channelId);
+
+    Integer saveChannelUrl(ChannelInfo channelInfo);
 }

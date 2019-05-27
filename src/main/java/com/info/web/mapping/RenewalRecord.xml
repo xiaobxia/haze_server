@@ -369,7 +369,8 @@ LEFT JOIN out_orders o on o.order_no = a.order_id
             and rd.repayment_time >= #{repaymentTime}
         </if>
         <if test="repaymentTimeEnd != null">
-            <![CDATA[ and rd.repayment_time < #{repaymentTimeChangeEnd} ]]>
+            <![CDATA[ and rd.repayment_time < #{repaymentTimeEnd} ]]>
+            <!--<![CDATA[ and rd.repayment_time < #{repaymentTimeChangeEnd} ]]>-->
         </if>
         <if test="userName != null">
             and u.realname = #{userName}

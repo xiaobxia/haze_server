@@ -97,6 +97,11 @@ public class ChannelInfoService implements IChannelInfoService {
 	}
 
 	@Override
+	public void saveChannelUrl(ChannelInfo channelInfo) {
+		channelInfoDao.saveChannelUrl(channelInfo);
+	}
+
+	@Override
 	public void deleteChannelInfoById(Integer id) {
 		channelInfoDao.deleteById(id);
 	}
