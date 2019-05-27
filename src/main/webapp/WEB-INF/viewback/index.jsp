@@ -925,35 +925,35 @@
 												<div id="drzqje" class="number-text">--</div>
 											</div>
 										</div>
-										<div class="sub-item">
+										<div id="drzqdd" class="number-text">--</div>
+									</div>
+								</div>
+								<div class="sub-item left">
+									<div class="text">
+										<div>当日待收金额</div>
+										<div id="drdsje" class="number-text">--</div>
+									</div>
+								</div>
+								<div class="sub-item">
+									<div class="text">
+										<div>当日待收订单</div>
+										<div id="drdsdd" class="number-text">--</div>
+									</div>
+								git </div>
+								<div class="item left">
+									<div class="icon">
+										<img src="${basePath }/images/shouyeimg/当日放款率.png" alt="">
+									</div>
+									<div class="text">
+										<div>当日放款率</div>
+										<div id="drfkl" class="number-text">--</div>
+									</div>
+								</div>
+								<div class="item">
+									<div class="icon">
+									<div class="sub-item">
 											<div class="text">
 												<div>当日展期订单</div>
-												<div id="drzqdd" class="number-text">--</div>
-											</div>
-										</div>
-										<div class="sub-item left">
-											<div class="text">
-												<div>当日待收金额</div>
-												<div id="drdsje" class="number-text">--</div>
-											</div>
-										</div>
-										<div class="sub-item">
-											<div class="text">
-												<div>当日待收订单</div>
-												<div id="drdsdd" class="number-text">--</div>
-											</div>
-										</div>
-										<div class="item left">
-											<div class="icon">
-												<img src="${basePath }/images/shouyeimg/当日放款率.png" alt="">
-											</div>
-											<div class="text">
-												<div>当日放款率</div>
-												<div id="drfkl" class="number-text">--</div>
-											</div>
-										</div>
-										<div class="item">
-											<div class="icon">
 												<img src="${basePath }/images/shouyeimg/当日通过率.png" alt="">
 											</div>
 											<div class="text">
