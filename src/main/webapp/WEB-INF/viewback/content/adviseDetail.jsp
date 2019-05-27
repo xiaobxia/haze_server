@@ -30,7 +30,7 @@
 				
 				<p style="height: 160px; width: 950px;">
 					<label>反馈内容：</label>
-					<textarea name="aboutIntroduce" cols="100" rows="10" disabled="disabled" maxlength="420">${advise.adviseContent}</textarea>
+					<textarea name="aboutIntroduce" cols="100" rows="6" disabled="disabled" maxlength="420">${advise.adviseContent}</textarea>
 				</p>
 				<div class="divider"></div>
 				
@@ -62,13 +62,13 @@
 					
 					<p style="height: 160px; width: 950px;">
 						<label>内容提要：</label>
-						<textarea name="aboutIntroduce" cols="100" rows="10" disabled="disabled" maxlength="420">${advise.adviseConnectInfo}</textarea>
+						<textarea name="aboutIntroduce" cols="100" rows="6" disabled="disabled" maxlength="420">${advise.adviseConnectInfo}</textarea>
 					</p>
 					<div class="divider"></div>
 					
 					<p style="height: 160px; width: 950px;">
 						<label>处理内容：</label>
-						<textarea name="aboutIntroduce" cols="100" rows="10" disabled="disabled" maxlength="420">${advise.adviseFeedback}</textarea>
+						<textarea name="aboutIntroduce" cols="100" rows="6" disabled="disabled" maxlength="420">${advise.adviseFeedback}</textarea>
 					</p>
 					<div class="divider"></div>
 					

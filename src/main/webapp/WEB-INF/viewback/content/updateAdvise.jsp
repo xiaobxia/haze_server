@@ -28,7 +28,7 @@
 				
 				<p style="height: 160px; width: 950px;">
 					<label>反馈内容：</label>
-					<textarea name="aboutIntroduce"  cols="100" rows="10" disabled="disabled" maxlength="420">${advise.adviseContent}</textarea>
+					<textarea name="aboutIntroduce"  cols="100" rows="6" disabled="disabled" maxlength="420">${advise.adviseContent}</textarea>
 				</p>
 				<div class="divider"></div>
 				
@@ -40,14 +40,14 @@
 				<c:if test="${not empty advise.adviseConnectInfo}">
 					<p style="height: 160px; width: 950px;">
 						<label>内容提要：</label>
-						<textarea name="adviseConnectInfo" cols="100" rows="10" maxlength="420" disabled="disabled">${advise.adviseConnectInfo}</textarea>
+						<textarea name="adviseConnectInfo" cols="100" rows="6" maxlength="420" disabled="disabled">${advise.adviseConnectInfo}</textarea>
 					</p>
 					<div class="divider"></div>
 				</c:if>
 				<c:if test="${empty advise.adviseConnectInfo}">
 				<p style="height: 160px; width: 950px;">
 						<label>内容提要：</label>
-						<textarea class="required" name="adviseConnectInfo" cols="100" rows="10" maxlength="420"></textarea>
+						<textarea class="required" name="adviseConnectInfo" cols="100" rows="6" maxlength="420"></textarea>
 					</p>
 				<div class="divider"></div>
 				</c:if>
