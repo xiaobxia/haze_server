@@ -105,8 +105,8 @@
 .grid .gridTbody .gridRow td.tdLast { border-color:#ededed;}
 .grid .gridTbody .hover { border-color:#dddddd; background:#f5f5f5;}
 .grid .gridTbody .hover .tdSelected { background:#f5f5f5;}
-.grid .gridTbody .selected { border-color:#b8d0d6; background:#7cc5e5;}
-.grid .gridTbody .selected .tdSelected { background:#e8edf3;}
+.grid .gridTbody .selected {background:#f5f7fa;}
+.grid .gridTbody .selected .tdSelected { background:#f5f7fa;}
 .grid .gridTbody .tdSelected { background:#f8f8f8;}
 .grid .error{background:#fb7e81;}
 
@@ -133,7 +133,7 @@ input.disabled, textarea.disabled { border-color:#9eabb3 #d5dbdf #d5dbdf #9eabb3
 .buttonActive, .buttonActive span,
 .button .buttonContent, .buttonHover, .buttonHover .buttonContent,
 .buttonActive .buttonContent, .buttonActiveHover, .buttonActiveHover .buttonContent,
-.buttonDisabled .buttonContent {background-color: #1E6BFF;border-radius: 2px;}
+.buttonDisabled .buttonContent {background-color: #1E6BFF;border-radius: 4px;}
 
 .button span, .buttonDisabled span, .buttonActive span,
 .button .buttonContent, .buttonHover, .buttonHover .buttonContent,
@@ -146,6 +146,7 @@ input.disabled, textarea.disabled { border-color:#9eabb3 #d5dbdf #d5dbdf #9eabb3
 
 .panelBar .toolBar a span {
     background: url(./images/icon.png) no-repeat;
+    background-position: 6px 2px;
 }
 
 /* ----------------------------------------------------------------- Pages */
@@ -559,6 +560,7 @@ body, #splitBar { background:#32374A;}
     padding: 5px 10px;
     background-color: #10AA72;
     color: #fff;
+    border-radius: 4px;
 }
 
 .falseBtn {
@@ -572,6 +574,7 @@ body, #splitBar { background:#32374A;}
     background-color: #1E6BFF;
     color: #fff;
     cursor: pointer;
+    border-radius: 4px;
 }
 
 .setBtn.disabled {
@@ -586,6 +589,7 @@ body, #splitBar { background:#32374A;}
     background-color: #F85252;
     color: #fff;
     cursor: pointer;
+    border-radius: 4px;
 }
 .deleteBtn.disabled {
     padding: 5px 10px;
@@ -616,4 +620,53 @@ body, #splitBar { background:#32374A;}
     display: inline-block;
     text-align: right;
     width: 100px;
+}
+.slide-btn {
+    display: inline-block !important;
+    position: relative;
+    font-size: 14px;
+    line-height: 20px;
+    height: 20px !important;
+    vertical-align: middle;
+    border: 1px solid #dcdfe6;
+    outline: none;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background: #dcdfe6;
+    cursor: pointer;
+    transition: border-color .3s,background-color .3s;
+    width: 40px;
+}
+
+.slide-btn.close-s {
+    border-color: #bbb;
+    background-color: #bbb;
+}
+
+.slide-btn.open-s {
+    border-color: rgb(19, 206, 102);
+    background-color: rgb(19, 206, 102);
+}
+
+.slide-btn.open-s.disabled {
+    border-color: rgb(19, 206, 102, 0.5);
+    background-color: rgb(19, 206, 102, 0.5);
+    cursor: not-allowed;
+}
+
+.slide-btn:after {
+    content: "";
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    border-radius: 100%;
+    transition: all .3s;
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+}
+
+.slide-btn.open-s:after {
+    right: 1px;
+    left: auto;
 }

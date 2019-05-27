@@ -330,34 +330,34 @@
 	<script type="text/javascript" src="${basePath }/js/user/city.js"></script>
 
 	<script type="text/javascript">
-        $(function(){
-            $(document).bind("ajaxComplete", function(e,jqXHR, status){
-                var sessionstatus =jqXHR.getResponseHeader("statusCode");// 通过XMLHttpRequest取得响应头，sessionstatus，
-                todo(sessionstatus);
-            });
-            DWZ.init("<%=path%>/resources/dwz.frag.xml",
-                {
-                    loginUrl : "login_dialog.html",
-                    loginTitle : "登录", // 弹出登录对话框
-                    //		loginUrl:"login.html",	// 跳到登录页面
-                    statusCode : {
-                        ok : 200,
-                        error : 300,
-                        timeout : 301
-                    }, //【可选】
-                    pageInfo : {
-                        pageNum : "pageNum",
-                        numPerPage : "numPerPage",
-                        orderField : "orderField",
-                        orderDirection : "orderDirection"
-                    }, //【可选】
-                    debug : false, // 调试模式 【true|false】
-                    callback : function() {
-                        initEnv();
-                        $("#themeList").theme({
-                            themeBase : "${basePath }/themes"});
-                    }
-                });
+		$(function(){
+			$(document).bind("ajaxComplete", function(e,jqXHR, status){
+				var sessionstatus =jqXHR.getResponseHeader("statusCode");// 通过XMLHttpRequest取得响应头，sessionstatus，
+				todo(sessionstatus);
+			});
+			DWZ.init("<%=path%>/resources/dwz.frag.xml",
+					{
+						loginUrl : "login_dialog.html",
+						loginTitle : "登录", // 弹出登录对话框
+						//		loginUrl:"login.html",	// 跳到登录页面
+						statusCode : {
+							ok : 200,
+							error : 300,
+							timeout : 301
+						}, //【可选】
+						pageInfo : {
+							pageNum : "pageNum",
+							numPerPage : "numPerPage",
+							orderField : "orderField",
+							orderDirection : "orderDirection"
+						}, //【可选】
+						debug : false, // 调试模式 【true|false】
+						callback : function() {
+							initEnv();
+							$("#themeList").theme({
+								themeBase : "${basePath }/themes"});
+						}
+					});
 			function initIndexPage(data) {
 				function setAdaptive () {
 					var baseFontSize = 20
@@ -560,32 +560,32 @@
 					}
 					$('#drhkl').html(indexInfo.repayPercentage + '%' + drhklImg)
 					var drfjlImg = ''
-                    if (indexInfo.repayPercentage > 0) {
-                        drfjlImg = '<img class="up-down-icon" src="${basePath }/images/shouyeimg/箭头2.png">'
-                    }
-                    if (indexInfo.repayPercentage < 0) {
-                        drfjlImg = '<img class="up-down-icon" src="${basePath }/images/shouyeimg/箭头1.png">'
-                    }
-                    $('#drfjlImg').html(indexInfo.reBorrowReate + '%' + drfjlImg)
+					if (indexInfo.repayPercentage > 0) {
+						drfjlImg = '<img class="up-down-icon" src="${basePath }/images/shouyeimg/箭头2.png">'
+					}
+					if (indexInfo.repayPercentage < 0) {
+						drfjlImg = '<img class="up-down-icon" src="${basePath }/images/shouyeimg/箭头1.png">'
+					}
+					$('#drfjlImg').html(indexInfo.reBorrowReate + '%' + drfjlImg)
 				}
 
 				renderNumber(data.indexInfo || {})
 
 				renderChart(data.indexInfo || {})
 			}
-            $.getJSON("summary/summaryBorrow?type=riskToday", function(data) {
-                console.log(data)
+			$.getJSON("summary/summaryBorrow?type=riskToday", function(data) {
+				console.log(data)
 				setTimeout(function () {
 					initIndexPage(data)
 				}, 100)
 			});
-        });
+		});
 		function renderLoanStatusName() {
 			$('.loanStatusName').each(function () {
 				var text = $(this).text().trim();
 				var color = ''
 				var textColorMap = {
-                    '正常已还款': '#1E6BFF',
+					'正常已还款': '#1E6BFF',
 					'逾期已还款': '#6298FF',
 					'初审通过待复审': '#28C189',
 					'复审通过待还款审核': '#10AA72',
@@ -617,20 +617,20 @@
 			})
 		}
 
-        function renderLoanSuccessCount() {
-            $('.loanSuccessCount').each(function () {
-                var text = $(this).text().trim();
-                var color = '#FF9000'
-                if (text.indexOf('首借') !== -1) {
-                    color = '#28C189'
-                }
-                $(this).html('<div class="status-tag" style="background-color:' + color + ';"><span>' + text + '</span></div>')
-                $(this).attr('style', '')
-            })
-            $('.loanSuccessCountTitle').each(function () {
-                $(this).attr('style', '')
-            })
-        }
+		function renderLoanSuccessCount() {
+			$('.loanSuccessCount').each(function () {
+				var text = $(this).text().trim();
+				var color = '#FF9000'
+				if (text.indexOf('首借') !== -1) {
+					color = '#28C189'
+				}
+				$(this).html('<div class="status-tag" style="background-color:' + color + ';"><span>' + text + '</span></div>')
+				$(this).attr('style', '')
+			})
+			$('.loanSuccessCountTitle').each(function () {
+				$(this).attr('style', '')
+			})
+		}
 	</script>
 </head>
 <body scroll="no">
@@ -972,14 +972,14 @@
 											</div>
 										</div>
 										<div class="item">
-												<div class="icon">
-													<img src="${basePath }/images/shouyeimg/当日复借率.png" alt="">
-												</div>
-												<div class="text">
-													<div>当日复借率</div>
-													<div id="drfjlImg" class="number-text">--</div>
-												</div>
+											<div class="icon">
+												<img src="${basePath }/images/shouyeimg/当日复借率.png" alt="">
 											</div>
+											<div class="text">
+												<div>当日复借率</div>
+												<div id="drfjlImg" class="number-text">--</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>

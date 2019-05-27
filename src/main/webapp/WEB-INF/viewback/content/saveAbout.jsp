@@ -39,12 +39,12 @@
 				<div class="divider"></div>
 				<p style="height: 340px; width: 950px;">
 					<label>公司简介：</label>
-					<textarea name="aboutIntroduce" cols="100" rows="20" class="required" maxlength="420">${content.aboutIntroduce }</textarea>
+					<textarea name="aboutIntroduce" cols="100" rows="6" class="required" maxlength="420">${content.aboutIntroduce }</textarea>
 				</p>
 				<div class="divider"></div>
 				<p style="height: 340px; width: 950px;">
 					<label>关于我们内容：</label>
-					<textarea name="aboutContent" cols="100" rows="20" class="required" maxlength="420">${content.aboutContent }</textarea>
+					<textarea name="aboutContent" cols="100" rows="6" class="required" maxlength="420">${content.aboutContent }</textarea>
 				</p>
 			</div>
 
