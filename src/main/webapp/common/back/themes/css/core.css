@@ -310,9 +310,9 @@ a:hover {text-decoration:underline;}
 .grid .gridTbody { }
 
 .grid table { border:0; border-collapse:collapse;table-layout:fixed;}
-.grid .gridHeader th { padding:0 3px; vertical-align:top; white-space:nowrap; line-height:21px; cursor:default;}
+.grid .gridHeader th { padding:0 3px; vertical-align:top; white-space:nowrap; line-height:21px; cursor:default;text-align: center;font-weight: 600;}
 .grid .gridHeader th.hover, .grid .gridHeader th.thSelected { background-position:0 -50px;}
-.grid .gridTbody td { overflow:hidden; padding:0 3px; border-bottom:solid 1px #ededed; vertical-align:middle; line-height:30px; font-size: 14px;}
+.grid .gridTbody td { overflow:hidden; padding:0 3px; border-bottom:solid 1px #ededed; vertical-align:middle; line-height:30px; font-size: 14px;text-align: center;}
 .grid .gridTbody td div { display:block; overflow:hidden; height:30px; white-space:nowrap; line-height:30px;}
 .grid .gridTbody td div a{line-height:30px;}
 
@@ -342,8 +342,8 @@ table.list tbody {background-color:#fff;}
 table.list .right {text-align:right;}
 table.list .trbg {background-color:#F8F8F8;}
 table.list .hot {background-color:#fff5c0;}
-table.list .hover {background-color:#e4f5ff;}
-table.list .selected {background-color:#7cc5e5;border-color:#b8d0d6; }
+table.list .hover {background-color:#f5f7fa;}
+table.list .selected {background-color:#f5f7fa; }
 table.list a {color:#3C7FB1; font-size:11px; line-height:20px;}
 table.list a:hover {text-decoration:underline; line-height:20px;}
 table.list td span.error {z-index:-1}
@@ -401,7 +401,16 @@ textarea.focus, textarea.required, textarea.error, textarea.readonly, textarea.d
     color: #606266;
     display: inline-block;
     outline: none;
+    cursor: pointer;
 }
+.textInput:hover {
+    border-color: #c0c4cc;
+}
+.textInput:focus {
+    outline: none;
+    border-color: #409eff;
+}
+
 input.required, textarea.required { background-position:100% 0;}
 input.gray, textarea.gray{color:gray;}
 select { border:1px solid; border-color: #A2BAC0 #B8D0D6 #B8D0D6 #A2BAC0}

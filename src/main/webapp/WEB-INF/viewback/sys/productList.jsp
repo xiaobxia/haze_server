@@ -78,9 +78,6 @@
                     借款期限
                 </th>
                 <th>
-                    是否默认
-                </th>
-                <th>
                     默认管理
                 </th>
                 <th>
@@ -124,24 +121,13 @@
                     <td>
                             ${product.borrowDay}
                     </td>
-
                     <td>
                         <c:choose>
                             <c:when test="${product.status == 0}">
-                                <span class="trueBtn">是</span>
+                                <div class="slide-btn open-s disabled"></div>
                             </c:when>
                             <c:otherwise>
-                                <span class="falseBtn">否</span>
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-                    <td>
-                        <c:choose>
-                            <c:when test="${product.status == 0}">
-                                <span class="setBtn disabled">置为否</span>
-                            </c:when>
-                            <c:otherwise>
-                                <span class="setBtn" onclick="setPStatus('${product.productId }')">置为是</span>
+                                <div class="slide-btn close-s" onclick="setPStatus('${product.productId }')"></div>
                             </c:otherwise>
                         </c:choose>
                     </td>

@@ -75,9 +75,6 @@
                     备注
                 </th>
                 <th>
-                    状态
-                </th>
-                <th>
                     状态管理
                 </th>
             </tr>
@@ -110,20 +107,10 @@
                     <td>
                         <c:choose>
                             <c:when test="${backExtend.extendStatus == 0}">
-                                <span class="trueBtn">开</span>
+                                <div class="slide-btn open-s" onclick="setPStatus('${backExtend.id}', 1)"></div>
                             </c:when>
                             <c:otherwise>
-                                <span class="falseBtn">关</span>
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-                    <td>
-                        <c:choose>
-                            <c:when test="${backExtend.extendStatus == 0}">
-                                <span class="setBtn" onclick="setPStatus('${backExtend.id}', 1)">关闭</span>
-                            </c:when>
-                            <c:otherwise>
-                                <span class="setBtn" onclick="setPStatus('${backExtend.id}', 0)">开启</span>
+                                <div class="slide-btn close-s" onclick="setPStatus('${backExtend.id}', 0)"></div>
                             </c:otherwise>
                         </c:choose>
                     </td>
