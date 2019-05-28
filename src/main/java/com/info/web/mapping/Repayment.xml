@@ -291,7 +291,7 @@
         left join asset_borrow_order abo on a.asset_order_id = abo.id
         where 1 = 1
         <if test="statuses != null and statuses != '' and statuses.length > 0">
-            and a.status in
+            and abo.status in
             <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
                 ${item}
             </foreach>
