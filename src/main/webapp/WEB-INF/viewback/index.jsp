@@ -577,6 +577,10 @@
 				console.log(data)
 				setTimeout(function () {
 					initIndexPage(data)
+					$(window).resize(function () {
+						console.log('窗口大小变化')
+						initIndexPage(data)
+					})
 				}, 100)
 			});
 		});

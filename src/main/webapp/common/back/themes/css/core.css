@@ -345,8 +345,8 @@ table.list tbody {background-color:#fff;}
 table.list .right {text-align:right;}
 table.list .trbg {background-color:#F8F8F8;}
 table.list .hot {background-color:#fff5c0;}
-table.list .hover {background-color:#f5f7fa;}
-table.list .selected {background-color:#f5f7fa; }
+table.list .hover {background-color:#ddd;}
+table.list .selected {background-color:#ddd; }
 table.list a {color:#3C7FB1; font-size:11px; line-height:20px;}
 table.list a:hover {text-decoration:underline; line-height:20px;}
 table.list td span.error {z-index:-1}

@@ -301,7 +301,7 @@ public class BannerController extends BaseController {
                 }
             }
         }
-        SpringUtils.renderDwzResult(response, succ, msg, DwzResult.CALLBACK_CLOSECURRENTDIALOG);
+        SpringUtils.renderDwzResult(response, succ, msg, DwzResult.CALLBACK_CLOSECURRENT);
     }
 
     @RequestMapping("deleteBanner")
