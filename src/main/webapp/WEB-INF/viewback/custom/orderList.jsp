@@ -12,6 +12,7 @@
 <style>
 	.popLayer {
 		display: none;
+		display: none;
 		position: fixed;
 		top: 50%;
 		left: 50%;
@@ -146,12 +147,6 @@
 							<option value="">----请选择----</option>
 							<option value="user_remark_online">在线客服</option>
 							<option value="user_remark">电话客服</option>
-						</select>
-
-						<select name="labelGroup" class="textInput" id="secondclassify" style="width:100px;vertical-align: bottom;">
-						</select>
-
-						<select name="labelStatus" class="textInput" id="thirdclassify" style="width:100px;vertical-align: bottom;">
 						</select>
 					</td>
 					<td>

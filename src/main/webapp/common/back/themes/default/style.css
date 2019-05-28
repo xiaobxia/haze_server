@@ -70,8 +70,11 @@
 .tree .checked, .tree .unchecked, .tree .indeterminate { background:url(./images/tree/check.png) no-repeat;}
 .tree ul { background-color: #32374A;}
 .tree li a, .tree li span { color:#fff; font-size: 13px;padding-left: 60px;}
-.tree .hover { background:#1D2437;}
-.tree .selected { background-color:#1D2437;}
+.tree li .selected a, .tree li .selected span {
+    color: #1EDDAE;
+}
+.tree .hover { background:#5C6C97; opacity: 0.5;}
+.tree .selected { background-color:#5C6C97;}
 
 /* Accordion */
 .accordion .accordionHeader h2 {font-size: 17px; position: relative;}
@@ -133,7 +136,7 @@ input.disabled, textarea.disabled { border-color:#9eabb3 #d5dbdf #d5dbdf #9eabb3
 .buttonActive, .buttonActive span,
 .button .buttonContent, .buttonHover, .buttonHover .buttonContent,
 .buttonActive .buttonContent, .buttonActiveHover, .buttonActiveHover .buttonContent,
-.buttonDisabled .buttonContent {background-color: #1E6BFF;border-radius: 4px;}
+.buttonDisabled .buttonContent {background-color: rgb(77,132,238);border-radius: 4px;}
 
 .button span, .buttonDisabled span, .buttonActive span,
 .button .buttonContent, .buttonHover, .buttonHover .buttonContent,
@@ -155,7 +158,7 @@ body, #splitBar { background:#32374A;}
 #header, #header .headerNav { height: 120px;}
 #header { background-color:#1D2437;}
 #header .logo { background:url(../../images/logo.png) no-repeat;margin: 0; z-index: 1;position: absolute;}
-#header .nav li { float:left; margin-left:-1px; padding:0 8px; line-height:20px;border-left: 1px solid #1E6BFF;}
+#header .nav li { float:left; margin-left:-1px; padding:0 8px; line-height:20px;border-left: 1px solid rgb(77,132,238);}
 #header .nav li a { color:#fff; font-size: 12px; }
 #header .themeList li div { background:url(./images/themeButton.png) no-repeat;}
 .toggleCollapse, .toggleCollapse div { background:url(./images/layout/toggleSidebar.png) no-repeat;}
@@ -173,7 +176,7 @@ body, #splitBar { background:#32374A;}
 #navMenu, #navMenu li, #navMenu li.selected a, #navMenu li.selected span { }
 #navMenu {  }
 #navMenu li a, #navMenu li span { color:#FFF; }
-#navMenu li.selected span { color:#0056FB;border-bottom: 2px solid #1E6BFF;}
+#navMenu li.selected span { color:#0056FB;border-bottom: 2px solid rgb(77,132,238);}
 
 /* Homepage */
 .sidebarContent { display:block; overflow:auto; height:500px; border:solid 1px #86B4EC; background:#FFF;}

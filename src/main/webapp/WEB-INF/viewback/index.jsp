@@ -688,11 +688,13 @@
 					<div class="accordionHeader">
 						<c:if test="${ count.index==0}">
 							<h2 class="collapsable">
+								<img src="${basePath }/images/menu/${item.moduleName }.png" alt="">
 								<span>icon</span>${item.moduleName }
 							</h2>
 						</c:if>
 						<c:if test="${ count.index>0}">
 							<h2 class="">
+								<img src="${basePath }/images/menu/${item.moduleName }.png" alt="">
 								<span>icon</span>${item.moduleName }
 							</h2>
 						</c:if>
