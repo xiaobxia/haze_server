@@ -694,6 +694,8 @@
 		AND emergency.second_contact_name IS NOT NULL
 		AND emergency.second_contact_phone IS NOT NULL
 		left join channel_info c on uc.user_from = c.id
+		left join channel_super_info ui on ui.id = c.channel_super_id
+		where 1=1
 		<if test="id != null and id !=''">
 		 and <![CDATA[uc.id = #{uid}]]>
 		</if>
@@ -729,6 +731,8 @@
 		from user_info where 1=1 */
 		SELECT
 		uc.id as id,
+		ui.channel_super_code as channelSuperCode,
+		ui.channel_super_name as channelSuperName,
 		IFNULL(c.channel_name,"自然流量") as channelName,
 		c.id as channelId,
 		uc.realname realname,
@@ -754,6 +758,8 @@
 		AND emergency.second_contact_name IS NOT NULL
 		AND emergency.second_contact_phone IS NOT NULL
 		left join channel_info c on uc.user_from = c.id
+		left join channel_super_info ui on ui.id = c.channel_super_id
+		where 1=1
 		<if test="id != null and id !=''">
 		 and <![CDATA[uc.id = #{id}]]>
 		</if>
@@ -777,6 +783,12 @@
 		</if>
 		<if test="status != null and status !=''">
 		 and <![CDATA[uc.status=#{status}]]>
+		</if>
+		<if test="channelSuperCode != null and channelSuperCode !=''">
+			and <![CDATA[ui.channel_super_code=#{channelSuperCode}]]>
+		</if>
+		<if test="channelName != null and channelName !=''">
+			and <![CDATA[c.channel_name=#{channelName}]]>
 		</if>
 		 and uc.status not in (3)
 		order by uc.create_time desc

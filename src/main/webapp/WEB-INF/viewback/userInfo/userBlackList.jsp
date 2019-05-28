@@ -6,9 +6,8 @@
 	String path = request.getContextPath();
 %>
 
- <form id="pagerForm" onsubmit="return navTabSearch(this);" action="userManage/gotoUserManage?myId=${searchParams.myId}&jsp=1" method="post">
-	 <input type="hidden" id="jsp" value="1">
-	 <div class="pageHeader">
+ <form id="pagerForm" onsubmit="return navTabSearch(this);" action="userManage/gotoUserManage?myId=${searchParams.myId}&jsp=2" method="post">
+	<div class="pageHeader">
 		<input type="hidden" name="init" value=0>
 		<div class="searchBar">
 			<table class="searchContent">
@@ -37,13 +36,6 @@
 					</td>
 					<td>渠道名称：
 						<input type="text" name="channelName" value="${channelName}">
-					</td>
-					<td>是否黑名单:
-					<select name="status">
-							<option value="">不限</option>
-							<option value="1" name="status" <c:if test="${searchParams.status eq 1}">selected</c:if>>否</option>
-							<option value="2" name="status" <c:if test="${searchParams.status eq 2}">selected</c:if>>是</option>
-					</select>
 					</td>
 					<td>真实姓名: <input type="text" name="realname"
 						value="${searchParams.realname }" />
@@ -84,7 +76,6 @@
 			<thead>
 				<tr>
 					<th align="center">用户ID</th>
-					<th align="center">渠道商</th>
 					<th align="center">所属渠道</th>
 					<th align="center">姓名</th>
 					<%--<th align="center">公司名称</th>--%>
@@ -95,8 +86,6 @@
 					<!-- <th align="center">类型</th>
 					<th align="center">状态</th>
 					<th align="center">可再借时间</th> -->
-					<th align="center">进件状态</th>
-					<th align="center">是否黑名单</th>
 					<th align="center">注册来源</th>
 					<th align="center">创建时间</th>
 				</tr>
@@ -105,7 +94,6 @@
 				<c:forEach var="user" items="${pm.items }" varStatus="status" >
 					<tr target="userId" rel="${user.id }">
 						<td align="center">${user.id }</td>
-						<td align="center">${user.channelSuperName}</td>
 						<td align="center">${user.channelName}</td>
 						<td align="center">${user.realname}</td>
 						<%--<td align="center">${user.company_name }</td>--%>
@@ -120,50 +108,6 @@
 						<td align="center">${user.idNumber}</td>
 						<%-- <td align="center">${user.user_type }</td>
 						<td align="center"></td> --%>
-						<td align="center">
-							<c:choose>
-								<c:when test="${user.realNameStatus==1}">
-									<span class="trueBtn">身份认证</span>
-								</c:when>
-								<c:otherwise>
-									<span class="nullBtn">身份认证</span>
-								</c:otherwise>
-							</c:choose>
-							<c:choose>
-								<c:when test="${user.bankId==1}">
-									<span class="trueBtn">银行卡认证</span>
-								</c:when>
-								<c:otherwise>
-									<span class="nullBtn">银行卡认证</span>
-								</c:otherwise>
-							</c:choose>
-							<c:choose>
-								<c:when test="${user.tdStatus==2}">
-									<span class="trueBtn">运营商认证</span>
-								</c:when>
-								<c:otherwise>
-									<span class="nullBtn">运营商认证</span>
-								</c:otherwise>
-							</c:choose>
-							<c:choose>
-								<c:when test="${user.emergencyInfo==1}">
-									<span class="trueBtn">通讯录认证</span>
-								</c:when>
-								<c:otherwise>
-									<span class="nullBtn">通讯录认证</span>
-								</c:otherwise>
-							</c:choose>
-						</td>
-					<c:if test="${user.status==2}">
-						<td align="center">
-							<span class="falseBtn">是</span>
-						</td>
-					</c:if>
-					<c:if test="${user.status!=2}">
-						<td align="center">
-							<span class="trueBtn">否</span>
-						</td>
-					</c:if>
 						<td align="center">
 							<c:if test ="${user.qqWechat==1}">
                               qq

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.info.web.common.reslult.JsonResult;
+import com.info.web.pojo.*;
 import com.info.web.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -23,12 +24,6 @@ import com.info.back.utils.SpringUtils;
 import com.info.risk.pojo.RiskCreditUser;
 import com.info.risk.pojo.RiskRuleCal;
 import com.info.web.controller.BaseController;
-import com.info.web.pojo.BorrowOrder;
-import com.info.web.pojo.ObtainUserShortMessage;
-import com.info.web.pojo.User;
-import com.info.web.pojo.UserCardInfo;
-import com.info.web.pojo.UserContacts;
-import com.info.web.pojo.UserInfoImage;
 import com.info.web.util.PageConfig;
 
 @Slf4j
@@ -60,10 +55,15 @@ public class UserManageController extends BaseController{
 	 */
 	@RequestMapping("gotoUserManage")
 	public String gotoUserManage(HttpServletRequest request,Model model) {
+		HashMap<String, Object> params = getParametersO(request);
 		try {
-			HashMap<String, Object> params = getParametersO(request);
+			if(params.get("jsp").equals("1")){
+				String status=request.getParameter("status");
+				if(StringUtils.isBlank(status)){status=null;}
+			}else{
+				String status="2";
+			}
 			String userId=request.getParameter("id");
-			String status=request.getParameter("status");
 			String realname=request.getParameter("realname");
 			String idNumber=request.getParameter("idNumber");
 			String userPhone=request.getParameter("userPhone");
@@ -72,7 +72,6 @@ public class UserManageController extends BaseController{
 			String channelId = request.getParameter("channelId");
 			PageConfig<User> page = null;
 			if(StringUtils.isBlank(userId)){userId=null;}
-			if(StringUtils.isBlank(status)){status=null;}
 			if(StringUtils.isBlank(realname)){realname=null;}
 			if(StringUtils.isBlank(idNumber)){idNumber=null;}
 			if(StringUtils.isBlank(userPhone)){userPhone=null;}
@@ -81,15 +80,21 @@ public class UserManageController extends BaseController{
 /*
 			if(!StringUtils.isBlank(userId)|| null!=userId || !StringUtils.isBlank(userPhone) || null!=userPhone || !StringUtils.isBlank(status) || null!=status || !StringUtils.isBlank(realname) || null!=realname || !StringUtils.isBlank(idNumber) || null!=idNumber|| !StringUtils.isBlank(createTime) || null!=createTime || !StringUtils.isBlank(beginTime) || null!=beginTime){
 */
-				page=this.userService.getUserPage(params);
+			List<ChannelInfo> channel = channelInfoService.findAllUserList(params);
+			page=this.userService.getUserPage(params);
 			//}
 			model.addAttribute("pm", page);
 			model.addAttribute("searchParams", params);//用于搜索框保留值
+			model.addAttribute("channel",channel);//渠道查询下拉框
 
 		} catch (Exception e) {
 			log.error("getUserPage error:{}", e);
 		}
-		return "userInfo/userManageList";//用户列表jsp
+		if(params.get("jsp").equals("1")){
+			return "userInfo/userManageList";//用户列表jsp
+		}else{
+			return "userInfo/userBlackList";//黑名单用户列表
+		}
 	}
 	
 	/**
