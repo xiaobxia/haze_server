@@ -85,17 +85,17 @@
 					<th align="center" >
 						计费方式
 					</th>
-					<th align="center" >
-						状态
-					</th>
-					<th align="center" >
-						创建时间
-					</th>
 					<th align="center">
 						渠道链接
 					</th>
 					<th align="center">
 						推广链接
+					</th>
+					<th align="center" >
+						状态
+					</th>
+					<th align="center" >
+						创建时间
 					</th>
 					<th align="center">
 					 	操作
