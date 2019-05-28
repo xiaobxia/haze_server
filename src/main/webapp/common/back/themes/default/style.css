@@ -46,10 +46,10 @@
 
 /* Dialog */
 .dialog .dialogHeader, .dialog .dialogHeader_r, .dialog .dialogHeader_c,
-.dialog .dialogFooter, .dialog .dialogFooter_r, .dialog .dialogFooter_c { background:url(./images/dialog/dialogpanel.png) no-repeat;}
-.dialog .dialogHeader h1, .dialog .dialogHeader .close, .dialog .dialogHeader .maximize, .dialog .dialogHeader .restore, .dialog .dialogHeader .minimize, .resizable_f_r { background:url(./images/dialog/dialogpanel_icon.png) no-repeat;}
+.dialog .dialogFooter, .dialog .dialogFooter_r, .dialog .dialogFooter_c {background-color: #fff;}
+.dialog .dialogHeader .close, .dialog .dialogHeader .maximize, .dialog .dialogHeader .restore, .dialog .dialogHeader .minimize, .resizable_f_r { background:url(./images/dialog/dialogpanel_icon.png) no-repeat;}
 .dialog .dialogHeader h1 { color:#183152;}
-.dialog .dialogContent { border-color:#b8d0d6; background:#eef4f5;}
+.dialog .dialogContent {background-color: #fff;}
 
 .resizable { border-color:#081629; background:#c3d7dc;}
 
@@ -111,7 +111,7 @@
 .grid .error{background:#fb7e81;}
 
 /* ProgressBar */
-.progressBar { border:solid 2px #86a5ad; background:#FFF url(./images/progressBar/progressBar_m.gif) no-repeat 10px 10px;}
+.progressBar { background:#FFF url(./images/progressBar/progressBar_m.gif) no-repeat 10px 10px;}
 
 /* ----------------------------------------------------------------- Form */
 /* TextInput */
@@ -145,8 +145,6 @@ input.disabled, textarea.disabled { border-color:#9eabb3 #d5dbdf #d5dbdf #9eabb3
 .buttonDisabled button { color:#999;}
 
 .panelBar .toolBar a span {
-    background: url(./images/icon.png) no-repeat;
-    background-position: 6px 2px;
 }
 
 /* ----------------------------------------------------------------- Pages */
@@ -200,11 +198,11 @@ body, #splitBar { background:#32374A;}
 
 .formBar .button, .formBar .buttonActive, .formBar .buttonDisabled, .formBar .buttonHover {margin-left: 20px; padding: 0 18px;}
 /* Pages default */
-.page .pageHeader, .formBar { background-color: #EBF0F5;}
+.page .pageHeader, .formBar {}
 .page .searchBar label { color:#183152;}
 
 /* Pages Form */
-.formBar { border-color:#b8d0d6;}
+.formBar { }
 .divider { border-color:#b8d0d6;}
 
 /* combox */
@@ -669,4 +667,11 @@ body, #splitBar { background:#32374A;}
 .slide-btn.open-s:after {
     right: 1px;
     left: auto;
+}
+
+input:disabled {
+    cursor: not-allowed !important;
+    background-color: #f5f7fa !important;
+    border-color: #e4e7ed !important;
+    color: #c0c4cc !important;
 }

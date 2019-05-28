@@ -993,7 +993,7 @@
 </div>
 
 <div id="footer" s>
-	Copyright &copy; 2019-2020  技术支持：多米优<a href="#" target="_blank"></a>
+	Copyright &copy; 2019-2020
 </div>
 <script type="text/javascript">
 

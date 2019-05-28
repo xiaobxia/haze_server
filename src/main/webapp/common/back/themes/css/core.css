@@ -132,24 +132,24 @@ a:hover {text-decoration:underline;}
 .alert .alertFooter_c { padding:0; background-position:0 -100px; background-repeat:repeat-x;}
 
 /* Dialog */
-.dialog { display:block; text-align:left; position:absolute; z-index:42;}
-.dialog .dialogHeader, .dialog .dialogHeader_r, .dialog .dialogHeader_c { display:block; overflow:hidden; height:28px;}
-.dialog .dialogHeader .close, .dialog .dialogHeader .maximize, .dialog .dialogHeader .restore, .dialog .dialogHeader .minimize { display:block; overflow:hidden; text-indent:-1000px; width:19px; height:19px; position:absolute; top:5px;}
-.dialog .dialogHeader h1 { display:block; overflow:hidden; height:28px; padding:0 5px 0 20px; line-height:28px; background-position:0 -450px;}
+.dialog { display:block; text-align:left; position:absolute; z-index:42;border-radius: 4px; overflow: hidden;}
+.dialog .dialogHeader, .dialog .dialogHeader_r, .dialog .dialogHeader_c { display:block; overflow:hidden; height:40px;}
+.dialog .dialogHeader .close, .dialog .dialogHeader .maximize, .dialog .dialogHeader .restore, .dialog .dialogHeader .minimize { display:block; overflow:hidden; text-indent:-1000px; width:19px; height:19px; position:absolute; top:9px;}
+.dialog .dialogHeader h1 { display:block; overflow:hidden; height:40px; padding:0; line-height:40px;font-size: 18px;}
 
-.dialog .dialogHeader { padding-left:5px; background-position:0 0; position:relative; cursor:move;}
-.dialog .dialogHeader_r { padding-right:5px; background-position:100% -50px;}
-.dialog .dialogHeader_c { padding:0; background-position:0 -100px; background-repeat:repeat-x;}
+.dialog .dialogHeader { padding:0 10px; background-position:0 0; position:relative; cursor:move;}
+.dialog .dialogHeader_r { }
+.dialog .dialogHeader_c {}
 
-.dialog .dialogHeader .close { background-position:0 0; right:4px;}
-.dialog .dialogHeader .close:hover { background-position:0 -50px;}
-.dialog .dialogHeader .maximize { background-position:0 -100px; right:23px;}
+.dialog .dialogHeader .close { background-position:0 0; right:10px;}
+.dialog .dialogHeader .close:hover {}
+.dialog .dialogHeader .maximize { background-position:0 -100px; right:23px;display: none !important;}
 .dialog .dialogHeader .maximize:hover { background-position:0 -150px;}
 .dialog .dialogHeader .restore { display:none; background-position:0 -200px; right:23px;}
 .dialog .dialogHeader .restore:hover { background-position:0 -250px;}
 .dialog .dialogHeader .minimize { background-position:0 -300px; right:42px;}
 .dialog .dialogHeader .minimize:hover { background-position:0 -350px;}
-.dialog .dialogContent { display:block; overflow:hidden; padding:5px 5px 1px 5px; border-style:solid; border-width:0 1px;}
+.dialog .dialogContent { display:block; overflow:hidden; padding:5px 5px 1px 5px;}
 .dialog .panelFooter_r, .dialog .dialogFooter_c { display:block; overflow:hidden; height:5px;}
 .dialog .dialogFooter { padding-left:5px; background-position:0 -150px;}
 .dialog .dialogFooter_r { padding-right:5px; background-position:100% -200px;}
@@ -264,13 +264,13 @@ a:hover {text-decoration:underline;}
 .panelBar { display:block; overflow:hidden; height:30px; border-style:solid; border-width:1px 0; line-height: 20px; padding: 5px 0;box-sizing: border-box;}
 
 .panelBar ul {}
-.panelBar li { float:left; display:block; overflow:hidden; height:20px; padding:0 0 0 5px;line-height: 20px;}
+.panelBar li { float:left; display:block; overflow:hidden; height:20px;line-height: 20px;}
 .panelBar li.hover { background-position:0 -100px;}
 .panelBar li.hover a { background-position:100% -150px;}
 
-.panelBar .toolBar li, .panelBar .toolBar li.hover { padding:0 0 0 5px; background-position:0 -100px;}
-.panelBar .toolBar a, .panelBar .toolBar li.hover a { float:left; display:block; overflow:hidden; padding:0 20px 0 0; text-decoration:none; background-position:100% -150px;}
-.panelBar .toolBar span, .panelBar .toolBar li.hover span { float:left; display:block; overflow:hidden; height:20px; padding:0 0 0 20px; line-height:20px; cursor:pointer;}
+.panelBar .toolBar li, .panelBar .toolBar li.hover { }
+.panelBar .toolBar a, .panelBar .toolBar li.hover a { float:left; display:block; overflow:hidden; padding:0 20px; text-decoration:none; background-position:100% -150px;}
+.panelBar .toolBar span, .panelBar .toolBar li.hover span { float:left; display:block; overflow:hidden; height:20px; line-height:20px; cursor:pointer;}
 
 .panelBar .toolBar li.line { display:block; overflow:hidden; width:1px; padding:0; text-indent:-1000px; background-color: #667097;}
 
@@ -383,10 +383,10 @@ table.nowrap tbody tr {border-bottom:solid 1px #ededed;}
 #taskbar .taskbarRightDisabled { background-position:0 -250px; cursor:default;}
 
 /* ProgressBar */
-.progressBar { display:block; width:148px; height:28px; position:fixed; top:50%; left:50%; margin-left:-74px; margin-top:-14px; padding:10px 10px 10px 50px; text-align:left; line-height:27px; font-weight:bold; position:absolute; z-index:2001;}
+.progressBar { display:block; width:148px; height:28px; position:fixed; top:50%; left:50%; margin-left:-74px; margin-top:-14px; padding:10px 10px 10px 50px; text-align:left; line-height:27px; font-weight:bold; position:absolute; z-index:2001;font-size: 15px;}
 .background { display:block; width:100%; height:100%; opacity:0.4; filter:alpha(opacity=40); background:#FFF; position:absolute; top:0; left:0; z-index:2000;}
 .alertBackground { display:none; width:100%; height:100%; opacity:0.4; filter:alpha(opacity=40); background:#FFF; position:absolute; top:0; left:0; z-index:1010;}
-.dialogBackground { display:none; width:100%; height:100%; opacity:0.4; filter:alpha(opacity=40); background:#FFF; position:absolute; top:0; left:0; z-index:900;}
+.dialogBackground { display:none; width:100%; height:100%; opacity:0.4; background-color: rgba(0,0,0,0.3); position:absolute; top:0; left:0; z-index:900;}
 
 /* ----------------------------------------------------------------- Form */
 /* TextInput */
@@ -546,7 +546,7 @@ body { overflow:hidden;}
 .pageFormContent p.nowrap { height:auto;}
 .pageFormContent .radioGroup { float:left; display:block; overflow:hidden;}
 
-.pageFormContent label { float:left; width:120px; padding:0 5px; line-height:21px;}
+.pageFormContent label { float:left; width:120px; padding:3px 5px; line-height:21px;}
 .pageFormContent label.radioButton { float:left; width:auto; padding:0 10px 0 0; line-height:21px;}
 .pageFormContent .textInput { float:left;}
 .pageFormContent select { float:left;}
@@ -576,16 +576,16 @@ fieldset legend {
 }
 fieldset legend:hover {background-color: #dddddd;}
 
-.formBar { clear:both; padding:0 5px; height:30px; padding-top:5px; border-style:solid; border-width:1px 0 0 0;}
+.formBar { clear:both; padding:0 5px; height:30px; padding-top:5px;}
 .formBar ul { float:right;}
 .formBar li { float:left; margin-left:5px;}
 .divider { clear:both; display:block; overflow:hidden; text-indent:-1000px; width:auto; height:1px; padding:4px 0 0 0; margin-bottom:5px; border-style:dotted; border-width:0 0 1px 0;}
 
 /* Pages dialog */
 .dialog .pageHeader { border-style:solid; border-width:1px;margin:0}
-.dialog .pageContent { border-style:solid; border-width:0 1px; background-color:#fff}
-.dialog .pageFormContent, .dialog .viewInfo { border-style:solid; border-width:1px 0 0 0;}
-.dialog .formBar { border-style:solid; border-width:1px 0;}
+.dialog .pageContent { background-color:#fff}
+.dialog .pageFormContent, .dialog .viewInfo {}
+.dialog .formBar {}
 
 
 .combox { float:left; margin-right:3px; background-position:100% -25px;}
