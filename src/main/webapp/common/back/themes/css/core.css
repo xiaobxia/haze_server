@@ -67,7 +67,7 @@ a:hover {text-decoration:underline;}
 .tabsPage .tabsPageHeaderMargin { margin:0 34px 0 17px;}
 .tabsPage .tabsPageHeader ul { display:block; width:10000px; height:36px; z-index:1; position:absolute;}
 .tabsPage .tabsPageHeader li { float:left; display:block; height:26px; margin-top: 4px; margin-left:15px; background-position:0 -100px; background-repeat:repeat-x; position:relative; cursor:pointer;background-color:#EBF0F5;border-radius: 4px;}
-.tabsPage .tabsPageHeader li:first-child {margin-left: 0;}
+.tabsPage .tabsPageHeader li:first-child {margin-left: 4px;}
 .tabsPage .tabsPageHeader li a { float:left; display:block; overflow:hidden; height:26px; padding-left:5px; padding-right:15px; line-height:26px; background-position:0 0; }
 .tabsPage .tabsPageHeader li a:hover { text-decoration:none;}
 .tabsPage .tabsPageHeader li span { float:left; display:block; overflow:hidden; width:92px; height:26px; line-height:26px; background-position:100% -50px; cursor:pointer;}
@@ -85,7 +85,10 @@ a:hover {text-decoration:underline;}
 
 .tabsPage .tabsPageHeader li.main span {}
 .tabsPage .tabsPageHeader li .home_icon,
-.tabsPage .tabsPageHeader li.main .home_icon { width:auto; padding:0 0 0 30px; background-position:6px 5px;}
+.tabsPage .tabsPageHeader li.main .home_icon { width:auto; padding:0 0 0 30px; background-position:6px -20px;}
+
+.tabsPage .tabsPageHeader li.selected .home_icon,
+.tabsPage .tabsPageHeader li.main.selected .home_icon { width:auto; padding:0 0 0 30px; background-position:6px 5px;}
 
 .tabsPage .tabsMove { height:25px; position:absolute; top:0; right:0; z-index:2;}
 .tabsPage .tabsLeft, .tabsPage .tabsRight, .tabsPage .tabsMore { display:block; overflow:hidden; width:17px; height:23px; text-indent:-1000px; position:absolute; z-index:2;}
