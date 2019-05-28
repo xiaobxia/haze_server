@@ -29,7 +29,8 @@
                             <option value="">全部</option>
                             <c:forEach var="productInfo" items="${productMoneyList}">
                                 <option value="${productInfo.borrowAmount}"
-                                        <c:if test="${productInfo.borrowAmount eq params.borrowAmount}">selected="selected"</c:if> >${productInfo.borrowAmount}</option>
+                                        <c:if test="${productInfo.borrowAmount eq params.borrowAmount}">selected="selected"</c:if> ><fmt:formatNumber type="number" value="${productInfo.borrowAmount/100}" pattern="0.00"
+                                                                                                                                                          maxFractionDigits="0"/></option>
                             </c:forEach>
                         </select>
                     </td>

@@ -44,10 +44,16 @@
 						</dd>
 					</dl>
 					<div class="divider"></div>
-					<p >
-						<label style="width: 100px;">备注:</label>
-						<textarea  name="remark" rows="5" cols="60" maxlength="50">${channelSuperInfo.remark }</textarea>
-					</p>
+					<dl>
+						<dt style="width: 100px;">
+							<label>
+								备注:
+							</label>
+						</dt>
+						<dd>
+							<textarea  name="remark" rows="5" cols="60" maxlength="50">${channelSuperInfo.remark }</textarea>
+						</dd>
+					</dl>
 				</div>
 				<div class="formBar">
 					<ul>

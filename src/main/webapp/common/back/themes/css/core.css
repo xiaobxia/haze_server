@@ -335,10 +335,10 @@ a:hover {text-decoration:underline;}
 .grid .center { text-align:center;}
 
 /* CSS Table */
-table.list {border-collapse:collapse; border:solid 1px #ededed;}
-table.list thead tr {background-color:#F0EFF0;}
-table.list th {padding:1px 2px; line-height:36px; border-right: solid 1px #D0D0D0; border-bottom:solid 1px #D0D0D0; font-weight:bolder; font-size: 16px;}
-table.list td {padding:1px 2px; line-height:36px; border-right:solid 1px #ededed;font-size: 14px;}
+table.list {border-collapse:collapse;}
+table.list thead tr {background-color:#f5f7fa;}
+table.list th {padding:1px 2px; line-height:36px;  font-weight:bolder; font-size: 16px;}
+table.list td {padding:1px 2px; line-height:36px; font-size: 14px;}
 table.list th.asc, .grid .gridHeader th.asc{background-position: 100% 0; background:url(../default/images/order_up.gif) no-repeat right; cursor:pointer;}
 table.list th.desc, .grid .gridHeader th.desc{background-position: 100% 0; background:url(../default/images/order_down.gif) no-repeat right; cursor:pointer;}
 table.list tbody {background-color:#fff;}
@@ -386,7 +386,7 @@ table.nowrap tbody tr {border-bottom:solid 1px #ededed;}
 .progressBar { display:block; width:148px; height:28px; position:fixed; top:50%; left:50%; margin-left:-74px; margin-top:-14px; padding:10px 10px 10px 50px; text-align:left; line-height:27px; font-weight:bold; position:absolute; z-index:2001;font-size: 15px;}
 .background { display:block; width:100%; height:100%; opacity:0.4; filter:alpha(opacity=40); background:#FFF; position:absolute; top:0; left:0; z-index:2000;}
 .alertBackground { display:none; width:100%; height:100%; opacity:0.4; filter:alpha(opacity=40); background:#FFF; position:absolute; top:0; left:0; z-index:1010;}
-.dialogBackground { display:none; width:100%; height:100%; opacity:0.4; background-color: rgba(0,0,0,0.3); position:absolute; top:0; left:0; z-index:900;}
+.dialogBackground { display:none; width:100%; height:100%; background-color: rgba(0,0,0,0.4); position:absolute; top:0; left:0; z-index:900;}
 
 /* ----------------------------------------------------------------- Form */
 /* TextInput */
@@ -454,7 +454,7 @@ label.alt {display:block; overflow:hidden; position:absolute;line-height:20px}
 .buttonDisabled .buttonContent { padding:0 5px 0 0; background-position:100% -450px;}
 
 .button button, .buttonHover button,
-.buttonActive button, .buttonDisabled button { width:auto; height:25px; margin:0; padding:0 0 5px 0; border:0; font-size:12px; font-weight:bold; background:none; cursor:pointer;color: #fff; padding: 0 18px;}
+.buttonActive button, .buttonDisabled button { width:auto; height:25px; margin:0; border:0; font-size:12px; font-weight:bold; background:none; cursor:pointer;color: #fff; padding: 0 18px;line-height: 25px;}
 .buttonDisabled button { cursor:default;}
 
 /* ----------------------------------------------------------------- Pages */
