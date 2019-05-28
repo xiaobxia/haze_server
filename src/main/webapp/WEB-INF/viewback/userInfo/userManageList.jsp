@@ -72,15 +72,19 @@
 			<thead>
 				<tr>
 					<th align="center">用户ID</th>
+					<th align="center">所属渠道</th>
 					<th align="center">姓名</th>
 					<%--<th align="center">公司名称</th>--%>
 					<th align="center">联系方式</th>
 					<%--<th align="center">生日</th>--%>
 					<th align="center">性别</th>
+					<th align="center">身份证号</th>
 					<!-- <th align="center">类型</th>
 					<th align="center">状态</th>
 					<th align="center">可再借时间</th> -->
+					<th align="center">进件状态</th>
 					<th align="center">是否黑名单</th>
+					<th align="center">注册来源</th>
 					<th align="center">创建时间</th>
 				</tr>
 			</thead>
@@ -88,6 +92,7 @@
 				<c:forEach var="user" items="${pm.items }" varStatus="status" >
 					<tr target="userId" rel="${user.id }">
 						<td align="center">${user.id }</td>
+						<td align="center">${user.channelName}</td>
 						<td align="center">${user.realname}</td>
 						<%--<td align="center">${user.company_name }</td>--%>
 						<td align="center">${user.user_phone }</td>
@@ -97,17 +102,46 @@
 								<c:otherwise></c:otherwise>
 							</c:choose> 
 						</td>--%>
-						<td align="center">${user.user_sex }</td>
+						<td align="center">${user.user_sex}</td>
+						<td align="center">${user.idNumber}</td>
 						<%-- <td align="center">${user.user_type }</td>
 						<td align="center"></td> --%>
-						
+						<td align="center">
+							<c:choose>
+								<c:when test="${user.realNameStatus==1}">身份认证</c:when>
+								<c:otherwise>身份未认证</c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${user.bankId==1}">银行卡认证</c:when>
+								<c:otherwise>银行卡未认证</c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${user.tdStatus==2}">运营商认证</c:when>
+								<c:otherwise>运营商未认证</c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${user.emergencyInfo==1}">通讯录认证</c:when>
+								<c:otherwise>通讯录未认证</c:otherwise>
+							</c:choose>
+						</td>
 					<c:if test="${user.status==2}">
 						<td align="center">是</td>
 					</c:if>
 					<c:if test="${user.status!=2}">
 						<td align="center">否</td>
 					</c:if>
-						
+						<td align="center">
+							<c:if test ="${user.qqWechat==1}">
+                              qq
+							</c:if>
+							<c:if test ="${user.qqWechat==2}">
+								微信
+							</c:if>
+							<c:if test ="${user.qqWechat==0}">
+								正常
+							</c:if>
+						</td>
+
 						<td align="center">
 						<fmt:formatDate value="${user.create_time }" pattern="yyyy-MM-dd HH:mm" />
 							${ALL_ORIGIN_TYPE[user.originType] }

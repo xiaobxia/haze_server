@@ -120,7 +120,7 @@
 		 	</if>
 		 </where>
   	</select>
-  	
+
   	
   	<!-- 查询用户认证状态列表 -->
 	<select id="selectCertificationPage" parameterType="HashMap" resultType="HashMap" >
@@ -679,66 +679,107 @@
 	<!-- 后台 -->
 	<!-- 用户列表 -->
 	<select id="selectUserCount" resultType="int" parameterType="Map" fetchSize="200">
-		select count(*) from user_info where 1=1 
+
+/*
+		select count(*) from user_info where 1=1
+*/
+		SELECT
+		count(uc.id)
+		FROM
+		user_info uc
+		LEFT JOIN user_card_info card ON card.user_id = uc.id
+		LEFT JOIN user_info emergency ON uc.id = emergency.id
+		AND emergency.first_contact_name IS NOT NULL
+		AND emergency.first_contact_phone IS NOT NULL
+		AND emergency.second_contact_name IS NOT NULL
+		AND emergency.second_contact_phone IS NOT NULL
+		left join channel_info c on uc.user_from = c.id
 		<if test="id != null and id !=''">
-		 and <![CDATA[id = #{id}]]>
+		 and <![CDATA[uc.id = #{uid}]]>
 		</if>
 		<if test="realname != null and realname !=''">
-		 and <![CDATA[realname = #{realname}]]>
+		 and <![CDATA[uc.realname = #{realname}]]>
 		</if>
 		<if test="idNumber != null and idNumber !=''">
-		 and <![CDATA[id_number = #{idNumber}]]>
+		 and <![CDATA[uc.id_number = #{idNumber}]]>
 		</if>
 		<if test="userPhone != null and userPhone !=''">
-		and <![CDATA[user_phone = #{userPhone}]]>
+		and <![CDATA[uc.user_phone = #{userPhone}]]>
 		</if>
 		<if test="createTime !=null and createTime !='' and beginTime !=null and beginTime !='' " >
-		 and <![CDATA[create_time>=#{createTime} AND create_time<=#{beginTime}]]>
+		 and <![CDATA[uc.create_time>=#{createTime} AND create_time<=#{beginTime}]]>
 		 </if>
 		 <if test="createTime !=null and createTime !='' " >
-		 and <![CDATA[create_time>=#{createTime}]]>
+		 and <![CDATA[uc.create_time>=#{createTime}]]>
 		 </if>
 		 <if test="beginTime !=null and beginTime !=''" >
-		 and <![CDATA[create_time<=#{beginTime}]]>
+		 and <![CDATA[uc.create_time<=#{beginTime}]]>
 		</if>
 		<if test="status != null and status !=''">
-		 and <![CDATA[status=#{status}]]>
+		 and <![CDATA[uc.status=#{status}]]>
 		</if>
-		 and status not in (3)
-		order by create_time desc
+		 and uc.status not in (3)
+		order by uc.create_time desc
 	</select>
 	
 	<!-- 用户列表 多条件查询 -->
 	<select id="selectUserPage" resultType="map" parameterType="HashMap">
-		select 
+		/*select
 			id,user_name,user_phone,realname,realname_status,id_number,status,create_time,user_sex,company_name
-		from user_info where 1=1 
+		from user_info where 1=1 */
+		SELECT
+		uc.id as id,
+		IFNULL(c.channel_name,"自然流量") as channelName,
+		c.id as channelId,
+		uc.realname realname,
+		uc.id_number idNumber,
+		uc.user_phone user_phone,
+		uc.user_sex as user_sex,
+		uc.status as status,
+		uc.qq_wechat as qqWechat,
+		uc.realname_status realNameStatus,
+		uc.td_status tdStatus,
+		IF
+		( card.user_id is null, 0, 1 ) bankId,
+
+		IF
+		( emergency.id  is null, 0, 1 ) emergencyInfo,
+		uc.create_time as create_time
+		FROM
+		user_info uc
+		LEFT JOIN user_card_info card ON card.user_id = uc.id
+		LEFT JOIN user_info emergency ON uc.id = emergency.id
+		AND emergency.first_contact_name IS NOT NULL
+		AND emergency.first_contact_phone IS NOT NULL
+		AND emergency.second_contact_name IS NOT NULL
+		AND emergency.second_contact_phone IS NOT NULL
+		left join channel_info c on uc.user_from = c.id
 		<if test="id != null and id !=''">
-		 and <![CDATA[id = #{id}]]>
+		 and <![CDATA[uc.id = #{id}]]>
 		</if>
 		<if test="realname != null and realname !=''">
-		 and <![CDATA[realname = #{realname}]]>
+		 and <![CDATA[uc.realname = #{realname}]]>
 		</if>
 		<if test="idNumber != null and idNumber !=''">
-		 and <![CDATA[id_number = #{idNumber}]]>
+		 and <![CDATA[uc.id_number = #{idNumber}]]>
 		</if>
 		<if test="userPhone != null and userPhone !=''">
-		and <![CDATA[user_phone = #{userPhone}]]>
+		and <![CDATA[uc.user_phone = #{userPhone}]]>
 		</if>
 		<if test="createTime !=null and createTime !='' and beginTime !=null and beginTime !='' " >
-		 and <![CDATA[create_time>=#{createTime} AND create_time<=#{beginTime}]]>
+		 and <![CDATA[uc.create_time>=#{createTime} AND uc.create_time<=#{beginTime}]]>
 		 </if>
 		 <if test="createTime !=null and createTime !='' " >
-		 and <![CDATA[create_time>=#{createTime}]]>
+		 and <![CDATA[uc.create_time>=#{createTime}]]>
 		 </if>
 		 <if test="beginTime !=null and beginTime !='' " >
-		 and <![CDATA[create_time<=#{beginTime}]]>
+		 and <![CDATA[uc.create_time<=#{beginTime}]]>
 		</if>
 		<if test="status != null and status !=''">
-		 and <![CDATA[status=#{status}]]>
+		 and <![CDATA[uc.status=#{status}]]>
 		</if>
-		 and status not in (3)
-		order by create_time desc
+		 and uc.status not in (3)
+		order by uc.create_time desc
 	</select>
 	
 	

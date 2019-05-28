@@ -59,6 +59,7 @@
 				<![CDATA[AND uc.create_time<=#{addEndTiem}]]>
 			</if>
 		</where>
+		order by uc.create_time desc
 	</select>
 	<select id="findUserBankTotal" resultType="Integer" parameterType="HashMap" >
 		select count(1) from user_card_info uc left join bank_all_info bc on (uc.bank_id=bc.id) left join user_info u on(uc.user_id=u.id)

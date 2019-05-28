@@ -1908,7 +1908,7 @@ public class ChannelInfoController extends BaseController {
     @RequestMapping("goProductList")
     public String getProductList(Model model,HttpServletRequest request){
         HashMap<String, Object> params = getParametersO(request);
-        List<ProductDetail> list = iProductService.moneyList(params);
+        List<ProductDetail> list = iProductService.moneyList(null);
         model.addAttribute("productMoneyList",list);
         PageConfig<ProductDetail>  pageConfig = iProductService.getProductList(params);
         model.addAttribute("pm",pageConfig);
@@ -2065,7 +2065,7 @@ public class ChannelInfoController extends BaseController {
         HashMap<String, Object> params = getParametersO(request);
         PageConfig<BackExtend> pageConfig = iProductService.getExtendList(params);
         model.addAttribute("pm",pageConfig);
-        List<BackExtend> list = iProductService.findExtendList(params);
+        List<BackExtend> list = iProductService.findExtendList(null);
         model.addAttribute("extendList",list);
         model.addAttribute("params",params);
         return "sys/extendList";
@@ -2080,7 +2080,7 @@ public class ChannelInfoController extends BaseController {
         HashMap<String, Object> params = getParametersO(request);
         PageConfig<BackLimit> pageConfig = iProductService.getLimitList(params);
         model.addAttribute("pm",pageConfig);
-        List<BackLimit> list = iProductService.findLimitList(params);
+        List<BackLimit> list = iProductService.findLimitList(null);
         model.addAttribute("limitList",list);
         model.addAttribute("params",params);
         return "sys/limitList";

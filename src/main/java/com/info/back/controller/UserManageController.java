@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.info.web.common.reslult.JsonResult;
+import com.info.web.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +29,6 @@ import com.info.web.pojo.User;
 import com.info.web.pojo.UserCardInfo;
 import com.info.web.pojo.UserContacts;
 import com.info.web.pojo.UserInfoImage;
-import com.info.web.service.IBorrowOrderService;
-import com.info.web.service.IObtainUserShortMessageService;
-import com.info.web.service.IUserBankService;
-import com.info.web.service.IUserContactsService;
-import com.info.web.service.IUserInfoImageService;
-import com.info.web.service.IUserService;
 import com.info.web.util.PageConfig;
 
 @Slf4j
@@ -52,6 +48,8 @@ public class UserManageController extends BaseController{
 	private IUserContactsService userContactsService;
 	@Autowired
 	private IObtainUserShortMessageService userShortMessageService;
+	@Autowired
+	private IChannelInfoService channelInfoService;
 	
 	@Autowired
 	@Qualifier("riskUserService")
@@ -71,6 +69,7 @@ public class UserManageController extends BaseController{
 			String userPhone=request.getParameter("userPhone");
 			String createTime=request.getParameter("createTime");
 			String beginTime=request.getParameter("beginTime");
+			String channelId = request.getParameter("channelId");
 			PageConfig<User> page = null;
 			if(StringUtils.isBlank(userId)){userId=null;}
 			if(StringUtils.isBlank(status)){status=null;}
@@ -258,28 +257,28 @@ public class UserManageController extends BaseController{
 		return "userInfo/updadteBankCard";
 	}
 	
-//	/**
+/*	*//**
 //	 * 重新绑定银行卡
 //	 * @param request req
 //	 * @param response res
-//	 */
-//	@RequestMapping("updateBankCard")
-//	public void updateBankCard(HttpServletRequest request,HttpServletResponse response){
-//		boolean bool=false;
-//		JsonResult result=null;
-//		try{
-//				Map<String,String> pams=this.getParameters(request);
-//				result=userBankService.updateUpserBankCard(pams);
-//				if(result.isSuccessed()){
-//					bool=true;
-//				}
-//		}catch (Exception e) {
-//			result=new JsonResult("500","系统异常请稍后重试");
-//			log.error("updateBankCard error:{}",e);
-//		}finally{
-//			SpringUtils.renderDwzResult(response, bool, bool ? "操作成功": result.getMsg(), DwzResult.CALLBACK_CLOSECURRENT);
-//		}
-//	}
+//	 *//*
+	@RequestMapping("updateBankCard")
+	public void updateBankCard(HttpServletRequest request,HttpServletResponse response){
+	boolean bool=false;
+		JsonResult result=null;
+	try{
+			Map<String,String> pams=this.getParameters(request);
+				result=userBankService.updateUpserBankCard(pams);
+			if(result.isSuccessed()){
+					bool=true;
+				}
+	}catch (Exception e) {
+		result=new JsonResult("500","系统异常请稍后重试");
+		log.error("updateBankCard error:{}",e);
+		}finally{
+			SpringUtils.renderDwzResult(response, bool, bool ? "操作成功": result.getMsg(), DwzResult.CALLBACK_CLOSECURRENT);
+		}
+	}*/
 
 	/**
 	 * 银行卡列表
