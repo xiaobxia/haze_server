@@ -56,7 +56,7 @@
 						序列
 					</th>
 					<th align="center"  >
-						注册用户
+						注册用户姓名
 					</th>
 					<th align="center"  >
 						注册用户手机号
@@ -64,12 +64,12 @@
 					<th align="center" >
 						注册时间
 					</th>
-					<th align="center"  >
+					<%--<th align="center"  >
 						推广员姓名
 					</th>
 					<th align="center"  >
 						推广员电话
-					</th>
+					</th>--%>
 					<th align="center"  >
 						渠道商名称
 					</th>
@@ -94,12 +94,12 @@
 						<td>
 							<fmt:formatDate value="${channel.createTime}" pattern="yyyy-MM-dd HH:mm"/>
 						</td>
-						 <td>
+						<%--<td>
 							${channel.realname}
 						</td>
 						<td>
 							${channel.userPhone}
-						</td>
+						</td>--%>
 						<td>
 							${channel.channelName}
 						</td>
