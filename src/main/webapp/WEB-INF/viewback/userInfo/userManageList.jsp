@@ -108,27 +108,47 @@
 						<td align="center"></td> --%>
 						<td align="center">
 							<c:choose>
-								<c:when test="${user.realNameStatus==1}">身份认证</c:when>
-								<c:otherwise>身份未认证</c:otherwise>
+								<c:when test="${user.realNameStatus==1}">
+									<span class="trueBtn">身份认证</span>
+								</c:when>
+								<c:otherwise>
+									<span class="nullBtn">身份认证</span>
+								</c:otherwise>
 							</c:choose>
 							<c:choose>
-								<c:when test="${user.bankId==1}">银行卡认证</c:when>
-								<c:otherwise>银行卡未认证</c:otherwise>
+								<c:when test="${user.bankId==1}">
+									<span class="trueBtn">银行卡认证</span>
+								</c:when>
+								<c:otherwise>
+									<span class="nullBtn">银行卡认证</span>
+								</c:otherwise>
 							</c:choose>
 							<c:choose>
-								<c:when test="${user.tdStatus==2}">运营商认证</c:when>
-								<c:otherwise>运营商未认证</c:otherwise>
+								<c:when test="${user.tdStatus==2}">
+									<span class="trueBtn">运营商认证</span>
+								</c:when>
+								<c:otherwise>
+									<span class="nullBtn">运营商认证</span>
+								</c:otherwise>
 							</c:choose>
 							<c:choose>
-								<c:when test="${user.emergencyInfo==1}">通讯录认证</c:when>
-								<c:otherwise>通讯录未认证</c:otherwise>
+								<c:when test="${user.emergencyInfo==1}">
+									<span class="trueBtn">通讯录认证</span>
+								</c:when>
+								<c:otherwise>
+									<span class="nullBtn">通讯录认证</span>
+								</c:otherwise>
 							</c:choose>
 						</td>
 					<c:if test="${user.status==2}">
-						<td align="center">是</td>
+						<td align="center">
+							<span class="falseBtn">是</span>
+						</td>
 					</c:if>
 					<c:if test="${user.status!=2}">
-						<td align="center">否</td>
+						<td align="center">
+							<span class="trueBtn">否</span>
+						</td>
 					</c:if>
 						<td align="center">
 							<c:if test ="${user.qqWechat==1}">

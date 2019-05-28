@@ -557,6 +557,14 @@ body, #splitBar { background:#32374A;}
     color: #00832E!important;
 }
 
+
+.nullBtn {
+    padding: 5px 10px;
+    background-color: #A5A7AF;
+    color: #fff;
+    border-radius: 4px;
+}
+
 .trueBtn {
     padding: 5px 10px;
     background-color: #10AA72;
@@ -568,6 +576,7 @@ body, #splitBar { background:#32374A;}
     padding: 5px 10px;
     background-color: #313743;
     color: #fff;
+    border-radius: 4px;
 }
 
 .setBtn {
