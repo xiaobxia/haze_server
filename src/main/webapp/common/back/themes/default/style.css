@@ -73,7 +73,10 @@
 .tree li .selected a, .tree li .selected span {
     color: #1EDDAE;
 }
-.tree .hover { background:#5C6C97; opacity: 0.5;}
+.tree .hover { background:rgba(92,108,151, 0.5);}
+.tree .hover a {
+    color: #1EDDAE;
+}
 .tree .selected { background-color:#5C6C97;}
 
 /* Accordion */
@@ -689,4 +692,8 @@ input:disabled {
 }
 .pageForm .divider {
   border: none;
+}
+
+.pageFormContent label.required-label {
+ width: auto;
 }

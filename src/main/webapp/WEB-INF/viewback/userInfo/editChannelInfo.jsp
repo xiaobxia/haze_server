@@ -33,7 +33,7 @@
 									<option value="${channelSuperList.id}" <c:if test="${channelSuperList.id eq channelInfo.channelSuperId}">selected="selected"</c:if>>${channelSuperList.channelSuperName}</option>
 							</c:forEach>
 					</select>
-					<label style="color: red;">*</label>
+					<label style="color: red;" class="required-label">*</label>
 						</dd>
 					</dl>
 					<div class="divider"></div>
@@ -86,7 +86,7 @@
 									<option value="${channelRateList.id}" <c:if test="${channelRateList.id eq channelInfo.rateId}">selected="selected"</c:if>>${channelRateList.channelRateName}</option>
 							</c:forEach>
 					</select>
-							<label style="color: red;">*</label>
+							<label style="color: red;" class="required-label">*</label>
 						</dd>
 					</dl>
 					<div class="divider"></div>
@@ -97,8 +97,9 @@
 							</label>
 						</dt>
 						<dd>
-							<input name="operatorName" value="${channelInfo.operatorName }" type="text"
+							<input name="operatorName" value="${channelInfo.operatorName }" type="text"  class="required"
 								  alt="请输入用户名" size="30" />
+							<label style="color: red;" class="required-label">*</label>
 						</dd>
 					</dl>
 					<div class="divider"></div>
@@ -120,8 +121,9 @@
 							</label>
 						</dt>
 						<dd>
-							<input name="channelTel" value="${channelInfo.channelTel }" type="text"
+							<input name="channelTel" value="${channelInfo.channelTel }" type="text"  class="required"
 								  alt="请输入手机号" size="30" />
+							<label style="color: red;" class="required-label">*</label>
 						</dd>
 					</dl>
 					<div class="divider"></div>

@@ -248,7 +248,7 @@ a:hover {text-decoration:underline;}
 .accordion .accordionContent .tree li {background-color: #4B5777;}
 .accordion .accordionHeader h2 img {
     display: block;
-    width: 20px;
+    width: auto;
     height: 20px;
     left: 18px;
     top: 14px;
@@ -432,7 +432,7 @@ select { border:1px solid; border-color: #A2BAC0 #B8D0D6 #B8D0D6 #A2BAC0}
 .inputDateButton { float:left; display:block; overflow:hidden; text-indent:-1000px; width:16px; height:21px; background-position:0 -100px;}
 .inputDateButton:hover { background-position:0 -150px;}
 
-span.error { display:block; overflow:hidden; width:auto; height:21px; padding:0 3px; line-height:21px; background:#F00; color:#FFF; position:absolute; top:5px; left:280px;}
+span.error { display:block; overflow:hidden; width:auto; height:24px; padding:0 3px; line-height:24px; background:#F00; color:#FFF; position:absolute; top:6px; left:280px;}
 label.alt {display:block; overflow:hidden; position:absolute;line-height:20px}
 
 /* Button */

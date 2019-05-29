@@ -30,7 +30,8 @@
 						<select name="channelSuperCode">
 							<option value="">不限</option>
 							<c:forEach items="${channel}" var="channel">
-								<option value="${channel.channelSuperCode}" name="channelSuperCode">${channel.channelSuperName}</option>
+								<option value="${channel.channelSuperCode}" name="channelSuperCode"
+										<c:if test="${channel.channelSuperCode eq searchParams.channelSuperCode}">selected="selected"</c:if> >${channel.channelSuperName}</option>
 							</c:forEach>
 						</select>
 					</td>
