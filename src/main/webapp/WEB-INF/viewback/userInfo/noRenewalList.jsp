@@ -6,7 +6,7 @@
 	String path = request.getContextPath();
 %>
 
- <form id="pagerForm" onsubmit="return navTabSearch(this);" action="userManage/noRenewal.jsp?myId=${searchParams.myId}" method="post">
+ <form id="pagerForm" onsubmit="return navTabSearch(this);" action="userManage/noRenewalList?myId=${searchParams.myId}" method="post">
 	<div class="pageHeader">
 		<input type="hidden" name="init" value=0>
 		<div class="searchBar">
