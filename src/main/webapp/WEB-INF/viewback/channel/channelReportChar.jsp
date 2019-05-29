@@ -19,7 +19,7 @@ String basePath = path + "/common/web/zmxy";
 				<tr>
 
 					<td>渠道商： <select name="channelid" id="channelid">
-							<option value="">全部</option>
+							<%--<option value="">全部</option>--%>
 							<c:forEach var="channelList" items="${channelList}">
 								<option value="${channelList.id}"
 									<c:if test="${channelList.id eq params.channelid}">selected="selected"</c:if>>${channelList.channelName}</option>
@@ -60,18 +60,12 @@ function createChart(){
     var beginTime=document.getElementById('beginTime').value;
     var endTime =document.getElementById('endTime').value;
     var channelid = document.getElementById('channelid').value;
-
-	//alert(beginTime);
-	//alert(channelid);
 	var options = {
 			    chart: {
 			        type: 'column'
 			    },
 			    title: {
 			        text: '渠道统计分析图'
-			    },
-			    subtitle: {
-			        text: 'www.xiangjie.com'
 			    },
 			    xAxis: [],
 			    yAxis: {

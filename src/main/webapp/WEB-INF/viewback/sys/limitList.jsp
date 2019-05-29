@@ -8,7 +8,7 @@
 <script type="text/javascript" src="${path}/resources/js/productAmount_choose.js"></script>
 
 <form id="pagerForm-l" onsubmit="return navTabSearch(this);"
-      action="channel/goLimitList?myId=${params.myId}" method="post">
+      action="product/goLimitList?myId=${params.myId}" method="post">
     <div class="pageHeader">
         <div class="searchBar">
             <table class="searchContent">
@@ -122,7 +122,7 @@
                 "id":id,
                 "limitStatus":status
             },
-            url : "channel/updateBackLimit",
+            url : "product/updateBackLimit",
             success : function(ret) {
                 setTimeout(function () {
                     $('#pagerForm-l').submit()

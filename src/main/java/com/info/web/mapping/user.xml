@@ -723,7 +723,86 @@
 		 and uc.status not in (3)
 		order by uc.create_time desc
 	</select>
-	
+	<select id ="noRenewalList" resultType="map" parameterType="hashmap">
+		SELECT
+			u.id,
+			u.realname AS realName,
+			u.user_phone AS userPhone,
+		    u.user_sex AS userSex,
+		    IFNULL( borrow.borrowCount, 0 ) AS borrowCount,
+			IFNULL( repayment.reapayCount, 0 ) AS repayCount,
+			IFNULL( ove.oveCount, 0 ) AS oveCount,
+			IFNULL( lateDay.lateLong, 0 ) AS lateLong,
+		    lateDay.realTime as realTime
+		FROM
+			user_info AS u
+			LEFT JOIN ( SELECT count( 1 ) AS reapayCount, user_id AS userId FROM asset_repayment WHERE STATUS IN ( 30, 34 ) GROUP BY user_id ) AS repayment ON u.id = repayment.userId
+			LEFT JOIN ( SELECT count( 1 ) AS oveCount, user_id AS userId FROM asset_borrow_order WHERE `status` IN ( - 11, 34 ) GROUP BY user_id ) AS ove ON ove.userId = u.id
+			LEFT JOIN ( SELECT count( 1 ) AS borrowCount, user_id AS userId FROM asset_borrow_order GROUP BY user_id ) AS borrow ON borrow.userId = u.id
+			LEFT JOIN (
+		SELECT
+			max( late_day ) AS lateLong,
+			max( DATE_FORMAT( repayment_real_time, '%Y-%m-%d' ) ) AS repaymentedTime,
+		    repayment_real_time as realTime,
+			user_id AS userId
+		FROM
+			asset_repayment
+		GROUP BY
+			user_id
+			) AS lateDay ON lateDay.userId = u.id
+		WHERE
+			repayment.reapayCount = borrow.borrowCount
+			<if test="renewalCount != null and renewalCount!=''">
+				AND datediff( CURDATE( ), lateDay.repaymentedTime ) &gt; #{renewalCount}
+			</if>
+			<if test="id != null and id !=''">
+				AND <![CDATA[uc.id = #{id}]]>
+			</if>
+			<if test="realname != null and realname !=''">
+				AND <![CDATA[uc.realname = #{realname}]]>
+			</if>
+			<if test="userPhone != null and userPhone !=''">
+				AND <![CDATA[uc.user_phone = #{userPhone}]]>
+			</if>
+		ORDER BY
+		repayment.reapayCount DESC
+	</select>
+	<select id ="noRenewalListCount" resultType="java.lang.Integer" parameterType="HashMap">
+		SELECT
+		count(1)
+		FROM
+		user_info AS u
+		LEFT JOIN ( SELECT count( 1 ) AS reapayCount, user_id AS userId FROM asset_repayment WHERE STATUS IN ( 30, 34 ) GROUP BY user_id ) AS repayment ON u.id = repayment.userId
+		LEFT JOIN ( SELECT count( 1 ) AS oveCount, user_id AS userId FROM asset_borrow_order WHERE `status` IN ( - 11, 34 ) GROUP BY user_id ) AS ove ON ove.userId = u.id
+		LEFT JOIN ( SELECT count( 1 ) AS borrowCount, user_id AS userId FROM asset_borrow_order GROUP BY user_id ) AS borrow ON borrow.userId = u.id
+		LEFT JOIN (
+		SELECT
+		max( late_day ) AS lateLong,
+		max( DATE_FORMAT( repayment_real_time, '%Y-%m-%d' ) ) AS repaymentedTime,
+		repayment_real_time as realTime,
+		user_id AS userId
+		FROM
+		asset_repayment
+		GROUP BY
+		user_id
+		) AS lateDay ON lateDay.userId = u.id
+		WHERE
+		repayment.reapayCount = borrow.borrowCount
+		<if test="renewalCount != null and renewalCount!=''">
+			AND datediff( CURDATE( ), lateDay.repaymentedTime ) &gt; #{renewalCount}
+		</if>
+		<if test="id != null and id !=''">
+			AND <![CDATA[uc.id = #{id}]]>
+		</if>
+		<if test="realname != null and realname !=''">
+			AND <![CDATA[uc.realname = #{realname}]]>
+		</if>
+		<if test="userPhone != null and userPhone !=''">
+			AND <![CDATA[uc.user_phone = #{userPhone}]]>
+		</if>
+		ORDER BY
+		repayment.reapayCount DESC
+	</select>
 	<!-- 用户列表 多条件查询 -->
 	<select id="selectUserPage" resultType="map" parameterType="HashMap">
 		/*select

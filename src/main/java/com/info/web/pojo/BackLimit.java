@@ -14,8 +14,8 @@ public class BackLimit implements Serializable {
     private Integer id;//id
     private String limitName;//提额类型
     private Integer limitCount;//还款？次可提额
-    private Integer limitStatus;//提额至？个产品
-    private Integer limitProductId;//提额状态 0 开启 1 关闭
+    private Integer limitStatus;//提额状态 0 开启 1 关闭
+    private Integer limitProductId;//提额至？个产品
     private String limitRemark;//备注
     private String limiitProductName;//产品名称
     private Date createDate;//创建时间

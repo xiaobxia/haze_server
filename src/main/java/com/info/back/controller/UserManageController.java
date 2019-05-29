@@ -96,6 +96,31 @@ public class UserManageController extends BaseController{
 			return "userInfo/userBlackList";//黑名单用户列表
 		}
 	}
+	/**
+	 * 用户管理 --》无续借用户列表 默认查询所有无续借用户
+	 */
+	@RequestMapping("noRenewal")
+	public String noRenewalList(HttpServletRequest request,Model model) {
+       try{
+		   HashMap<String, Object> params = getParametersO(request);
+		   String userId=request.getParameter("id");
+		   String realname=request.getParameter("realname");
+		   String userPhone=request.getParameter("userPhone");
+		   String renewalCount=request.getParameter("renewalCount");
+		   PageConfig<User> page = null;
+		   if(StringUtils.isBlank(userId)){userId=null;}
+		   if(StringUtils.isBlank(realname)){realname=null;}
+		   if(StringUtils.isBlank(userPhone)){userPhone=null;}
+		   if(StringUtils.isBlank(renewalCount)){renewalCount=null;}
+		   page=this.userService.noRenewalList(params);
+		   model.addAttribute("pm",page);
+		   model.addAttribute("searchParams", params);
+	   }catch (Exception e){
+		   log.error("noRenewal error:{}", e);
+	   }
+	   return "userInfo/noRenewalList";
+	}
+
 	
 	/**
 	 * 用户管理 --》用户列表 --》 操作

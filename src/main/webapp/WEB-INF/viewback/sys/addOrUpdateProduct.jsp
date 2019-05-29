@@ -121,10 +121,10 @@
 </body>
 <script type="text/javascript">
     <c:if test="${not empty id}">
-        var postUrl = "channel/updateProduct"
+        var postUrl = "product/updateProduct"
     </c:if>
     <c:if test="${empty id}">
-        var postUrl = "channel/addProduct"
+        var postUrl = "product/addProduct"
     </c:if>
     $('#p-submit').click(function () {
         $.ajax({

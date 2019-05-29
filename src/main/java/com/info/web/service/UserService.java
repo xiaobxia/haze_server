@@ -108,8 +108,13 @@ public class UserService implements IUserService {
 		params.put(Constant.NAME_SPACE, "User");
 		return paginationDao.findPage("selectUserPage", "selectUserCount", params,"web");
 	}
-	
-	
+
+	@Override
+	public PageConfig<User> noRenewalList(HashMap<String, Object> params) {
+		params.put(Constant.NAME_SPACE, "User");
+		return paginationDao.findPage("noRenewalList", "noRenewalListCount", params,"web");
+	}
+
 	public List<UserCertification> findCerticationList(){
 		return this.userCerticationDao.findCerticationList();
 	}

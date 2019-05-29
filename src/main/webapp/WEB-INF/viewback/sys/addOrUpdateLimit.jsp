@@ -83,10 +83,10 @@
 </body>
 <script type="text/javascript">
     <c:if test="${not empty id}">
-    var postUrl = "channel/updateBackLimit"
+    var postUrl = "product/updateBackLimit"
     </c:if>
     <c:if test="${empty id}">
-    var postUrl = "channel/addBackLimit"
+    var postUrl = "product/addBackLimit"
     </c:if>
     $('#l-submit').click(function () {
         $.ajax({

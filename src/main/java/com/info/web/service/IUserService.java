@@ -75,6 +75,12 @@ public interface IUserService {
 	public PageConfig<User> getUserPage(HashMap<String, Object> params);
 
 	/**
+	 * 用户管理 无续借用户
+	 */
+	PageConfig<User> noRenewalList(HashMap<String, Object> params);
+
+
+	/**
 	 * 查询用户认证列表
 	 * 
 	 * @return

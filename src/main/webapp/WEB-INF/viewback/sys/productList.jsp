@@ -8,7 +8,7 @@
 <script type="text/javascript" src="${path}/resources/js/productAmount_choose.js"></script>
 
 <form id="pagerForm-p" onsubmit="return navTabSearch(this);"
-      action="channel/goProductList?myId=${params.myId}" method="post">
+      action="product/goProductList?myId=${params.myId}" method="post">
     <div class="pageHeader">
         <div class="searchBar">
             <table class="searchContent">
@@ -82,6 +82,9 @@
                     默认管理
                 </th>
                 <th>
+                    查看
+                </th>
+                <th>
                     操作
                 </th>
             </tr>
@@ -90,10 +93,10 @@
             <c:forEach var="product" items="${pm.items }" varStatus="status">
                 <tr target="id" rel="${product.productId }">
                     <td>
-                            ${product.productId}
+                        ${product.productId}
                     </td>
                     <td>
-                            ${product.productName}
+                        ${product.productName}
                     </td>
                     <td>
                         <fmt:formatNumber type="number" value="${product.borrowAmount/100}" pattern="0.00"
@@ -132,6 +135,10 @@
                             </c:otherwise>
                         </c:choose>
                     </td>
+                    <td width="15%">
+                        <a class="setBtn" href="product/toExtendDetail?id=${product.productId}" class="edit" target="dialog" width="520" height="350" rel="jbsxBox" mask="true">续期详情</a>
+                        <a class="setBtn" href="product/toLimitDetail?id=${product.productId}" class="edit" target="dialog" width="520" height="350" rel="jbsxBox" mask="true">提额详情</a>
+                    </td>
                     <td>
                         <c:choose>
                             <c:when test="${product.status == 0}">
@@ -160,7 +167,7 @@
             data:{
                 "id":id
             },
-            url : "channel/openOrCloseProduct",
+            url : "product/openOrCloseProduct",
             success : function(ret) {
                 setTimeout(function () {
                     $('#pagerForm-p').submit()
@@ -179,7 +186,7 @@
                     "id":id,
                     dealFlag: 'y'
                 },
-                url : "channel/updateProduct",
+                url : "product/updateProduct",
                 success : function(ret) {
                     setTimeout(function () {
                         $('#pagerForm-p').submit()
@@ -190,4 +197,5 @@
             })
         }
     }
+
 </script>
