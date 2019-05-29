@@ -29,6 +29,8 @@
 					<td>渠道商：
 						<select name="channelSuperCode">
 							<option value="">不限</option>
+							<option value="-999" name="channelSuperCode"
+									<c:if test="${searchParams.channelSuperCode == '-999'}">selected="selected"</c:if> >自然流量</option>
 							<c:forEach items="${channel}" var="channel">
 								<option value="${channel.channelSuperCode}" name="channelSuperCode"
 										<c:if test="${channel.channelSuperCode eq searchParams.channelSuperCode}">selected="selected"</c:if> >${channel.channelSuperName}</option>
@@ -36,7 +38,7 @@
 						</select>
 					</td>
 					<td>渠道名称：
-						<input type="text" name="channelName" value="${channelName}">
+						<input type="text" name="channelName" value="${searchParams.channelName}">
 					</td>
 					<td>真实姓名: <input type="text" name="realname"
 						value="${searchParams.realname }" />
@@ -77,6 +79,7 @@
 			<thead>
 				<tr>
 					<th align="center">用户ID</th>
+					<th align="center">渠道商</th>
 					<th align="center">所属渠道</th>
 					<th align="center">姓名</th>
 					<%--<th align="center">公司名称</th>--%>
@@ -95,6 +98,7 @@
 				<c:forEach var="user" items="${pm.items }" varStatus="status" >
 					<tr target="userId" rel="${user.id }">
 						<td align="center">${user.id }</td>
+						<td align="center">${user.channelSuperName}</td>
 						<td align="center">${user.channelName}</td>
 						<td align="center">${user.realname}</td>
 						<%--<td align="center">${user.company_name }</td>--%>

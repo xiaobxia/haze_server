@@ -164,32 +164,32 @@
                 <th align="left">
                     订单号
                 </th>
-                <th align="center" width="5%">
+                <th align="center">
                     姓名
                 </th>
-                <th align="center" width="10%">
+                <th align="center">
                     手机号
                 </th>
-                <th align="center" width="10%">
+                <th align="center">
                     区域
                 </th>
                <%-- <th align="center">
                     是否是老用户
                 </th>--%>
-                <th align="center" width="7%">
+                <th align="center">
                    成功还款次数
                 </th>
                 <th align="center">
-                    借款金额(元)
+                    借款金额
                 </th>
                 <th align="center">
                     借款期限
                 </th>
                 <th align="center">
-                    服务费利率(万分之一)
+                    服务费率
                 </th>
-                <th align="center">
-                    服务费(元)
+                <th align="center" width="52px">
+                    服务费
                 </th>
                 <th align="center">
                     申请时间
@@ -205,7 +205,7 @@
                 <th align="center" class="loanStatusTitle">
                     状态
                 </th>
-                <th align="center" width="7%">
+                <th align="center">
                     渠道商名称
                 </th>
                 <%--<th align="center">--%>
@@ -245,20 +245,18 @@
                     <td>
                             <%--  							${borrow.moneyAmount/100 } --%>
                         <fmt:formatNumber type="number" value="${borrow.moneyAmount/100}" pattern="0.00"
-                                          maxFractionDigits="0"/>
+                                          maxFractionDigits="0"/>元
+                    </td>
+                    <td>
+                        ${borrow.loanTerm }
                     </td>
                     <td>
 
-                            ${borrow.loanTerm }
-
-                    </td>
-                    <td>
-
-                        <fmt:formatNumber type="number" value="${borrow.apr}" pattern="0.00" maxFractionDigits="0"/>
+                        <fmt:formatNumber type="number" value="${borrow.apr/100}" pattern="0.00" maxFractionDigits="0"/>%
                     </td>
                     <td>
                         <fmt:formatNumber type="number" value="${borrow.loanInterests/100}" pattern="0.00"
-                                          maxFractionDigits="2"/>
+                                          maxFractionDigits="2"/>元
                     </td>
                     <td>
                         <fmt:formatDate value="${borrow.orderTime }" pattern="yyyy-MM-dd HH:mm:ss"/>

@@ -720,6 +720,9 @@
 		<if test="status != null and status !=''">
 		 and <![CDATA[uc.status=#{status}]]>
 		</if>
+		<if test="userFrom != null">
+			and <![CDATA[uc.user_from=#{userFrom}]]>
+		</if>
 		 and uc.status not in (3)
 		order by uc.create_time desc
 	</select>
@@ -811,7 +814,7 @@
 		SELECT
 		uc.id as id,
 		ui.channel_super_code as channelSuperCode,
-		ui.channel_super_name as channelSuperName,
+		IFNULL(ui.channel_super_name,"自然流量") as channelSuperName,
 		IFNULL(c.channel_name,"自然流量") as channelName,
 		c.id as channelId,
 		uc.realname realname,
@@ -868,6 +871,9 @@
 		</if>
 		<if test="channelName != null and channelName !=''">
 			and <![CDATA[c.channel_name=#{channelName}]]>
+		</if>
+		<if test="userFrom != null">
+			and <![CDATA[uc.user_from=#{userFrom}]]>
 		</if>
 		 and uc.status not in (3)
 		order by uc.create_time desc
