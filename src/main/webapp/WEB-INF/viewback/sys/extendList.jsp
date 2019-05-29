@@ -8,7 +8,7 @@
 <script type="text/javascript" src="${path}/resources/js/productAmount_choose.js"></script>
 
 <form id="pagerForm-e" onsubmit="return navTabSearch(this);"
-      action="channel/goextendList?myId=${params.myId}" method="post">
+      action="product/goextendList?myId=${params.myId}" method="post">
     <div class="pageHeader">
         <div class="searchBar">
             <table class="searchContent">
@@ -133,7 +133,7 @@
                 "id":id,
                 extendStatus: status
             },
-            url : "channel/updateExtend",
+            url : "product/updateExtend",
             success : function(ret) {
                 setTimeout(function () {
                     $('#pagerForm-e').submit()
