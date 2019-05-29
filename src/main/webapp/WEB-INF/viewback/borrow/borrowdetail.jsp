@@ -639,8 +639,6 @@
 	</div>
 </div>
 <%@include file="popUpWindow.jsp"%>
-</body>
-</html>
 
 <div id="operatorHtml">
 	<iframe src="${operatorHtml}">

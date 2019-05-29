@@ -5,7 +5,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
 	String path = request.getContextPath();
+	String basePath = path + "/common/back";
 %>
+<c:set var="basePath" value="<%=basePath%>"></c:set>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -302,294 +304,409 @@
 		}
 
 	</style>
+	<script type="text/javascript">
+		var borrowId =document.getElementById('borrowId').value;
+		console.log(borrowId);
+		$("#openMoney").click(function() {
+					if(confirm("确定仍要放款吗？"))
+					{
+						$.ajax({
+							url:"${pageContext.request.contextPath}/back/backBorrowOrder/insistlending",
+							method:'get',
+							data:{
+								"type": 0,
+								"borrowId":borrowId
+							},
+							success:function(status,data){
+								if (status == 'success')
+									alert("已完成");
+								else
+									alert(status);
+							}
+						});
+					}
+				}
+		)
+	</script>
 </head>
 <body>
 <div class="pageContent">
-	<form method="post" action="backBorrowOrder/saveUpdateBorrow"
-		  onsubmit="return validateCallback(this, navTabAjaxDone);"
-		  class="pageForm required-validate">
-		<input type="hidden" name="id" value="${borrow.id}" />
-		<input type="hidden" name="parentId" value="${params.parentId}" />
-		<input type="hidden" name="bType" value="${params.bType}" />
-		<div class="pageFormContent" layoutH="50" style="overflow: auto;">
-			<%--借款信息--%>
-			<fieldset>
-				<legend>借款信息</legend>
-				<table class="userTable">
-					<tbody>
-					<tr>
-						<td style="font-weight: bold">借款详情</td>
-						<td>
-							<table class="userTable">
+	<div class="pageFormContent" layoutH="50" style="overflow: auto;">
+		<input input="text" style="display:none"  value="${borrow.id}" id="borrowId">
+		<div class="detail-page-main" style="position: relative">
+			<div class="detail-card">
+				<div class="title-wrap">
+					<div class="title">
+						<img src="${basePath}/images/loandetail/借款信息.png" alt="">
+						<span class="main-text">借款信息</span>
+						<span class="sub-text">(订单号:${borrow.outTradeNo})</span>
+					</div>
+					<div class="force-loan">
+						<span class="text">风控系统返回分值：<c:if test="${score == null}">
+							暂无分数
+						</c:if>
+						<c:if test="${score != null}">
+							${score}
+						</c:if></span>
+						<span class="btn" id="openMoney">仍要放款</span>
+					</div>
+				</div>
+				<div class="content">
+					<table class="detail-table">
+						<tr>
+							<th>借款期限</th>
+							<th>总额度</th>
+							<th>剩余额度</th>
+							<th>服务费(元)</th>
+							<th>服务费费率‰</th>
+							<th>当前状态</th>
+							<th>申请时间</th>
+							<th>还款时间</th>
+							<th>开户行</th>
+							<th>借款银行卡卡号</th>
+							<th>预留手机号码</th>
+						</tr>
+						<tr>
+							<td>${borrow.loanTerm }天</td>
+							<td><fmt:formatNumber type="number"
+												  value="${user.amountMax/100}" pattern="0.00"
+												  maxFractionDigits="2" />元</td>
+							<td><fmt:formatNumber type="number"
+												  value="${user.amountAvailable/100}" pattern="0.00"
+												  maxFractionDigits="2" />元</td>
+							<td><fmt:formatNumber type="number"
+												  value="${borrow.loanInterests/100}" pattern="0.00"
+												  maxFractionDigits="2" />元</td>
+							<td><fmt:formatNumber type="number"
+												  value="${borrow.apr}" pattern="0.00" maxFractionDigits="2" /></td>
+							<td>${borrow.statusName}</td>
+							<td><fmt:formatDate
+									value="${borrow.orderTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+							<td><fmt:formatDate value="${borrow.loanEndTime}"
+												pattern="yyyy-MM-dd HH:mm:ss" /></td>
+							<td>${bankCard.bankName}</td>
+							<td>${borrow.cardNo}</td>
+							<td>${bankCard.phone}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="detail-card">
+				<div class="title-wrap">
+					<div id="report-btn" class="report-bth blue-click-btn">运营商报告</div>
+					<div class="title">
+						<img src="${basePath}/images/loandetail/个人信息.png" alt="">
+						<span class="main-text">个人信息</span>
+						<span class="sub-text">(账号创建时间:<fmt:formatDate value="${user.createTime}"
+																	   pattern="yyyy-MM-dd HH:mm:ss" />)</span>
+					</div>
+				</div>
+				<div class="block-row">
+					<div class="sub-block">
+						<div class="sub-title">
+							1）个人详情
+						</div>
+						<div class="content">
+							<table class="detail-table">
 								<tr>
-									<td class="tdGround" style="width: 180px;">用户ID:</td>
+									<th>用户ID</th>
+									<th>姓名</th>
+									<th>年龄</th>
+									<th>性别</th>
+									<th>出生日期</th>
+									<th>身份证号</th>
+									<th>联系方式</th>
+									<th>婚姻</th>
+									<th>行业</th>
+									<th>QQ</th>
+									<th>邮箱</th>
+								</tr>
+								<tr>
 									<td>${user.id}</td>
-									<td class="tdGround" colspan="2">订单号:</td>
-									<td colspan="2">${borrow.outTradeNo}</td>
-								</tr>
-								<tr>
-									<td class="tdGround" style="width: 180px;">借款期限:</td>
-									<td>${borrow.loanTerm }天</td>
-									<td class="tdGround" colspan="2">当前状态:</td>
-									<td colspan="2">${borrow.statusName }</td>
-								</tr>
-								<tr>
-									<td class="tdGround">服务费:</td>
-									<td><fmt:formatNumber type="number"
-														  value="${borrow.loanInterests/100}" pattern="0.00"
-														  maxFractionDigits="0" />元</td>
-									<td class="tdGround" colspan="2">服务费费率‱:</td>
-									<td colspan="2"><fmt:formatNumber type="number"
-																	  value="${borrow.apr}" pattern="0.00" maxFractionDigits="2" /></td>
-								</tr>
-								<tr>
-
-									<td class="tdGround" >申请时间:</td>
-									<td ><fmt:formatDate
-											value="${borrow.orderTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-									<td class="tdGround" colspan="2">还款时间:</td>
-									<td colspan="2"><fmt:formatDate value="${borrow.loanEndTime}"
-																	pattern="yyyy-MM-dd HH:mm:ss" /></td>
-								</tr>
-								<tr>
-									<td class="tdGround">总额度:</td>
-									<td><fmt:formatNumber type="number"
-														  value="${user.amountMax/100}" pattern="0.00"
-														  maxFractionDigits="2" />元</td>
-									<td class="tdGround" colspan="2">剩余额度</td>
-									<td colspan="2"><fmt:formatNumber type="number"
-																	  value="${user.amountAvailable/100}" pattern="0.00"
-																	  maxFractionDigits="2" />元</td>
-									<!-- 										<td class="tdGround">剩余额度</td> -->
-									<%-- 										<td>${user.amountAvailable}</td> --%>
-								</tr>
-								<tr>
-									<td class="tdGround">开户行</td>
-									<td>${bankCard.bankName}</td>
-									<td class="tdGround" colspan="2">借款银行卡卡号</td>
-									<td>${borrow.cardNo}</td>
-								</tr>
-								<tr>
-									<td class="tdGround">预留手机号码</td>
-									<td colspan="4">${bankCard.phone}</td>
-								</tr>
-							</table>
-						</td>
-					</tr>
-					</tbody>
-				</table>
-			</fieldset>
-			<!-- 个人信息 -->
-			<fieldset>
-				<legend>个人信息</legend>
-				<table class="userTable">
-					<tbody>
-					<tr>
-						<td style="font-weight: bold">个人详情</td>
-						<td>
-							<table class="userTable">
-								<tr>
-									<td class="tdGround" style="width: 180px;">用户ID</td>
-									<td>${user.id}</td>
-									<td class="tdGround">姓名</td>
 									<td>${user.realname}</td>
-									<td class="tdGround">年龄</td>
 									<td>${age}</td>
-									<td class="tdGround">性别</td>
 									<td>${user.userSex}</td>
-								</tr>
-								<tr>
-									<td class="tdGround" style="width: 180px;">出生日期</td>
 									<td>${birthday}</td>
-									<td class="tdGround">身份证号</td>
 									<td>${user.idNumber}</td>
-									<td class="tdGround">联系方式</td>
 									<td>${user.userPhone}</td>
-									<td class="tdGround">婚姻</td>
 									<td>${user.maritalStatus}</td>
-								</tr>
-								<tr>
-									<td class="tdGround">常住地址</td>
-									<td colspan="3">${user.presentAddress}
-										${user.presentAddressDistinct}</td>
-									<%--<td class="tdGround">学历：</td>--%>
-									<%--<td>${user.education}</td>--%>
-
-									<td class="tdGround">居住时长：</td>
-									<td>${user.presentPeriod}</td>
-									<td class="tdGround">账号创建时间</td>
-									<td><fmt:formatDate value="${user.createTime}"
-														pattern="yyyy-MM-dd HH:mm:ss" /></td>
-								</tr>
-								<tr>
-									<td class="tdGround">QQ</td>
-									<td>${user.qq}</td>
-									<td class="tdGround">邮箱</td>
-									<td>${user.email}</td>
-									<td class="tdGround">行业</td>
 									<td>${user.workIndustry}</td>
-									<td class="tdGround">公司</td>
+									<td>${user.qq}</td>
+									<td>${user.email}</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="block-row">
+					<div class="sub-block">
+						<div class="sub-title">
+							2）地址身份证
+						</div>
+						<div class="content">
+							<table class="detail-table">
+								<tr>
+									<th>常住地址</th>
+									<th>居住时长</th>
+									<th>公司</th>
+									<th>公司地址</th>
+								</tr>
+								<tr>
+									<td>${user.presentAddress}
+										${user.presentAddressDistinct}</td>
+									<td>${user.presentPeriod}</td>
 									<td>${user.companyName}</td>
-								</tr>
-								<tr>
-									<td class="tdGround">公司地址</td>
-									<td colspan="7">${user.companyAddress}</td>
-								</tr>
-								<tr class="identity">
-									<%--<td class="tdGround" style="height: 100px; width: 180px;">学历证明:--%>
-									<%--</td>--%>
-									<%--<td><img src="" /></td>--%>
-									<td class="tdGround" style="height: 100px;">身份证</td>
-									<td colspan="2">
-										<c:if test="${user.idcardImgZ!=null}">
-											<img src="${APP_IMG_URL['APP_IMG_URL']}${user.idcardImgZ}"/>
-										</c:if>
-										<%--<img src="http://oyd863ahw.bkt.clouddn.com///mnt/img/qbm_04/04_77/04_77_868/20171026/20171026103514_1nbnx54bys_appTh.png " alt=""><br/>身份证正面--%>
-									</td>
-									<td colspan="2">
-										<c:if test="${user.idcardImgF!=null}">
-											<img src="${APP_IMG_URL['APP_IMG_URL']}${user.idcardImgF}"/>
-										</c:if>
-										<%--<img src="http://oyd863ahw.bkt.clouddn.com///mnt/img/qbm_04/04_77/04_77_868/20171026/20171026103514_1nbnx54bys_appTh.png " alt=""><br/>身份证反面--%>
-									</td>
-									<td colspan="3">
-										<c:if test="${user.headPortrait!=null}">
-											<img src="${APP_IMG_URL['APP_IMG_URL']}${user.headPortrait}"/>
-										</c:if>
-										<%--<img src="http://oyd863ahw.bkt.clouddn.com///mnt/img/qbm_04/04_77/04_77_868/20171026/20171026103514_1nbnx54bys_appTh.png " alt=""><br/>用户活体检测照片--%>
-									</td>
+									<td>${user.companyAddress}</td>
 								</tr>
 							</table>
-						</td>
-					</tr>
-					<tr>
-						<td style="font-weight: bold">联系人</td>
-						<td>
-							<table class="userTable">
-								<tr>
-									<td class="tdGround" style="width: 180px;">关系</td>
-									<td>${user.fristContactRelation}</td>
-									<td class="tdGround">姓名</td>
-									<td>${user.firstContactName}</td>
-									<td class="tdGround">电话</td>
-									<td>${user.firstContactPhone}</td>
-									<td class="tdGround">来源</td>
-									<td>系统上传</td>
-								</tr>
-								<tr>
-									<td class="tdGround" style="width: 180px;">关系</td>
-									<td>${user.secondContactRelation}</td>
-									<td class="tdGround">姓名</td>
-									<td>${user.secondContactName}</td>
-									<td class="tdGround">电话</td>
-									<td>${user.secondContactPhone}</td>
-									<td class="tdGround">来源</td>
-									<td>系统上传</td>
-								</tr>
-								<tr class="contact_num">
-									<td class="tdGround" style="width: 180px;">通讯录分析</td>
-									<td colspan="11" style="padding: 8px 0;">
-										<a rel="tree161" id="contact-btn" class="contactBtn" href="javascript:void 0">手机通讯录联系人总个数：&nbsp;<span id="contactNum">${fn:length(contactList)}</span></a>
-										<%--<a rel="tree161" href="javascript:;" id="tdYunYingShang-btn">同盾运营商数据</a>--%>
-										<%--<span>运营商数据与通讯录号码撞库率：<b>--%>
-												<%--${SJMHModel.sameRate}%--%>
-										<%--</b></span>--%>
-									</td>
-								</tr>
-							</table>
-						</td>
-					</tr>
-					<tr>
-						<td style="font-weight: bold">用户来源</td>
-						<td>
-							<table>
-								<tr>
-									<td style="text-indent: 10px;line-height: 38px;width: 50%">认证时地理位置：
-										<span id="gaode_address"></span>
-									</td>
-									<td style="text-indent: 10px;">渠道商名称：
-										<c:choose>
+							<div class="imgs-block identity">
+								<div class="id-img-wrap">
+									<c:if test="${user.idcardImgZ!=null}">
+										<img class="imgPreview" src="${APP_IMG_URL['APP_IMG_URL']}${user.idcardImgZ}"/>
+									</c:if>
+								</div>
+								<div class="id-img-wrap">
+									<c:if test="${user.idcardImgF!=null}">
+										<img class="imgPreview" src="${APP_IMG_URL['APP_IMG_URL']}${user.idcardImgF}"/>
+									</c:if>
+								</div>
+								<div class="id-img-wrap">
+									<c:if test="${user.headPortrait!=null}">
+										<img class="imgPreview" src="${APP_IMG_URL['APP_IMG_URL']}${user.headPortrait}"/>
+									</c:if>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="block-row">
+					<div class="half-block">
+						<div class="sub-block">
+							<div class="sub-title">
+								3）联系人
+							</div>
+							<div class="content">
+								<table class="detail-table">
+									<tr>
+										<th>关系</th>
+										<th>姓名</th>
+										<th>电话</th>
+										<th>来源</th>
+										<th></th>
+									</tr>
+									<tr>
+										<td>${user.fristContactRelation}</td>
+										<td>${user.firstContactName}</td>
+										<td>${user.firstContactPhone}</td>
+										<td>系统上传</td>
+										<td><a rel="tree161" id="contact-btn" class="contactBtn blue-click-btn" href="javascript:;">手机通讯录联系人总个数：&nbsp;<span id="contactNum">${fn:length(contactList)}</span></a></td>
+									</tr>
+									<tr>
+										<td>${user.secondContactRelation}</td>
+										<td>${user.secondContactName}</td>
+										<td>${user.secondContactPhone}</td>
+										<td>系统上传</td>
+										<td></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="half-block">
+						<div class="sub-block">
+							<div class="sub-title">
+								4）用户来源
+							</div>
+							<div class="content">
+								<table class="detail-table left-text">
+									<tr>
+										<th>认证时地理位置</th>
+										<th>渠道商名称</th>
+									</tr>
+									<tr>
+										<td><span class="blue-click-btn" id="gaode_address"></span></td>
+										<td><c:choose>
 											<c:when test="${channelName != null and channelName != ''}">${channelName}</c:when>
 											<c:when test="${inviteUser != null}">
 												${inviteUser.realname}-${inviteUser.userPhone}
 											</c:when>
 											<c:otherwise>自然流量用户</c:otherwise>
 										</c:choose>
-									</td>
-								</tr>
-							</table>
-						</td>
-					</tr>
-					</tbody>
-				</table>
-			</fieldset>
-			<fieldset>
-				<legend>征信详情</legend>
-				<table class="userTable">
-					<tbody>
-					<%--<tr>--%>
-						<%--<td style="font-weight: bold">征信查询</td>--%>
-						<%--<td>--%>
-							<%--<table class="zxinTable">--%>
-								<%--<tr>--%>
-									<%--<td>征信平台</td>--%>
-									<%--<td>分数/结果</td>--%>
-									<%--<td>命中/建议</td>--%>
-									<%--<td></td>--%>
-								<%--</tr>--%>
-								<%--<%@include file="creditCommonPage.jsp"%>--%>
-
-								<%----%>
-							<%--</table>--%>
-							<%@include file="historyList.jsp" %>
-
-					</tbody>
-				</table>
-			</fieldset>
-			<%--<%@include file="riskAdvice.jsp"%>--%>
-			<fieldset>
-				<legend>审核信息</legend>
-				<dl class="nowrap">
-					<dt>审核状态:</dt>
-					<dd>
-					<dd>
-						<input name="status"   id="borrowStatus" value="${STATUS_FKZ }" type="radio" />放款审核通过(直接放款)
-						&nbsp;&nbsp;&nbsp;&nbsp;<input name="status"   id="borrowStatus" value="${STATUS_FSTG }" type="radio" />复审通过
-						&nbsp;&nbsp;&nbsp;&nbsp;<input name="status" id="borrowStatus" checked="checked" value="-50"   type="radio" />复审驳回并拉黑
-						&nbsp;&nbsp;&nbsp;&nbsp;<input name="status" id="borrowStatus" checked="checked" value="${STATUS_FSBH }"   type="radio" />复审驳回
-					</dd>
-				</dl>
-				<dl class="nowrap">
-					<dt>备注:</dt>
-					<dd class="unit">
-						<textarea   rows="10" name="remark" cols="75"  >${borrow.verifyReviewRemark}</textarea>
-					</dd>
-				</dl>
-			</fieldset>
-		</div>
-		<div class="formBar">
-			<ul>
-				<li>
-					<div class="buttonActive">
-						<div class="buttonContent">
-							<button type="submit" >
-								保存
-							</button>
+										</td>
+									</tr>
+								</table>
+							</div>
 						</div>
 					</div>
-					<div class="button">
-						<div class="buttonContent">
-							<button type="button" class="close">
-								取消
-							</button>
+				</div>
+			</div>
+			<div class="detail-card">
+				<div class="title-wrap">
+					<div class="title">
+						<img src="${basePath}/images/loandetail/征信信息.png" alt="">
+						<span class="main-text">征信查询</span>
+						<span class="sub-text">(订单号:${borrow.outTradeNo})</span>
+					</div>
+				</div>
+				<div class="content">
+					<%@include file="historyList_new.jsp" %>
+				</div>
+			</div>
+			<div class="detail-card">
+				<div class="title-wrap">
+					<div class="title">
+						<img src="${basePath }/images/loandetail/审核信息.png" alt="">
+						<span class="main-text">审核信息</span>
+					</div>
+				</div>
+				<div class="block-row">
+					<div class="sh-card right">
+						<div class="sub-block">
+							<div class="sub-title">
+								2）复审
+							</div>
+							<div class="content">
+								<div class="text-block">
+									<div class="text-title">审核人</div>
+									<div class="text-text">${borrow.verifyReviewUser}</div>
+								</div>
+								<div class="text-block">
+									<div class="text-title">审核时间</div>
+									<div class="text-text"><fmt:formatDate
+											value="${borrow.verifyReviewTime}"
+											pattern="yyyy-MM-dd HH:mm:ss" /></div>
+								</div>
+								<div class="bz-card">
+									<h4>审核备注:</h4>
+									<p>${borrow.verifyReviewRemark}</p>
+								</div>
+							</div>
 						</div>
 					</div>
+					<div class="sh-card">
+						<div class="sub-block">
+							<div class="sub-title">
+								1）初审
+							</div>
+							<div class="content">
+								<div class="text-block">
+									<div class="text-title">审核人</div>
+									<div class="text-text">${borrow.verifyTrialUser}</div>
+								</div>
+								<div class="text-block">
+									<div class="text-title">审核时间</div>
+									<div class="text-text"><fmt:formatDate
+											value="${borrow.verifyTrialTime}"
+											pattern="yyyy-MM-dd HH:mm:ss" /></div>
+								</div>
+								<div class="bz-card">
+									<h4>审核备注:</h4>
+									<p>${borrow.verifyTrialRemark}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="block-row">
+					<div class="sh-card">
+						<div class="sub-block">
+							<div class="sub-title">
+								3）放款审核
+							</div>
+							<div class="content">
+								<div class="text-block">
+									<div class="text-title">审核人</div>
+									<div class="text-text">${borrow.verifyLoanUser}</div>
+								</div>
+								<div class="text-block">
+									<div class="text-title">审核时间</div>
+									<div class="text-text"><fmt:formatDate
+											value="${borrow.verifyLoanTime}"
+											pattern="yyyy-MM-dd HH:mm:ss" /></div>
+								</div>
+								<div class="bz-card">
+									<h4>审核备注:</h4>
+									<p>${borrow.verifyLoanRemark}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="detail-card">
+				<div class="title-wrap">
+					<div class="title">
+						<img src="${basePath}/images/loandetail/征信信息.png" alt="">
+						<span class="main-text">审核信息</span>
+					</div>
+				</div>
+				<div class="content">
+					<form method="post" action="backBorrowOrder/saveUpdateBorrow"
+						  onsubmit="return validateCallback(this, navTabAjaxDone);"
+						  class="pageForm required-validate">
+						<input type="hidden" name="id" value="${borrow.id}" />
+						<input type="hidden" name="parentId" value="${params.parentId}" />
+						<input type="hidden" name="bType" value="${params.bType}" />
+						<div class="pageForm">
+							<div class="form-item">
+								<span class="label">审核状态：</span>
+								<input name="status" value="${STATUS_FKZ }" type="radio" />放款审核通过(直接放款)
+								<input name="status" value="${STATUS_FSTG }" type="radio" />复审通过
+								<input name="status" checked="checked" value="-50"   type="radio" />复审驳回并拉黑
+								<input name="status" checked="checked" value="${STATUS_FSBH }"   type="radio" />复审驳回
+							</div>
+							<div class="form-item">
+								<span class="label">备注：</span>
+								<textarea rows="10" name="remark" cols="75" class="input-textarea">${borrow.verifyReviewRemark}</textarea>
+							</div>
+						</div>
+						<div class="formBar">
+							<ul>
+								<li>
+									<div class="buttonActive">
+										<div class="buttonContent">
+											<button type="submit" >
+												保存
+											</button>
+										</div>
+									</div>
+									<div class="button">
+										<div class="buttonContent">
+											<button type="button" class="close">
+												取消
+											</button>
+										</div>
+									</div>
 
-				</li>
-			</ul>
+								</li>
+							</ul>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
-	</form>
+	</div>
 </div>
 <%@include file="popUpWindow.jsp"%>
+<div id="operatorHtml">
+	<iframe src="${operatorHtml}">
+		<p>您的浏览器不支持  iframe 标签。</p>
+	</iframe>
+	<span id="operatorHtml-close" class="blue-click-btn">关闭</span>
+</div>
+<div id="operatorHtml-url" style="display: none;">${operatorHtml}</div>
 </body>
 </html>
+<script>
+	$('#report-btn').click(function () {
+		var url = $('#operatorHtml-url').text().trim();
+		if (url) {
+			$('#operatorHtml').show()
+		} else {
+			alert('该用户未生成运营商报告')
+		}
+	})
+	$('#operatorHtml-close').click(function () {
+		$('#operatorHtml').hide()
+	})
+</script>

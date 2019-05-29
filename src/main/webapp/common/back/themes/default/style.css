@@ -697,3 +697,6 @@ input:disabled {
 .pageFormContent label.required-label {
  width: auto;
 }
+.pageFormContent .input-textarea {
+    float: none!important;
+}

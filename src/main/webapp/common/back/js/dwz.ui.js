@@ -143,7 +143,7 @@ function initUI(_box){
 	}
 	
 	// init styles
-	$("input[type=text], input[type=password], textarea", $p).addClass("textInput").focusClass("focus");
+	$("input[type=text], input[type=password]", $p).addClass("textInput").focusClass("focus");
 
 	$("input[readonly], textarea[readonly]", $p).addClass("readonly");
 	$("input[disabled=true], textarea[disabled=true]", $p).addClass("disabled");
