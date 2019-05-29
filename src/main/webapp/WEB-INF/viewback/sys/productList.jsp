@@ -82,6 +82,9 @@
                     默认管理
                 </th>
                 <th>
+                    查看
+                </th>
+                <th>
                     操作
                 </th>
             </tr>
@@ -133,6 +136,10 @@
                         </c:choose>
                     </td>
                     <td>
+                        <a class="setBtn" href="product/toExtendDetail?id=${product.productId}" class="edit" target="dialog" width="520" height="350" rel="jbsxBox" mask="true">续期详情</a>
+                        <a class="setBtn" href="product/toLimitDetail?id=${product.productId}" class="edit" target="dialog" width="520" height="350" rel="jbsxBox" mask="true">提额详情</a>
+                    </td>
+                    <td>
                         <c:choose>
                             <c:when test="${product.status == 0}">
                                 <span class="deleteBtn disabled">删除</span>
@@ -160,7 +167,7 @@
             data:{
                 "id":id
             },
-            url : "channel/openOrCloseProduct",
+            url : "product/openOrCloseProduct",
             success : function(ret) {
                 setTimeout(function () {
                     $('#pagerForm-p').submit()
@@ -179,7 +186,7 @@
                     "id":id,
                     dealFlag: 'y'
                 },
-                url : "channel/updateProduct",
+                url : "product/updateProduct",
                 success : function(ret) {
                     setTimeout(function () {
                         $('#pagerForm-p').submit()
@@ -190,4 +197,5 @@
             })
         }
     }
+
 </script>

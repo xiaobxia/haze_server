@@ -12,7 +12,7 @@
     <title>Insert user</title>
     <style>
     </style>
-</head>>
+</head>
 <body>
 <div class="pageContent new">
     <div class="pageForm required-validate">

@@ -232,12 +232,12 @@ public class ProductController extends BaseController {
      * 进入产品详情页面
      * @return
      */
-    @RequestMapping("toProductDetail")
+    /*@RequestMapping("toProductDetail")
     public String toProductDetail(Model model,Integer id,HashMap<String,Object> params){
         ProductDetail productDetail = iProductService.getProductDetail(id);
         model.addAttribute("productDetail",productDetail);
         return "sys/productDetail";
-    }
+    }*/
 
     /**
      * 进入添加或修改续期页面
@@ -275,5 +275,23 @@ public class ProductController extends BaseController {
         }
         model.addAttribute("list",list);
         return "sys/addOrUpdateLimit";
+    }
+
+    @RequestMapping("toExtendDetail")
+    public String toExtendDetail(Integer id,Model model){
+        BackExtend backExtend = iProductService.findExtend(id);
+        model.addAttribute("backExtend",backExtend);
+        return "sys/extendDetail";
+    }
+
+    @RequestMapping("toLimitDetail")
+    public String toLimitDetail(Integer id,Model model){
+        List<ProductDetail> list = iProductService.moneyList(null);
+        BackLimit backLimit = iProductService.findLimit(id);
+        //查询产品详情
+        ProductDetail productDetail = iProductService.getProductDetail(backLimit.getLimitProductId());
+        model.addAttribute("backLimit",backLimit);
+        model.addAttribute("productDetail",productDetail);
+        return "sys/limitDetail";
     }
 }
