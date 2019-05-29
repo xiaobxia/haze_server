@@ -164,19 +164,19 @@
                 <th align="left">
                     订单号
                 </th>
-                <th align="center">
+                <th align="center" width="5%">
                     姓名
                 </th>
-                <th align="center">
+                <th align="center" width="10%">
                     手机号
                 </th>
-                <th align="center">
+                <th align="center" width="10%">
                     区域
                 </th>
                <%-- <th align="center">
                     是否是老用户
                 </th>--%>
-                <th align="center">
+                <th align="center" width="7%">
                    成功还款次数
                 </th>
                 <th align="center">
@@ -205,7 +205,7 @@
                 <th align="center" class="loanStatusTitle">
                     状态
                 </th>
-                <th align="center">
+                <th align="center" width="7%">
                     渠道商名称
                 </th>
                 <%--<th align="center">--%>
