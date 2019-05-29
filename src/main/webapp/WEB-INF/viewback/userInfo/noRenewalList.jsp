@@ -6,9 +6,8 @@
 	String path = request.getContextPath();
 %>
 
- <form id="pagerForm" onsubmit="return navTabSearch(this);" action="userManage/noRenewalList?myId=${searchParams.myId}" method="post">
+ <form id="pagerForm" onsubmit="return navTabSearch(this);" action="userManage/noRenewal?myId=${searchParams.myId}" method="post">
 	<div class="pageHeader">
-		<input type="hidden" name="init" value=0>
 		<div class="searchBar">
 			<table class="searchContent">
 				<tr>
@@ -26,14 +25,12 @@
 							</c:forEach>
 					</select>
 					</td> -->
-					<td>超过<input type="text" name="renewalCount" value="${renewalCount.renewalCount}">(天)无续借</td>
+					<td>超过<input type="text" name="renewalCount" value="${renewalCount.renewalCount}" class="mid">(天)无续借</td>
 					<td>真实姓名: <input type="text" name="realname"
 						value="${searchParams.realname }" />
 					</td>
-				</tr>
-				<tr>
 					<td>手机: <input type="text" name="userPhone"
-						value="${searchParams.userPhone }" />
+								   value="${searchParams.userPhone }" />
 					</td>
 					<!-- <td>&nbsp;&nbsp;&nbsp;&nbsp;</td> -->
 					<td>

@@ -292,8 +292,8 @@
 		}
 		.logo-wrap img {
 			display: inline-block;
-			width: 114px;
-			height: auto;
+			width: auto;
+			height: 40px;
 			vertical-align: middle;
 		}
 		.header-wrap {

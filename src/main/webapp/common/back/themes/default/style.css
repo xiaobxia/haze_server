@@ -662,8 +662,6 @@ body, #splitBar { background:#32374A;}
 }
 
 .slide-btn.open-s.disabled {
-    border-color: rgba(19, 206, 102, 0.5);
-    background-color: rgba(19, 206, 102, 0.5);
     cursor: not-allowed;
 }
 
@@ -699,4 +697,8 @@ input:disabled {
 }
 .pageFormContent .input-textarea {
     float: none!important;
+}
+
+.textInput.mid {
+    margin: 0 10px;
 }
