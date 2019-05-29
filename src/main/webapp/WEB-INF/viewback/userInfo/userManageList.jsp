@@ -30,6 +30,8 @@
 					<td>渠道商：
 						<select name="channelSuperCode">
 							<option value="">不限</option>
+							<option value="-999" name="channelSuperCode"
+									<c:if test="${searchParams.channelSuperCode == '-999'}">selected="selected"</c:if> >自然流量</option>
 							<c:forEach items="${channel}" var="channel">
 								<option value="${channel.channelSuperCode}" name="channelSuperCode"
                                         <c:if test="${channel.channelSuperCode eq searchParams.channelSuperCode}">selected="selected"</c:if> >${channel.channelSuperName}</option>
@@ -37,7 +39,7 @@
 						</select>
 					</td>
 					<td>渠道名称：
-						<input type="text" name="channelName" value="${channelName}">
+						<input type="text" name="channelName" value="${searchParams.channelName}">
 					</td>
 					<td>是否黑名单:
 					<select name="status">

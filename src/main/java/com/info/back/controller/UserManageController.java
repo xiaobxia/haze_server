@@ -70,6 +70,17 @@ public class UserManageController extends BaseController{
 			String createTime=request.getParameter("createTime");
 			String beginTime=request.getParameter("beginTime");
 			String channelId = request.getParameter("channelId");
+			String channelSuperCode = request.getParameter("channelSuperCode");
+			String channelName = request.getParameter("channelName");
+			if(StringUtils.isNotBlank(channelSuperCode) && channelSuperCode.equals("-999")){
+				params.put("channelSuperCode",null);
+				params.put("userFrom",0);
+
+			}
+			if(StringUtils.isNotBlank(channelName) && channelName.equals("自然流量")){
+				params.put("channelName",null);
+				params.put("userFrom",0);
+			}
 			PageConfig<User> page = null;
 			if(StringUtils.isBlank(userId)){userId=null;}
 			if(StringUtils.isBlank(realname)){realname=null;}
@@ -84,6 +95,12 @@ public class UserManageController extends BaseController{
 			page=this.userService.getUserPage(params);
 			//}
 			model.addAttribute("pm", page);
+			if(StringUtils.isNotBlank(channelSuperCode) && channelSuperCode.equals("-999")){
+				params.put("channelSuperCode","-999");
+			}
+			if(StringUtils.isNotBlank(channelName) && channelName.equals("自然流量")){
+				params.put("channelName","自然流量");
+			}
 			model.addAttribute("searchParams", params);//用于搜索框保留值
 			model.addAttribute("channel",channel);//渠道查询下拉框
 
