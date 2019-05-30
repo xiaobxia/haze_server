@@ -9,6 +9,7 @@ import com.info.web.pojo.User;
 import com.info.web.pojo.UserCardInfo;
 import com.info.web.pojo.UserCertification;
 import com.info.web.util.PageConfig;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface IUserService {
 	User getUserPhoneAndName(int id);

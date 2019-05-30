@@ -5,42 +5,19 @@
 <%
 	String path = request.getContextPath();
 %>
-
- <form id="pagerForm" onsubmit="return navTabSearch(this);" action="userManage/gotoUserManage?myId=${searchParams.myId}&jsp=2" method="post">
+<div><font color="bule">批量导入</font></div>
+<form action="userManage/batchimport" method="post" enctype="multipart/form-data" onsubmit="return check();">
+	<div style="margin: 30px;"><input id="excel_file" type="file" name="filename" accept="xlsx" size="80"/>
+		<input id="excel_button" type="submit" value="导入Excel"/></div>
+</form>
+<form id="pagerForm" onsubmit="return navTabSearch(this);" action="userManage/userBlackList?myId=${searchParams.myId}" method="post">
 	<div class="pageHeader">
 		<input type="hidden" name="init" value=0>
+		<a href="https://fully-online.oss-cn-hangzhou.aliyuncs.com/excel/black.xlsx"><input type="button" value="下载模板" class="bt2" onclick="down();" /></a>
 		<div class="searchBar">
-			<table class="searchContent">
+			<%--<table class="searchContent">
 				<tr>
-					<td>ID：<input type="text" name="id"
-						value="${searchParams.id }" />
-					</td>
-					<!-- <td>用户类型: <select name="userType">
-							<option value="">不限</option>
-							<c:forEach items="${USER_TYPE }" var="type">
-								<c:if test="${type.key ne USER_TYPE_SYSTEM }">
-									<option value="${type.key }"
-										<c:if test="${searchParams.userSystem eq type.key }">selected="selected"</c:if>>${type.value
-										}</option>
-								</c:if>
-							</c:forEach>
-					</select>
-					</td> -->
-					<td>渠道商：
-						<select name="channelSuperCode">
-							<option value="">不限</option>
-							<option value="-999" name="channelSuperCode"
-									<c:if test="${searchParams.channelSuperCode == '-999'}">selected="selected"</c:if> >自然流量</option>
-							<c:forEach items="${channel}" var="channel">
-								<option value="${channel.channelSuperCode}" name="channelSuperCode"
-										<c:if test="${channel.channelSuperCode eq searchParams.channelSuperCode}">selected="selected"</c:if> >${channel.channelSuperName}</option>
-							</c:forEach>
-						</select>
-					</td>
-					<td>渠道名称：
-						<input type="text" name="channelName" value="${searchParams.channelName}">
-					</td>
-					<td>真实姓名: <input type="text" name="realname"
+					<td>姓名: <input type="text" name="realname"
 						value="${searchParams.realname }" />
 					</td>
 					<td>证件号码: <input type="text" name="idNumber"
@@ -68,7 +45,7 @@
 						</div>
 					</td>
 				</tr>
-			</table>
+			</table>--%>
 		</div>
 	</div>
 	<div class="pageContent">
@@ -78,56 +55,19 @@
 		<table class="list" width="100%" layoutH="114">
 			<thead>
 				<tr>
-					<th align="center">用户ID</th>
-					<th align="center">渠道商</th>
-					<th align="center">所属渠道</th>
 					<th align="center">姓名</th>
-					<%--<th align="center">公司名称</th>--%>
 					<th align="center">联系方式</th>
-					<%--<th align="center">生日</th>--%>
-					<th align="center">性别</th>
 					<th align="center">身份证号</th>
-					<!-- <th align="center">类型</th>
-					<th align="center">状态</th>
-					<th align="center">可再借时间</th> -->
-					<th align="center">注册来源</th>
 					<th align="center">创建时间</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var="user" items="${pm.items }" varStatus="status" >
-					<tr target="userId" rel="${user.id }">
-						<td align="center">${user.id }</td>
-						<td align="center">${user.channelSuperName}</td>
-						<td align="center">${user.channelName}</td>
-						<td align="center">${user.realname}</td>
-						<%--<td align="center">${user.company_name }</td>--%>
-						<td align="center">${user.user_phone }</td>
-						<%--<td align="center">
-							<c:choose>
-								<c:when test="${user.id_number!=null && user.id_number!=''}">${fn:substring(user.id_number, 6, 10)}年${fn:substring(user.id_number, 10, 12)}月${fn:substring(user.id_number, 12, 14)}日</c:when>
-								<c:otherwise></c:otherwise>
-							</c:choose> 
-						</td>--%>
-						<td align="center">${user.user_sex}</td>
-						<td align="center">${user.idNumber}</td>
-						<%-- <td align="center">${user.user_type }</td>
-						<td align="center"></td> --%>
+						<td align="center">${status.userName}</td>
+						<td align="center">${status.userPhone}</td>
+						<td align="center">${status.idNumber}</td>
 						<td align="center">
-							<c:if test ="${user.qqWechat==1}">
-                              qq
-							</c:if>
-							<c:if test ="${user.qqWechat==2}">
-								微信
-							</c:if>
-							<c:if test ="${user.qqWechat==0}">
-								正常
-							</c:if>
-						</td>
-
-						<td align="center">
-						<fmt:formatDate value="${user.create_time }" pattern="yyyy-MM-dd HH:mm" />
-							${ALL_ORIGIN_TYPE[user.originType] }
+						<fmt:formatDate value="${userBlack.createTime}" pattern="yyyy-MM-dd HH:mm" />
 						</td>
 					</tr>
 				</c:forEach>
@@ -138,6 +78,24 @@
 		<%@ include file="../page.jsp"%>
 	</div>
 	<script type="text/javascript">
-		
-	</script>
+        function check() {
+            var excel_file = $("#excel_file").val();
+            if (excel_file == "" || excel_file.length == 0) {
+                alert("请选择文件路径！");
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        $(document).ready(function () {
+            var msg="";
+            if($("#importMsg").text()!=null){
+                msg=$("#importMsg").text();
+            }
+            if(msg!=""){
+                alert(msg);
+            }
+        });
+	 </script>
 </form>
