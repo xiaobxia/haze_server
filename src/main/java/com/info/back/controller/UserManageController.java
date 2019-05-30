@@ -62,6 +62,7 @@ public class UserManageController extends BaseController{
 				if(StringUtils.isBlank(status)){status=null;}
 			}else{
 				String status="2";
+				params.put("status","2");
 			}
 			String userId=request.getParameter("id");
 			String realname=request.getParameter("realname");
