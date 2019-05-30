@@ -28,6 +28,8 @@
 		<result column="pic_code_num" property="picCodeNum" jdbcType="VARCHAR"/>
 		<result column="toutiao_convert_id" property="toutiaoConvertId" jdbcType="VARCHAR"/>
 		<result column="user_info_id" property="userInfoId" jdbcType="INTEGER"/>
+		<result column="qq_status" property="qqStatus" jdbcType="INTEGER"/>
+		<result column="wechat_status" property="wechatStatus" jdbcType="INTEGER"/>
 		<association property="user" column="user_id"
 			javaType="com.info.web.pojo.User" select="com.info.web.dao.IUserDao.selectByPrimaryKey" />
 	</resultMap>
@@ -413,7 +415,14 @@
 	</update>
 <!--New 动态渠道-->
 	<select id="findAllUserList" resultMap="BaseResultMap" parameterType="HashMap">
-		SELECT a.*,b.channel_super_name AS channelSuperName,channel_super_code as channelSuperCode,c.channel_rate_name AS channelRateName FROM channel_info a
+		SELECT
+		a.*,
+		b.channel_super_name AS channelSuperName,
+		channel_super_code as channelSuperCode,
+		c.channel_rate_name AS channelRateName,
+		a.qq_status as qqStatus,
+		a.wechat_status as wechatStatus
+		FROM channel_info a
 		LEFT JOIN channel_super_info b ON a.channel_super_id = b.id
 		LEFT JOIN channel_rate c on a.rate_id = c.id
 		<include refid="findAllSql" />
