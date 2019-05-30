@@ -81,6 +81,11 @@ String path = request.getContextPath()+"";
                         title: '注册量',
                         width: 170,
                         align: 'center'
+                    },      {
+                        field: 'loanCount',
+                        title: '放款笔数',
+                        width: 170,
+                        align: 'center'
                     }/*,
                                 {
                                     field: 'borrowApplyCount',
@@ -88,12 +93,7 @@ String path = request.getContextPath()+"";
                                     width: 170,
                                     align: 'center'
                                 },
-                                {
-                                    field: 'loanCount',
-                                    title: '放款笔数',
-                                    width: 170,
-                                    align: 'center'
-                                },
+
                                 {
                                     field: 'repaymentCount',
                                     title: '还款笔数',
@@ -203,16 +203,6 @@ String path = request.getContextPath()+"";
                     //     }
                     // }
                 ]
-                var typeStatus = '${channelRateType}'
-                console.log(typeStatus)
-                if (typeStatus === '1') {
-                    columnsList.splice(3,0, {
-                        field: 'loanCount',
-                        title: '放款笔数',
-                        width: 170,
-                        align: 'center'
-                    })
-                }
                 $('#datagrid')
                     .datagrid(
                         {
@@ -223,6 +213,11 @@ String path = request.getContextPath()+"";
                             onLoadSuccess:function(data){
                                 /*$("a[name='details']").linkbutton({text:'查看',plain:true,iconCls:'icon-search'});
                                 $("a[name='details']").bind('click')*/
+                                console.log(data)
+                                var item = data.rows[0]
+                                if (item && item.channelRateType === 0) {
+                                    $('td[field=loanCount]').hide()
+                                }
                             },
                             pagination: true,
                             rownumbers: true,
