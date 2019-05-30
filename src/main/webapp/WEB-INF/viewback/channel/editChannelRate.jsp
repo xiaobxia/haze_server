@@ -56,6 +56,22 @@
 						</dd>
 					</dl>
 					<div class="divider"></div>
+					<dl  style="width: 480px;">
+						<dt style="width: 150px;">
+							<label>费率类型</label>
+						</dt>
+						<dd>
+							<select name="channelRateType" class="required">
+								<option value="">--请选择--</option>
+								<option value="1" <c:if test="${channelRate.channelRateType == 2}">selected="selected"</c:if>>UV</option>
+								<option value="1" <c:if test="${channelRate.channelRateType == 3}">selected="selected"</c:if>>PV</option>
+								<option value="0" <c:if test="${channelRate.channelRateType == 0}">selected="selected"</c:if>>CPA</option>
+								<option value="1" <c:if test="${channelRate.channelRateType == 1}">selected="selected"</c:if>>CPS</option>
+								<option value="1" <c:if test="${channelRate.channelRateType == 4}">selected="selected"</c:if>>CPL</option>
+							</select>
+						</dd>
+					</dl>
+					<div class="divider"></div>
 					<p style="width: 480px;">
 						<label style="width: 100px;">计算公式:</label>
 						<label style="width: 300px;">日消耗=日注册量*CPA+日新用户放款总额*CPS</label>

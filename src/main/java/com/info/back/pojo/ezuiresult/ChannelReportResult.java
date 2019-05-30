@@ -36,6 +36,10 @@ public class ChannelReportResult {
     private Integer borrowSucOutCount;
     private BigDecimal borrowRateOut;
     private BigDecimal passRateOut;
+    //渠道计费类型
+    private Integer channelRateType;
+    //放款笔数
+    private int loanCount = 0;
 
     public ChannelReportResult(ChannelReport report) {
         this.reportDate = report.getReportDate();
@@ -57,6 +61,8 @@ public class ChannelReportResult {
         this.borrowApplyCount = report.getDayBorrowApplyCount();
         this.borrowSucCount = report.getDayBorrowSucCount();
         this.blackUserCount = report.getDayBlackUserCount();
+        this.channelRateType = report.getChannelRateType();
+        this.loanCount = report.getLoanCount();
 //        if (isSeeCurrent) {
 //
 //        } else {
@@ -318,4 +324,27 @@ public class ChannelReportResult {
         this.passRateOut = passRateOut;
     }
 
+    public Integer getRegisterCount() {
+        return registerCount;
+    }
+
+    public void setRegisterCount(Integer registerCount) {
+        this.registerCount = registerCount;
+    }
+
+    public Integer getChannelRateType() {
+        return channelRateType;
+    }
+
+    public void setChannelRateType(Integer channelRateType) {
+        this.channelRateType = channelRateType;
+    }
+
+    public int getLoanCount() {
+        return loanCount;
+    }
+
+    public void setLoanCount(int loanCount) {
+        this.loanCount = loanCount;
+    }
 }

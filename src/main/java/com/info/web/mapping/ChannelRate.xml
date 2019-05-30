@@ -9,6 +9,7 @@
 		<result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
 		<result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
 		<result column="remark" property="remark"/>
+		<result column="channel_rate_type" property="channelRateType" jdbcType="INTEGER"/>
 	</resultMap>
  
 	<sql id="findAllSql">
@@ -40,7 +41,8 @@
 		channel_newloan_rate,
 		created_at,
 		updated_at,
-		remark
+		remark,
+		channel_rate_type
 		FROM channel_rate
 		<include refid="findAllSql" />
 		order by created_at DESC
@@ -66,14 +68,16 @@
              channel_newloan_rate,
              created_at,
              updated_at,
-             remark)
+             remark,
+             channel_rate_type)
 		VALUES (
 		        #{channelRateName},
 		        #{channelRegisterRate},
 		        #{channelNewloanRate},
 		         now(),
 		         NOW(),
-		        #{remark});
+		        #{remark},
+		        #{channelRateType});
 	</insert>
 	 
 	<update id="updateById" parameterType="com.info.web.pojo.ChannelRate">
@@ -83,7 +87,8 @@
 		channel_register_rate =#{channelRegisterRate},
 		channel_newloan_rate =#{channelNewloanRate},
 		updated_at = now(),
-		remark = remark
+		remark = #{remark},
+		channel_rate_type=#{channelRateType}
 		WHERE id = #{id};
 	</update>
 </mapper>

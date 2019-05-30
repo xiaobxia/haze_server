@@ -86,6 +86,8 @@ public class ChannelReport implements Serializable {
     private String loanRatio;
     //回款率
     private String repayRatio;
+
+    private Integer channelRateType;
     /**
      * 2019、05/18新增
      * @return
@@ -592,5 +594,13 @@ public class ChannelReport implements Serializable {
 
     public void setRepayRatio(String repayRatio) {
         this.repayRatio = repayRatio;
+    }
+
+    public Integer getChannelRateType() {
+        return channelRateType;
+    }
+
+    public void setChannelRateType(Integer channelRateType) {
+        this.channelRateType = channelRateType;
     }
 }

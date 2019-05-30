@@ -251,7 +251,8 @@
 		SELECT a.*,b.channel_super_name AS channelSuperName,
         channel_super_code as channelSuperCode,c.channel_rate_name AS channelRateName,
 		a.qq_status as qqStatus,
-		a.wechat_status as wechatStatus
+		a.wechat_status as wechatStatus,
+		rate_id as rateId
 		FROM channel_info a
 		LEFT JOIN channel_super_info b ON a.channel_super_id = b.id
 		LEFT JOIN channel_rate c on a.rate_id = c.id
