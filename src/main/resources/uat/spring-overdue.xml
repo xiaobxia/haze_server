@@ -47,7 +47,7 @@
         <!-- 代扣每日5、17点-->
         <!--<property name="cronExpression" value="0 0 13,18 * * ?"/>-->
         <property name="cronExpression" value="0 0 5,17 * * ?"/>
- </bean>
+    </bean>
 
  <bean id="reportRepayment12Bean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
      <property name="jobClass" value="com.info.web.util.JobDetailBean"/>

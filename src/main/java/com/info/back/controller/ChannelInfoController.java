@@ -968,19 +968,6 @@ public class ChannelInfoController extends BaseController {
                     int loanCount =channelInfoService.findLoanCount(report.getReportDate(),idList);
                     report.setLoanCount(loanCount);
                 }
-                //查询该渠道的费率类型
-                HashMap<String, Object> param = new HashMap<>();
-                param.put("channelId",report.getChannelid());
-                //通过渠道id查询渠道信息
-                ChannelInfo channelInfo = channelInfoService
-                        .findOneChannelInfo(param);
-                if(channelInfo != null){
-                    param.put("id",channelInfo.getRateId());
-                    ChannelRate channelRate = channelInfoService.findOneChannelRateInfo(param);
-                    if(channelRate != null){
-                        report.setChannelRateType(channelRate.getChannelRateType());
-                    }
-                }
                 /*
                  * 当天实时查询
                  */
@@ -1107,6 +1094,14 @@ public class ChannelInfoController extends BaseController {
             if (channelCode == null || channelInfo == null) {
                 model.addAttribute("msg", "渠道不存在!");
                 return "error";
+            }
+            if(channelInfo != null){
+                HashMap<String, Object> param = new HashMap<>();
+                param.put("id",channelInfo.getRateId());
+                ChannelRate channelRate = channelInfoService.findOneChannelRateInfo(param);
+                if(channelRate != null){
+                    model.addAttribute("channelRateType",channelRate.getChannelRateType());
+                }
             }
             //渠道名称
             model.addAttribute("channelName", channelInfo.getChannelName());

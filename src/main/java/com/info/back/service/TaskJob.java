@@ -587,9 +587,16 @@ public class TaskJob implements ITaskJob {
      */
     @Override
     public void withhold() {
-
-        withhold2();
-
+    	//获取全局配置参数，AM，PM
+		Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT+08:00"));
+		int time = c.get(Calendar.HOUR_OF_DAY);
+		Map<String, String> keys = SysCacheUtils.getConfigParams(BackConfigParams.MX);
+		int am = Integer.parseInt(keys.get("WITHHOLD_AM"));
+		int pm = Integer.parseInt(keys.get("WITHHOLD_PM"));
+		if (time == am || time == pm) {
+			log.info("withhold time:{} ",time);
+			withhold2();
+		}
     }
 
 

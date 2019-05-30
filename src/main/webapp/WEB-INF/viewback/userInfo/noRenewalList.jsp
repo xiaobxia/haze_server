@@ -25,7 +25,7 @@
 							</c:forEach>
 					</select>
 					</td> -->
-					<td>超过<input type="text" name="renewalCount" value="${renewalCount.renewalCount}" class="mid">(天)无续借</td>
+					<td>超过<input type="text" name="renewalCount" value="${searchParams.renewalCount}" class="mid">(天)无续借</td>
 					<td>真实姓名: <input type="text" name="realname"
 						value="${searchParams.realname }" />
 					</td>

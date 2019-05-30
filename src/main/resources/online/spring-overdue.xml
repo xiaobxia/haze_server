@@ -44,9 +44,9 @@
     </bean>
     <bean id="withholdJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="withholdBean"/>
-        <!-- 代扣每日5、17点-->
+        <!-- 代扣设置为可配置，暂时先在这里设置为每小时一次，在方法内判断全局参数-->
         <!--<property name="cronExpression" value="0 0 13,18 * * ?"/>-->
-        <property name="cronExpression" value="0 0 5,17 * * ?"/>
+        <property name="cronExpression" value="0 0 0/1 * * ? "/>
  </bean>
 
  <bean id="reportRepayment12Bean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
