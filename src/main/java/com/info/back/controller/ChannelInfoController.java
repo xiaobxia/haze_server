@@ -215,7 +215,7 @@ public class ChannelInfoController extends BaseController {
             params.remove("id");
             List<ChannelSuperInfo> channelSuperList = channelInfoService.findSuperAll(params);
             params.put("id",channelId);
-            List<ChannelRate> channelRateList = channelInfoService.findChannelRateAll(params);
+            List<ChannelRate> channelRateList = channelInfoService.findChannelRateAll(null);
             model.addAttribute("channelSuperList", channelSuperList);
             model.addAttribute("channelRateList", channelRateList);
             if ("toJsp".equals(String.valueOf(params.get("type")))) {

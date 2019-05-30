@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%
 	String path = request.getContextPath();
 %>
@@ -61,14 +62,14 @@
 						</dd>
 					</dl>
 					<div class="divider"></div>
-					<dl>
+					<dl style="display: none">
 						<dt style="width: 100px;">
 							<label>
 								登录密码:
 							</label>
 						</dt>
 						<dd>
-							<input name="channelPassword" value=""
+							<input name="channelPassword" style="display: none" value="123456"
 							 class="required"	type="password" alt="请输入编码" size="30"/>
 						</dd>
 					</dl>
@@ -76,7 +77,7 @@
 					<dl style="width: 380px;">
 						<dt style="width: 100px;">
 							<label>
-								计费方式：
+								渠道计费方式：
 							</label>
 						</dt>
 						<dd>
@@ -89,6 +90,40 @@
 							<label style="color: red;" class="required-label">*</label>
 						</dd>
 					</dl>
+					<div class="divider"></div>
+					<div>
+						<dl style="...">
+							<dt style="...">
+								<label>
+									qq注册口子:
+								</label>
+							</dt>
+							<dd>
+								<select name="qqStatus" class="required">
+								<option value="">--请选择--</option>
+									<option value="0" <c:if test="${channelInfo.qqStatus == 0}">selected="selected"</c:if>>开启</option>
+									<option value="1" <c:if test="${channelInfo.qqStatus == 1}">selected="selected"</c:if>>关闭</option>
+								</select>
+							</dd>
+						</dl>
+					</div>
+					<div class="divider"></div>
+					<div>
+						<dl style="...">
+							<dt style="...">
+								<label>
+									微信注册口子:
+								</label>
+							</dt>
+							<dd>
+								<select name="wechatStatus" class="required">
+								<option value="">--请选择--</option>
+									<option value="0" <c:if test="${channelInfo.wechatStatus == 0}">selected="selected"</c:if>>开启</option>
+									<option value="1" <c:if test="${channelInfo.wechatStatus == 1}">selected="selected"</c:if>>关闭</option>
+								</select>
+							</dd>
+						</dl>
+					</div>
 					<div class="divider"></div>
 					<dl>
 						<dt style="width: 100px;">
