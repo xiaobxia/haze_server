@@ -51,6 +51,8 @@ public class BackConfigParams {
 	public static final String SY_TS = "SY_TS";
 	/**魔蝎的sys_type*/
 	public static final String MX = "MX";
+	/**代扣的sys_type*/
+	public static final String WITHHOLD_TIME = "WITHHOLD_TIME";
 
 	public static final String YSPAY_SUCCESS_CODE = "0000";
 	

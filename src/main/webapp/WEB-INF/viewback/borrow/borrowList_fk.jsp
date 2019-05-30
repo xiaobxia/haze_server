@@ -121,10 +121,10 @@
 					<th align="center">地域</th>
 					<%--<th align="center">是否是老用户</th>--%>
 					<th align="center">成功还款次数</th>
-					<th align="center">借款金额(元)</th>
+					<th align="center">借款金额</th>
 					<th align="center">天数</th>
-					<th align="center">服务费利率(万分之一)</th>
-					<th align="center">手续费</th>
+					<th align="center">服务费率</th>
+					<th align="center" width="52px">手续费</th>
 					<th align="center">到账金额</th>
 					<th align="center">下单时间</th>
 
@@ -155,17 +155,17 @@
 						<td class="loanSuccessCount">${borrow.loanCount}</td>
 						<td><fmt:formatNumber type="number"
 								value="${borrow.moneyAmount/100}" pattern="0.00"
-								maxFractionDigits="2" /></td>
+								maxFractionDigits="2" />元</td>
 						<td>${borrow.loanTerm }</td>
-						<td>${borrow.apr }</td>
+						<td>${borrow.apr/100 }%</td>
 
 
 						<td><fmt:formatNumber type="number"
 								value="${borrow.loanInterests/100}" pattern="0.00"
-								maxFractionDigits="2" /></td>
+								maxFractionDigits="2" />元</td>
 						<td><fmt:formatNumber type="number"
 								value="${borrow.intoMoney/100}" pattern="0.00"
-								maxFractionDigits="2" /></td>
+								maxFractionDigits="2" />元</td>
 						<td><fmt:formatDate value="${borrow.orderTime }"
 								pattern="yyyy-MM-dd HH:mm:ss" /></td>
 
