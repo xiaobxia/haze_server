@@ -73,7 +73,7 @@
 						<td align="center">${user.repayCount}</td>
 						<td align="center">${user.oveCount }</td>
 						<td align="center">${user.lateLong}</td>
-						<td>
+						<td align="center">
 						<fmt:formatDate value="${user.realTime }" pattern="yyyy-MM-dd HH:mm" />
 						</td>
 					</tr>

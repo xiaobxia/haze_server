@@ -48,12 +48,6 @@
 							<option value="2" name="status" <c:if test="${searchParams.status eq 2}">selected</c:if>>是</option>
 					</select>
 					</td>
-					<td>真实姓名: <input type="text" name="realname"
-						value="${searchParams.realname }" />
-					</td>
-					<td>证件号码: <input type="text" name="idNumber"
-						value="${searchParams.idNumber }" />
-					</td>
 				</tr>
 				<tr>
 					<td>手机: <input type="text" name="userPhone"
@@ -66,6 +60,12 @@
 					<td>结束时间: <input type="text" name="beginTime"
 						class="date textInput readonly" datefmt="yyyy-MM-dd"
 						value="${searchParams.beginTime }" readonly="readonly" />
+					</td>
+					<td>真实姓名: <input type="text" name="realname"
+									 value="${searchParams.realname }" />
+					</td>
+					<td>证件号码: <input type="text" name="idNumber"
+									 value="${searchParams.idNumber }" />
 					</td>
 					<!-- <td>&nbsp;&nbsp;&nbsp;&nbsp;</td> -->
 					<td>
