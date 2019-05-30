@@ -13,9 +13,9 @@
  
 	<sql id="findAllSql">
 		<where>
-<!-- 			<if test="id != null and id != ''"> -->
-<!-- 				and id  = #{id}  -->
-<!-- 			</if> -->
+			<if test="id != null and id != ''">
+				and id  = #{id}
+		</if>
 			<if test="channelRateName != null and channelRateName != ''">
 				and channel_rate_name  = #{channelRateName} 
 			</if>

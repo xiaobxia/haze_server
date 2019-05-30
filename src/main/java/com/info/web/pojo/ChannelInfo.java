@@ -51,4 +51,6 @@ public class ChannelInfo implements Serializable {
 
 	private String channelUrl;
 	private String promotionUrl;
+	private	Integer qqStatus;
+	private Integer wechatStatus;
 }

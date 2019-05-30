@@ -720,6 +720,12 @@
 		<if test="status != null and status !=''">
 		 and <![CDATA[uc.status=#{status}]]>
 		</if>
+		<if test="channelSuperCode != null and channelSuperCode !=''">
+			and <![CDATA[ui.channel_super_code=#{channelSuperCode}]]>
+		</if>
+		<if test="channelName != null and channelName !=''">
+			and <![CDATA[c.channel_name=#{channelName}]]>
+		</if>
 		<if test="userFrom != null">
 			and <![CDATA[uc.user_from=#{userFrom}]]>
 		</if>

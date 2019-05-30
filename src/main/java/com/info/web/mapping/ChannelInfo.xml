@@ -246,7 +246,11 @@
 	</select>
 
 	<select id="findAll" resultMap="BaseResultMap" parameterType="HashMap">
-		SELECT a.*,b.channel_super_name AS channelSuperName,channel_super_code as channelSuperCode,c.channel_rate_name AS channelRateName FROM channel_info a
+		SELECT a.*,b.channel_super_name AS channelSuperName,
+        channel_super_code as channelSuperCode,c.channel_rate_name AS channelRateName,
+		a.qq_status as qqStatus,
+		a.wechat_status as wechatStatus
+		FROM channel_info a
 		LEFT JOIN channel_super_info b ON a.channel_super_id = b.id
 		LEFT JOIN channel_rate c on a.rate_id = c.id
 		<include refid="findAllSql" />
@@ -354,7 +358,9 @@
 		channel_password,
 		status,
 		channel_url,
-		promotion_url)
+		promotion_url,
+		qq_status,
+		wechat_status)
 		VALUES (		
 		#{channelName},
 		#{channelCode},
@@ -371,7 +377,9 @@
 		#{channelPassword},
 		#{status},
 		#{channelUrl},
-		#{promotionUrl});
+		#{promotionUrl},
+		#{qqStatus},
+		#{wechatStatus});
 	</insert>
 	<insert id="insertChannelUserInfo" parameterType="map">
 		INSERT INTO
@@ -398,7 +406,9 @@
 		remark = #{remark},
 		status = #{status},
 		channel_url = #{channelUrl},
-		promotion_url = #{promotionUrl}
+		promotion_url = #{promotionUrl},
+		qq_status = #{qqStatus},
+		wechat_status = #{wechatStatus}
 		WHERE id = #{id};
 	</update>
 <!--New 动态渠道-->
