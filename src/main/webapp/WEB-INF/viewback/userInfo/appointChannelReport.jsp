@@ -45,49 +45,43 @@ String path = request.getContextPath()+"";
                         refresh();
                     }
                 }];
-                $('#datagrid')
-                    .datagrid(
-                        {
-                            title: '${channelName}'+'推广统计',
-                            url: 'getChannelReportData?channelCode='+'${channelCode}',
-                            toolbar: _toolbar,
-                            columns: [[
-                                // {
-                                //     field: 'channelSuperName',
-                                //     title: '渠道商',
-                                //     width: 120,
-                                //     align: 'center'
-                                // },
-                                {
-                                    field: 'channelName',
-                                    title: '渠道商名称',
-                                    width: 120,
-                                    align: 'center'
-                                },
-                                {
-                                    field: 'reportDate',
-                                    title: '日期',
-                                    width: 120,
-                                    align: 'center',
-                                    formatter:function(value,row,index){
-                                        if(value == null){
-                                            return '';
-                                        }else{
-                                            return new Date(value).format('yyyy-MM-dd');
-                                        }
-                                    }},
-                                /*{
-                                    field: 'uvCount',
-                                    title: 'uv数量',
-                                    width: 170,
-                                    align: 'center'
-                                },*/
-                                {
-                                    field: 'registerCount',
-                                    title: '注册量',
-                                    width: 170,
-                                    align: 'center'
-                                }/*,
+                var columnsList = [
+                    // {
+                    //     field: 'channelSuperName',
+                    //     title: '渠道商',
+                    //     width: 120,
+                    //     align: 'center'
+                    // },
+                    {
+                        field: 'channelName',
+                        title: '渠道商名称',
+                        width: 120,
+                        align: 'center'
+                    },
+                    {
+                        field: 'reportDate',
+                        title: '日期',
+                        width: 120,
+                        align: 'center',
+                        formatter:function(value,row,index){
+                            if(value == null){
+                                return '';
+                            }else{
+                                return new Date(value).format('yyyy-MM-dd');
+                            }
+                        }},
+                    /*{
+                        field: 'uvCount',
+                        title: 'uv数量',
+                        width: 170,
+                        align: 'center'
+                    },*/
+                    {
+                        field: 'registerCount',
+                        title: '注册量',
+                        width: 170,
+                        align: 'center'
+                    }/*,
                                 {
                                     field: 'borrowApplyCount',
                                     title: '申请笔数',
@@ -130,85 +124,102 @@ String path = request.getContextPath()+"";
                                     width: 170,
                                     align: 'center'
                                 }*/
-                               // {
-                                    //field: 'attestationRealnameCount',
-                                    //title: '实名认证',
-                                    //width: 120,
-                                   // align: 'center'
-                               // }
-                                // ,
-                                // {
-                                //     field: 'attestationBankCount',
-                                //     title: '绑卡人数',
-                                //     width: 120,
-                                //     align: 'center'
-                                // },
-                                // {
-                                //     field: 'contactCount',
-                                //     title: '紧急联系人',
-                                //     width: 120,
-                                //     align: 'center'
-                                // },{
-                                //     field: 'jxlCount',
-                                //     title: '运营商认证',
-                                //     width: 120,
-                                //     align: 'center'
-                                // },{
-                                //     field: 'alipayCount',
-                                //     title: '支付宝认证人数',
-                                //     width: 120,
-                                //     align: 'center'
-                                // },{
-                                //     field: 'zhimaCount',
-                                //     title: '芝麻认证人数',
-                                //     width: 120,
-                                //     align: 'center'
-                                // },{
-                                //     field: 'companyCount',
-                                //     title: '工作信息',
-                                //     width: 120,
-                                //     align: 'center'
-                                // },{
-                                //     field: 'blackUserCount',
-                                //     title: '黑名单人数',
-                                //     width: 120,
-                                //     align: 'center'
-                                // },
-                                // {
-                                //     field: 'borrowApplyOutCount',
-                                //     title: '申请借款人数',
-                                //     width: 120,
-                                //     align: 'center'
-                                // },
-                                // {
-                                //     field: 'borrowSucOutCount',
-                                //     title: '申请成功人数',
-                                //     width: 120,
-                                //     align: 'center'
-                                // },
-                                // {
-                                //     field: 'borrowRateOut',
-                                //     title: '借款率%',
-                                //     width: 120,
-                                //     align: 'center'
-                                // },
-                                // {
-                                //     field: 'passRateOut',
-                                //     title: '通过率%',
-                                //     width: 120,
-                                //     align: 'center'
-                                // },
-                                // {
-                                //     field: 'channelid',
-                                //     title: '用户注册详情',
-                                //     width: 120,
-                                //     align: 'center',
-                                //     formatter: function(value,rec){
-                                //         var btn = "<a name='details' onclick='detailsRow(" + value + "," + rec.reportDate + ")' href='javascript:void(0)'>查看</a>";
-                                //         return btn;
-                                //     }
-                                // }
-                            ]],
+                    // {
+                    //field: 'attestationRealnameCount',
+                    //title: '实名认证',
+                    //width: 120,
+                    // align: 'center'
+                    // }
+                    // ,
+                    // {
+                    //     field: 'attestationBankCount',
+                    //     title: '绑卡人数',
+                    //     width: 120,
+                    //     align: 'center'
+                    // },
+                    // {
+                    //     field: 'contactCount',
+                    //     title: '紧急联系人',
+                    //     width: 120,
+                    //     align: 'center'
+                    // },{
+                    //     field: 'jxlCount',
+                    //     title: '运营商认证',
+                    //     width: 120,
+                    //     align: 'center'
+                    // },{
+                    //     field: 'alipayCount',
+                    //     title: '支付宝认证人数',
+                    //     width: 120,
+                    //     align: 'center'
+                    // },{
+                    //     field: 'zhimaCount',
+                    //     title: '芝麻认证人数',
+                    //     width: 120,
+                    //     align: 'center'
+                    // },{
+                    //     field: 'companyCount',
+                    //     title: '工作信息',
+                    //     width: 120,
+                    //     align: 'center'
+                    // },{
+                    //     field: 'blackUserCount',
+                    //     title: '黑名单人数',
+                    //     width: 120,
+                    //     align: 'center'
+                    // },
+                    // {
+                    //     field: 'borrowApplyOutCount',
+                    //     title: '申请借款人数',
+                    //     width: 120,
+                    //     align: 'center'
+                    // },
+                    // {
+                    //     field: 'borrowSucOutCount',
+                    //     title: '申请成功人数',
+                    //     width: 120,
+                    //     align: 'center'
+                    // },
+                    // {
+                    //     field: 'borrowRateOut',
+                    //     title: '借款率%',
+                    //     width: 120,
+                    //     align: 'center'
+                    // },
+                    // {
+                    //     field: 'passRateOut',
+                    //     title: '通过率%',
+                    //     width: 120,
+                    //     align: 'center'
+                    // },
+                    // {
+                    //     field: 'channelid',
+                    //     title: '用户注册详情',
+                    //     width: 120,
+                    //     align: 'center',
+                    //     formatter: function(value,rec){
+                    //         var btn = "<a name='details' onclick='detailsRow(" + value + "," + rec.reportDate + ")' href='javascript:void(0)'>查看</a>";
+                    //         return btn;
+                    //     }
+                    // }
+                ]
+                var typeStatus = '${channelRateType}'
+                console.log(typeStatus)
+                if (typeStatus === '1') {
+                    columnsList.splice(3,0, {
+                        field: 'loanCount',
+                        title: '放款笔数',
+                        width: 170,
+                        align: 'center'
+                    })
+                }
+                $('#datagrid')
+                    .datagrid(
+                        {
+                            title: '${channelName}'+'推广统计',
+                            url: 'getChannelReportData?channelCode='+'${channelCode}',
+                            toolbar: _toolbar,
+                            columns: [columnsList],
                             onLoadSuccess:function(data){
                                 /*$("a[name='details']").linkbutton({text:'查看',plain:true,iconCls:'icon-search'});
                                 $("a[name='details']").bind('click')*/
