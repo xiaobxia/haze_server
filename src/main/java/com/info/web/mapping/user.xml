@@ -765,13 +765,13 @@
 				AND datediff( CURDATE( ), lateDay.repaymentedTime ) &gt; #{renewalCount}
 			</if>
 			<if test="id != null and id !=''">
-				AND <![CDATA[uc.id = #{id}]]>
+				AND <![CDATA[u.id = #{id}]]>
 			</if>
 			<if test="realname != null and realname !=''">
-				AND <![CDATA[uc.realname = #{realname}]]>
+				AND <![CDATA[u.realname = #{realname}]]>
 			</if>
 			<if test="userPhone != null and userPhone !=''">
-				AND <![CDATA[uc.user_phone = #{userPhone}]]>
+				AND <![CDATA[u.user_phone = #{userPhone}]]>
 			</if>
 		ORDER BY
 		repayment.reapayCount DESC
@@ -801,13 +801,13 @@
 			AND datediff( CURDATE( ), lateDay.repaymentedTime ) &gt; #{renewalCount}
 		</if>
 		<if test="id != null and id !=''">
-			AND <![CDATA[uc.id = #{id}]]>
+			AND <![CDATA[u.id = #{id}]]>
 		</if>
 		<if test="realname != null and realname !=''">
-			AND <![CDATA[uc.realname = #{realname}]]>
+			AND <![CDATA[u.realname = #{realname}]]>
 		</if>
 		<if test="userPhone != null and userPhone !=''">
-			AND <![CDATA[uc.user_phone = #{userPhone}]]>
+			AND <![CDATA[u.user_phone = #{userPhone}]]>
 		</if>
 		ORDER BY
 		repayment.reapayCount DESC

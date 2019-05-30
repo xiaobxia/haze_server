@@ -408,4 +408,14 @@ public class UserManageController extends BaseController{
 		}
 		return "userInfo/addressBookList";
 	}
+
+	/**
+	 * 黑名单导入
+	 * @param response
+	 * @param request
+	 */
+	@RequestMapping("leadBlackUser")
+	public void leadBlackUser(HttpServletResponse response, HttpServletRequest request) {
+		HashMap<String, Object> params = getParametersO(request);
+	}
 }
