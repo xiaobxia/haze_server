@@ -91,6 +91,12 @@
 					<th align="center">
 						推广链接
 					</th>
+					<th align="center">
+						qq注册口子
+					</th>
+					<th align="center">
+						微信注册口子
+					</th>
 					<th align="center" >
 						状态
 					</th>
@@ -146,6 +152,22 @@
 						<td>
 							<c:if test="${not empty channel.promotionUrl}">
 								<a href="${channel.promotionUrl}" target="_blank" >查看URL</a>
+							</c:if>
+						</td>
+						<td>
+							<c:if test="${channel.qqStatus == 0}">
+                               开启
+							</c:if>
+							<c:if test="${channel.qqStatus == 1}">
+								关闭
+							</c:if>
+						</td>
+						<td>
+							<c:if test="${channel.wechatStatus == 0}">
+                               开启
+							</c:if>
+							<c:if test="${channel.wechatStatus ==1}">
+								关闭
 							</c:if>
 						</td>
 						<td>
