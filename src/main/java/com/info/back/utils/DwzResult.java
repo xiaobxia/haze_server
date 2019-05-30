@@ -7,7 +7,7 @@ public class DwzResult {
 
 	public static final String SUCCESS = "200";
 	public static final String FAILD = "300";
-
+	public static final String CALLBACK_RELOADPAGE = "reloadPage";
 	public static final String CALLBACK_CLOSECURRENT = "closeCurrent";
 	public static final String CALLBACK_CLOSECURRENTDIALOG = "closeCurrentDialog";
 	public static final String CALLBACK_FORWARD = "forward";
