@@ -146,12 +146,12 @@
 						</td>
 						<td>
 							<c:if test="${not empty channel.channelUrl}">
-								<a href="${channel.channelUrl}" target="_blank" >查看渠道</a>
+								<a href="${channel.channelUrl}" target="_blank" class="a-link">查看渠道</a>
 							</c:if>
 						</td>
 						<td>
 							<c:if test="${not empty channel.promotionUrl}">
-								<a href="${channel.promotionUrl}" target="_blank" >查看URL</a>
+								<a href="${channel.promotionUrl}" target="_blank" class="a-link">查看URL</a>
 							</c:if>
 						</td>
 						<td>

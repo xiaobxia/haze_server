@@ -704,3 +704,7 @@ input:disabled {
 .textInput.mid {
     margin: 0 10px;
 }
+
+.a-link {
+    color: #416ABA!important;
+}
