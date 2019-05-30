@@ -28,7 +28,7 @@
 							</label>
 						</dt>
 						<dd>
-							<select name="channelSuperId" class="required">
+							<select name="channelSuperId" class="required" style="width: 100%;">
 							<option value="">--请选择--</option>
 							<c:forEach var="channelSuperList" items="${channelSuperList}">
 									<option value="${channelSuperList.id}" <c:if test="${channelSuperList.id eq channelInfo.channelSuperId}">selected="selected"</c:if>>${channelSuperList.channelSuperName}</option>
@@ -47,6 +47,7 @@
 						<dd>
 							<input name="channelName" value="${channelInfo.channelName}"
 							 class="required"	type="text" alt="请输入名称" size="30"/>
+							<label style="color: red;" class="required-label">*</label>
 						</dd>
 					</dl>
 					<div class="divider"></div>
@@ -59,6 +60,7 @@
 						<dd>
 							<input name="channelCode" value="${channelInfo.channelCode}"
 							 class="required"	type="text" alt="请输入编码" size="30"/>
+							<label style="color: red;" class="required-label">*</label>
 						</dd>
 					</dl>
 					<div class="divider"></div>
@@ -81,7 +83,7 @@
 							</label>
 						</dt>
 						<dd>
-							<select name="rateId" class="required">
+							<select name="rateId" class="required" style="width: 100%;">
 							<option value="">--请选择--</option>
 							<c:forEach var="channelRateList" items="${channelRateList}">
 									<option value="${channelRateList.id}" <c:if test="${channelRateList.id eq channelInfo.rateId}">selected="selected"</c:if>>${channelRateList.channelRateName}</option>
@@ -92,35 +94,37 @@
 					</dl>
 					<div class="divider"></div>
 					<div>
-						<dl style="...">
-							<dt style="...">
+						<dl style="width: 380px;">
+							<dt style="width: 100px;">
 								<label>
 									qq注册口子:
 								</label>
 							</dt>
 							<dd>
-								<select name="qqStatus" class="required">
+								<select name="qqStatus" class="required" style="width: 100%;">
 								<option value="">--请选择--</option>
 									<option value="0" <c:if test="${channelInfo.qqStatus == 0}">selected="selected"</c:if>>开启</option>
 									<option value="1" <c:if test="${channelInfo.qqStatus == 1}">selected="selected"</c:if>>关闭</option>
 								</select>
+								<label style="color: red;" class="required-label">*</label>
 							</dd>
 						</dl>
 					</div>
 					<div class="divider"></div>
 					<div>
-						<dl style="...">
-							<dt style="...">
+						<dl style="width: 380px;">
+							<dt style="width: 100px;">
 								<label>
 									微信注册口子:
 								</label>
 							</dt>
 							<dd>
-								<select name="wechatStatus" class="required">
+								<select name="wechatStatus" class="required" style="width: 100%;">
 								<option value="">--请选择--</option>
 									<option value="0" <c:if test="${channelInfo.wechatStatus == 0}">selected="selected"</c:if>>开启</option>
 									<option value="1" <c:if test="${channelInfo.wechatStatus == 1}">selected="selected"</c:if>>关闭</option>
 								</select>
+								<label style="color: red;" class="required-label">*</label>
 							</dd>
 						</dl>
 					</div>

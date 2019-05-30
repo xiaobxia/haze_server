@@ -64,7 +64,7 @@ public class LoanReportController  extends BaseController {
 			bool = false;
 			log.error("getUserPage error:{}", e);
 		}
-		SpringUtils.renderDwzResult(response, bool, bool ? "操作成功" : "操作失败", DwzResult.CALLBACK_CLOSECURRENT);
+		SpringUtils.renderDwzResult(response, bool, bool ? "操作成功" : "操作失败", DwzResult.CALLBACK_RELOADPAGE);
 	}
 	
 	

@@ -386,6 +386,30 @@
             border-image: initial;
         }
     </style>
+    <script type="text/javascript">
+        var borrowId =document.getElementById('borrowId').value;
+        console.log(borrowId);
+        $("#openMoney").click(function() {
+                if(confirm("确定仍要放款吗？"))
+                {
+                    $.ajax({
+                        url:"${pageContext.request.contextPath}/back/backBorrowOrder/insistlending",
+                        method:'get',
+                        data:{
+                            "type": 0,
+                            "borrowId":borrowId
+                        },
+                        success:function(status,data){
+                            if (status == 'success')
+                                alert("已完成");
+                            else
+                                alert(status);
+                        }
+                    });
+                }
+            }
+        )
+    </script>
 </head>
 <body>
 <div class="pageContent">

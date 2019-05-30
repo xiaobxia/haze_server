@@ -4,7 +4,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
     String path = request.getContextPath();
+    String basePath = path + "/common/back";
 %>
+<c:set var="basePath" value="<%=basePath%>"></c:set>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -74,148 +76,165 @@
 <body>
 <div class="pageContent">
     <div class="pageFormContent" layoutH="50" style="overflow: auto;">
-        <!-- 个人信息 -->
-        <fieldset>
-            <table class="userTable">
-                <tbody>
-                <tr>
-                    <td style="font-weight: bold">个人详情</td>
-                    <td>
-                        <table class="userTable">
-                            <tr>
-                                <td class="tdGround" style="width: 180px;">用户ID</td>
-                                <td>${user.id}</td>
-                                <td class="tdGround">姓名</td>
-                                <td>${user.realname}</td>
-                                <td class="tdGround">年龄</td>
-                                <td>${age}</td>
-                                <td class="tdGround">性别</td>
-                                <td>${user.userSex}</td>
-                            </tr>
-                            <tr>
-                                <td class="tdGround" style="width: 180px;">出生日期</td>
-                                <td>${birthday}</td>
-                                <td class="tdGround">身份证号</td>
-                                <td>${user.idNumber}</td>
-                                <td class="tdGround">联系方式</td>
-                                <td>${user.userPhone}</td>
-                                <td class="tdGround">婚姻</td>
-                                <td>${user.maritalStatus}</td>
-                            </tr>
-                            <tr>
-                                <td class="tdGround">常住地址</td>
-                                <td colspan="3">${user.presentAddress}
-                                    ${user.presentAddressDistinct}</td>
-                                <%--<td class="tdGround">学历：</td>--%>
-                                <%--<td>${user.education}</td>--%>
-
-                                <td class="tdGround">居住时长：</td>
-                                <td>${user.presentPeriod}</td>
-                                <td class="tdGround">账号创建时间</td>
-                                <td><fmt:formatDate value="${user.createTime}"
-                                                    pattern="yyyy-MM-dd HH:mm:ss" /></td>
-                            </tr>
-                            <tr class="identity">
-                                <%--<td class="tdGround" style="height: 100px; width: 180px;">学历证明:--%>
-                                <%--</td>--%>
-                                <%--<td><img src="" /></td>--%>
-                                <td class="tdGround" style="height: 100px;">身份证</td>
-                                <td colspan="2">
+        <div class="detail-page-main" style="position: relative">
+            <div class="detail-card">
+                <div class="title-wrap">
+                    <div class="title">
+                        <img src="${basePath}/images/loandetail/个人信息.png" alt="">
+                        <span class="main-text">个人信息</span>
+                        <span class="sub-text">(账号创建时间:<fmt:formatDate value="${user.createTime}" pattern="yyyy-MM-dd HH:mm:ss" />)</span>
+                    </div>
+                </div>
+                <div class="block-row">
+                    <div class="sub-block">
+                        <div class="sub-title">
+                            1）个人详情
+                        </div>
+                        <div class="content">
+                            <table class="detail-table">
+                                <tr>
+                                    <th>用户ID</th>
+                                    <th>姓名</th>
+                                    <th>年龄</th>
+                                    <th>性别</th>
+                                    <th>出生日期</th>
+                                    <th>身份证号</th>
+                                    <th>联系方式</th>
+                                    <th>婚姻</th>
+                                </tr>
+                                <tr>
+                                    <td>${user.id}</td>
+                                    <td>${user.realname}</td>
+                                    <td>${age}</td>
+                                    <td>${user.userSex}</td>
+                                    <td>${birthday}</td>
+                                    <td>${user.idNumber}</td>
+                                    <td>${user.userPhone}</td>
+                                    <td>${user.maritalStatus}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="block-row">
+                    <div class="sub-block">
+                        <div class="sub-title">
+                            2）地址身份证
+                        </div>
+                        <div class="content">
+                            <table class="detail-table">
+                                <tr>
+                                    <th>常住地址</th>
+                                    <th>居住时长</th>
+                                    <th>公司</th>
+                                    <th>公司地址</th>
+                                </tr>
+                                <tr>
+                                    <td>${user.presentAddress}
+                                        ${user.presentAddressDistinct}</td>
+                                    <td>${user.presentPeriod}</td>
+                                    <td>${user.companyName}</td>
+                                    <td>${user.companyAddress}</td>
+                                </tr>
+                            </table>
+                            <div class="imgs-block identity">
+                                <div class="id-img-wrap">
                                     <c:if test="${user.idcardImgZ!=null}">
                                         <img class="imgPreview" src="${APP_IMG_URL['APP_IMG_URL']}${user.idcardImgZ}"/>
                                     </c:if>
-                                    <%--<img src="http://oyd863ahw.bkt.clouddn.com///mnt/img/qbm_04/04_77/04_77_868/20171026/20171026103514_1nbnx54bys_appTh.png " alt=""><br/>身份证正面--%>
-                                </td>
-                                <td colspan="2">
+                                </div>
+                                <div class="id-img-wrap">
                                     <c:if test="${user.idcardImgF!=null}">
                                         <img class="imgPreview" src="${APP_IMG_URL['APP_IMG_URL']}${user.idcardImgF}" />
                                     </c:if>
-                                    <%--<img src="http://oyd863ahw.bkt.clouddn.com///mnt/img/qbm_04/04_77/04_77_868/20171026/20171026103514_1nbnx54bys_appTh.png " alt=""><br/>身份证反面--%>
-                                </td>
-                                <td colspan="3">
+                                </div>
+                                <div class="id-img-wrap">
                                     <c:if test="${user.headPortrait!=null}">
                                         <img class="imgPreview" src="${APP_IMG_URL['APP_IMG_URL']}${user.headPortrait}"/>
                                     </c:if>
-                                    <%--<img src="http://oyd863ahw.bkt.clouddn.com///mnt/img/qbm_04/04_77/04_77_868/20171026/20171026103514_1nbnx54bys_appTh.png " alt=""><br/>用户活体检测照片--%>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="font-weight: bold">银行卡信息</td>
-                    <td>
-                        <c:forEach items="${bankCardList}" var="card">
-                            <table class="userTable">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block-row">
+                    <div class="sub-block">
+                        <div class="sub-title">
+                            3）银行卡信息
+                        </div>
+                        <div class="content">
+                            <table class="detail-table">
                                 <tr>
-                                    <td class="tdGround">发卡行:</td>
-                                    <td>${card.bankName}</td>
-                                    <td class="tdGround" style="width:180px;">种类:</td>
-                                    <td>
-                                        <c:choose>
-                                            <c:when test="${card.type==1}">信用卡</c:when>
-                                            <c:when test="${card.type==3}">对公账号</c:when>
-                                            <c:otherwise>借记卡</c:otherwise>
-                                        </c:choose>
-                                    </td>
-                                    <td class="tdGround" >类型：</td>
-                                    <td>
-                                        <c:choose>
-                                            <c:when test="${card.mainCard==0}">主卡</c:when>
-                                            <c:otherwise>附卡${card.mainCard}</c:otherwise>
-                                        </c:choose>
-                                    </td>
-                                    <td class="tdGround">默认卡(是/否)</td>
-                                    <td>
-                                        <c:choose>
-                                            <c:when test="${card.cardDefault==1}">是</c:when>
-                                            <c:when test="${card.cardDefault==0}">否</c:when>
-                                        </c:choose>
-                                    </td>
+                                    <th>发卡行</th>
+                                    <th>种类</th>
+                                    <th>类型</th>
+                                    <th>默认卡(是/否)</th>
+                                    <th>卡号</th>
+                                    <th>预留收号码</th>
+                                    <th>添加时间</th>
+                                </tr>
+                                <c:forEach items="${bankCardList}" var="card">
+                                    <tr>
+                                        <td>${card.bankName}</td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${card.type==1}">信用卡</c:when>
+                                                <c:when test="${card.type==3}">对公账号</c:when>
+                                                <c:otherwise>借记卡</c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${card.mainCard==0}">主卡</c:when>
+                                                <c:otherwise>附卡${card.mainCard}</c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${card.cardDefault==1}">是</c:when>
+                                                <c:when test="${card.cardDefault==0}">否</c:when>
+                                            </c:choose>
+                                        </td>
+                                        <td>${card.card_no}</td>
+                                        <td>${card.phone}</td>
+                                        <td><fmt:formatDate value="${card.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                                    </tr>
+                                </c:forEach>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="block-row">
+                    <div class="sub-block">
+                        <div class="sub-title">
+                            4）联系人
+                        </div>
+                        <div class="content">
+                            <table class="detail-table">
+                                <tr>
+                                    <th>关系</th>
+                                    <th>姓名</th>
+                                    <th>电话</th>
+                                    <th>来源</th>
                                 </tr>
                                 <tr>
-                                    <td class="tdGround">卡号：</td>
-                                    <td>${card.card_no}</td>
-                                    <td class="tdGround">预留收号码:</td>
-                                    <td>${card.phone}</td>
-                                    <td class="tdGround">添加时间</td>
-                                    <td colspan="3"><fmt:formatDate value="${card.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-
+                                    <td>${user.fristContactRelation}</td>
+                                    <td>${user.firstContactName}</td>
+                                    <td>${user.firstContactPhone}</td>
+                                    <td>系统上传</td>
+                                </tr>
+                                <tr>
+                                    <td>${user.secondContactRelation}</td>
+                                    <td>${user.secondContactName}</td>
+                                    <td>${user.secondContactPhone}</td>
+                                    <td>系统上传</td>
                                 </tr>
                             </table>
-                        </c:forEach>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="font-weight: bold">联系人</td>
-                    <td>
-                        <table class="userTable">
-                            <tr>
-                                <td class="tdGround" style="width: 180px;">关系</td>
-                                <td>${user.fristContactRelation}</td>
-                                <td class="tdGround">姓名</td>
-                                <td>${user.firstContactName}</td>
-                                <td class="tdGround">电话</td>
-                                <td>${user.firstContactPhone}</td>
-                                <td class="tdGround">来源</td>
-                                <td>系统上传</td>
-                            </tr>
-                            <tr>
-                                <td class="tdGround" style="width: 180px;">关系</td>
-                                <td>${user.secondContactRelation}</td>
-                                <td class="tdGround">姓名</td>
-                                <td>${user.secondContactName}</td>
-                                <td class="tdGround">电话</td>
-                                <td>${user.secondContactPhone}</td>
-                                <td class="tdGround">来源</td>
-                                <td>系统上传</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
