@@ -53,6 +53,12 @@
 					<th align="center"  >
 						新用户放款费用系数
 					</th>
+					<th align="center">
+						费用类型
+					</th>
+					<th align="center">
+						备注
+					</th>
 					<th align="center" >
 						创建时间
 					</th>
@@ -73,6 +79,26 @@
 						</td>
 						<td>
 							${channel.channelNewloanRate}
+						</td>
+						<td>
+							<c:if test="${channel.channelRateType == 0}">
+								CPA
+							</c:if>
+							<c:if test="${channel.channelRateType == 1}">
+								CPS
+							</c:if>
+							<c:if test="${channel.channelRateType == 2}">
+								UV
+							</c:if>
+							<c:if test="${channel.channelRateType == 3}">
+								PV
+							</c:if>
+							<c:if test="${channel.channelRateType == 4}">
+								CPL
+							</c:if>
+						</td>
+						<td>
+							${channel.remark}
 						</td>
 						<td>
 							<fmt:formatDate value="${channel.createdAt}" pattern="yyyy-MM-dd HH:mm:ss"/>

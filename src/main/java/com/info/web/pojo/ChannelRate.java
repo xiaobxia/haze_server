@@ -12,8 +12,8 @@ public class ChannelRate{
 	private Date createdAt;
 	private Date updatedAt;
 	private String remark;
-	
-	
+	private Integer channelRateType;
+
 	public Date getUpdatedAt() {
 		return updatedAt;
 	}
@@ -56,7 +56,12 @@ public class ChannelRate{
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	
 
-	
+	public Integer getChannelRateType() {
+		return channelRateType;
+	}
+
+	public void setChannelRateType(Integer channelRateType) {
+		this.channelRateType = channelRateType;
+	}
 }
