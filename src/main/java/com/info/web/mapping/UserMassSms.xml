@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- user_mass_sms表:群发短信模块 -->
+<mapper namespace="com.info.web.dao.IUserMassSmsDao">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.info.web.pojo.UserMassSms">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+        <result column="send_content" property="sendContent" jdbcType="VARCHAR" />
+        <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+        <result column="receive_content" property="receiveContent" jdbcType="VARCHAR" />
+        <result column="receive_time" property="receiveTime" jdbcType="TIMESTAMP" />
+        <result column="ext" property="ext" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,mobile,send_content,send_time,receive_content,receive_time,ext 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !=null and id !=''">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                and mobile = #{mobile,jdbcType=VARCHAR}
+            </if>
+            <if test="sendContent != null and sendContent != ''">
+                and send_content = #{sendContent,jdbcType=VARCHAR}
+            </if>
+            <if test="sendTime !=null">
+                and send_time = #{sendTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="receiveContent != null and receiveContent != ''">
+                and receive_content = #{receiveContent,jdbcType=VARCHAR}
+            </if>
+            <if test="receiveTime !=null">
+                and receive_time = #{receiveTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="ext != null and ext != ''">
+                and ext = #{ext,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.info.web.pojo.UserMassSms">
+        insert into user_mass_sms(mobile,send_content,send_time,receive_content,receive_time,ext)values(#{mobile,jdbcType=VARCHAR},#{sendContent,jdbcType=VARCHAR},#{sendTime,jdbcType=TIMESTAMP},#{receiveContent,jdbcType=VARCHAR},#{receiveTime,jdbcType=TIMESTAMP},#{ext,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <insert id="saveRecord" parameterType="com.info.web.pojo.UserMassSms" keyProperty="id">
+    	<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+	      SELECT LAST_INSERT_ID()
+	    </selectKey>
+    
+        insert into user_mass_sms
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+	        <if test="mobile != null">        
+	            mobile,
+	        </if>
+	        <if test="sendContent != null">        
+	            send_content,
+	        </if>
+	        <if test="sendTime != null">        
+	            send_time,
+	        </if>
+	        <if test="receiveContent != null">        
+	            receive_content,
+	        </if>
+	        <if test="receiveTime != null">        
+	            receive_time,
+	        </if>
+	        <if test="ext != null">        
+	            ext,
+	        </if>
+        </trim>
+        
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+		    <if test="mobile != null" >
+		       #{mobile,jdbcType=VARCHAR},
+		    </if>
+		    <if test="sendContent != null" >
+		       #{sendContent,jdbcType=VARCHAR},
+		    </if>
+		    <if test="sendTime != null" >
+		       #{sendTime,jdbcType=TIMESTAMP},
+		    </if>
+		    <if test="receiveContent != null" >
+		       #{receiveContent,jdbcType=VARCHAR},
+		    </if>
+		    <if test="receiveTime != null" >
+		       #{receiveTime,jdbcType=TIMESTAMP},
+		    </if>
+		    <if test="ext != null" >
+		       #{ext,jdbcType=VARCHAR},
+		    </if>
+        </trim>
+    </insert>
+    
+    
+    <update id="update" parameterType="com.info.web.pojo.UserMassSms">
+        update user_mass_sms set 
+            mobile = #{mobile,jdbcType=VARCHAR},
+            send_content = #{sendContent,jdbcType=VARCHAR},
+            send_time = #{sendTime,jdbcType=TIMESTAMP},
+            receive_content = #{receiveContent,jdbcType=VARCHAR},
+            receive_time = #{receiveTime,jdbcType=TIMESTAMP},
+            ext = #{ext,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="com.info.web.pojo.UserMassSms">
+        update user_mass_sms
+          <set>
+            <if test="mobile != null and mobile != '' ">        
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="sendContent != null and sendContent != '' ">        
+                send_content = #{sendContent,jdbcType=VARCHAR},
+            </if>
+            <if test="sendTime != null and sendTime != '' ">        
+                send_time = #{sendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="receiveContent != null and receiveContent != '' ">        
+                receive_content = #{receiveContent,jdbcType=VARCHAR},
+            </if>
+            <if test="receiveTime != null and receiveTime != '' ">        
+                receive_time = #{receiveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ext != null and ext != '' ">        
+                ext = #{ext,jdbcType=VARCHAR}
+            </if>
+        </set>    
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from user_mass_sms
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_mass_sms
+        <include refid="searchBy"/> 
+        limit 0,1
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_mass_sms
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>

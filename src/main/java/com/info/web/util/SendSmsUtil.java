@@ -23,6 +23,7 @@ public class SendSmsUtil {
 
 	private static final Logger loger = LoggerFactory.getLogger(SendSmsUtil.class);
 	private static String apiUrl = SmsConfigConstant.getConstant("apiurl");
+	private static String massApiUrl = SmsConfigConstant.getConstant("massApiUrl");//群发
 	private static String account = SmsConfigConstant.getConstant("account");
 	private static String pswd = SmsConfigConstant.getConstant("pswd");
 	private static String sign = SmsConfigConstant.getConstant("sign");
