@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.info.back.utils.Result;
 import com.info.web.pojo.*;
 import com.info.web.service.*;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,7 @@ import com.info.web.controller.BaseController;
 import com.info.web.util.PageConfig;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
@@ -417,7 +419,8 @@ public class UserManageController extends BaseController{
      * @throws IOException
      */
     @RequestMapping(value = "batchimport", method = RequestMethod.POST)
-    public String batchimport(@RequestParam(value="filename") MultipartFile file,
+	@ResponseBody
+    public Result batchimport(@RequestParam(value="filename") MultipartFile file,
                               HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
@@ -431,13 +434,10 @@ public class UserManageController extends BaseController{
         //批量导入。参数：文件名，文件。
         boolean b = userBlackService.batchImport(name,file);
         if(b){
-            String Msg ="impot success！";
-            request.getSession().setAttribute("msg",Msg);
+           return Result.success();
         }else{
-            String Msg ="import failed！";
-            request.getSession().setAttribute("msg",Msg);
+          return Result.error("批量导入失败");
         }
-        return "userInfo/userBlackList";
     }
 
     /**
@@ -458,5 +458,22 @@ public class UserManageController extends BaseController{
         }
         return "userInfo/userBlackList";
     }
+
+	/**
+	 * 删除黑名单用户
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("updateUserBlackStatus")
+	@ResponseBody
+    public Result updateUserBlackStatus(Integer id){
+    	try{
+    		userBlackService.updateUserBlackStatus(id);
+			return Result.success();
+		}catch(Exception e){
+			log.error("删除失败"+e);
+			return Result.error("删除失败");
+		}
+	}
 
 }
