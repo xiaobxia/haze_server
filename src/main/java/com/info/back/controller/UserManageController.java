@@ -471,8 +471,8 @@ public class UserManageController extends BaseController{
     		userBlackService.updateUserBlackStatus(id);
 			return Result.success();
 		}catch(Exception e){
-			log.error("添加失败"+e);
-			return Result.error("添加失败");
+			log.error("删除失败"+e);
+			return Result.error("删除失败");
 		}
 	}
 
