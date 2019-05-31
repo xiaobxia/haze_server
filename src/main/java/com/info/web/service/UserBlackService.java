@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.info.back.utils.ReadExecl;
 import com.info.web.pojo.UserBlack;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,12 +35,18 @@ public class UserBlackService implements  IUserBlackService{
             ReadExecl readExcel=new ReadExecl();
             //解析excel，获取客户信息集合。
             List<UserBlack> customerList = readExcel.getExcelInfo(name ,file);
+            //execl中的结果去重
             List<UserBlack> collect = customerList.stream().distinct().collect(Collectors.toList());
-            System.out.println(customerList);
-            if(customerList != null){
+            //查出数据库现在的黑名单用户
+            List<UserBlack> list = iUserBlackDao.userBlackList();
+            //execl 与本地库 取差集
+            List<UserBlack> distinctByUniqueList = collect.stream() .filter(item -> !list.stream() .map(e -> e.getUserName()+ e.getUserPhone() + e.getIdNumber())
+                    .collect(Collectors.toList()) .contains(item.getUserName() + item.getUserPhone() + item.getIdNumber())) .collect(Collectors.toList());
+            if(distinctByUniqueList != null){
                 b = true;
             }
-            for(UserBlack userBlack:collect){
+            for(UserBlack userBlack:distinctByUniqueList){
+                userBlack.setCreateTime(new Date());
                 iUserBlackDao.addUserBlack(userBlack);
             }
         }catch (Exception e){
