@@ -696,8 +696,8 @@
 		left join channel_info c on uc.user_from = c.id
 		left join channel_super_info ui on ui.id = c.channel_super_id
 		where 1=1
-		<if test="id != null and id !=''">
-		 and <![CDATA[uc.id = #{uid}]]>
+		<if test="id != null">
+		 and <![CDATA[uc.id = #{id}]]>
 		</if>
 		<if test="realname != null and realname !=''">
 		 and <![CDATA[uc.realname = #{realname}]]>
@@ -848,7 +848,7 @@
 		left join channel_info c on uc.user_from = c.id
 		left join channel_super_info ui on ui.id = c.channel_super_id
 		where 1=1
-		<if test="id != null and id !=''">
+		<if test="id != null">
 		 and <![CDATA[uc.id = #{id}]]>
 		</if>
 		<if test="realname != null and realname !=''">

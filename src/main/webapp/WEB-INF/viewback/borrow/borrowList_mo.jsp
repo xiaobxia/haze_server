@@ -62,6 +62,15 @@
                         </select>
                     </td>
                     <td>
+                        <div class="buttonActive">
+                            <div class="buttonContent">
+                                <button type="submit">
+                                    查询
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                   <%-- <td>
                         审核员:
                         <select name="reviewUser" id="reviewUser" class="textInput" onchange="">
                             <option value="">全部</option>
@@ -71,7 +80,7 @@
                                 <option value="${backUser.telephone}"  <c:if test="${backUser.telephone eq params.reviewUser}">selected="selected"</c:if> >${backUser.userName}</option>
                             </c:forEach>
                         </select>
-                    </td>
+                    </td>--%>
                     <td>审核时间：
                         <input type="text" name="reviewStartTime" id="reviewStartTime" value="${params.reviewStartTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
                         到<input type="text" name="reviewEndTime" id="reviewEndTime" value="${params.reviewEndTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
@@ -132,15 +141,6 @@
                         <input type="hidden" value="${params.productAmount}" id="product_amount_choosed"/>
                     </td>
 
-                    <td>
-                        <div class="buttonActive">
-                            <div class="buttonContent">
-                                <button type="submit">
-                                    查询
-                                </button>
-                            </div>
-                        </div>
-                    </td>
                 </tr>
             </table>
         </div>
@@ -193,9 +193,6 @@
                 </th>
 
                 <th align="center">更新时间</th>
-                <th align="center">
-                    子类型
-                </th>
                 <th align="center" class="loanStatusTitle">
                     状态
                 </th>
@@ -254,17 +251,11 @@
                     <td>
                         <fmt:formatDate value="${borrow.orderTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
                     </td>
-
-
                     <td>
                         <fmt:formatDate value="${borrow.loanTime }" pattern="yyyy-MM-dd"/>
                     </td>
                     <td><fmt:formatDate value="${borrow.updatedAt }"
                                         pattern="yyyy-MM-dd HH:mm:ss"/></td>
-
-                    <td>
-                            ${appName }
-                    </td>
                     <td class="loanStatusName">
                             ${borrow.statusName }
                     </td>

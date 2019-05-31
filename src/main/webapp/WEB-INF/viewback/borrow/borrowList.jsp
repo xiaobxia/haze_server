@@ -74,6 +74,11 @@
                         <input type="text" name="reviewStartTime" id="reviewStartTime" value="${params.reviewStartTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
                         到<input type="text" name="reviewEndTime" id="reviewEndTime" value="${params.reviewEndTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
                     </td>
+                    <td>
+                        借款金额:
+                        <select id = "productAmount" name = "productAmount"></select>
+                        <input type="hidden" value="${params.productAmount}" id="product_amount_choosed"/>
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -129,11 +134,7 @@
                         到<input type="text" name="endApplyTime" id="endApplyTime" value="${params.endApplyTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
                     </td>
 
-                    <td>
-                        借款金额:
-                        <select id = "productAmount" name = "productAmount"></select>
-                        <input type="hidden" value="${params.productAmount}" id="product_amount_choosed"/>
-                    </td>
+
 
                     <td>
                         <div class="buttonActive">
@@ -199,9 +200,6 @@
                 </th>
 
                 <th align="center">更新时间</th>
-                <th align="center">
-                    子类型
-                </th>
                 <th align="center" class="loanStatusTitle">
                     状态
                 </th>
@@ -268,10 +266,6 @@
                     </td>
                     <td><fmt:formatDate value="${borrow.updatedAt }"
                                         pattern="yyyy-MM-dd HH:mm:ss"/></td>
-
-                    <td>
-                            ${appName}
-                    </td>
                     <td class="loanStatusName">
                             ${borrow.statusName }
                     </td>

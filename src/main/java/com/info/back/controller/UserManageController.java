@@ -1,6 +1,7 @@
 package com.info.back.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -154,6 +155,15 @@ public class UserManageController extends BaseController{
 				user.setId(id);
 				user.setStatus("2");//2黑名单
 				int count=this.userService.updateByPrimaryKeyUser(user);
+				//根据用户id 查询用户信息
+                User u = userService.searchByUserid(Integer.parseInt(id));
+				//加入黑名单库
+                UserBlack userBlack = new UserBlack();
+                userBlack.setIdNumber(u.getIdNumber());
+                userBlack.setUserName(u.getRealname());
+                userBlack.setUserPhone(u.getUserPhone());
+                userBlack.setCreateTime(new Date());
+                userBlackService.addUserBlack(userBlack);
 				if(count>0){
 					bool=true;
 				}

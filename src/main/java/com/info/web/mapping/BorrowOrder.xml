@@ -218,7 +218,7 @@
 				and abo.status=#{borrowStatus}
 			</if>
 			<if test="customerTypeStatus!=null and customerTypeStatus!=''">
-				and abo.customer_type = #{customerTypeStatus}
+				and ui.customer_type = #{customerTypeStatus}
 			</if>
 
 			<if test="loanTerm!=null and loanTerm!=0">
@@ -537,6 +537,7 @@
 		select
 		count(1)
 		from asset_borrow_order abo
+		left join user_info ui  on ui.id= abo.user_id
 		<if test="(provinceId!=null and provinceId!='') or (cityId!=null and cityId!='')">
 			LEFT JOIN china_area ca1 ON ca1.code_id = SUBSTRING(abo.id_number,1,6)
 			LEFT JOIN china_area ca2 ON ca2.code_id = SUBSTRING(abo.id_number,1,4)
@@ -582,6 +583,7 @@
 		LEFT JOIN china_area ca3 ON ca3.code_id = SUBSTRING(abo.id_number,1,2)
 		LEFT JOIN risk_model_order rmo ON abo.id = rmo.borrow_order_id
 		LEFT JOIN back_user bu ON bu.user_account = abo.verify_review_user
+		left join user_info ui  on ui.id= abo.user_id
 		<include refid="selectSql" />
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
