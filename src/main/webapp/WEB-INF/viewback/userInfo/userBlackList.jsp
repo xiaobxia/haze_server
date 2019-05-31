@@ -73,7 +73,7 @@
 						<td align="center">
 						<fmt:formatDate value="${userBlack.createTime}" pattern="yyyy-MM-dd HH:mm" />
 						</td>
-					    <td align="center"><input type="button" value="删除" onclick="setPDelete('${userBlack.id }')"></td>
+						<td align="center"><span class="deleteBtn" onclick="setPDelete('${userBlack.id }')">删除</span></td>
 					</tr>
 				</c:forEach>
 			</tbody>
