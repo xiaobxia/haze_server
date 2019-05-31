@@ -3,12 +3,10 @@ package com.info.web.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import com.info.back.pojo.UserDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
 import com.info.constant.Constant;
 import com.info.web.dao.IPaginationDao;
 import com.info.web.dao.IUserDao;
@@ -18,7 +16,6 @@ import com.info.web.pojo.User;
 import com.info.web.pojo.UserCardInfo;
 import com.info.web.pojo.UserCertification;
 import com.info.web.util.PageConfig;
-
 @Service
 public class UserService implements IUserService {
 
@@ -196,4 +193,6 @@ public class UserService implements IUserService {
 	public String selectGxbReportDataHtml(Integer userId) {
 		return userDao.selectGxbReportDataHtml(userId);
 	}
+
+
 }

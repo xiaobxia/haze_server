@@ -1,5 +1,6 @@
 package com.info.back.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,7 +8,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.info.web.common.reslult.JsonResult;
 import com.info.web.pojo.*;
 import com.info.web.service.*;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +25,9 @@ import com.info.risk.pojo.RiskCreditUser;
 import com.info.risk.pojo.RiskRuleCal;
 import com.info.web.controller.BaseController;
 import com.info.web.util.PageConfig;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Controller
@@ -45,7 +48,10 @@ public class UserManageController extends BaseController{
 	private IObtainUserShortMessageService userShortMessageService;
 	@Autowired
 	private IChannelInfoService channelInfoService;
-	
+
+	@Autowired
+	private IUserBlackService userBlackService;
+
 	@Autowired
 	@Qualifier("riskUserService")
 	private IRiskUserService riskUserService;
@@ -57,13 +63,8 @@ public class UserManageController extends BaseController{
 	public String gotoUserManage(HttpServletRequest request,Model model) {
 		HashMap<String, Object> params = getParametersO(request);
 		try {
-			if(params.get("jsp").equals("1")){
-				String status=request.getParameter("status");
-				if(StringUtils.isBlank(status)){status=null;}
-			}else{
-				String status="2";
-				params.put("status","2");
-			}
+
+			String status=request.getParameter("status");
 			String userId=request.getParameter("id");
 			String realname=request.getParameter("realname");
 			String idNumber=request.getParameter("idNumber");
@@ -73,6 +74,7 @@ public class UserManageController extends BaseController{
 			String channelId = request.getParameter("channelId");
 			String channelSuperCode = request.getParameter("channelSuperCode");
 			String channelName = request.getParameter("channelName");
+            if(StringUtils.isBlank(status)){status=null;}
 			if(StringUtils.isNotBlank(channelSuperCode) && channelSuperCode.equals("-999")){
 				params.put("channelSuperCode",null);
 				params.put("userFrom",0);
@@ -108,11 +110,8 @@ public class UserManageController extends BaseController{
 		} catch (Exception e) {
 			log.error("getUserPage error:{}", e);
 		}
-		if(params.get("jsp").equals("1")){
 			return "userInfo/userManageList";//用户列表jsp
-		}else{
-			return "userInfo/userBlackList";//黑名单用户列表
-		}
+
 	}
 	/**
 	 * 用户管理 --》无续借用户列表 默认查询所有无续借用户
@@ -409,13 +408,55 @@ public class UserManageController extends BaseController{
 		return "userInfo/addressBookList";
 	}
 
-	/**
-	 * 黑名单导入
-	 * @param response
-	 * @param request
-	 */
-	@RequestMapping("leadBlackUser")
-	public void leadBlackUser(HttpServletResponse response, HttpServletRequest request) {
-		HashMap<String, Object> params = getParametersO(request);
-	}
+    /**
+     * 批量导入黑名单用户
+     * @param file
+     * @param request
+     * @param response
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "batchimport", method = RequestMethod.POST)
+    public String batchimport(@RequestParam(value="filename") MultipartFile file,
+                              HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        //判断文件是否为空
+        if(file==null) return null;
+        //获取文件名
+        String name=file.getOriginalFilename();
+        //进一步判断文件是否为空（即判断其大小是否为0或其名称是否为null）
+        long size=file.getSize();
+        if(name==null || ("").equals(name) && size==0) return null;
+        //批量导入。参数：文件名，文件。
+        boolean b = userBlackService.batchImport(name,file);
+        if(b){
+            String Msg ="impot success！";
+            request.getSession().setAttribute("msg",Msg);
+        }else{
+            String Msg ="import failed！";
+            request.getSession().setAttribute("msg",Msg);
+        }
+        return "userInfo/userBlackList";
+    }
+
+    /**
+     * 黑名单用户列表
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping("userBlackList")
+    public String userBlackList(HttpServletRequest request,Model model){
+        try{
+            HashMap<String, Object> params = getParametersO(request);
+            model.addAttribute("params", params);// 用于搜索框保留值
+            PageConfig<UserBlack> pageConfig=userBlackService.getUserPage(params);
+            model.addAttribute("pm", pageConfig);
+        }catch (Exception e) {
+            log.error("userBankCardList error:{}", e);
+        }
+        return "userInfo/userBlackList";
+    }
+
 }
