@@ -792,3 +792,31 @@ input:disabled {
 .form-wrap .form-item {
     height: 30px;
 }
+
+.buttonActive-blue {
+    float: left;
+    display: block;
+    overflow: hidden;
+    height: 25px;
+    background-color: #7C99D1;
+    border-radius: 4px;
+}
+
+.buttonActive-blue .buttonContent-blue {
+    padding: 0;
+    display: block;
+    overflow: hidden;
+    height: 25px;
+    line-height: 25px;
+    font-weight: bold;
+}
+
+.buttonActive-blue .buttonContent-blue a, .buttonActive-blue .buttonContent-blue span{
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0 18px;
+    line-height: 25px;
+    text-decoration: none;
+}

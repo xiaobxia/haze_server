@@ -476,4 +476,21 @@ public class UserManageController extends BaseController{
 		}
 	}
 
+	/**
+	 * 导入黑名单
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("importBlackUser")
+	public String importBlackUser(HttpServletRequest request,Model model){
+		try{
+			HashMap<String, Object> params = getParametersO(request);
+			model.addAttribute("params", params);// 用于搜索框保留值
+		}catch (Exception e) {
+			log.error("importBlackUser error:{}", e);
+		}
+		return "userInfo/importBlackUser";
+	}
+
 }

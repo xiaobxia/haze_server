@@ -5,15 +5,9 @@
 <%
 	String path = request.getContextPath();
 %>
-<div><font color="bule">批量导入</font></div>
-<form action="userManage/batchimport" method="post" enctype="multipart/form-data" onsubmit="return check();">
-	<div style="margin: 30px;"><input id="excel_file" type="file" name="filename" accept="xlsx" size="80"/>
-		<input id="excel_button" type="submit" value="导入Excel"/></div>
-</form>
-<form id="pagerForm" onsubmit="return navTabSearch(this);" action="userManage/userBlackList?myId=${searchParams.myId}" method="post">
+<form id="pagerForm-ubl" onsubmit="return navTabSearch(this);" action="userManage/userBlackList?myId=${searchParams.myId}" method="post">
 	<div class="pageHeader">
 		<input type="hidden" name="init" value=0>
-		<a href="https://fully-online.oss-cn-hangzhou.aliyuncs.com/excel/black.xlsx"><input type="button" value="下载模板" class="bt2"/></a>
 		<div class="searchBar">
 			<table class="searchContent">
 				<tr>
@@ -23,19 +17,9 @@
 					<td>证件号码: <input type="text" name="idNumber"
 						value="${params.idNumber }" />
 					</td>
-				</tr>
-				<tr>
 					<td>手机: <input type="text" name="userPhone"
-						value="${params.userPhone }" />
+								   value="${params.userPhone }" />
 					</td>
-					<%--<td>开始时间: <input type="text" name="createTime"
-						class="date textInput readonly" datefmt="yyyy-MM-dd"
-						value="${params.createTime }" readonly="readonly" />
-					</td>
-					<td>结束时间: <input type="text" name="beginTime"
-						class="date textInput readonly" datefmt="yyyy-MM-dd"
-						value="${searchParams.beginTime }" readonly="readonly" />
-					</td>--%>
 					<td>
 						<div class="buttonActive">
 							<div class="buttonContent">
@@ -43,6 +27,28 @@
 							</div>
 						</div>
 					</td>
+					<td>
+						<div class="buttonActive-blue">
+							<div class="buttonContent-blue">
+								<a href="https://fully-online.oss-cn-hangzhou.aliyuncs.com/excel/black.xlsx">下载模板</a>
+							</div>
+						</div>
+					</td>
+					<td>
+						<div class="buttonActive-blue">
+							<div class="buttonContent-blue">
+								<a href="userManage/importBlackUser?type=tojsp&myId=${searchParams.myId}" class="add" target="dialog" width="820" height="420" mask="true">导入黑名单</a>
+							</div>
+						</div>
+					</td>
+					<%--<td>开始时间: <input type="text" name="createTime"
+                    class="date textInput readonly" datefmt="yyyy-MM-dd"
+                    value="${params.createTime }" readonly="readonly" />
+                </td>
+                <td>结束时间: <input type="text" name="beginTime"
+                    class="date textInput readonly" datefmt="yyyy-MM-dd"
+                    value="${searchParams.beginTime }" readonly="readonly" />
+                </td>--%>
 				</tr>
 			</table>
 		</div>
@@ -77,15 +83,6 @@
 		<%@ include file="../page.jsp"%>
 	</div>
 	<script type="text/javascript">
-        function check() {
-            var excel_file = $("#excel_file").val();
-            if (excel_file == "" || excel_file.length == 0) {
-                alert("请选择文件路径！");
-                return false;
-            } else {
-                return true;
-            }
-        }
         function setPDelete(id) {
             if(confirm("确定要删除吗？")) {
                 $.ajax({
