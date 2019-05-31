@@ -5,10 +5,10 @@
 <style type="text/css">
     .title-peizhi {
         font-size: 14px;
-        padding: 30px 0 8px;
-        margin-bottom: 10px;
-        border-bottom: 1px solid #bbb;
+        padding: 10px 0;
         text-indent: 20px;
+        background-color: #EBF0F5;
+        color: #1D2437;
     }
 
     /*.title-peizhi:not(:first-child) {*/
@@ -66,11 +66,17 @@
 
     .suolue-box {
         width: 15%;
-        float: left;
         padding: 5px 0;
         padding-left: 10px;
         border: 1px solid #ddd;
         margin-left: 25px;
+        position: absolute;
+        left: 400px;
+        top: 20px;
+        border-radius: 4px;
+    }
+
+    .suolue-box input {
     }
 
     .suolue-box .preview img {
@@ -162,108 +168,88 @@
         </c:if>
         <input type="hidden" id="pictureUrl" name="pictureUrl" value="${qrCode}"/>
         <input type="hidden" id="wechatPictureUrl" name="wechatPictureUrl" value="${wechatCode}"/>
-        <div class="pageFormContent" layoutH="56">
+        <div class="pageFormContent no-padding" layoutH="56">
             <div class="peizhi-pannel f-cb">
                 <div class="title-peizhi">支付宝账号配置</div>
-                <table class="account-table">
-                    <tr>
-                        <td>支付宝账号</td>
-                        <td>
-                            <input class="text-input" type="text" placeholder="请输入" name="payAccount"
-                                   value="${payAccount}">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td> 收款人</td>
-                        <td>
-                            <input class="text-input" type="text" placeholder="请输入" name="accountName"
-                                   value="${accountName}">
-                        </td>
-                    </tr>
-                </table>
-                <div class="suolue-box">
-                    <div class="preview">
-                        <input type="file" accept="image/png,image/gif" name="file" onchange="preview(this)"
-                               id="img_upload_btn"/>
+                <div class="form-wrap">
+                    <div class="form-item">
+                        <label>支付宝账号</label>
+                        <input class="text-input" type="text" placeholder="请输入" name="payAccount"
+                               value="${payAccount}">
                     </div>
-
-                    <div class="preview" id="preview">
-                        <div style="width: 120px;padding: 10px 0;display: none;" class="upload-loading">
-                            <img style="width: 40px;display: block;margin: 0 auto;" src="<%=request.getContextPath()%>/back/files/loading.gif" alt="">
+                    <div class="form-item">
+                        <label>收款人</label>
+                        <input class="text-input" type="text" placeholder="请输入" name="accountName"
+                               value="${accountName}">
+                    </div>
+                    <div class="suolue-box">
+                        <div class="preview">
+                            <input type="file" accept="image/png,image/gif" name="file" onchange="preview(this)"
+                                   id="img_upload_btn"/>
                         </div>
-                        <img alt="" src="${qrCode }" id="imagePath">
+
+                        <div class="preview" id="preview">
+                            <div style="width: 120px;padding: 10px 0;display: none;" class="upload-loading">
+                                <img style="width: 40px;display: block;margin: 0 auto;" src="<%=request.getContextPath()%>/back/files/loading.gif" alt="">
+                            </div>
+                            <img alt="" src="${qrCode }" id="imagePath">
+                        </div>
+                        <p>二维码: (500 x 500 以内)</p>
                     </div>
-                    <p>二维码: (500 x 500 以内)</p>
                 </div>
             </div>
             <div class="peizhi-pannel f-cb">
                 <div class="title-peizhi">微信账号配置</div>
-                <table class="account-table">
-                    <tr>
-                        <td>微信账号</td>
-                        <td>
-                            <input class="text-input" type="text" placeholder="请输入" name="payAccountWe"
-                                   value="${payAccount}">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td> 收款人</td>
-                        <td>
-                            <input class="text-input" type="text" placeholder="请输入" name="weAccountName"
-                                   value="${weAccountName}">
-                        </td>
-                    </tr>
-                </table>
-                <div class="suolue-box">
-                    <div class="preview">
-                        <input type="file" accept="image/png,image/gif" name="file" onchange="previewWe(this)"
-                               id="img_upload_btn_we"/>
+                <div class="form-wrap">
+                    <div class="form-item">
+                        <label>微信账号</label>
+                        <input class="text-input" type="text" placeholder="请输入" name="payAccountWe"
+                               value="${payAccount}">
                     </div>
-
-                    <div class="preview" id="previewWe">
-                        <div style="width: 120px;padding: 10px 0;display: none;" class="upload-loading">
-                            <img style="width: 40px;display: block;margin: 0 auto;" src="<%=request.getContextPath()%>/back/files/loading.gif" alt="">
+                    <div class="form-item">
+                        <label>收款人</label>
+                        <input class="text-input" type="text" placeholder="请输入" name="weAccountName"
+                               value="${weAccountName}">
+                    </div>
+                    <div class="suolue-box">
+                        <div class="preview">
+                            <input type="file" accept="image/png,image/gif" name="file" onchange="previewWe(this)"
+                                   id="img_upload_btn_we"/>
                         </div>
-                        <img alt="" src="${wechatCode }" id="imagePathWe">
+
+                        <div class="preview" id="previewWe">
+                            <div style="width: 120px;padding: 10px 0;display: none;" class="upload-loading">
+                                <img style="width: 40px;display: block;margin: 0 auto;" src="<%=request.getContextPath()%>/back/files/loading.gif" alt="">
+                            </div>
+                            <img alt="" src="${wechatCode }" id="imagePathWe">
+                        </div>
+                        <p>二维码: (500 x 500 以内)</p>
                     </div>
-                    <p>二维码: (500 x 500 以内)</p>
                 </div>
             </div>
             <div class="peizhi-pannel f-cb">
                 <div class="title-peizhi">客服电话配置</div>
-                <table class="account-table">
-
-                    <tr>
-                        <td>客服qq</td>
-                        <td>
-                            <input class="text-input" type="text" placeholder="请输入" name="serviceQQ"
-                                   value="${serviceQQ}">
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>客服电话</td>
-                        <td>
-                            <input class="text-input" type="text" placeholder="请输入" name="serviceTel"
-                                   value="${serviceTel}">
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>QQ/在线客服<br/>工作时间</td>
-                        <td>
-                            <input class="text-input" type="text" placeholder="请输入" name="onlineTime"
-                                   value="${onlineTime}">
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>电话客服工作时间</td>
-                        <td>
-                            <input class="text-input" type="text" placeholder="请输入" name="telTime" value="${telTime}">
-                        </td>
-                    </tr>
-                </table>
+                <div class="form-wrap">
+                    <div class="form-item">
+                        <label>客服qq</label>
+                        <input class="text-input" type="text" placeholder="请输入" name="serviceQQ"
+                               value="${serviceQQ}">
+                    </div>
+                    <div class="form-item">
+                        <label>客服电话</label>
+                        <input class="text-input" type="text" placeholder="请输入" name="serviceTel"
+                               value="${serviceTel}">
+                    </div>
+                    <div class="form-item">
+                        <label>QQ客服工作时间</label>
+                        <input class="text-input" type="text" placeholder="请输入" name="onlineTime"
+                               value="${onlineTime}">
+                    </div>
+                    <div class="form-item">
+                        <label>电话客服工作时间</label>
+                        <input class="text-input" type="text" placeholder="请输入" name="telTime" value="${telTime}">
+                    </div>
+                </div>
             </div>
         </div>
         <div class="formBar">

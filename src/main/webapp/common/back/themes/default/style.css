@@ -708,3 +708,87 @@ input:disabled {
 .a-link {
     color: #416ABA!important;
 }
+
+.radio-input {
+    white-space: nowrap;
+    cursor: pointer;
+    outline: none;
+    display: inline-block;
+    line-height: 1;
+    position: relative;
+    vertical-align: middle;
+}
+.radio-inner {
+    border: 1px solid #ccc;
+    border-radius: 100%;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    box-sizing: border-box;
+}
+.radio-inner:after {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background-color: transparent;
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+.checked .radio-inner {
+    border-color: #10AA72;
+}
+.checked .radio-inner:after {
+    background: #10AA72;
+}
+.radioItem {
+    opacity: 0;
+    outline: none;
+    position: absolute;
+    z-index: 20;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    width: 100% !important;
+    height: 100% !important;
+    cursor: pointer;
+}
+
+.config-block {
+    padding: 10px 20px 5px 20px;
+    position: relative;
+    background-color: #EBF0F5;
+}
+
+.pageFormContent .config-block label {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 25px;
+}
+
+.pageFormContent.no-padding {
+    padding: 0;
+}
+
+.config-block .buttonActive {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    float: none;
+}
+
+.peizhi-pannel .form-wrap {
+    position: relative;
+    padding: 20px;
+}
+
+.form-wrap .form-item {
+    height: 30px;
+}
