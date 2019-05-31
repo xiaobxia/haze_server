@@ -2,6 +2,8 @@ package com.info.web.dao;
 
 import com.info.web.pojo.UserBlack;
 
+import java.util.List;
+
 
 public interface IUserBlackDao {
     /**
@@ -15,5 +17,11 @@ public interface IUserBlackDao {
      * @param userBlack
      */
     void addUserBlack(UserBlack userBlack);
+
+    /**
+     * 黑名单用户
+     * @return
+     */
+    List<UserBlack> userBlackList();
 
 }

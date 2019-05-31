@@ -20,7 +20,7 @@
 		  remark as remark,
 		  create_time as createTime
 		  from user_black
-      where 1=1
+      where status =0
 		<if test="id != null">
 			and id = #{id}
 		</if>
@@ -34,8 +34,32 @@
 			and id_number = #{idNumber}
 		</if>
 	</select>
+	<select id="userBlackList" resultMap="BaseResultMap" resultType="com.info.web.pojo.UserBlack">
+     select
+		  id as id,
+		  user_name as userName,
+		  user_phone as userPhone,
+		  id_number as idNumber,
+		  status as status,
+		  remark as remark,
+		  create_time as createTime
+	  from user_black
+	  where status =0
+		<if test="id != null">
+			and id = #{id}
+		</if>
+		<if test="userName != null">
+			and user_name = #{userName}
+		</if>
+		<if test="userPhone != null">
+			and user_phone = #{userPhone}
+		</if>
+		<if test="idNumber != null">
+			and id_number = #{idNumber}
+		</if>
+	</select>
 	<select id="getBackUserCount" parameterType="HashMap" resultType="java.lang.Integer">
-     select count(1) from user_black where 1=1
+     select count(1) from user_black where status=0
 		<if test="id != null">
 			and id = #{id}
 		</if>
@@ -54,10 +78,12 @@
 		(
 		user_name,
 		user_phone,
-		id_number) VALUES (
+		id_number,
+		create_time) VALUES (
 		#{userName},
 		#{userPhone},
-		#{idNumber}
+		#{idNumber},
+		#{createTime}
 		)
 	</insert>
 	<update id="updateUserBlackStatus" parameterType="java.lang.Integer">

@@ -13,30 +13,29 @@
 <form id="pagerForm" onsubmit="return navTabSearch(this);" action="userManage/userBlackList?myId=${searchParams.myId}" method="post">
 	<div class="pageHeader">
 		<input type="hidden" name="init" value=0>
-		<a href="https://fully-online.oss-cn-hangzhou.aliyuncs.com/excel/black.xlsx"><input type="button" value="下载模板" class="bt2" onclick="down();" /></a>
+		<a href="https://fully-online.oss-cn-hangzhou.aliyuncs.com/excel/black.xlsx"><input type="button" value="下载模板" class="bt2"/></a>
 		<div class="searchBar">
-			<%--<table class="searchContent">
+			<table class="searchContent">
 				<tr>
-					<td>姓名: <input type="text" name="realname"
-						value="${searchParams.realname }" />
+					<td>姓名: <input type="text" name="userName"
+						value="${params.userName }" />
 					</td>
 					<td>证件号码: <input type="text" name="idNumber"
-						value="${searchParams.idNumber }" />
+						value="${params.idNumber }" />
 					</td>
 				</tr>
 				<tr>
 					<td>手机: <input type="text" name="userPhone"
-						value="${searchParams.userPhone }" />
+						value="${params.userPhone }" />
 					</td>
-					<td>开始时间: <input type="text" name="createTime"
+					<%--<td>开始时间: <input type="text" name="createTime"
 						class="date textInput readonly" datefmt="yyyy-MM-dd"
-						value="${searchParams.createTime }" readonly="readonly" />
+						value="${params.createTime }" readonly="readonly" />
 					</td>
 					<td>结束时间: <input type="text" name="beginTime"
 						class="date textInput readonly" datefmt="yyyy-MM-dd"
 						value="${searchParams.beginTime }" readonly="readonly" />
-					</td>
-					<!-- <td>&nbsp;&nbsp;&nbsp;&nbsp;</td> -->
+					</td>--%>
 					<td>
 						<div class="buttonActive">
 							<div class="buttonContent">
@@ -45,13 +44,10 @@
 						</div>
 					</td>
 				</tr>
-			</table>--%>
+			</table>
 		</div>
 	</div>
 	<div class="pageContent">
-		<jsp:include page="${BACK_URL}/rightSubList">
-			<jsp:param value="${searchParams.myId}" name="parentId"/>
-		</jsp:include>
 		<table class="list" width="100%" layoutH="114">
 			<thead>
 				<tr>
@@ -59,16 +55,19 @@
 					<th align="center">联系方式</th>
 					<th align="center">身份证号</th>
 					<th align="center">创建时间</th>
+					<th align="center">操作</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="user" items="${pm.items }" varStatus="status" >
-						<td align="center">${status.userName}</td>
-						<td align="center">${status.userPhone}</td>
-						<td align="center">${status.idNumber}</td>
+				<c:forEach var="userBlack" items="${pm.items }" varStatus="status" >
+					<tr>
+						<td align="center">${userBlack.userName}</td>
+						<td align="center">${userBlack.userPhone}</td>
+						<td align="center">${userBlack.idNumber}</td>
 						<td align="center">
 						<fmt:formatDate value="${userBlack.createTime}" pattern="yyyy-MM-dd HH:mm" />
 						</td>
+					    <td align="center"><input type="button" value="删除" onclick="setPDelete('${userBlack.id }')"></td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -87,15 +86,23 @@
                 return true;
             }
         }
-
-        $(document).ready(function () {
-            var msg="";
-            if($("#importMsg").text()!=null){
-                msg=$("#importMsg").text();
+        function setPDelete(id) {
+            if(confirm("确定要删除吗？")) {
+                $.ajax({
+                    type : "post",
+                    data:{
+                        "id":id,
+                    },
+                    url : "userManage/updateUserBlackStatus",
+                    success : function(ret) {
+                        setTimeout(function () {
+                            $('#pagerForm-p').submit()
+                        }, 200)
+                    },
+                    error:function(ret){
+                    }
+                })
             }
-            if(msg!=""){
-                alert(msg);
-            }
-        });
+        }
 	 </script>
 </form>
