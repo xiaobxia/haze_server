@@ -71,8 +71,7 @@
 							</label>
 						</dt>
 						<dd>
-							<input name="channelPassword" style="display: none" value="123456"
-							 class="required"	type="password" alt="请输入编码" size="30"/>
+							<input name="channelPassword" style="display: none" value="123456" type="password" alt="请输入编码" size="30"/>
 						</dd>
 					</dl>
 					<div class="divider"></div>

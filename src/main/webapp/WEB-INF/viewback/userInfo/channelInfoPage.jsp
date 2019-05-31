@@ -98,13 +98,10 @@
 						微信注册口子
 					</th>
 					<th align="center" >
-						状态
-					</th>
-					<th align="center" >
 						创建时间
 					</th>
 					<th align="center">
-					 	操作
+					 	状态管理
 					</th>
 				</tr>
 			</thead>
@@ -171,22 +168,14 @@
 							</c:if>
 						</td>
 						<td>
-							<c:if test="${channel.status == 1 }">
-								开启
-							</c:if>
-							<c:if test="${channel.status == 2 }">
-								关闭
-							</c:if>
-						</td>
-						<td>
 							<fmt:formatDate value="${channel.createdAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
 						</td>
 						<td>
 							<c:if test="${channel.status == 1}">
-								<button class="tag-button close-s" onclick="channelUpdateStatus('${channel.channelCode}',2)">关闭</button>
+								<button  class="slide-btn open-s"  onclick="channelUpdateStatus('${channel.channelCode}',2)"></button>
 							</c:if>
 							<c:if test="${channel.status == 2}">
-								<button class="tag-button open-s" onclick="channelUpdateStatus('${channel.channelCode}',1)">开启</button>
+								<button  class="slide-btn close-s" onclick="channelUpdateStatus('${channel.channelCode}',1)"></button>
 							</c:if>
 						</td>
 						 
