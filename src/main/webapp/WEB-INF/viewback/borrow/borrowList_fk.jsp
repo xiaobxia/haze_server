@@ -25,7 +25,22 @@
 						<input type="text" name="reviewStartTime" id="reviewStartTime" value="${params.reviewStartTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
 						到<input type="text" name="reviewEndTime" id="reviewEndTime" value="${params.reviewEndTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
 					</td>
-					<td>
+					<td>状态： <select name="borrowStatus"  id="borrowStatus">
+						<option value="">全部</option>
+						<c:forEach var="borrowStatus" items="${BORROW_STATUS_ALL}">
+							<c:if
+									test="${borrowStatus.key eq STATUS_FSTG
+							or borrowStatus.key eq STATUS_HKZ
+							or borrowStatus.key eq STATUS_FKZ
+							or borrowStatus.key eq STATUS_FKBH
+							or borrowStatus.key eq STATUS_FKSB}">
+								<option value="${borrowStatus.key}"
+										<c:if test="${borrowStatus.key eq params.borrowStatus}">selected="selected"</c:if>>${borrowStatus.value}</option>
+							</c:if>
+						</c:forEach>
+					</select>
+					</td>
+					<%--<td>
 						审核员:
 						<select name="reviewUser" id="reviewUser" class="textInput" onchange="">
 							<option value="">全部</option>
@@ -35,7 +50,7 @@
 								<option value="${backUser.telephone}"  <c:if test="${backUser.telephone eq params.reviewUser}">selected="selected"</c:if> >${backUser.userName}</option>
 							</c:forEach>
 						</select>
-					</td>
+					</td>--%>
 
 				</tr>
 				<tr>
@@ -74,21 +89,6 @@
 						<input type="text" name="startloanTime" id="startloanTime" value="${params.startloanTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
 						到<input type="text" name="endloanTime" id="endloanTime" value="${params.endloanTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
 					</td>
-                    <td>状态： <select name="borrowStatus"  id="borrowStatus">
-                        <option value="">全部</option>
-                        <c:forEach var="borrowStatus" items="${BORROW_STATUS_ALL}">
-                            <c:if
-                                    test="${borrowStatus.key eq STATUS_FSTG
-							or borrowStatus.key eq STATUS_HKZ
-							or borrowStatus.key eq STATUS_FKZ
-							or borrowStatus.key eq STATUS_FKBH
-							or borrowStatus.key eq STATUS_FKSB}">
-                                <option value="${borrowStatus.key}"
-                                        <c:if test="${borrowStatus.key eq params.borrowStatus}">selected="selected"</c:if>>${borrowStatus.value}</option>
-                            </c:if>
-                        </c:forEach>
-                    </select>
-                    </td>
 					<td>
 						<div class="buttonActive">
 							<div class="buttonContent">
@@ -130,7 +130,6 @@
 
 					<th align="center">放款时间</th>
 					<th align="center">更新时间</th>
-					<th align="center">子类型</th>
 					<th align="center" class="loanStatusTitle">状态</th>
 					<th align="center">放款备注</th>
 					<!-- 						<th align="center"  > -->
@@ -173,8 +172,6 @@
 								pattern="yyyy-MM-dd" /></td>
 						<td><fmt:formatDate value="${borrow.updatedAt }"
 								pattern="yyyy-MM-dd HH:mm:ss" /></td>
-
-						<td>${appName }</td>
 						<td class="loanStatusName">${borrow.statusName }</td>
 						<td>${borrow.payRemark }</td>
 						<!-- 									<td> -->

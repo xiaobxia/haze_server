@@ -720,7 +720,7 @@ public class CustomServiceController extends BaseController {
                     // 取最近一次排班日期+1
                     String lastClassDate = onlineCustomService.getLastClassDate();
                     Calendar calendar = Calendar.getInstance();
-                    if (lastClassDate != null) {
+                    if (!lastClassDate.equals("null")) {
                         calendar.setTime(sf.parse(lastClassDate));
                     }
                     calendar.add(Calendar.DATE, +1);

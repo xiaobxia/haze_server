@@ -135,7 +135,7 @@ public class IndexController extends BaseController {
 	@RequestMapping("updateCache")
 	public void updateCache(HttpServletRequest request,
 							HttpServletResponse response) {
-		boolean flag = false;
+		boolean flag = true;
 		DwzResult dwzResult=new DwzResult("200","刷新成功");
 		try {
 			BackUser backUser = loginAdminUser(request);

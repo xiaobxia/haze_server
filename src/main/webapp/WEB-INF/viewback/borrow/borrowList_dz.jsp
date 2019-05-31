@@ -81,7 +81,6 @@
                 <th align="left">第三方流水号</th>
                 <th align="center">姓名</th>
                 <th align="center">手机号</th>
-               <%-- <th align="center">是否是老用户</th>--%>
                 <th align="center">成功还款次数</th>
                 <th align="center">借款金额(元)</th>
                 <th align="center">到账金额(元)</th>
@@ -90,8 +89,6 @@
                 <th align="center">下单时间</th>
 
                 <th align="center">放款时间</th>
-
-                <th align="center">子类型</th>
                 <th align="center" class="loanStatusTitle">状态</th>
                 <!-- 						<th align="center"  > -->
                 <!-- 							操作 -->
@@ -122,9 +119,6 @@
 
                     <td><fmt:formatDate value="${borrow.loanTime }"
                                         pattern="yyyy-MM-dd HH:mm:ss"/></td>
-
-
-                    <td>${appName}</td>
                     <td class="loanStatusName">放款成功 <%--  ${borrow.statusName }	 --%>
                     </td>
                     <!-- 									<td> -->
