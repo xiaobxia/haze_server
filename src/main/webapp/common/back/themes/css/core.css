@@ -473,7 +473,7 @@ body { overflow:hidden;}
 #layout { display:block; height:100%; position:relative;}
 #header { display:block; overflow:hidden; height:50px; z-index:30}
 #leftside { position:absolute; top:55px; left:0; z-index:20;}
-#sidebar { width:200px; position:absolute; top:0; left:0px; z-index:20; overflow:hidden;}
+#sidebar { width:200px; position:absolute; top:0; left:0px; z-index:20; overflow:scroll;}
 #sidebar_s { display:none; width:24px; position:absolute; top:0; left:0; z-index:21;}
 #container { position:absolute; top:55px; left:200px;}
 #splitBar { display:none; overflow:hidden; width:5px; cursor:col-resize; position:absolute; top:55px; left:205px; z-index:20;}
