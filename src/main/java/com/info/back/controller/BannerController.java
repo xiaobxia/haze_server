@@ -383,7 +383,7 @@ public class BannerController extends BaseController {
             msg = "刷新失败，失败的服务器列表：" + failUrl.toString();
         }
 
-        SpringUtils.renderDwzResult(response, succ, msg, DwzResult.CALLBACK_CLOSECURRENT, params.get("parentId"));
+        SpringUtils.renderDwzResult(response, succ, msg, DwzResult.CALLBACK_RELOADPAGE, params.get("parentId"));
 
     }
 
