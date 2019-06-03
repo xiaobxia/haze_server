@@ -22,24 +22,6 @@
 							   value="${params.userName }" />
 					</td>
 					<td>
-						手机号码:
-						<input type="text" name="userPhone"
-							   value="${params.userPhone }" />
-					</td>
-					<td>
-						银行卡号:
-						<input type="text" name="cardNo"
-							   value="${params.cardNo }" />
-					</td>
-					<td>
-						状态
-						<select name="status">
-						  <option value ="">所有状态</option>
-							<option value ="0" <c:if test="${params.status eq 0}">selected</c:if>>未生效</option>
-						  <option value="1" <c:if test="${params.status eq 1}">selected</c:if>>已生效</option>
-						</select>
-					</td>
-					<td>
 						添加日期:
 						<input name="addStartTime" id="addStartTime" value="${params.addStartTime }" type="text"
 																onfocus="WdatePicker({isShowClear:true,readOnly:false,maxDate:'#F{$dp.$D(\'addStartTime\')||\'%y-%M-%d\'}'})" 
@@ -51,8 +33,26 @@
 																onfocus="WdatePicker({isShowClear:true,readOnly:false,maxDate:'#F{$dp.$D(\'addEndTiem\')||\'%y-%M-%d\'}'})" 
 																title="" size="30" />
 					</td>
+				</tr>
+				<tr>
 					<td>
-						<div class="buttonActive">
+						手机号码:
+						<input type="text" name="userPhone"
+							   value="${params.userPhone }" />
+					</td>
+					<td>
+						银行卡号:
+						<input type="text" name="cardNo"
+							   value="${params.cardNo }" />
+					</td>
+					<td style="text-align: left">
+						状态
+						<select name="status">
+							<option value ="">所有状态</option>
+							<option value ="0" <c:if test="${params.status eq 0}">selected</c:if>>未生效</option>
+							<option value="1" <c:if test="${params.status eq 1}">selected</c:if>>已生效</option>
+						</select>
+						<div class="buttonActive" style="float: right;">
 							<div class="buttonContent">
 								<button type="submit">
 									查询
