@@ -286,7 +286,7 @@ public class ContentController extends  BaseController {
 		}catch (Exception e) {
 			log.error("deleteAdvise error:{}",e);
 		}finally{
-			SpringUtils.renderDwzResult(response, bool, bool ? "操作成功" : "操作失败", DwzResult.CALLBACK_CLOSECURRENT);
+			SpringUtils.renderDwzResult(response, bool, bool ? "操作成功" : "操作失败", DwzResult.CALLBACK_RELOADPAGE);
 		}
 	}
 
