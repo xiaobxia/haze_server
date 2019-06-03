@@ -75,25 +75,25 @@ public  class RenewalRecordService implements IRenewalRecordService {
 	@Override
 	public PageConfig<RenewalRecord> findPage(HashMap<String, Object> params) {
 		params.put(Constant.NAME_SPACE, "RenewalRecord");
-		DateUtil.sqlOptimization4DateFormat(params,"repaymentTime","repaymentTimeEnd");
+		//DateUtil.sqlOptimization4DateFormat(params,"repaymentTime","repaymentTimeEnd");
 		return paginationDao.findPage("findPage", "findPageCount", params, "web");
 	}
 
 	@Override
 	public Integer renewalTotal(HashMap<String, Object> map) {
-		DateUtil.sqlOptimization4DateFormat(map,"repaymentTime","repaymentTimeEnd");
+		//DateUtil.sqlOptimization4DateFormat(map,"repaymentTime","repaymentTimeEnd");
 		return renewalRecordDao.renewalTotal(map);
 	}
 
 	@Override
 	public Long sumFeeTotal(HashMap<String, Object> map) {
-		DateUtil.sqlOptimization4DateFormat(map,"repaymentTime","repaymentTimeEnd");
+		//DateUtil.sqlOptimization4DateFormat(map,"repaymentTime","repaymentTimeEnd");
 		return renewalRecordDao.sumFeeTotal(map);
 	}
 
 	@Override
 	public Long renewalInterestTotal(HashMap<String, Object> map) {
-		DateUtil.sqlOptimization4DateFormat(map,"repaymentTime","repaymentTimeEnd");
+		//DateUtil.sqlOptimization4DateFormat(map,"repaymentTime","repaymentTimeEnd");
 		return renewalRecordDao.renewalInterestTotal(map);
 	}
 

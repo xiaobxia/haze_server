@@ -22,7 +22,7 @@
 							   value="${params.phone }" />
 					</td>
 					<td>
-						还款时间:
+						续期后应还款时间:
 						<input type="text" name="repaymentTime" id="ren_repaymentTime"
 							   class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly"
 							   value="${params.repaymentTime}" />-

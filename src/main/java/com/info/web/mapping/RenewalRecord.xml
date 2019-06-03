@@ -58,9 +58,9 @@
     </select>
 
     <select id="queryRenewalOrder" resultMap="BaseResultMap">
-SELECT a.* from asset_renewal_record a
-LEFT JOIN out_orders o on o.order_no = a.order_id
- where  o.user_id = a.user_id and o.`status` = 0 and a.`status`= 0
+        SELECT a.* from asset_renewal_record a
+        LEFT JOIN out_orders o on o.order_no = a.order_id
+         where  o.user_id = a.user_id and o.`status` = 0 and a.`status`= 0
   </select>
     <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
         select
@@ -317,7 +317,8 @@ LEFT JOIN out_orders o on o.order_no = a.order_id
         user_info u,
         asset_repayment r
         where rr.user_id = u.id
-        and rr.asset_repayment_id = r.id and rr.status in (1,5) and rr.return_money = 0
+        and rr.asset_repayment_id = r.id and rr.status in (1) and rr.return_money = 0
+       /* and rr.asset_repayment_id = r.id and rr.status in (1,5) and rr.return_money = 0*/
         <if test="phone != null and phone != ''">
             and u.user_phone = #{phone}
         </if>
@@ -337,8 +338,9 @@ LEFT JOIN out_orders o on o.order_no = a.order_id
         user_info u,
         asset_repayment r
         where rr.user_id = u.id
-        and rr.asset_repayment_id = r.id and rr.status in (1,5) and rr.return_money = 0
-        <if test="phone != null and phone != ''">
+        and rr.asset_repayment_id = r.id and rr.status in (1) and rr.return_money = 0
+        /*        and rr.asset_repayment_id = r.id and rr.status in (1,5) and rr.return_money = 0
+*/        <if test="phone != null and phone != ''">
             and u.user_phone = #{phone}
         </if>
         <if test="orderTime != null">
@@ -369,7 +371,7 @@ LEFT JOIN out_orders o on o.order_no = a.order_id
             and rd.repayment_time >= #{repaymentTime}
         </if>
         <if test="repaymentTimeEnd != null">
-            <![CDATA[ and rd.repayment_time < #{repaymentTimeEnd} ]]>
+            <![CDATA[ and rd.repayment_time <= #{repaymentTimeEnd} ]]>
             <!--<![CDATA[ and rd.repayment_time < #{repaymentTimeChangeEnd} ]]>-->
         </if>
         <if test="userName != null">
@@ -406,7 +408,8 @@ LEFT JOIN out_orders o on o.order_no = a.order_id
     <select id="renewalTotal" resultType="java.lang.Integer" parameterType="map">
         select count(1)
         from asset_renewal_record rd
-        where rd.status in (1,5,13,16)
+        where rd.status in (1)
+        /*where rd.status in (1,5,13,16)*/
         <!--  <if test="phone != null and phone != ''">
           and u.user_phone = #{phone}
         </if> -->
@@ -414,7 +417,10 @@ LEFT JOIN out_orders o on o.order_no = a.order_id
             and rd.repayment_time >= #{repaymentTime}
         </if>
         <if test="repaymentTimeEnd != null and repaymentTimeEnd != ''">
+<!--
             <![CDATA[ and rd.repayment_time < #{repaymentTimeChangeEnd} ]]>
+-->
+            <![CDATA[ and rd.repayment_time <= #{repaymentTimeEnd} ]]>
         </if>
         <!--  <if test="userName != null">
            and u.realname like  '%' ||#{userName} || '%'
@@ -424,7 +430,8 @@ LEFT JOIN out_orders o on o.order_no = a.order_id
     <select id="sumFeeTotal" resultType="java.lang.Long" parameterType="map">
         select sum(sum_fee) as amount
         from asset_renewal_record rd
-        where  rd.status in (1,5,13,16)
+        where rd.status in (1)
+        /*where  rd.status in (1,5,13,16)*/
         <!--  <if test="phone != null and phone != ''">
           and u.user_phone = #{phone}
         </if> -->
@@ -432,7 +439,10 @@ LEFT JOIN out_orders o on o.order_no = a.order_id
             and rd.repayment_time >= #{repaymentTime}
         </if>
         <if test="repaymentTimeEnd != null and repaymentTimeEnd != ''">
+<!--
             <![CDATA[ and rd.repayment_time < #{repaymentTimeChangeEnd} ]]>
+-->
+            <![CDATA[ and rd.repayment_time <= #{repaymentTimeEnd} ]]>
         </if>
         <!--  <if test="userName != null">
            and u.realname like  '%' ||#{userName} || '%'
@@ -442,7 +452,8 @@ LEFT JOIN out_orders o on o.order_no = a.order_id
     <select id="renewalInterestTotal" resultType="java.lang.Long" parameterType="map">
         select sum(repayment_interest) as amount
         from asset_renewal_record  rd
-        where  rd.status in (1,5,13,16)
+        where  rd.status in (1)
+       /* where  rd.status in (1,5,13,16)*/
         <!-- <if test="phone != null and phone != ''">
          and u.user_phone = #{phone}
        </if> -->
@@ -450,7 +461,7 @@ LEFT JOIN out_orders o on o.order_no = a.order_id
             and rd.repayment_time >= #{repaymentTime}
         </if>
         <if test="repaymentTimeEnd != null and repaymentTimeEnd != ''">
-            <![CDATA[ and rd.repayment_time < #{repaymentTimeChangeEnd} ]]>
+            <![CDATA[ and rd.repayment_time <= #{repaymentTimeEnd} ]]>
         </if>
         <!--   <if test="userName != null">
             and u.realname like  '%' ||#{userName} || '%'
@@ -459,15 +470,17 @@ LEFT JOIN out_orders o on o.order_no = a.order_id
     <select id="renewalFeeTotal" resultType="java.lang.Long" parameterType="map">
         select sum(renewal_fee) as amount
         from asset_renewal_record  rd
-        where  rd.status in (1,5,13,16)
-        <!--  <if test="phone != null and phone != ''">
+        where  rd.status in (1)
+/*        where  rd.status in (1,5,13,16)
+*/        <!--  <if test="phone != null and phone != ''">
           and u.user_phone = #{phone}
         </if> -->
         <if test="repaymentTime != null and repaymentTime != ''">
             and rd.repayment_time >= #{repaymentTime}
         </if>
         <if test="repaymentTimeEnd != null and repaymentTimeEnd != ''">
-            <![CDATA[ and rd.repayment_time < #{repaymentTimeChangeEnd} ]]>
+          <!--  <![CDATA[ and rd.repayment_time < #{repaymentTimeChangeEnd} ]]>-->
+            <![CDATA[ and rd.repayment_time <= #{repaymentTimeEnd} ]]>
         </if>
         <!--  <if test="userName != null">
            and u.realname like  '%' ||#{userName} || '%'
