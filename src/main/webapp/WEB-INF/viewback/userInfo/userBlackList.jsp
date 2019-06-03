@@ -93,7 +93,7 @@
                     url : "userManage/updateUserBlackStatus",
                     success : function(ret) {
                         setTimeout(function () {
-                            $('#pagerForm-p').submit()
+                            $('#pagerForm-ubl').submit()
                         }, 200)
                     },
                     error:function(ret){
