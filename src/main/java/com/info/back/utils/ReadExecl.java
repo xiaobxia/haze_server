@@ -164,11 +164,13 @@ public class ReadExecl {
 					if(c==0){
 						customer.setUserName(cell.getStringCellValue());//客户真实姓名
 					}else if(c==1){
+						cell.setCellType(Cell.CELL_TYPE_STRING);
                         //DecimalFormat df = new DecimalFormat("#");
-                        customer.setUserPhone(String.valueOf(cell.getNumericCellValue()));//客户手机号
+                        customer.setUserPhone(cell.getStringCellValue());//客户手机号
 					}else if(c==2){
+						cell.setCellType(Cell.CELL_TYPE_STRING);
                         //DecimalFormat df = new DecimalFormat("#");
-						customer.setIdNumber(String.valueOf(cell.getStringCellValue()));//客户身份证号
+						customer.setIdNumber(cell.getStringCellValue());//客户身份证号
 					}
 				}
 			}
