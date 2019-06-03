@@ -30,7 +30,7 @@
 							<jsp:include page="${BACK_URL}/rightSubList">
 								<jsp:param value="${params.myId}" name="parentId"/>
 							</jsp:include>
-							<table class="list" width="100%" layoutH="70">
+							<table class="table" width="100%" layoutH="70">
 								<thead>
 									<tr>
 										<th width="10%" align="center">

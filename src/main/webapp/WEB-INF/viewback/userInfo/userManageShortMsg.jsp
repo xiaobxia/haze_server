@@ -41,7 +41,7 @@
 		</div>
 	</div>
 	<div class="pageContent">
-		<table class="list" width="100%" layoutH="114">
+		<table class="table" width="100%" layoutH="114">
 			<thead>
 				<tr>
 					<th align="center">序号</th>

@@ -42,7 +42,7 @@
 		<jsp:include page="${BACK_URL}/rightSubList">
 			<jsp:param value="${params.myId}" name="parentId"/>
 		</jsp:include>
-		<table class="list" width="100%" layoutH="114">
+		<table class="table" width="100%" layoutH="114">
 			<thead>
 				<tr>
 					<th align="center">反馈序号</th>
