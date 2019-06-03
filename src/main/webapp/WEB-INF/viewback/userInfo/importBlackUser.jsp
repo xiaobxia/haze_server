@@ -56,8 +56,6 @@
             console.log('in aaa')
             formData.append("filename",$("#excel_file")[0].files[0]);
             formData.append("userType",$("#userType").val());
-            console.log("123456"+$("#userType").val())
-            console.log($("#excel_file")[0].files[0])
             $.ajax({
                 url: "userManage/batchimport",
                 type: 'POST',
@@ -70,7 +68,11 @@
                     $('div[class="shadow"]').hide();
                     $('div[id="dialogBackground"]').hide();
                     setTimeout(function () {
-                        $('#pagerForm-ubl').submit()
+                        if ($("#userType").val() === '1') {
+                            $('#pagerForm-uwl').submit()
+                        } else {
+                            $('#pagerForm-ubl').submit()
+                        }
                     }, 100)
                 }
             });

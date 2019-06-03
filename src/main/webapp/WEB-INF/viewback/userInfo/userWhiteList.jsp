@@ -5,7 +5,7 @@
 <%
 	String path = request.getContextPath();
 %>
-<form id="pagerForm-ubl" onsubmit="return navTabSearch(this);" action="userManage/userWhiteList?myId=${searchParams.myId}" method="post">
+<form id="pagerForm-uwl" onsubmit="return navTabSearch(this);" action="userManage/userWhiteList?myId=${searchParams.myId}" method="post">
 	<div class="pageHeader">
 		<input type="hidden" name="init" value=0>
 		<div class="searchBar">
