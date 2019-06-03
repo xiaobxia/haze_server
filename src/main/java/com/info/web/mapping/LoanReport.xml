@@ -41,14 +41,14 @@
 	 
 	 
 	<sql id="Sql">
-	<where>
+		<where>
 			<if test="beginTime !=null and beginTime !=''">
-	    		<!--<![CDATA[	and DATE_FORMAT(a.report_date,'%Y-%m-%d') >=  #{beginTime}  ]]>-->
-				<![CDATA[a.report_date >= #{beginTime}]]>
+				<!--<![CDATA[	and DATE_FORMAT(a.report_date,'%Y-%m-%d') >=  #{beginTime}  ]]>-->
+				<![CDATA[and a.report_date >= #{beginTime}]]>
 			</if>
 			<if test="endTime !=null and endTime !=''">
-		    	<!--<![CDATA[	and DATE_FORMAT(a.report_date,'%Y-%m-%d') <=  #{endTime}  ]]>-->
-				<![CDATA[a.report < #{endTimeChangeEnd}]]>
+				<!--<![CDATA[	and DATE_FORMAT(a.report_date,'%Y-%m-%d') <=  #{endTime}  ]]>-->
+				<![CDATA[and a.report < #{endTimeChangeEnd}]]>
 			</if>
 		</where>
 	</sql>
