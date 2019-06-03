@@ -820,3 +820,10 @@ input:disabled {
     line-height: 25px;
     text-decoration: none;
 }
+
+textarea:disabled {
+    cursor: not-allowed !important;
+    background-color: #f5f7fa !important;
+    border-color: #e4e7ed !important;
+    color: #c0c4cc !important;
+}
