@@ -23,7 +23,7 @@
         </div>
         <div class="form-item">
             <span class="label">续期费用：</span>
-            <input type="text" name="p-extendMoney" id="extendMoney" value="${backExtend.extendMoney}" readonly />元
+            <input type="text" name="p-extendMoney" id="extendMoney" value="${backExtend.extendMoney/100}" readonly />元
         </div>
         <div class="form-item">
             <span class="label">续期天数：</span>
