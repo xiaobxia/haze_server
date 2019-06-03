@@ -205,7 +205,7 @@ public class BannerController extends BaseController {
         String msg = "操作成功";
         boolean succ = true;
         if (!file.isEmpty()) {// 判断是否有上传文件
-            SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+            /*SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
             String path = SysCacheUtils.getServletContext().getRealPath("/files") + File.separator + "images_banner" + File.separator + format.format(new Date());
             File f = new File(path);
             if (!f.exists()) {
@@ -218,13 +218,16 @@ public class BannerController extends BaseController {
                 ext = originalFilename.substring(originalFilename.lastIndexOf("."));
             }
             path += File.separator + time + ext;
-            File newFile = new File(path);
+            File newFile = new File(path);*/
             try {
-                file.transferTo(newFile);
+                /*file.transferTo(newFile);
                 Map<String, String> keys = SysCacheUtils
-                        .getConfigParams(BackConfigParams.APP_IMG_URL);
-                String appurl = keys.get("APP_IMG_URL");
-                String url = appurl + "files/images_banner/" + format.format(new Date()) + "/" + time + ext;
+                        .getConfigParams(BackConfigParams.APP_IMG_URL);*/
+                //String appurl = keys.get("APP_IMG_URL");
+                //String url = appurl + "files/images_banner/" + format.format(new Date()) + "/" + time + ext;
+
+                String url = ossClientUtil.uploadAndGetUrl(file, "images_banner");
+
 //				String url = "http://192.168.1.134:" + request.getServerPort() + "/backcashman/" + "files/images_banner/" + format.format(new Date()) + "/" + time + ext;
                 banner.setUrl(url);
             } catch (Exception e) {
