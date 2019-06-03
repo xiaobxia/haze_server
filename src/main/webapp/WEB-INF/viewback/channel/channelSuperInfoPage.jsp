@@ -13,10 +13,10 @@
 				<tr>
 					<td>
 						渠道商名称:
-						<input type="text" name="channelName"
-							   value="${params.channelName}" />
+						<input type="text" name="channelSuperName"
+							   value="${params.channelSuperName}" />
 					</td>
-					<td>
+					<%--<td>
 						负责人:
 						<input type="text" name="operatorName"
 							   value="${params.operatorName}" />
@@ -25,7 +25,7 @@
 						联系方式:
 						<input type="text" name="channelTel"
 							   value="${params.channelTel}" />
-					</td>
+					</td>--%>
 					 
 					<td>
 							添加时间：

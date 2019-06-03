@@ -68,7 +68,7 @@
 				uc.user_id=#{userId}
 			</if>
 			<if test="userName !=null and userName !=''">
-				AND u.user_name=#{userName}
+				AND u.realname=#{userName}
 			</if>
 			<if test="userPhone !=null and userPhone !=''">
 				AND uc.phone=#{userPhone}

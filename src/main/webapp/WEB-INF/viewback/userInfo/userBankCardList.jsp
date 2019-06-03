@@ -31,6 +31,8 @@
 						<input type="text" name="cardNo"
 							   value="${params.cardNo }" />
 					</td>
+				</tr>
+				<tr>
 					<td>
 						状态
 						<select name="status">
