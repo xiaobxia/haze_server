@@ -30,7 +30,7 @@
 					<td>
 						<div class="buttonActive-blue">
 							<div class="buttonContent-blue">
-								<a href="https://fully-online.oss-cn-hangzhou.aliyuncs.com/excel/black.xlsx">下载模板</a>
+								<a href="https://fully-online.oss-cn-hangzhou.aliyuncs.com/excel/blacklist.xlsx">下载模板</a>
 							</div>
 						</div>
 					</td>
