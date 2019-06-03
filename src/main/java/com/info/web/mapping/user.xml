@@ -961,7 +961,7 @@
 		zm_status as zmStatus,
 		create_time as createTime,
 		td_status as tdStatus
-		FROM user_info where invite_userid in (SELECT user_id from  `channel_user_info` where channel_id=#{channelId})
+		FROM user_info where user_from = #{channelId}
 		<if test="userPhone !=null and userPhone !=''">
 			AND user_phone=#{userPhone}
 		</if>
@@ -974,7 +974,7 @@
 		order by create_time DESC
 	</select>
 	<select id="selectByChannelIdCount" resultType="Integer" parameterType="HashMap">
-		SELECT count(1) FROM user_info where invite_userid in (SELECT user_id from  `channel_user_info` where channel_id=#{channelId})
+		SELECT count(1) FROM user_info where user_from = #{channelId}
 		<if test="userPhone !=null and userPhone !=''">
 			AND user_phone=#{userPhone}
 		</if>
@@ -984,6 +984,7 @@
 		<if test="endTime !=null and endTime !=''">
 			<![CDATA[	and DATE_FORMAT(create_time,'%Y-%m-%d') <=  #{endTime}  ]]>
 		</if>
+	 	<!--invite_userid in (SELECT user_id from  `channel_user_info` where channel_id=#{channelId})-->
 	</select>
 
 	<select id="getRoleByUserId" resultType="Integer">
