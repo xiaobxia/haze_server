@@ -296,9 +296,9 @@ public class BorrowOrder {
 		borrowStatusMap.put(STATUS_KKZ, "扣款中");// +
 		borrowStatusMap.put(STATUS_KKSB, "扣款失败");// +
 
-		//添加新用户和老用户
+		/*//添加新用户和老用户
 		borrowStatusMap.put(88,"老用户");
-		borrowStatusMap.put(66,"新用户");
+		borrowStatusMap.put(66,"新用户");*/
 
 		//添加AI状态
 		borrowStatusMap.put(666, "待AI验证");

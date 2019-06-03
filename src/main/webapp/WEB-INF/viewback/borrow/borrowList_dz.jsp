@@ -35,7 +35,7 @@
                                   value="${params.endloanTime}" class="date textInput readonly"
                                   datefmt="yyyy-MM-dd" readonly="readonly"/>
                     </td>
-                    <td>
+                   <%-- <td>
                         放款账户：
                         <select name="capitalType" id="capitalType">
                             <option value="">全部</option>
@@ -47,7 +47,7 @@
                                 </option>
                             </c:forEach>
                         </select>
-                    </td>
+                    </td>--%>
 
                     <td>
                     借款金额:

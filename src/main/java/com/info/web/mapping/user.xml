@@ -679,10 +679,6 @@
 	<!-- 后台 -->
 	<!-- 用户列表 -->
 	<select id="selectUserCount" resultType="int" parameterType="Map" fetchSize="200">
-
-/*
-		select count(*) from user_info where 1=1
-*/
 		SELECT
 		count(uc.id)
 		FROM
@@ -708,14 +704,11 @@
 		<if test="userPhone != null and userPhone !=''">
 		and <![CDATA[uc.user_phone = #{userPhone}]]>
 		</if>
-		<if test="createTime !=null and createTime !='' and beginTime !=null and beginTime !='' " >
-		 and <![CDATA[uc.create_time>=#{createTime} AND create_time<=#{beginTime}]]>
-		 </if>
 		 <if test="createTime !=null and createTime !='' " >
-		 and <![CDATA[uc.create_time>=#{createTime}]]>
+		 and <![CDATA[DATE_FORMAT(uc.create_time,'%Y-%m-%d')>=#{createTime}]]>
 		 </if>
 		 <if test="beginTime !=null and beginTime !=''" >
-		 and <![CDATA[uc.create_time<=#{beginTime}]]>
+		 and <![CDATA[DATE_FORMAT(uc.create_time,'%Y-%m-%d')<=#{beginTime}]]>
 		</if>
 		<if test="status != null and status !=''">
 		 and <![CDATA[uc.status=#{status}]]>
@@ -814,9 +807,6 @@
 	</select>
 	<!-- 用户列表 多条件查询 -->
 	<select id="selectUserPage" resultType="map" parameterType="HashMap">
-		/*select
-			id,user_name,user_phone,realname,realname_status,id_number,status,create_time,user_sex,company_name
-		from user_info where 1=1 */
 		SELECT
 		uc.id as id,
 		ui.channel_super_code as channelSuperCode,
@@ -860,14 +850,11 @@
 		<if test="userPhone != null and userPhone !=''">
 		and <![CDATA[uc.user_phone = #{userPhone}]]>
 		</if>
-		<if test="createTime !=null and createTime !='' and beginTime !=null and beginTime !='' " >
-		 and <![CDATA[uc.create_time>=#{createTime} AND uc.create_time<=#{beginTime}]]>
-		 </if>
 		 <if test="createTime !=null and createTime !='' " >
-		 and <![CDATA[uc.create_time>=#{createTime}]]>
+		 and <![CDATA[DATE_FORMAT(uc.create_time,'%Y-%m-%d')>=#{createTime}]]>
 		 </if>
 		 <if test="beginTime !=null and beginTime !='' " >
-		 and <![CDATA[uc.create_time<=#{beginTime}]]>
+		 and <![CDATA[DATE_FORMAT(uc.create_time,'%Y-%m-%d')<=#{beginTime}]]>
 		</if>
 		<if test="status != null and status !=''">
 		 and <![CDATA[uc.status=#{status}]]>
