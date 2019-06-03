@@ -9,6 +9,7 @@
 		    <result column="status" property="status" jdbcType="INTEGER"/>
 		    <result column="remark" property="remark" jdbcType="VARCHAR"/>
 		    <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		    <result column="user_type" property="userType" jdbcType="INTEGER"/>
 	</resultMap>
 	<select id = "getBackUserList"  parameterType="HashMap" resultType="HashMap" >
       select
@@ -18,9 +19,10 @@
 		  id_number as idNumber,
 		  status as status,
 		  remark as remark,
-		  create_time as createTime
+		  create_time as createTime,
+		  user_type as userType
 		  from user_black
-      where status =0
+        where status =0
 		<if test="id != null">
 			and id = #{id}
 		</if>
@@ -33,8 +35,11 @@
 		<if test="idNumber != null">
 			and id_number = #{idNumber}
 		</if>
+		<if test="userType != null">
+            and user_type = #{userType}
+		</if>
 	</select>
-	<select id="userBlackList" resultMap="BaseResultMap" resultType="com.info.web.pojo.UserBlack">
+	<select id="userBlackList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
      select
 		  id as id,
 		  user_name as userName,
@@ -42,20 +47,12 @@
 		  id_number as idNumber,
 		  status as status,
 		  remark as remark,
-		  create_time as createTime
+		  create_time as createTime,
+		  user_type as userType
 	  from user_black
 	  where status =0
-		<if test="id != null">
-			and id = #{id}
-		</if>
-		<if test="userName != null">
-			and user_name = #{userName}
-		</if>
-		<if test="userPhone != null">
-			and user_phone = #{userPhone}
-		</if>
-		<if test="idNumber != null">
-			and id_number = #{idNumber}
+		<if test="userType != null">
+			and user_type = #{userType}
 		</if>
 	</select>
 	<select id="getBackUserCount" parameterType="HashMap" resultType="java.lang.Integer">
@@ -72,6 +69,9 @@
 		<if test="idNumber != null">
 			and id_number = #{idNumber}
 		</if>
+		<if test="userType != null">
+			and user_type = #{userType}
+		</if>
 	</select>
 	<insert id="addUserBlack" parameterType="com.info.web.pojo.UserBlack">
 		insert into user_black
@@ -79,11 +79,13 @@
 		user_name,
 		user_phone,
 		id_number,
-		create_time) VALUES (
+		create_time,
+		user_type) VALUES (
 		#{userName},
 		#{userPhone},
 		#{idNumber},
-		#{createTime}
+		#{createTime},
+		#{userType}
 		)
 	</insert>
 	<update id="updateUserBlackStatus" parameterType="java.lang.Integer">

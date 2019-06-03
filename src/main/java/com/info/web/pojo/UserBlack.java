@@ -1,5 +1,6 @@
 package com.info.web.pojo;
 
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,6 +12,7 @@ public class UserBlack implements Serializable {
     private Integer status;//状态
     private String remark;//备注
     private Date createTime;//创建时间
+    private Integer userType;//用户类型 0 黑名单 1 白名单
 
     public Integer getId() {
         return id;
@@ -68,6 +70,14 @@ public class UserBlack implements Serializable {
         this.createTime = createTime;
     }
 
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -81,7 +91,8 @@ public class UserBlack implements Serializable {
         if (idNumber != null ? !idNumber.equals(userBlack.idNumber) : userBlack.idNumber != null) return false;
         if (status != null ? !status.equals(userBlack.status) : userBlack.status != null) return false;
         if (remark != null ? !remark.equals(userBlack.remark) : userBlack.remark != null) return false;
-        return createTime != null ? createTime.equals(userBlack.createTime) : userBlack.createTime == null;
+        if (createTime != null ? !createTime.equals(userBlack.createTime) : userBlack.createTime != null) return false;
+        return userType != null ? userType.equals(userBlack.userType) : userBlack.userType == null;
     }
 
     @Override
@@ -93,6 +104,7 @@ public class UserBlack implements Serializable {
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (remark != null ? remark.hashCode() : 0);
         result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
+        result = 31 * result + (userType != null ? userType.hashCode() : 0);
         return result;
     }
 }
