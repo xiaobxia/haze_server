@@ -35,7 +35,6 @@
         <th>手机号</th>
         <th>状态</th>
         <th>审核人员</th>
-        <th>备注</th>
     </tr>
     <c:forEach var="borrow" items="${userBorrows }" varStatus="status">
         <tr>
@@ -79,11 +78,6 @@
             <c:if test="${borrow.reviwRiskLabel == 3}">
                 <td>${borrow.reBackUserName}</td>
             </c:if>
-            <td>
-                    <%--<c:if test="${appName eq borrow.orderTypeName }">--%>
-                <span class="showRisk green-click-btn" onclick="riskModel('${borrow.id}','${borrow.projectName}')">查看</span>
-                    <%--</c:if>--%>
-            </td>
         </tr>
     </c:forEach>
 </table>
