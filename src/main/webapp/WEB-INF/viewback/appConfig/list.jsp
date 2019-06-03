@@ -5,9 +5,8 @@
 <%
     String path = request.getContextPath();
 %>
-<script type="text/javascript" src="${path}/resources/js/productAmount_choose.js"></script>
 
-<form id="pagerForm-p" onsubmit="return navTabSearch(this);"
+<form id="pagerForm-ac" onsubmit="return navTabSearch(this);"
       action="appConfig/list?myId=${params.myId}" method="post">
     <div class="pageHeader">
         <div class="searchBar">
@@ -109,7 +108,7 @@
             url : "appConfig/openOrCloseConfig",
             success : function(ret) {
                 setTimeout(function () {
-                    $('#pagerForm-p').submit()
+                    $('#pagerForm-ac').submit()
                 }, 100)
             },
             error:function(ret){
@@ -128,7 +127,7 @@
                 url : "appConfig/editConfig",
                 success : function(ret) {
                     setTimeout(function () {
-                        $('#pagerForm-p').submit()
+                        $('#pagerForm-ac').submit()
                     }, 200)
                 },
                 error:function(ret){

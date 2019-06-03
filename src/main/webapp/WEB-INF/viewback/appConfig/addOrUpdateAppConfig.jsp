@@ -85,7 +85,7 @@
                 $('div[class="shadow"]').hide();
                 $('div[id="dialogBackground"]').hide();
                 setTimeout(function () {
-                    $('#pagerForm-p').submit()
+                    $('#pagerForm-ac').submit()
                 }, 100)
             },
             error:function(ret){

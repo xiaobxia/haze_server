@@ -136,8 +136,8 @@
                         </c:choose>
                     </td>
                     <td width="15%">
-                        <a class="setBtn" href="product/toExtendDetail?id=${product.productId}" class="edit" target="dialog" width="520" height="350" rel="jbsxBox" mask="true">续期详情</a>
-                        <a class="setBtn" href="product/toLimitDetail?id=${product.productId}" class="edit" target="dialog" width="520" height="350" rel="jbsxBox" mask="true">提额详情</a>
+                        <a class="setBtn" href="product/toExtendDetail?id=${product.extendId}" class="edit" target="dialog" width="520" height="350" rel="jbsxBox" mask="true">续期详情</a>
+                        <a class="setBtn" href="product/toLimitDetail?id=${product.limitId}" class="edit" target="dialog" width="520" height="350" rel="jbsxBox" mask="true">提额详情</a>
                     </td>
                     <td>
                         <c:choose>
