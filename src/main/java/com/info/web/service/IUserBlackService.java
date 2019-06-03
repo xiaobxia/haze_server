@@ -14,7 +14,7 @@ public interface IUserBlackService {
      * @param file
      * @return
      */
-    boolean batchImport(String name,MultipartFile file);
+    boolean batchImport(String name,MultipartFile file,String userType);
     /**
      * 修改黑名单用户状态（删除）
      * @param id

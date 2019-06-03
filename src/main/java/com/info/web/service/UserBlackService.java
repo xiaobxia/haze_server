@@ -11,6 +11,7 @@ import com.info.back.utils.ReadExecl;
 import com.info.web.pojo.UserBlack;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +29,7 @@ public class UserBlackService implements  IUserBlackService{
 
 
     @Override
-    public boolean batchImport(String name, MultipartFile file) {
+    public boolean batchImport(String name, MultipartFile file,String userType) {
         boolean b = false;
         try{
             //创建处理EXCEL
@@ -37,17 +38,29 @@ public class UserBlackService implements  IUserBlackService{
             List<UserBlack> customerList = readExcel.getExcelInfo(name ,file);
             //execl中的结果去重
             List<UserBlack> collect = customerList.stream().distinct().collect(Collectors.toList());
-            //查出数据库现在的黑名单用户
-            List<UserBlack> list = iUserBlackDao.userBlackList();
-            //execl 与本地库 取差集
-            List<UserBlack> distinctByUniqueList = collect.stream() .filter(item -> !list.stream() .map(e -> e.getUserName()+ e.getUserPhone() + e.getIdNumber())
-                    .collect(Collectors.toList()) .contains(item.getUserName() + item.getUserPhone() + item.getIdNumber())) .collect(Collectors.toList());
-            if(distinctByUniqueList != null){
-                b = true;
-            }
-            for(UserBlack userBlack:distinctByUniqueList){
-                userBlack.setCreateTime(new Date());
-                iUserBlackDao.addUserBlack(userBlack);
+            //查出数据库现在的白名单用户
+            List<UserBlack>  list = iUserBlackDao.userBlackList(Integer.valueOf(userType));
+            if(list.size()>0){
+                //execl 与本地库 取差集
+                List<UserBlack> distinctByUniqueList = collect.stream() .filter(item -> !list.stream() .map(e -> e.getUserName()+ e.getUserPhone() + e.getIdNumber())
+                        .collect(Collectors.toList()) .contains(item.getUserName() + item.getUserPhone() + item.getIdNumber())) .collect(Collectors.toList());
+                if(distinctByUniqueList != null){
+                    b = true;
+                }
+                for(UserBlack userBlack:distinctByUniqueList){
+                    userBlack.setUserType(Integer.valueOf(userType));
+                    userBlack.setCreateTime(new Date());
+                    iUserBlackDao.addUserBlack(userBlack);
+                }
+            }else{
+                if(collect != null){
+                    b = true;
+                }
+                for(UserBlack userBlack:collect){
+                    userBlack.setUserType(Integer.valueOf(userType));
+                    userBlack.setCreateTime(new Date());
+                    iUserBlackDao.addUserBlack(userBlack);
+                }
             }
         }catch (Exception e){
            log.error("批量导入黑名单",e.getMessage());
@@ -74,4 +87,6 @@ public class UserBlackService implements  IUserBlackService{
         params.put(Constant.NAME_SPACE, "UserBlack");
         return paginationDao.findPage("getBackUserList", "getBackUserCount", params,"web");
     }
+
+
 }

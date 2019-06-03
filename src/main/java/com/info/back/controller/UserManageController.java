@@ -196,7 +196,7 @@ public class UserManageController extends BaseController{
 		} catch (Exception e) {
 			log.error("operation error:{}",e);
 		}
-		SpringUtils.renderDwzResult(response, bool, bool ? "操作成功" : "操作失败", DwzResult.CALLBACK_RELOADPAGE);
+		SpringUtils.renderDwzResult(response, bool, bool ? "操作成功" : "操作失败", DwzResult.CALLBACK_CLOSECURRENT);
 	}
 	
 	/**
@@ -421,7 +421,7 @@ public class UserManageController extends BaseController{
 	}
 
     /**
-     * 批量导入黑名单用户
+     * 批量导入黑/白名单用户
      * @param file
      * @param request
      * @param response
@@ -434,6 +434,8 @@ public class UserManageController extends BaseController{
                               HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
+		HashMap<String, Object> params = getParametersO(request);
+		String userType=request.getParameter("userType");
         //判断文件是否为空
         if(file==null) return null;
         //获取文件名
@@ -442,7 +444,7 @@ public class UserManageController extends BaseController{
         long size=file.getSize();
         if(name==null || ("").equals(name) && size==0) return null;
         //批量导入。参数：文件名，文件。
-        boolean b = userBlackService.batchImport(name,file);
+        boolean b = userBlackService.batchImport(name,file,userType);
         if(b){
            return Result.success();
         }else{
@@ -461,6 +463,7 @@ public class UserManageController extends BaseController{
         try{
             HashMap<String, Object> params = getParametersO(request);
             model.addAttribute("params", params);// 用于搜索框保留值
+			params.put("userType","0");
             PageConfig<UserBlack> pageConfig=userBlackService.getUserPage(params);
             model.addAttribute("pm", pageConfig);
         }catch (Exception e) {
@@ -469,8 +472,27 @@ public class UserManageController extends BaseController{
         return "userInfo/userBlackList";
     }
 
+	/***
+	 * 白名单列表
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+    @RequestMapping("userWhiteList")
+    public String userWhiteList(HttpServletRequest request,Model model){
+		try{
+			HashMap<String, Object> params = getParametersO(request);
+			model.addAttribute("params", params);// 用于搜索框保留值
+			params.put("userType","1");
+			PageConfig<UserBlack> pageConfig=userBlackService.getUserPage(params);
+			model.addAttribute("pm", pageConfig);
+		}catch (Exception e) {
+			log.error("userWhiteList error:{}", e);
+		}
+		return "userInfo/userWhiteList";
+	}
 	/**
-	 * 删除黑名单用户
+	 * 删除黑名单/白名单用户
 	 * @param id
 	 * @return
 	 */
@@ -485,9 +507,8 @@ public class UserManageController extends BaseController{
 			return Result.error("删除失败");
 		}
 	}
-
 	/**
-	 * 导入黑名单
+	 * 导入黑名单/白名单
 	 * @param request
 	 * @param model
 	 * @return
@@ -496,11 +517,12 @@ public class UserManageController extends BaseController{
 	public String importBlackUser(HttpServletRequest request,Model model){
 		try{
 			HashMap<String, Object> params = getParametersO(request);
+			String userType=request.getParameter("userType");
+			params.put("userType",userType);
 			model.addAttribute("params", params);// 用于搜索框保留值
 		}catch (Exception e) {
 			log.error("importBlackUser error:{}", e);
 		}
 		return "userInfo/importBlackUser";
 	}
-
 }

@@ -5,7 +5,7 @@
 <%
 	String path = request.getContextPath();
 %>
-<form id="pagerForm-ubl" onsubmit="return navTabSearch(this);" action="userManage/userBlackList?myId=${searchParams.myId}" method="post">
+<form id="pagerForm-ubl" onsubmit="return navTabSearch(this);" action="userManage/userWhiteList?myId=${searchParams.myId}" method="post">
 	<div class="pageHeader">
 		<input type="hidden" name="init" value=0>
 		<div class="searchBar">
@@ -37,7 +37,7 @@
 					<td>
 						<div class="buttonActive-blue">
 							<div class="buttonContent-blue">
-								<a href="userManage/importBlackUser?type=tojsp&myId=${searchParams.myId}&userType=0" class="add" target="dialog" width="820" height="420" mask="true">导入黑名单</a>
+								<a href="userManage/importBlackUser?type=tojsp&myId=${searchParams.myId}&userType=1" class="add" target="dialog" width="820" height="420" mask="true">导入白名单</a>
 							</div>
 						</div>
 					</td>
@@ -54,7 +54,7 @@
 		</div>
 	</div>
 	<div class="pageContent">
-		<table class="table" width="100%" layoutH="114">
+		<table class="list" width="100%" layoutH="114">
 			<thead>
 				<tr>
 					<th align="center">姓名</th>

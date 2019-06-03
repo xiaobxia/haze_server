@@ -17,6 +17,7 @@
 <div class="pageContent new">
     <div class="pageForm">
         <form id="file-form" enctype="multipart/form-data">
+            <input type="hidden" value="${params.userType}" name="userType" id="userType">
             <div style="margin: 30px;">
                 <span style="margin-right:30px;">导入文件</span>
                 <input id="excel_file" type="file" name="filename" accept="xlsx" size="80"/>
@@ -54,6 +55,8 @@
             var formData = new FormData();
             console.log('in aaa')
             formData.append("filename",$("#excel_file")[0].files[0]);
+            formData.append("userType",$("#userType").val());
+            console.log("123456"+$("#userType").val())
             console.log($("#excel_file")[0].files[0])
             $.ajax({
                 url: "userManage/batchimport",

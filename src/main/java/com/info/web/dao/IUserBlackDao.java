@@ -1,6 +1,7 @@
 package com.info.web.dao;
 
 import com.info.web.pojo.UserBlack;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,6 +23,6 @@ public interface IUserBlackDao {
      * 黑名单用户
      * @return
      */
-    List<UserBlack> userBlackList();
+    List<UserBlack> userBlackList(@Param("userType") Integer userType);
 
 }
