@@ -225,9 +225,9 @@
 			<if test="operatorName != null and operatorName != ''">
 				and a.operator_name = #{operatorName}
 			</if>
-			<if test="superCode != null and superCode != ''">
+			<!--<if test="superCode != null and superCode != ''">
 				and b.channel_super_code= #{superCode}
-			</if>
+			</if>-->
 
 			<if test="channelTel != null and channelTel != ''">
 				and a.channel_tel = # {channelTel}
