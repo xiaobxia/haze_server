@@ -209,10 +209,10 @@
 				</foreach>
 			</if>
 			<if test="startApplyTime !=null and startApplyTime!=''">
-				<![CDATA[ and abo.created_at >= #{startApplyTime} ]]>
+				<![CDATA[ and DATE_FORMAT(abo.created_at,'%Y-%m-%d') >= #{startApplyTime} ]]>
 			</if>
 			<if test="endApplyTime !=null and endApplyTime!=''">
-				<![CDATA[ and abo.created_at < #{endApplyTime}]]>
+				<![CDATA[ and DATE_FORMAT(abo.created_at,'%Y-%m-%d') <= #{endApplyTime}]]>
 			</if>
 			<if test="borrowStatus!=null and borrowStatus!=''">
 				and abo.status=#{borrowStatus}

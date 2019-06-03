@@ -48,6 +48,9 @@
 							<option value="2" name="status" <c:if test="${searchParams.status eq 2}">selected</c:if>>是</option>
 					</select>
 					</td>
+					<td>证件号码: <input type="text" name="idNumber"
+									 value="${searchParams.idNumber }" />
+					</td>
 				</tr>
 				<tr>
 					<td>手机: <input type="text" name="userPhone"
@@ -63,9 +66,6 @@
 					</td>
 					<td>真实姓名: <input type="text" name="realname"
 									 value="${searchParams.realname }" />
-					</td>
-					<td>证件号码: <input type="text" name="idNumber"
-									 value="${searchParams.idNumber }" />
 					</td>
 					<!-- <td>&nbsp;&nbsp;&nbsp;&nbsp;</td> -->
 					<td>
@@ -100,7 +100,7 @@
 					<th align="center">可再借时间</th> -->
 					<th align="center">进件状态</th>
 					<th align="center">是否黑名单</th>
-					<th align="center">注册来源</th>
+					<%--<th align="center">注册来源</th>--%>
 					<th align="center">创建时间</th>
 				</tr>
 			</thead>
@@ -167,7 +167,7 @@
 							<span class="trueBtn">否</span>
 						</td>
 					</c:if>
-						<td align="center">
+						<%--<td align="center">
 							<c:if test ="${user.qqWechat==1}">
                               qq
 							</c:if>
@@ -177,7 +177,7 @@
 							<c:if test ="${user.qqWechat==0}">
 								正常
 							</c:if>
-						</td>
+						</td>--%>
 
 						<td align="center">
 						<fmt:formatDate value="${user.create_time }" pattern="yyyy-MM-dd HH:mm" />
