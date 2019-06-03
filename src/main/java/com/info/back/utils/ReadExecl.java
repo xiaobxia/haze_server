@@ -167,8 +167,8 @@ public class ReadExecl {
                         DecimalFormat df = new DecimalFormat("#");
                         customer.setUserPhone(String.valueOf(df.format(cell.getNumericCellValue())));//客户手机号
 					}else if(c==2){
-                        DecimalFormat df = new DecimalFormat("#");
-						customer.setIdNumber(String.valueOf(df.format(cell.getNumericCellValue())));//客户身份证号
+                        //DecimalFormat df = new DecimalFormat("#");
+						customer.setIdNumber(String.valueOf(cell.getStringCellValue()));//客户身份证号
 					}
 				}
 			}
