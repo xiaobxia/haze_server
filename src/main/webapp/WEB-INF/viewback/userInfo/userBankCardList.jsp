@@ -90,10 +90,6 @@
 						银行卡号
 					</th>
 					<th align="center" >
-						是后主卡
-					</th>
-
-					<th align="center" >
 						卡片类型
 					</th>
 					<th align="center" >
@@ -127,10 +123,6 @@
 						</td>
 						<td>
 							${bankCard.cardNo }
-						</td>
-						<td>
-							<c:if test="${bankCard.mainCard==0}">是</c:if>
-							<c:if test="${bankCard.mainCard==1}">不是</c:if>
 						</td>
 						<td>
 							<c:if test="${bankCard.type==1}">信用卡</c:if>
