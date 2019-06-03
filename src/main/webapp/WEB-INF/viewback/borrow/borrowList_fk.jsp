@@ -21,6 +21,25 @@
 					</td>
 					<td>手机: <input type="text" name="userPhone" value="${params.userPhone }" id="userPhone"/>
 					</td>
+					<td>状态： <select name="borrowStatus"  id="borrowStatus">
+						<option value="">全部</option>
+						<c:forEach var="borrowStatus" items="${BORROW_STATUS_ALL}">
+							<c:if
+									test="${borrowStatus.key eq STATUS_FSTG
+							or borrowStatus.key eq STATUS_HKZ
+							or borrowStatus.key eq STATUS_FKZ
+							or borrowStatus.key eq STATUS_FKBH
+							or borrowStatus.key eq STATUS_FKSB}">
+								<option value="${borrowStatus.key}"
+										<c:if test="${borrowStatus.key eq params.borrowStatus}">selected="selected"</c:if>>${borrowStatus.value}</option>
+							</c:if>
+						</c:forEach>
+					</select>
+					</td>
+					<td>放款时间：
+						<input type="text" name="startloanTime" id="startloanTime" value="${params.startloanTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
+						到<input type="text" name="endloanTime" id="endloanTime" value="${params.endloanTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
+					</td>
 					<%--<td>
 						审核员:
 						<select name="reviewUser" id="reviewUser" class="textInput" onchange="">
@@ -65,25 +84,6 @@
 						借款金额:
 						<select id = "productAmount" name = "productAmount"></select>
 						<input type="hidden" value="${params.productAmount}" id="product_amount_choosed"/>
-					</td>
-					<td>状态： <select name="borrowStatus"  id="borrowStatus">
-						<option value="">全部</option>
-						<c:forEach var="borrowStatus" items="${BORROW_STATUS_ALL}">
-							<c:if
-									test="${borrowStatus.key eq STATUS_FSTG
-							or borrowStatus.key eq STATUS_HKZ
-							or borrowStatus.key eq STATUS_FKZ
-							or borrowStatus.key eq STATUS_FKBH
-							or borrowStatus.key eq STATUS_FKSB}">
-								<option value="${borrowStatus.key}"
-										<c:if test="${borrowStatus.key eq params.borrowStatus}">selected="selected"</c:if>>${borrowStatus.value}</option>
-							</c:if>
-						</c:forEach>
-					</select>
-					</td>
-					<td>放款时间：
-						<input type="text" name="startloanTime" id="startloanTime" value="${params.startloanTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
-						到<input type="text" name="endloanTime" id="endloanTime" value="${params.endloanTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
 					</td>
 					<td>
 						<div class="buttonActive">

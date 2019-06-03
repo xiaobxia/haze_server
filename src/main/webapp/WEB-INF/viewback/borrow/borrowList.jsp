@@ -59,6 +59,16 @@
                             </c:forEach>
                         </select>
                     </td>
+                    <td>
+                        借款金额:
+                        <select id = "productAmount" name = "productAmount"></select>
+                        <input type="hidden" value="${params.productAmount}" id="product_amount_choosed"/>
+                    </td>
+                    <td>
+                        申请时间：
+                        <input type="text" name="startApplyTime" id="startApplyTime" value="${params.startApplyTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
+                        到<input type="text" name="endApplyTime" id="endApplyTime" value="${params.endApplyTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
+                    </td>
                     <%--<td>--%>
                         <%--审核员:--%>
                         <%--<select name="reviewUser" id="reviewUser" class="textInput" onchange="">--%>
@@ -119,19 +129,6 @@
                             <%--</c:forEach>--%>
                         <%--</select>--%>
                     <%--</td>--%>
-                    <td>
-                        借款金额:
-                        <select id = "productAmount" name = "productAmount"></select>
-                        <input type="hidden" value="${params.productAmount}" id="product_amount_choosed"/>
-                    </td>
-                    <td>
-                        申请时间：
-                        <input type="text" name="startApplyTime" id="startApplyTime" value="${params.startApplyTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
-                        到<input type="text" name="endApplyTime" id="endApplyTime" value="${params.endApplyTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
-                    </td>
-
-
-
                     <td>
                         <div class="buttonActive">
                             <div class="buttonContent">
