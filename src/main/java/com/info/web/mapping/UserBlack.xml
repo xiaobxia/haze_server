@@ -94,4 +94,10 @@
 		status=1
 		where id = #{id}
 	</update>
+	<update id="updateUserType" parameterType="java.lang.Integer">
+		update user_black
+		set
+		user_type = #{userType}
+		where id = #{id}
+	</update>
 </mapper>

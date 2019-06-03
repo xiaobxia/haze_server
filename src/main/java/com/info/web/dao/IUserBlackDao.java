@@ -25,4 +25,6 @@ public interface IUserBlackDao {
      */
     List<UserBlack> userBlackList(@Param("userType") Integer userType);
 
+    void updateUserType(@Param("userType") Integer userType,@Param("id") Integer id);
+
 }
