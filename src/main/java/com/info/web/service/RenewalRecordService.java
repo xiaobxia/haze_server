@@ -99,7 +99,7 @@ public  class RenewalRecordService implements IRenewalRecordService {
 
 	@Override
 	public Long renewalFeeTotal(HashMap<String, Object> map) {
-		DateUtil.sqlOptimization4DateFormat(map,"repaymentTime","repaymentTimeEnd");
+		//DateUtil.sqlOptimization4DateFormat(map,"repaymentTime","repaymentTimeEnd");
 		return renewalRecordDao.renewalFeeTotal(map);
 	}
 

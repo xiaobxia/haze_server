@@ -318,7 +318,7 @@
         asset_repayment r
         where rr.user_id = u.id
         and rr.asset_repayment_id = r.id and rr.status in (1) and rr.return_money = 0
-       /* and rr.asset_repayment_id = r.id and rr.status in (1,5) and rr.return_money = 0*/
+        <!-- and rr.asset_repayment_id = r.id and rr.status in (1,5) and rr.return_money = 0 -->
         <if test="phone != null and phone != ''">
             and u.user_phone = #{phone}
         </if>
@@ -338,9 +338,9 @@
         user_info u,
         asset_repayment r
         where rr.user_id = u.id
-        and rr.asset_repayment_id = r.id and rr.status in (1) and rr.return_money = 0
-        /*        and rr.asset_repayment_id = r.id and rr.status in (1,5) and rr.return_money = 0
-*/        <if test="phone != null and phone != ''">
+        and rr.asset_repayment_id = r.id and rr.status in (1)
+        <!--  and rr.asset_repayment_id = r.id and rr.status in (1,5) and rr.return_money = 0-->
+          <if test="phone != null and phone != ''">
             and u.user_phone = #{phone}
         </if>
         <if test="orderTime != null">
@@ -371,7 +371,7 @@
             and rd.repayment_time >= #{repaymentTime}
         </if>
         <if test="repaymentTimeEnd != null">
-            <![CDATA[ and rd.repayment_time <= #{repaymentTimeEnd} ]]>
+            <![CDATA[ and DATE_FORMAT(rd.repayment_time,'%Y-%m-%d') <= #{repaymentTimeEnd} ]]>
             <!--<![CDATA[ and rd.repayment_time < #{repaymentTimeChangeEnd} ]]>-->
         </if>
         <if test="userName != null">
@@ -391,26 +391,30 @@
         rd.renewal_day,
         rd.status,
         rd.repayment_time
-
         from asset_renewal_record rd ,
-        user_info u
-        where rd.user_id = u.id
+        user_info u,
+        asset_repayment r
+        where rd.user_id = u.id and rd.asset_repayment_id=r.id
         <include refid="whereSql"></include>
     </select>
     <select id="findPageCount" resultType="java.lang.Integer" parameterType="map">
         select count(1)
-        from asset_renewal_record rd,
-        user_info u
-        where rd.user_id = u.id
+        from asset_renewal_record rd ,
+        user_info u,
+        asset_repayment r
+        where rd.user_id = u.id and rd.asset_repayment_id=r.id
         <include refid="whereSql"></include>
     </select>
     <!-- 续期成功数 -->
     <select id="renewalTotal" resultType="java.lang.Integer" parameterType="map">
         select count(1)
-        from asset_renewal_record rd
-        where rd.status in (1)
-        /*where rd.status in (1,5,13,16)*/
+        from asset_renewal_record rd,
+        asset_repayment r,
+        user_info u
+        where rd.user_id = u.id and rd.asset_repayment_id=r.id and rd.status in (1)
         <!--  <if test="phone != null and phone != ''">
+        where rd.status in (1)
+        where rd.status in (1,5,13,16)
           and u.user_phone = #{phone}
         </if> -->
         <if test="repaymentTime != null and repaymentTime != ''">
@@ -420,7 +424,7 @@
 <!--
             <![CDATA[ and rd.repayment_time < #{repaymentTimeChangeEnd} ]]>
 -->
-            <![CDATA[ and rd.repayment_time <= #{repaymentTimeEnd} ]]>
+            <![CDATA[ and DATE_FORMAT(rd.repayment_time,'%Y-%m-%d') <= #{repaymentTimeEnd} ]]>
         </if>
         <!--  <if test="userName != null">
            and u.realname like  '%' ||#{userName} || '%'
@@ -429,10 +433,13 @@
     <!-- 续期总额 -->
     <select id="sumFeeTotal" resultType="java.lang.Long" parameterType="map">
         select sum(sum_fee) as amount
-        from asset_renewal_record rd
-        where rd.status in (1)
-        /*where  rd.status in (1,5,13,16)*/
+        from asset_renewal_record rd,
+        asset_repayment r,
+        user_info u
+        where rd.user_id = u.id and rd.asset_repayment_id=r.id and rd.status in (1)
         <!--  <if test="phone != null and phone != ''">
+/*        where rd.status in (1)
+*/        /*where  rd.status in (1,5,13,16)*/
           and u.user_phone = #{phone}
         </if> -->
         <if test="repaymentTime != null and repaymentTime != ''">
@@ -442,7 +449,7 @@
 <!--
             <![CDATA[ and rd.repayment_time < #{repaymentTimeChangeEnd} ]]>
 -->
-            <![CDATA[ and rd.repayment_time <= #{repaymentTimeEnd} ]]>
+            <![CDATA[ and DATE_FORMAT(rd.repayment_time,'%Y-%m-%d') <= #{repaymentTimeEnd} ]]>
         </if>
         <!--  <if test="userName != null">
            and u.realname like  '%' ||#{userName} || '%'
@@ -450,11 +457,14 @@
     </select>
     <!-- 续期服务费 -->
     <select id="renewalInterestTotal" resultType="java.lang.Long" parameterType="map">
-        select sum(repayment_interest) as amount
-        from asset_renewal_record  rd
-        where  rd.status in (1)
-       /* where  rd.status in (1,5,13,16)*/
+        select sum(rd.repayment_interest) as amount
+        from asset_renewal_record  rd,
+        user_info u,
+        asset_repayment r
+         where rd.user_id = u.id and rd.asset_repayment_id = r.id and rd.status in (1)
         <!-- <if test="phone != null and phone != ''">
+/*        where  rd.status in (1)
+*/       /* where  rd.status in (1,5,13,16)*/
          and u.user_phone = #{phone}
        </if> -->
         <if test="repaymentTime != null and repaymentTime != ''">
@@ -469,10 +479,14 @@
     </select>
     <select id="renewalFeeTotal" resultType="java.lang.Long" parameterType="map">
         select sum(renewal_fee) as amount
-        from asset_renewal_record  rd
-        where  rd.status in (1)
+        from asset_renewal_record  rd,
+        user_info u,
+        asset_repayment r
+        where rd.user_id = u.id and rd.asset_repayment_id = r.id and rd.status in (1)
+
+       <!--  <if test="phone != null and phone != ''">
+      /*  where  rd.status in (1)*/
 /*        where  rd.status in (1,5,13,16)
-*/        <!--  <if test="phone != null and phone != ''">
           and u.user_phone = #{phone}
         </if> -->
         <if test="repaymentTime != null and repaymentTime != ''">
@@ -480,7 +494,7 @@
         </if>
         <if test="repaymentTimeEnd != null and repaymentTimeEnd != ''">
           <!--  <![CDATA[ and rd.repayment_time < #{repaymentTimeChangeEnd} ]]>-->
-            <![CDATA[ and rd.repayment_time <= #{repaymentTimeEnd} ]]>
+            <![CDATA[ and DATE_FORMAT(rd.repayment_time,'%Y-%m-%d') <= #{repaymentTimeEnd} ]]>
         </if>
         <!--  <if test="userName != null">
            and u.realname like  '%' ||#{userName} || '%'
