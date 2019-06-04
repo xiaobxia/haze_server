@@ -15,31 +15,38 @@
 </head>
 <body>
 <div class="pageContent new">
-    <div class="pageForm required-validate">
+    <form id="frm" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
         <c:if test="${not empty id}">
             <input type="hidden" name="p-id" id="p-id" value="${id}"/>
             <div class="form-item">
                 <span class="label">产品名称：</span>
                 <input type="text" name="p-productName" id="productName" value="${productDetail.productName}"/>
+                <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">产品金额：</span>
                 <input type="text" name="p-borrowAmount" id="borrowAmount" value="<fmt:formatNumber type="number" value="${productDetail.borrowAmount/100}" pattern="0.00"
                                           maxFractionDigits="0"/>"/>
+                <label style="color: red;" class="required-label">*</label>
+
             </div>
             <div class="form-item">
                 <span class="label">到账金额：</span>
                 <input type="text" name="p-daozhang" id="daozhang" value="<fmt:formatNumber type="number" value="${(productDetail.borrowAmount - productDetail.totalFeeRate) /100}" pattern="0.00"
                                           maxFractionDigits="0"/>"/>
+                <label style="color: red;" class="required-label">*</label>
+
             </div>
             <div class="form-item">
                 <span class="label">滞纳金：</span>
                 <input type="text" name="p-lateFee" id="lateFee" value="<fmt:formatNumber type="number" value="${productDetail.lateFee/100}" pattern="0.00"
                                           maxFractionDigits="0"/>"/>
+                <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">借款期限：</span>
                 <input type="text" name="p-borrowDay" id="borrowDay" value="${productDetail.borrowDay}"/>
+                <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">提额：</span>
@@ -50,6 +57,7 @@
                                 <c:if test="${limitInfo.id eq productDetail.limitId}">selected="selected"</c:if> >${limitInfo.limitName}</option>
                     </c:forEach>
                 </select>
+                <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">展期：</span>
@@ -60,28 +68,34 @@
                                 <c:if test="${extendInfo.id eq productDetail.extendId}">selected="selected"</c:if> >${extendInfo.extendName}</option>
                     </c:forEach>
                 </select>
+                <label style="color: red;" class="required-label">*</label>
             </div>
         </c:if>
         <c:if test="${empty id}">
             <div class="form-item">
                 <span class="label">产品名称：</span>
                 <input type="text" name="p-productName" id="productName"/>
+                <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">产品金额：</span>
                 <input type="text" name="p-borrowAmount" id="borrowAmount"/>
+                <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">到账金额：</span>
                 <input type="text" name="p-daozhang" id="daozhang"/>
+                <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">滞纳金：</span>
                 <input type="text" name="p-lateFee" id="lateFee"/>
+                <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">借款期限：</span>
                 <input type="text" name="p-borrowDay" id="borrowDay"/>
+                <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">提额：</span>
@@ -91,6 +105,7 @@
                         <option value="${limitInfo.id}">${limitInfo.limitName}</option>
                     </c:forEach>
                 </select>
+                <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">展期：</span>
@@ -100,10 +115,12 @@
                         <option value="${extendInfo.id}">${extendInfo.extendName}</option>
                     </c:forEach>
                 </select>
+                <label style="color: red;" class="required-label">*</label>
             </div>
         </c:if>
-    </div>
-    <div class="formBar">
+    </form>
+</div>
+<div class="formBar">
         <ul>
             <li><div class="buttonActive">
                 <div class="buttonContent">
@@ -116,7 +133,6 @@
                 </div>
             </div></li>
         </ul>
-    </div>
 </div>
 </body>
 <script type="text/javascript">

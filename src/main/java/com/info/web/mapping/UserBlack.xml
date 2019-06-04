@@ -38,6 +38,7 @@
 		<if test="userType != null">
             and user_type = #{userType}
 		</if>
+		ORDER BY create_time desc
 	</select>
 	<select id="userBlackList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
      select
@@ -72,6 +73,7 @@
 		<if test="userType != null">
 			and user_type = #{userType}
 		</if>
+		ORDER BY create_time desc
 	</select>
 	<insert id="addUserBlack" parameterType="com.info.web.pojo.UserBlack">
 		insert into user_black
@@ -88,6 +90,24 @@
 		#{userType}
 		)
 	</insert>
+	<update id ="updateUserBlack" parameterType="com.info.web.pojo.UserBlack">
+      update user_black
+		<set>
+			  <if test = "userName != null">
+				  <![CDATA[user_name = #{userName},]]>
+			  </if>
+			  <if test = "userPhone != null">
+				  <![CDATA[user_phone = #{userPhone},]]>
+			  </if>
+			  <if test = "idNumber != null">
+				  <![CDATA[id_number = #{idNumber},]]>
+			  </if>
+			  <if test = "userType != null">
+				  <![CDATA[user_type = #{userType},]]>
+			  </if>
+		</set>
+	  where id = #{id}
+	</update>
 	<update id="updateUserBlackStatus" parameterType="java.lang.Integer">
 		update user_black
 		set
@@ -100,4 +120,26 @@
 		user_type = #{userType}
 		where id = #{id}
 	</update>
+	<select id="findBlackUserByParams" resultType="com.info.web.pojo.UserBlack">
+      select
+          id as id,
+		  user_name as userName,
+		  user_phone as userPhone,
+		  id_number as idNumber,
+		  status as status,
+		  remark as remark,
+		  create_time as createTime,
+		  user_type as userType
+		from user_black
+		where status =0
+		<if test="userType != null ">
+			and user_type = #{userType}
+		</if>
+		<if test="id != null">
+			and id = #{id}
+		</if>
+		<if test="userPhone != null">
+			and user_phone = #{userPhone}
+		</if>
+	</select>
 </mapper>

@@ -31,4 +31,11 @@ public interface IUserBlackService {
      * 后台查询 分页
      */
      PageConfig<UserBlack> getUserPage(HashMap<String, Object> params);
+
+    /**
+     * 通过id查询黑名单用户
+     * @param id
+     * @return
+     */
+     UserBlack findBlackUserByParams(Integer id , Integer  userType, String userPhone);
 }

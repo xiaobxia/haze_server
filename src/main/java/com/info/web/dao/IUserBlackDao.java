@@ -27,4 +27,12 @@ public interface IUserBlackDao {
 
     void updateUserType(@Param("userType") Integer userType,@Param("id") Integer id);
 
+    /**
+     * 通过id查询黑名单用户
+     * @param id
+     * @return
+     */
+    UserBlack findBlackUserByParams(@Param("id") Integer id ,@Param("userType") Integer userType ,@Param("userPhone") String userPhone);
+
+    void updateUserBlack(UserBlack userBlack);
 }

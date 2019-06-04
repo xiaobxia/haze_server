@@ -155,18 +155,21 @@ public class UserManageController extends BaseController{
 				user.setId(id);
 				user.setStatus("2");//2黑名单
 				int count=this.userService.updateByPrimaryKeyUser(user);
-				//根据用户id 查询用户信息
-                User u = userService.searchByUserid(Integer.parseInt(id));
-				//加入黑名单库
-                UserBlack userBlack = new UserBlack();
-                userBlack.setIdNumber(u.getIdNumber());
-                userBlack.setUserName(u.getRealname());
-                userBlack.setUserPhone(u.getUserPhone());
-                userBlack.setCreateTime(new Date());
-                userBlack.setUserType(0);
-                userBlackService.addUserBlack(userBlack);
 				if(count>0){
 					bool=true;
+				}
+				//根据用户id 查询用户信息
+				User u = userService.searchByUserid(Integer.parseInt(id));
+				//加入黑名单库 判断用户是否存在于黑名单（手机号）存在则不存。
+				UserBlack ub = userBlackService.findBlackUserByParams(null,0,u.getUserPhone());
+				if(ub == null){
+					UserBlack userBlack = new UserBlack();
+					userBlack.setIdNumber(u.getIdNumber());
+					userBlack.setUserName(u.getRealname());
+					userBlack.setUserPhone(u.getUserPhone());
+					userBlack.setCreateTime(new Date());
+					userBlack.setUserType(0);
+					userBlackService.addUserBlack(userBlack);
 				}
 			}else if("2".equals(request.getParameter("option"))){//注销/删除资料账户
 				User usr=this.userService.searchByUserid(Integer.parseInt(id));
