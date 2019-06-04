@@ -288,7 +288,7 @@
 			position: absolute;
 			z-index: 10;
 			height: 50px;
-			width: 190x;
+			width: 190px;
 			line-height: 50px;
 			text-align: center;
 		}
