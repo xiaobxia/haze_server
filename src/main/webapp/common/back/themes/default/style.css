@@ -787,6 +787,7 @@ input:disabled {
 .peizhi-pannel .form-wrap {
     position: relative;
     padding: 20px;
+    min-height: 160px;
 }
 
 .form-wrap .form-item {
