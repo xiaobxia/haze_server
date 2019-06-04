@@ -166,7 +166,7 @@ public class ChannelInfoController extends BaseController {
     public String getChannelRecordPage(HttpServletRequest request, Model model) {
         try {
             HashMap<String, Object> params = getParametersO(request);
-            BackUser backUser = this.loginAdminUser(request);
+           /* BackUser backUser = this.loginAdminUser(request);
             if (backUser != null
                     && !StringUtils.isBlank(backUser.getUserAddress())) {
                 HashMap<String, Object> pm = new HashMap<>();
@@ -176,11 +176,29 @@ public class ChannelInfoController extends BaseController {
                 if (channelInfo != null) {
                     params.put("channelCode", channelInfo.getChannelCode());
                 }
+            }*/
+            /*
+             * 渠道商集合
+             */
+            List<ChannelSuperInfo> channelSuperInfos = channelInfoService.findSuperAll(params);
+            model.addAttribute("channelSuperInfos", channelSuperInfos);
+            String channelSuperId=request.getParameter("channelSuperId");
+            String channelName = request.getParameter("channelName");
+            if(StringUtils.isNotBlank(channelSuperId) && channelSuperId.equals("-999")) {
+                params.put("channelSuperId",null);
+                params.put("userFrom","0");
+            }
+            if(StringUtils.isNotBlank(channelName) && channelName.equals("自然流量")){
+                params.put("channelName",null);
+                params.put("userFrom","0");
             }
             PageConfig<ChannelInfo> pageConfig = channelInfoService
                     .findChannelRecordPage(params);
             model.addAttribute("pm", pageConfig);
             // 用于搜索框保留值
+            if(StringUtils.isNotBlank(channelName) && channelName.equals("自然流量")){
+                params.put("channelName","自然流量");
+            }
             model.addAttribute("params", params);
             // channelReportService.saveChannelReport();
         } catch (Exception e) {

@@ -11,7 +11,7 @@
 		<div class="searchBar">
 			<table class="searchContent">
 				<tr>
-					<td>
+					<%--<td>
 						注册用户:
 						<input type="text" name="userName"
 							   value="${params.userName}" />
@@ -26,7 +26,27 @@
 						推广员:
 						<input type="text" name="realname"
 							   value="${params.realname}" />
+					</td>--%>
+					<td>
+							渠道商:
+						<select name="channelSuperId">
+                            <option value="">全部</option>
+							<option name="channelSuperId" value="-999" <c:if test="${params.userFrom == '0'}">selected="selected"</c:if>>自然流量</option>
+							<c:forEach var="channelSuperInfo" items="${channelSuperInfos}">
+								<option value="${channelSuperInfo.id}" <c:if test="${channelSuperInfo.id eq params.channelSuperId}">selected="selected"</c:if>>${channelSuperInfo.channelSuperName}</option>
+							</c:forEach>
+						</select>
 					</td>
+					<td>
+						渠道名称：
+						<input type="text" name="channelName"
+							   value="${params.channelName}" />
+					</td>
+						<td>
+							手机号：
+							<input type="text" name="userPhone"
+								   value="${params.userPhone}" />
+						</td>
 					<td>
 							注册时间：
 							<input type="text" name="beginTime" id="beginTime" value="${params.beginTime}" class="date textInput readonly" datefmt="yyyy-MM-dd"  readonly="readonly"/>
@@ -56,6 +76,12 @@
 						序列
 					</th>
 					<th align="center"  >
+						渠道商名称
+					</th>
+					<th align="center">
+						渠道名称
+					</th>
+					<th align="center"  >
 						注册用户姓名
 					</th>
 					<th align="center"  >
@@ -70,12 +96,9 @@
 					<th align="center"  >
 						推广员电话
 					</th>--%>
-					<th align="center"  >
-						渠道商名称
-					</th>
-					<th align="center" >
+					<%--<th align="center" >
 						负责人
-					</th>
+					</th>--%>
 					
 				</tr>
 			</thead>
@@ -86,10 +109,16 @@
 							${status.index+1}
 						</td>
 						<td>
-							${channel.userName}
+							${channel.channelSuperName}
 						</td>
 						<td>
-							${channel.userTel}
+							${channel.channelName}
+						</td>
+						<td>
+							${channel.realName}
+						</td>
+						<td>
+							${channel.userPhone}
 						</td>	
 						<td>
 							<fmt:formatDate value="${channel.createTime}" pattern="yyyy-MM-dd HH:mm"/>
@@ -100,12 +129,10 @@
 						<td>
 							${channel.userPhone}
 						</td>--%>
-						<td>
-							${channel.channelName}
-						</td>
-						<td>
+
+						<%--<td>
 							${channel.operatorName}
-						</td>
+						</td>--%>
 						
 					</tr>
 				</c:forEach>

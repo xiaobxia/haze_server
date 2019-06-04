@@ -183,9 +183,8 @@
 		</where>
 	</sql>
 	
-	<select id="findRecordAllCount" resultType="Integer"
-		parameterType="HashMap">
-		SELECT COUNT(1)
+	<select id="findRecordAllCount" resultType="java.lang.Integer" parameterType="HashMap">
+		<!--SELECT COUNT(1)
 		FROM user_info a
 		INNER JOIN (
 		SELECT * FROM user_info WHERE id IN(SELECT user_id FROM channel_user_info)
@@ -193,11 +192,36 @@
 		b ON a.invite_userid=b.id
 		LEFT JOIN channel_info d ON d.id =
 		a.user_from
-		<include refid="findRecordAllSql"/>
+		<include refid="findRecordAllSql"/>-->
+		select count(u.id)
+		from user_info u left join channel_info c on u.user_from = c.id
+		left join  channel_super_info s on s.id = c.channel_super_id
+		where 1=1
+		<if test="userFrom != null">
+			and u.user_from = #{userFrom}
+		</if>
+		<if test="channelSuperId != null">
+			and s.id = #{channelSuperId}
+		</if>
+		<if test="channelSuperCode != null">
+			and s.channel_super_code = #{channelSuperCode}
+		</if>
+		<if test="channelName != null">
+			and c.channel_name = #{channelName}
+		</if>
+		<if test="userPhone != null">
+			and u.user_phone = #{userPhone}
+		</if>
+		<if test="beginTime != null">
+			<![CDATA[ and DATE_FORMAT(u.create_time,'%Y-%m-%d') >=#{beginTime} ]]>
+		</if>
+		<if test="endTime != null">
+			<![CDATA[ and DATE_FORMAT(u.create_time,'%Y-%m-%d') <= #{endTime} ]]>
+		</if>
+		order by u.create_time desc
 	</select>
-	<select id="findRecordAll" resultMap="BaseResultMap"
-		parameterType="HashMap">
-		SELECT b.realname as realname,b.user_phone AS userPhone,a.create_time
+	<select id="findRecordAll" resultType="map" parameterType="HashMap">
+        <!--SELECT b.realname as realname,b.user_phone AS userPhone,a.create_time
 		AS createTime, a.realname AS userName,a.user_phone AS userTel,d.*
 		FROM
 		user_info a
@@ -209,6 +233,39 @@
 		a.user_from
 		<include refid="findRecordAllSql"/>
 		order by a.create_time DESC
+		-->
+		select
+		IFNULL(s.channel_super_name,"自然流量") as channelSuperName ,
+		IFNULL(c.channel_name,"自然流量") as channelName ,
+		u.realname as realName,
+		u.user_phone as userPhone,
+		u.create_time as createTime,
+		s.id as channelSuperId
+		from user_info u left join channel_info c on u.user_from = c.id
+		left join  channel_super_info s on s.id = c.channel_super_id
+		where 1=1
+		<if test="userFrom != null">
+         and u.user_from = #{userFrom}
+		</if>
+		<if test="channelSuperId != null">
+         and s.id = #{channelSuperId}
+		</if>
+		<if test="channelSuperCode != null">
+         and s.channel_super_code = #{channelSuperCode}
+		</if>
+		<if test="channelName != null">
+         and c.channel_name = #{channelName}
+		</if>
+		<if test="userPhone != null">
+		  and u.user_phone = #{userPhone}
+		</if>
+		<if test="beginTime != null">
+			<![CDATA[ and DATE_FORMAT(u.create_time,'%Y-%m-%d') >=#{beginTime} ]]>
+		</if>
+		<if test="endTime != null">
+			<![CDATA[ and DATE_FORMAT(u.create_time,'%Y-%m-%d') <= #{endTime} ]]>
+		</if>
+		order by u.create_time desc
 	</select>
 	<sql id="findAllSql">
 		<where>
