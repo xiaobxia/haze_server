@@ -305,7 +305,7 @@ body, #splitBar { background:#32374A;}
 .bottom-page .pagination li.jumpto .textInput {
     float: none;
     padding: 0;
-    border: none;
+    text-align: center;
 }
 
 .bottom-page .pagination li.jumpto .goto {

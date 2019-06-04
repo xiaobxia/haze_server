@@ -288,14 +288,14 @@
 			position: absolute;
 			z-index: 10;
 			height: 50px;
-			width: 205px;
+			width: 190x;
 			line-height: 50px;
 			text-align: center;
 		}
 		.logo-wrap img {
 			display: inline-block;
 			width: auto;
-			height: 40px;
+			height: 48px;
 			vertical-align: middle;
 		}
 		.header-wrap {
