@@ -444,6 +444,10 @@ public class BorrowOrderController extends BaseController {
                     return "此状态不可操作放款";
                 }
                 User user = userService.searchByUserid(borrow.getUserId());
+                if (user.getStatus().equals(User.USER_STATUS_THREE)) {
+                    return "此用户已经被注销，不可操作放款";
+                }
+
                 //坚持放款 修改asset_borrow_order数据表中的状态为 待放款
                 BorrowOrder borrowOrder = new BorrowOrder();
                 borrowOrder.setId(Integer.valueOf(borrowId));

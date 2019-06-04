@@ -136,7 +136,7 @@ public class TaskJob implements ITaskJob {
 		// 设置超时时间
 		RequestConfig requestConfig = RequestConfig.custom()
 				.setSocketTimeout(2000).setConnectTimeout(2000).build();
-		HttpPost post = new HttpPost(PropertiesUtil.get("APP_HOST_API")+"/gringotts/task/userQuota/syn");
+		HttpPost post = new HttpPost(PropertiesUtil.get("APP_HOST_API") + "/" + PropertiesUtil.get("PAY_CHANNEL") + "/gringotts/task/userQuota/syn");
 		try{
 			post.setConfig(requestConfig);
 			httpClient.execute(post);
@@ -151,7 +151,7 @@ public class TaskJob implements ITaskJob {
 		// 设置超时时间
 		RequestConfig requestConfig = RequestConfig.custom()
 				.setSocketTimeout(2000).setConnectTimeout(2000).build();
-		HttpPost post = new HttpPost(PropertiesUtil.get("APP_HOST_API")+"/gringotts/task/everyDayuserQuota/syn");
+		HttpPost post = new HttpPost(PropertiesUtil.get("APP_HOST_API") + "/" + PropertiesUtil.get("PAY_CHANNEL") + "/gringotts/task/everyDayuserQuota/syn");
 		try{
 			post.setConfig(requestConfig);
 			httpClient.execute(post);
@@ -166,7 +166,7 @@ public class TaskJob implements ITaskJob {
 		// 设置超时时间
 		RequestConfig requestConfig = RequestConfig.custom()
 				.setSocketTimeout(2000).setConnectTimeout(2000).build();
-		HttpPost post = new HttpPost(PropertiesUtil.get("APP_HOST_API")+"/gringotts/task/mq/syn");
+		HttpPost post = new HttpPost(PropertiesUtil.get("APP_HOST_API") + "/" + PropertiesUtil.get("PAY_CHANNEL") + "/gringotts/task/mq/syn");
 		try{
 			post.setConfig(requestConfig);
 			httpClient.execute(post);
