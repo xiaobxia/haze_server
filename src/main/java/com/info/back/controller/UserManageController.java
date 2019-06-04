@@ -196,7 +196,7 @@ public class UserManageController extends BaseController{
 		} catch (Exception e) {
 			log.error("operation error:{}",e);
 		}
-		SpringUtils.renderDwzResult(response, bool, bool ? "操作成功" : "操作失败", DwzResult.CALLBACK_CLOSECURRENT);
+		SpringUtils.renderDwzResult(response, bool, bool ? "操作成功" : "操作失败", DwzResult.CALLBACK_RELOADPAGE);
 	}
 	
 	/**
