@@ -15,24 +15,28 @@
 </head>
 <body>
 <div class="pageContent new">
-    <div class="pageForm required-validate">
+    <form id="aue" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
         <c:if test="${not empty id}">
             <input type="hidden" name="p-id" id="p-id" value="${id}"/>
             <div class="form-item">
                 <span class="label">续期类型：</span>
-                <input type="text" name="p-extendName" id="extendName" value="${backExtend.extendName}"/>
+                <input class="required" type="text" name="p-extendName" id="extendName" value="${backExtend.extendName}"/>
+                <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">续期次数：</span>
-                <input type="text" name="p-extendCount" id="extendCount" value="${backExtend.extendCount}"/>
+                <input class="required" type="text" name="p-extendCount" id="extendCount" value="${backExtend.extendCount}"/>
+                <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">续期费用：</span>
-                <input type="text" name="p-extendMoney" id="extendMoney" value="${backExtend.extendMoney/100}"/>元
+                <input class="required" type="text" name="p-extendMoney" id="extendMoney" value="${backExtend.extendMoney/100}"/>元
+                <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">续期天数：</span>
-                <input type="text" name="p-extendDay" id="extendDay" value="${backExtend.extendDay}"/>
+                <input class="required" type="text" name="p-extendDay" id="extendDay" value="${backExtend.extendDay}"/>
+                <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">备注：</span>
@@ -42,26 +46,30 @@
         <c:if test="${empty id}">
             <div class="form-item">
                 <span class="label">续期类型：</span>
-                <input type="text" name="p-extendName" id="extendName"/>
+                <input class="required" type="text" name="p-extendName" id="extendName"/>
+                <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">续期次数：</span>
-                <input type="text" name="p-extendCount" id="extendCount"/>
+                <input class="required" type="text" name="p-extendCount" id="extendCount"/>
+                <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">续期费用：</span>
-                <input type="text" name="p-extendMoney" id="extendMoney"/>元
+                <input class="required" type="text" name="p-extendMoney" id="extendMoney"/>元
+                <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">续期天数：</span>
-                <input type="text" name="p-extendDay" id="extendDay"/>
+                <input class="required" type="text" name="p-extendDay" id="extendDay"/>
+                <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">备注：</span>
                 <input type="text" name="p-remark" id="remark"/>
             </div>
         </c:if>
-    </div>
+    </form>
     <div class="formBar">
         <ul>
             <li><div class="buttonActive">
@@ -86,6 +94,10 @@
     var postUrl = "product/addExtend"
     </c:if>
     $('#p-submit').click(function () {
+        var $form = $("#aue");
+        if (!$form.valid()) {
+            return false;
+        }
         $.ajax({
             type : "post",
             data:{
@@ -105,8 +117,7 @@
                     $('#pagerForm-e').submit()
                 }, 100)
             },
-            error:function(ret){
-            }
+            error:DWZ.ajaxError
         })
     })
 </script>

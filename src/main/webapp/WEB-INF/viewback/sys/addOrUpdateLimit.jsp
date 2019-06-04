@@ -15,16 +15,18 @@
 </head>
 <body>
 <div class="pageContent new">
-    <div class="pageForm required-validate">
+    <form id="aul" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
         <c:if test="${not empty id}">
             <input type="hidden" name="l-id" id="l-id" value="${id}"/>
             <div class="form-item">
                 <span class="label">提额类型：</span>
-                <input type="text" name="l-limitName" id="limitName" value="${backLimit.limitName}"/>
+                <input class="required" type="text" name="l-limitName" id="limitName" value="${backLimit.limitName}"/>
+                <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">还款几次可提额：</span>
-                <input type="text" name="l-limitCount" id="limitCount" value="${backLimit.limitCount}"/>
+                <input class="required" type="text" name="l-limitCount" id="limitCount" value="${backLimit.limitCount}"/>
+                <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">备注：</span>
@@ -32,23 +34,26 @@
             </div>
             <div class="form-item">
                 <span class="label">提额至产品：</span>
-                <select name="l-limitProductId" class="textInput">
+                <select class="required" name="l-limitProductId" class="textInput">
                     <option value="">全部</option>
                     <c:forEach var="productInfo" items="${list}">
                         <option value="${productInfo.productId}"
                                 <c:if test="${productInfo.productId eq backLimit.limitProductId}">selected="selected"</c:if> >${productInfo.productName}</option>
                     </c:forEach>
                 </select>
+                <label style="color: red;" class="required-label">*</label>
             </div>
         </c:if>
         <c:if test="${empty id}">
             <div class="form-item">
                 <span class="label">提额类型：</span>
-                <input type="text" name="l-limitName" id="limitName"/>
+                <input class="required" type="text" name="l-limitName" id="limitName"/>
+                <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">还款几次可提额：</span>
-                <input type="text" name="l-limitCount" id="limitCount"/>
+                <input class="required" type="text" name="l-limitCount" id="limitCount"/>
+                <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">备注：</span>
@@ -56,15 +61,16 @@
             </div>
             <div class="form-item">
                 <span class="label">提额至产品：</span>
-                <select name="l-limitProductId" class="textInput">
+                <select class="required" name="l-limitProductId" class="textInput">
                     <option value="">全部</option>
                     <c:forEach var="productInfo" items="${list}">
                         <option value="${productInfo.productId}">${productInfo.productName}</option>
                     </c:forEach>
                 </select>
+                <label style="color: red;" class="required-label">*</label>
             </div>
         </c:if>
-    </div>
+    </form>
     <div class="formBar">
         <ul>
             <li><div class="buttonActive">
@@ -89,6 +95,10 @@
     var postUrl = "product/addBackLimit"
     </c:if>
     $('#l-submit').click(function () {
+        var $form = $("#aul");
+        if (!$form.valid()) {
+            return false;
+        }
         $.ajax({
             type : "post",
             data:{
@@ -107,8 +117,7 @@
                     $('#pagerForm-l').submit()
                 }, 100)
             },
-            error:function(ret){
-            }
+            error:DWZ.ajaxError
         })
     })
 </script>

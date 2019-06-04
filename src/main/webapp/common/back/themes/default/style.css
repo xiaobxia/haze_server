@@ -787,11 +787,17 @@ input:disabled {
 .peizhi-pannel .form-wrap {
     position: relative;
     padding: 20px;
-    min-height: 160px;
+    min-height: 180px;
 }
 
 .form-wrap .form-item {
     height: 30px;
+}
+.form-item {
+    position: relative;
+}
+.form-item span.error {
+    top: 0;
 }
 
 .buttonActive-blue {

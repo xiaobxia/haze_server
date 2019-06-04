@@ -15,42 +15,42 @@
 </head>
 <body>
 <div class="pageContent new">
-    <form id="frm" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+    <form id="aup" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
         <c:if test="${not empty id}">
             <input type="hidden" name="p-id" id="p-id" value="${id}"/>
             <div class="form-item">
                 <span class="label">产品名称：</span>
-                <input type="text" name="p-productName" id="productName" value="${productDetail.productName}"/>
+                <input class="required"  type="text" name="p-productName" id="productName" value="${productDetail.productName}"/>
                 <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">产品金额：</span>
-                <input type="text" name="p-borrowAmount" id="borrowAmount" value="<fmt:formatNumber type="number" value="${productDetail.borrowAmount/100}" pattern="0.00"
+                <input class="required"  type="text" name="p-borrowAmount" id="borrowAmount" value="<fmt:formatNumber type="number" value="${productDetail.borrowAmount/100}" pattern="0.00"
                                           maxFractionDigits="0"/>"/>
                 <label style="color: red;" class="required-label">*</label>
 
             </div>
             <div class="form-item">
                 <span class="label">到账金额：</span>
-                <input type="text" name="p-daozhang" id="daozhang" value="<fmt:formatNumber type="number" value="${(productDetail.borrowAmount - productDetail.totalFeeRate) /100}" pattern="0.00"
+                <input class="required"  type="text" name="p-daozhang" id="daozhang" value="<fmt:formatNumber type="number" value="${(productDetail.borrowAmount - productDetail.totalFeeRate) /100}" pattern="0.00"
                                           maxFractionDigits="0"/>"/>
                 <label style="color: red;" class="required-label">*</label>
 
             </div>
             <div class="form-item">
                 <span class="label">滞纳金：</span>
-                <input type="text" name="p-lateFee" id="lateFee" value="<fmt:formatNumber type="number" value="${productDetail.lateFee/100}" pattern="0.00"
+                <input class="required"  type="text" name="p-lateFee" id="lateFee" value="<fmt:formatNumber type="number" value="${productDetail.lateFee/100}" pattern="0.00"
                                           maxFractionDigits="0"/>"/>
                 <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">借款期限：</span>
-                <input type="text" name="p-borrowDay" id="borrowDay" value="${productDetail.borrowDay}"/>
+                <input class="required"  type="text" name="p-borrowDay" id="borrowDay" value="${productDetail.borrowDay}"/>
                 <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">提额：</span>
-                <select name="p-limitId" class="textInput">
+                <select name="p-limitId" class="textInput required">
                     <option value="">全部</option>
                     <c:forEach var="limitInfo" items="${limitList}">
                         <option value="${limitInfo.id}"
@@ -61,7 +61,7 @@
             </div>
             <div class="form-item">
                 <span class="label">展期：</span>
-                <select name="p-extendId" class="textInput">
+                <select name="p-extendId" class="textInput required">
                     <option value="">全部</option>
                     <c:forEach var="extendInfo" items="${extendList}">
                         <option value="${extendInfo.id}"
@@ -74,32 +74,32 @@
         <c:if test="${empty id}">
             <div class="form-item">
                 <span class="label">产品名称：</span>
-                <input type="text" name="p-productName" id="productName"/>
+                <input class="required" type="text" name="p-productName" id="productName"/>
                 <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">产品金额：</span>
-                <input type="text" name="p-borrowAmount" id="borrowAmount"/>
+                <input class="required" type="text" name="p-borrowAmount" id="borrowAmount"/>
                 <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">到账金额：</span>
-                <input type="text" name="p-daozhang" id="daozhang"/>
+                <input class="required" type="text" name="p-daozhang" id="daozhang"/>
                 <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">滞纳金：</span>
-                <input type="text" name="p-lateFee" id="lateFee"/>
+                <input class="required" type="text" name="p-lateFee" id="lateFee"/>
                 <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">借款期限：</span>
-                <input type="text" name="p-borrowDay" id="borrowDay"/>
+                <input class="required" type="text" name="p-borrowDay" id="borrowDay"/>
                 <label style="color: red;" class="required-label">*</label>
             </div>
             <div class="form-item">
                 <span class="label">提额：</span>
-                <select name="p-limitId" class="textInput">
+                <select name="p-limitId" class="textInput required">
                     <option value="">全部</option>
                     <c:forEach var="limitInfo" items="${limitList}">
                         <option value="${limitInfo.id}">${limitInfo.limitName}</option>
@@ -109,7 +109,7 @@
             </div>
             <div class="form-item">
                 <span class="label">展期：</span>
-                <select name="p-extendId" class="textInput">
+                <select name="p-extendId" class="textInput required">
                     <option value="">全部</option>
                     <c:forEach var="extendInfo" items="${extendList}">
                         <option value="${extendInfo.id}">${extendInfo.extendName}</option>
@@ -119,8 +119,7 @@
             </div>
         </c:if>
     </form>
-</div>
-<div class="formBar">
+    <div class="formBar">
         <ul>
             <li><div class="buttonActive">
                 <div class="buttonContent">
@@ -133,6 +132,7 @@
                 </div>
             </div></li>
         </ul>
+    </div>
 </div>
 </body>
 <script type="text/javascript">
@@ -143,6 +143,10 @@
         var postUrl = "product/addProduct"
     </c:if>
     $('#p-submit').click(function () {
+        var $form = $("#aup");
+        if (!$form.valid()) {
+            return false;
+        }
         $.ajax({
             type : "post",
             data:{
@@ -164,8 +168,7 @@
                     $('#pagerForm-p').submit()
                 }, 100)
             },
-            error:function(ret){
-            }
+            error:DWZ.ajaxError
         })
     })
 </script>
