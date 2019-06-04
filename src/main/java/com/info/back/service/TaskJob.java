@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.JedisCluster;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -215,6 +216,7 @@ public class TaskJob implements ITaskJob {
 //	}
 
 	@Override
+	@PostConstruct
 	public void overdue() {
 		log.info("overdue start");
 		Map<String, Object> params = new HashMap<>();

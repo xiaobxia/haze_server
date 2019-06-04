@@ -40,6 +40,7 @@ import com.info.web.dao.IUserDao;
 import com.info.web.test.ThreadPool;
 import redis.clients.jedis.JedisCluster;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 @Slf4j
 @Service
@@ -496,19 +497,19 @@ public class RepaymentService implements IRepaymentService {
                     try {
                         repaymentIds.add(re.getId().toString());
                         re.setCollection(Repayment.COLLECTION_YES);
-                        String msg_limit = backDictionaryDao.findDictionary(Constant.MSG_LIMIT).get(0).getDataValue();
+                        /*String msg_limit = backDictionaryDao.findDictionary(Constant.MSG_LIMIT).get(0).getDataValue();
                         if (repaymentIds.size() == Integer.parseInt(msg_limit)) {
                             //加入催收队列
-                            RocketMqUtil.sendMqMessage(PropertiesUtil.get("MQ_APPNAME")+ "_" + Constant.TOPIC_REPAYID,Constant.OVERDUE_TAG,StringUtils.join(repaymentIds, ","));
+                            RocketMqUtil.sendMqMessage(PropertiesUtil.get("MQ_APPNAME")+ "_" + Constant.TOPIC_REPAYID, Constant.OVERDUE_TAG, StringUtils.join(repaymentIds, ","));
                             repaymentIds.clear();
-                        }
+                        }*/
                     } catch (Exception e) {
                         log.error("collection overdue error repaymentId=:{}", e);
                     }
                 }
                 this.updateByPrimaryKeySelective(re);
             }
-        } catch (ParseException e) {
+        } catch (Exception e) {
             log.error("overdue error repaymentId =:{}",re.getId(), e);
         }
     }
