@@ -57,11 +57,6 @@ String path = request.getContextPath()+"";
                         title: '渠道商名称',
                         width: 120,
                         align: 'center'
-                    },{
-                        field: 'channelRateType',
-                        title: 'channelRateType',
-                        width: 120,
-                        align: 'center'
                     },
                     {
                         field: 'reportDate',
