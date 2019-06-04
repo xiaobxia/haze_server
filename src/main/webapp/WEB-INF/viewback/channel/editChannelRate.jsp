@@ -63,11 +63,11 @@
 						<dd>
 							<select name="channelRateType" class="required">
 								<option value="">--请选择--</option>
-								<option value="1" <c:if test="${channelRate.channelRateType == 2}">selected="selected"</c:if>>UV</option>
-								<option value="1" <c:if test="${channelRate.channelRateType == 3}">selected="selected"</c:if>>PV</option>
+								<option value="2" <c:if test="${channelRate.channelRateType == 2}">selected="selected"</c:if>>UV</option>
+								<option value="3" <c:if test="${channelRate.channelRateType == 3}">selected="selected"</c:if>>PV</option>
 								<option value="0" <c:if test="${channelRate.channelRateType == 0}">selected="selected"</c:if>>CPA</option>
 								<option value="1" <c:if test="${channelRate.channelRateType == 1}">selected="selected"</c:if>>CPS</option>
-								<option value="1" <c:if test="${channelRate.channelRateType == 4}">selected="selected"</c:if>>CPL</option>
+								<option value="4" <c:if test="${channelRate.channelRateType == 4}">selected="selected"</c:if>>CPL</option>
 							</select>
 						</dd>
 					</dl>
