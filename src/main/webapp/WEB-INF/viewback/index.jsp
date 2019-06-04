@@ -285,6 +285,8 @@
 	</style>
 	<style>
 		.logo-wrap {
+			position: absolute;
+			z-index: 10;
 			height: 50px;
 			width: 205px;
 			line-height: 50px;
@@ -297,9 +299,6 @@
 			vertical-align: middle;
 		}
 		.header-wrap {
-			position: absolute;
-			left: 0;
-			top: 0;
 			height: 50px;
 			width: 100%;
 			box-sizing: border-box;
@@ -331,6 +330,9 @@
 
 	<script type="text/javascript">
 		$(function(){
+			$(".logo-wrap").click(function () {
+				$('.navTab-tab .main').trigger('click')
+			});
 			$(document).bind("ajaxComplete", function(e,jqXHR, status){
 				var sessionstatus =jqXHR.getResponseHeader("statusCode");// 通过XMLHttpRequest取得响应头，sessionstatus，
 				todo(sessionstatus);
