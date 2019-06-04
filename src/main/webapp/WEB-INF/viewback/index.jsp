@@ -504,7 +504,7 @@
 					if (indexInfo.allRegistPercentage < 0) {
 						zyhlImg = '<img class="up-down-icon" src="${basePath }/images/shouyeimg/箭头1.png">'
 					}
-					$('#zyhl-b').html(indexInfo.allRegistPercentage + '%' + zyhlImg)
+					$('#zyhl-b').html((indexInfo.allRegistPercentage * 100).toFixed(2) + '%' + zyhlImg)
 					// 当日注册用户数
 					$('#drzcyhs').text(formatNumToThree(indexInfo.registCount))
 					// 当日申请用户数
@@ -541,7 +541,7 @@
 					if (indexInfo.loanPercentage < 0) {
 						drfklImg = '<img class="up-down-icon" src="${basePath }/images/shouyeimg/箭头1.png">'
 					}
-					$('#drfkl').html(indexInfo.loanPercentage + '%' + drfklImg)
+					$('#drfkl').html((indexInfo.loanPercentage * 100).toFixed(2) + '%' + drfklImg)
 
 					// 当日通过率
 					var drtglImg = ''
@@ -551,7 +551,7 @@
 					if (indexInfo.passPercentage < 0) {
 						drtglImg = '<img class="up-down-icon" src="${basePath }/images/shouyeimg/箭头1.png">'
 					}
-					$('#drtgl').html(indexInfo.passPercentage + '%' + drtglImg)
+					$('#drtgl').html((indexInfo.passPercentage * 100).toFixed(2) + '%' + drtglImg)
 					// 当日回款率
 					var drhklImg = ''
 					if (indexInfo.repayPercentage > 0) {
@@ -560,7 +560,7 @@
 					if (indexInfo.repayPercentage < 0) {
 						drhklImg = '<img class="up-down-icon" src="${basePath }/images/shouyeimg/箭头1.png">'
 					}
-					$('#drhkl').html(indexInfo.repayPercentage + '%' + drhklImg)
+					$('#drhkl').html((indexInfo.repayPercentage * 100).toFixed(2) + '%' + drhklImg)
 					var drfjlImg = ''
 					if (indexInfo.repayPercentage > 0) {
 						drfjlImg = '<img class="up-down-icon" src="${basePath }/images/shouyeimg/箭头2.png">'
@@ -568,7 +568,7 @@
 					if (indexInfo.repayPercentage < 0) {
 						drfjlImg = '<img class="up-down-icon" src="${basePath }/images/shouyeimg/箭头1.png">'
 					}
-					$('#drfjlImg').html(indexInfo.reBorrowReate + '%' + drfjlImg)
+					$('#drfjlImg').html((indexInfo.reBorrowReate * 100).toFixed(2) + '%' + drfjlImg)
 				}
 
 				renderNumber(data.indexInfo || {})
