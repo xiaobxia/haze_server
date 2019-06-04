@@ -184,7 +184,7 @@
 	</sql>
 	
 	<select id="findRecordAllCount" resultType="java.lang.Integer" parameterType="HashMap">
-		<!--SELECT COUNT(1)
+		SELECT COUNT(1)
 		FROM user_info a
 		INNER JOIN (
 		SELECT * FROM user_info WHERE id IN(SELECT user_id FROM channel_user_info)
@@ -192,7 +192,9 @@
 		b ON a.invite_userid=b.id
 		LEFT JOIN channel_info d ON d.id =
 		a.user_from
-		<include refid="findRecordAllSql"/>-->
+		<include refid="findRecordAllSql"/>
+	</select>
+	<select id="findRecordAllCounttwo" resultType="java.lang.Integer" parameterType="HashMap">
 		select count(u.id)
 		from user_info u left join channel_info c on u.user_from = c.id
 		left join  channel_super_info s on s.id = c.channel_super_id
