@@ -163,6 +163,7 @@ public class UserManageController extends BaseController{
                 userBlack.setUserName(u.getRealname());
                 userBlack.setUserPhone(u.getUserPhone());
                 userBlack.setCreateTime(new Date());
+                userBlack.setUserType(0);
                 userBlackService.addUserBlack(userBlack);
 				if(count>0){
 					bool=true;
