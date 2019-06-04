@@ -100,7 +100,7 @@ public class ContentController extends  BaseController {
 			log.error("save content error:{}", e);
 		} finally {
 			SpringUtils.renderDwzResult(response, bool, bool ? "操作成功"
-					: "操作失败", DwzResult.CALLBACK_CLOSECURRENT);
+					: "操作失败", DwzResult.CALLBACK_RELOADPAGE);
 		}
 	}
 	/**
