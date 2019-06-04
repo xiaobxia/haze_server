@@ -32,12 +32,12 @@ public interface IChannelInfoDao {
 	public List<String> findAllChUser(Map<String, Object> params);
 
 
-	Integer findRecordAllCount(Map<String, Object> params);
+	Integer findRecordAllCount(Map<String, Object> map);
 
 	/**
 	 * 插入对象
 	 *
-	 * @param backUser
+	 * @param
 	 */
 	public void insert(ChannelInfo channelInfo);
 

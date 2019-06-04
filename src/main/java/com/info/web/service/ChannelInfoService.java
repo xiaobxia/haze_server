@@ -129,7 +129,7 @@ public class ChannelInfoService implements IChannelInfoService {
 			HashMap<String, Object> params) {
 		params.put(Constant.NAME_SPACE, "ChannelInfo");
 		PageConfig<ChannelInfo> pageConfig = new PageConfig<ChannelInfo>();
-		pageConfig = paginationDao.findPage("findRecordAll", "findRecordAllCount", params,"web");
+		pageConfig = paginationDao.findPage("findRecordAll", "findRecordAllCounttwo", params,"web");
 		return pageConfig;
 	}
 
