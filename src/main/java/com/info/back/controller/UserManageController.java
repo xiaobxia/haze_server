@@ -151,15 +151,21 @@ public class UserManageController extends BaseController{
 		try {
 			String id=request.getParameter("id");
 			if("1".equals(request.getParameter("option"))){//黑名单
-				User user=new User();
-				user.setId(id);
-				user.setStatus("2");//2黑名单
-				int count=this.userService.updateByPrimaryKeyUser(user);
-				if(count>0){
-					bool=true;
-				}
 				//根据用户id 查询用户信息
 				User u = userService.searchByUserid(Integer.parseInt(id));
+				if(u.getStatus().equals("2")){
+					bool =false;
+					SpringUtils.renderDwzResult(response, bool, "该用户已经是黑名单用户!", DwzResult.CALLBACK_RELOADPAGE);
+				}else{
+					User user=new User();
+					user.setId(id);
+					user.setStatus("2");//2黑名单
+					int count=this.userService.updateByPrimaryKeyUser(user);
+					if(count>0){
+						bool=true;
+					}
+					SpringUtils.renderDwzResult(response, bool, bool ? "操作成功!" : "操作失败!", DwzResult.CALLBACK_RELOADPAGE);
+				}
 				//加入黑名单库 判断用户是否存在于黑名单（手机号）存在则不存。
 				UserBlack ub = userBlackService.findBlackUserByParams(null,0,u.getUserPhone());
 				if(ub == null){
@@ -172,21 +178,30 @@ public class UserManageController extends BaseController{
 					userBlackService.addUserBlack(userBlack);
 				}
 			}else if("2".equals(request.getParameter("option"))){//注销/删除资料账户
-				User usr=this.userService.searchByUserid(Integer.parseInt(id));
-				if(!StringUtils.isBlank(usr.getUserName())){
-					usr.setUserName(usr.getUserName()+"*");
-				} 
-				if(!StringUtils.isBlank(usr.getIdNumber())){
-					usr.setIdNumber(usr.getIdNumber()+"*");
-				} 
-				if(!StringUtils.isBlank(usr.getUserPhone())){
-					usr.setUserPhone(usr.getUserPhone()+"*");
-				} 
-				usr.setStatus("3");//3 删除
-				int count=this.userService.updateByPrimaryKeyUser(usr);
-				if(count>0){
-					bool=true;
+				//查询用户状态为借款状态则提示不可以删除
+				List<BorrowOrder> list = borrowOrderService.findByUserId(Integer.valueOf(id));
+				if(list.size()>0){
+					bool = false;
+					SpringUtils.renderDwzResult(response, bool, "改用户为借款中状态,不能删除!", DwzResult.CALLBACK_RELOADPAGE);
+				}else{
+					User usr=this.userService.searchByUserid(Integer.parseInt(id));
+					if(!StringUtils.isBlank(usr.getUserName())){
+						usr.setUserName(usr.getUserName()+"*");
+					}
+					if(!StringUtils.isBlank(usr.getIdNumber())){
+						usr.setIdNumber(usr.getIdNumber()+"*");
+					}
+					if(!StringUtils.isBlank(usr.getUserPhone())){
+						usr.setUserPhone(usr.getUserPhone()+"*");
+					}
+					usr.setStatus("3");//3 删除
+					int count=this.userService.updateByPrimaryKeyUser(usr);
+					if(count>0){
+						bool=true;
+					}
+					SpringUtils.renderDwzResult(response, bool, bool ? "操作成功!" : "操作失败!", DwzResult.CALLBACK_RELOADPAGE);
 				}
+
 			}else if(request.getParameter("option").equals("3")){//保存修改手机号码
 				User user=new User();
 				user.setId(id);
@@ -196,11 +211,11 @@ public class UserManageController extends BaseController{
 				if(count>0){
 					bool=true;
 				}
+				SpringUtils.renderDwzResult(response, bool, bool ? "操作成功!" : "操作失败!", DwzResult.CALLBACK_RELOADPAGE);
 			}
 		} catch (Exception e) {
 			log.error("operation error:{}",e);
 		}
-		SpringUtils.renderDwzResult(response, bool, bool ? "操作成功" : "操作失败", DwzResult.CALLBACK_RELOADPAGE);
 	}
 	
 	/**
