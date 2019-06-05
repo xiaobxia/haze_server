@@ -182,7 +182,7 @@ public class UserManageController extends BaseController{
 				List<BorrowOrder> list = borrowOrderService.findByUserId(Integer.valueOf(id));
 				if(list.size()>0){
 					bool = false;
-					SpringUtils.renderDwzResult(response, bool, "改用户为借款中状态,不能删除!", DwzResult.CALLBACK_RELOADPAGE);
+					SpringUtils.renderDwzResult(response, bool, "该用户为借款中状态,不能删除!", DwzResult.CALLBACK_RELOADPAGE);
 				}else{
 					User usr=this.userService.searchByUserid(Integer.parseInt(id));
 					if(!StringUtils.isBlank(usr.getUserName())){
