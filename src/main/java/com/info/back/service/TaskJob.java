@@ -216,7 +216,6 @@ public class TaskJob implements ITaskJob {
 //	}
 
 	@Override
-	@PostConstruct
 	public void overdue() {
 		log.info("overdue start");
 		Map<String, Object> params = new HashMap<>();
@@ -1097,7 +1096,7 @@ public class TaskJob implements ITaskJob {
 		try {
 			final String signKey = "621c76126e4940e8d7de8b5cce65bf7c";
 			//借款期限
-			paramsM.put("loanTerm", 7);
+			//paramsM.put("loanTerm", 7);
 			//每次查询50条数据
 			paramsM.put("querylimit", 50);
 			List<BorrowOrder> bos = borrowOrderService.findOrderIdAndUserIdList(paramsM);
