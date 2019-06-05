@@ -246,7 +246,7 @@ public class ChannelInfoController extends BaseController {
                 url = "userInfo/editChannelInfo";
                 model.addAttribute("flag",flag);
             } else {
-                channelInfo.setStatus(1);
+               // channelInfo.setStatus(1);
                 // 更新或者添加操作
                 if (channelInfo.getId() != null) {
                     String passWord = MD5coding.MD5(AESUtil.encrypt(channelInfo.getChannelPassword(), ""));
@@ -267,10 +267,9 @@ public class ChannelInfoController extends BaseController {
                         return null;
                     }
                     String passWord = MD5coding.MD5(AESUtil.encrypt(channelInfo.getChannelPassword(), ""));
-
+                    channelInfo.setStatus(1);
                     channelInfo.setChannelPassword(passWord);
                     channelInfoService.insert(channelInfo);
-
                     saveChannelUrl(request, channelInfo, params, false);
                 }
                 SpringUtils.renderDwzResult(response, true, "操作成功",
