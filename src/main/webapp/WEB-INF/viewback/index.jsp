@@ -34,11 +34,11 @@
 	<![endif]-->
 	<style type="text/css">
 		#header {
-			height: 50px
+			height: 80px
 		}
 
 		#leftside,#container,#splitBar,#splitBarProxy {
-			top: 50px
+			top: 80px
 		}
 	</style>
 	<style>
@@ -287,19 +287,20 @@
 		.logo-wrap {
 			position: absolute;
 			z-index: 10;
-			height: 50px;
+			height: 80px;
 			width: 190px;
-			line-height: 50px;
+			padding-left: 10px;
+			line-height: 80px;
 			text-align: center;
 		}
 		.logo-wrap img {
 			display: inline-block;
 			width: auto;
-			height: 48px;
+			height: 60px;
 			vertical-align: middle;
 		}
 		.header-wrap {
-			height: 50px;
+			height: 80px;
 			width: 100%;
 			box-sizing: border-box;
 			padding-left: 205px;
