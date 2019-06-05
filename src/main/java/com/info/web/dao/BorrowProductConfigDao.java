@@ -125,4 +125,6 @@ public interface BorrowProductConfigDao {
     BackExtend findExtend(Integer id);
 
     BackLimit findLimit(Integer id);
+
+    BigDecimal queryByOrderId(Integer orderId);
 }

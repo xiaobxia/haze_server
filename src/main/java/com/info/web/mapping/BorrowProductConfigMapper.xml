@@ -664,4 +664,9 @@
    </set>
     where id = #{id}
   </update>
+
+  <select id="queryByOrderId" resultType="java.math.BigDecimal" parameterType="java.lang.Integer">
+    select late_fee
+    from borrow_product_config where id = (select product_id from asset_borrow_order where id = #{orderId})
+  </select>
 </mapper>

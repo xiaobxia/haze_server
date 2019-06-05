@@ -2,6 +2,7 @@ package com.info.web.service;
 
 import static com.info.web.pojo.BorrowOrder.STATUS_YYQ;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.Map;
 
 import com.info.back.dao.IBackDictionaryDao;
 import com.info.back.utils.PropertiesUtil;
+import com.info.web.dao.*;
 import com.info.web.pojo.*;
 import com.info.web.util.*;
 import com.info.web.util.aliyun.RocketMqUtil;
@@ -30,13 +32,6 @@ import org.springframework.stereotype.Service;
 import com.info.constant.CollectionConstant;
 import com.info.constant.Constant;
 import com.info.risk.service.IOutOrdersService;
-import com.info.web.dao.IBorrowOrderDao;
-import com.info.web.dao.IIndexDao;
-import com.info.web.dao.IPaginationDao;
-import com.info.web.dao.IRenewalRecordDao;
-import com.info.web.dao.IRepaymentDao;
-import com.info.web.dao.IRepaymentDetailDao;
-import com.info.web.dao.IUserDao;
 import com.info.web.test.ThreadPool;
 import redis.clients.jedis.JedisCluster;
 
@@ -74,6 +69,8 @@ public class RepaymentService implements IRepaymentService {
 	private IRepaymentDetailService repaymentDetailService;
 	@Autowired
 	private IPushUserService pushUserService;
+	@Resource
+	private BorrowProductConfigDao borrowProductConfigDao;
 
 	@Autowired
 	JedisCluster jedisCluster;
@@ -443,7 +440,11 @@ public class RepaymentService implements IRepaymentService {
 			userService.updateByPrimaryKeyUser(userT);
             if (between > 0) {
                 // 滞纳金 = （借款到账金额 + 服务费） * 滞纳金服务费 / 10000 * 滞纳天数
-                Integer lateFee = (int) ((re.getRepaymentPrincipal() + re.getRepaymentInterest()) * re.getLateFeeApr() / 10000 * between);
+				Integer lateFee = (int) ((re.getRepaymentPrincipal() + re.getRepaymentInterest()) * re.getLateFeeApr() / 10000 * between);
+				BigDecimal productLateFee = borrowProductConfigDao.queryByOrderId(re.getAssetOrderId());
+				if (productLateFee != null) {
+					lateFee = productLateFee.intValue();
+				}
                 // 更新用户最近一次逾期总天数、历史逾期总记录数
                 User user = userService.selectCollectionByUserId(re.getUserId());
                 if (re.getLateDay() == 0) {
