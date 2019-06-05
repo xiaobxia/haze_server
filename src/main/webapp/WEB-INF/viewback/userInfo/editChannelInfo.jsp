@@ -75,18 +75,35 @@
 						</dd>
 					</dl>
 					<div class="divider"></div>
+					<c:if test = "${flag == true}">
 					<dl style="width: 360px;">
 						<dt style="width: 100px;">
 							<label>
 								渠道编码:
 							</label>
-						</dt>
-						<dd>
-							<input name="channelCode" value="${channelInfo.channelCode}"
-							 class="required"	type="text" alt="请输入编码" size="30"/>
-							<label style="color: red;" class="required-label">*</label>
-						</dd>
-					</dl>
+						 </dt>
+							<dd>
+								<input name="channelCode" value="${channelInfo.channelCode}"
+									   class="required"	type="text" readonly size="18"/> 此项不可修改
+								<label style="color: red;" class="required-label">*</label>
+							</dd>
+					   </dl>
+						</c:if>
+                        <c:if test ="${flag == false}">
+						<dl style="width: 360px;">
+							<dt style="width: 100px;">
+								<label>
+									渠道编码:
+								</label>
+							</dt>
+							<dd>
+								<input name="channelCode" value="${channelInfo.channelCode}"
+									   class="required"	type="text" alt="请输入编码" size="30"/>
+								<label style="color: red;" class="required-label">*</label>
+							</dd>
+						</dl>
+						</c:if>
+
 					<dl style="width: 360px;">
 						<dt style="width: 100px;">
 							<label>
