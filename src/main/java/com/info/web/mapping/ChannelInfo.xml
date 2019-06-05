@@ -452,52 +452,52 @@
 	<update id="updateById" parameterType="com.info.web.pojo.ChannelInfo">
 		UPDATE channel_info
 		<set>
-		<if test="channelSuperId != null and channelSuperId != ''">
+		<if test="channelSuperId != null">
 			<![CDATA[channel_super_id = #{channelSuperId},]]>
 		</if>
-		<if test="channelName != null and channelName != ''">
+		<if test="channelName != null">
 			<![CDATA[channel_name = #{channelName},]]>
 		</if>
-		<if test="channelCode != null and channelCode !=''">
+		<if test="channelCode != null ">
 			<![CDATA[channel_code = #{channelCode},]]>
 		</if>
-		<if test="operatorName != null and operatorName != ''">
+		<if test="operatorName != null ">
 			<![CDATA[operator_name = #{operatorName},]]>
 		</if>
-		<if test="channelTel != null and channelTel !=''">
+		<if test="channelTel != null ">
 			<![CDATA[channel_tel = #{channelTel},]]>
 		</if>
-		<if test="channelProvince != null and channelProvince !=''">
-			<![CDATA[channel_province = 	#{channelProvince},]]>
+		<if test="channelProvince != null">
+			<![CDATA[channel_province = #{channelProvince},]]>
 		</if>
-		<if test="channelCity != null and channelCity !=''">
+		<if test="channelCity != null">
 			<![CDATA[channel_city = #{channelCity},]]>
 		</if>
-		<if test="channelArea != null and channelArea !=''">
+		<if test="channelArea != null">
 			<![CDATA[channel_area = #{channelArea},]]>
 		</if>
-		<if test = "channelPassword != null and channelPassword != ''">
+		<if test = "channelPassword != null">
 			<![CDATA[channel_password = #{channelPassword},]]>
 		</if>
-		<if test="rateId != null and rateId!=''">
+		<if test="rateId != null">
 			<![CDATA[rate_id = #{rateId},]]>
 		</if>
-		<if test="remark != null and remark !=''">
+		<if test="remark != null">
 			<![CDATA[remark = #{remark},]]>
 		</if>
-		<if test="status != null and status !=''">
+		<if test="status != null">
 			<![CDATA[status = #{status},]]>
 		</if>
-		<if test="channelUrl != null and channelUrl !=''">
+		<if test="channelUrl != null">
 			<![CDATA[channel_url = #{channelUrl},]]>
 		</if>
-		<if test="promotionUrl != null and promotionUrl != ''">
+		<if test="promotionUrl != null">
 			<![CDATA[promotion_url = #{promotionUrl},]]>
 		</if>
-		<if test="qqStatus != null and qqStatus != ''">
+		<if test="qqStatus != null">
 			<![CDATA[qq_status = #{qqStatus},]]>
 		</if>
-		<if test="wechatStatus != null and wechatStatus !=''">
+		<if test="wechatStatus != null">
 			<![CDATA[wechat_status = #{wechatStatus},]]>
 		</if>
 			updated_at = NOW()

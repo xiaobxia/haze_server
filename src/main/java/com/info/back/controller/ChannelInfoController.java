@@ -241,8 +241,10 @@ public class ChannelInfoController extends BaseController {
                     // 更新的页面跳转
                     channelInfo = channelInfoService.findOneChannelInfo(params);
                     model.addAttribute("channelInfo", channelInfo);
+                    model.addAttribute("flag",flag);
                 }
                 url = "userInfo/editChannelInfo";
+                model.addAttribute("flag",flag);
             } else {
                 channelInfo.setStatus(1);
                 // 更新或者添加操作
