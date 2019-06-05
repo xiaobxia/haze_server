@@ -52,6 +52,12 @@ public class ProductService implements  IProductService {
         borrowProductConfig.setPlatformLicensing(BigDecimal.valueOf(5000));
         borrowProductConfig.setCollectChannelFee(BigDecimal.valueOf(3000));
         borrowProductConfig.setAccountManagerFee(BigDecimal.valueOf(3000));
+        if (borrowProductConfig.getExtendId() != null) {
+            borrowProductConfig.setRenewalFee(BigDecimal.valueOf(findExtend(borrowProductConfig.getExtendId()).getExtendMoney().intValue() - 3000));
+        } else {
+            borrowProductConfig.setRenewalFee(BigDecimal.valueOf(47000));
+        }
+        borrowProductConfig.setRenewalPoundage(BigDecimal.valueOf(3000));
         borrowProductConfig.setStatus(1);
         borrowProductConfig.setProjectName("haze");
         borrowProductConfig.setCreateTime(new Date());
