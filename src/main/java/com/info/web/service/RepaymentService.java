@@ -479,7 +479,7 @@ public class RepaymentService implements IRepaymentService {
                         orderLogModel.setRemark(OrderChangeAction.OVERDUE.getMessage());
                         orderLogService.addNewOrderChangeLog(orderLogModel);
                     }catch (Exception e){
-                        log.error("add order log error:{}",e);
+                        //log.error("add order log error:{}",e);
                     }
                 }
 //				if (between == 1) {
