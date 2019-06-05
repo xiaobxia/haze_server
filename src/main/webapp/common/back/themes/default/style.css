@@ -111,8 +111,8 @@
 .grid .gridTbody .gridRow td.tdLast { border-color:#ededed;}
 .grid .gridTbody .hover { border-color:#dddddd; background:#f5f5f5;}
 .grid .gridTbody .hover .tdSelected { background:#f5f5f5;}
-.grid .gridTbody .selected {background:#f5f7fa;}
-.grid .gridTbody .selected .tdSelected { background:#f5f7fa;}
+.grid .gridTbody .selected {background:#ddd;}
+.grid .gridTbody .selected .tdSelected { background:#ddd;}
 .grid .gridTbody .tdSelected { background:#f8f8f8;}
 .grid .error{background:#fb7e81;}
 
