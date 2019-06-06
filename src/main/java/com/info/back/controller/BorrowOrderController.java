@@ -490,6 +490,8 @@ public class BorrowOrderController extends BaseController {
     }
 
     private void jxDetail(HttpServletRequest request, Model model) throws Exception {
+
+
         HashMap<String, Object> params = this.getParametersO(request);
         Integer id = Integer.valueOf(String.valueOf(params.get("id")));
         BorrowOrder borrow = null;
@@ -867,23 +869,19 @@ public class BorrowOrderController extends BaseController {
                 user.setFristContactRelation(User.CONTACTS_FAMILY.get(user.getFristContactRelation()));
                 user.setSecondContactRelation(User.CONTACTS_OTHER.get(user.getSecondContactRelation()));
                 model.addAttribute("user", user);
-
                 UserCardInfo info = userBankService.findBankCardByCardNo(borrow.getCardNo());
                 model.addAttribute("bankCard", info);
                 List<UserInfoImage> userInfoImage = this.userInfoImageService.selectImageByUserId(borrow.getUserId());
                 model.addAttribute("InfoImage", userInfoImage);
                 model.addAttribute("params", params);
-
                 // 查询征信信息
                 RiskCreditUser riskCreditUser = riskUserService.findRiskCreditUserByAssetsId(String.valueOf(id));
                 if (null != riskCreditUser) {
                     model.addAttribute("riskCreditUser", riskCreditUser);
                 }
-
                 // 规则查询
                 List<RiskRuleCal> riskRuleCalList = riskUserService.findRiskRuleCalByAssetsId(String.valueOf(id));
                 model.addAttribute("riskRuleCalList", riskRuleCalList);
-
                 url = "borrow/borrow_check";
                 if (params.containsKey("bType")) {
                     if ("fangk".equals(params.get("bType"))) {
@@ -1148,6 +1146,11 @@ public class BorrowOrderController extends BaseController {
     public String saveUpdateBorrow(HttpServletRequest request, HttpServletResponse response, Model model, BorrowOrder borrowOrder) throws Exception {
         String appName = PropertiesUtil.get("APP_NAME");
         model.addAttribute("appName", appName);
+        BorrowOrder borrow = borrowOrderService.findOneBorrow(borrowOrder.getId());
+        //风控返回分数
+        User user = userService.searchByUserid(borrow.getUserId());
+        Integer score =repaymentDetailService.findRiskScore(Integer.valueOf(user.getId()));
+        model.addAttribute("score",score);
         try {
             return saveUpdateBorrowJx(request, response, model, borrowOrder);
         } catch (Exception e) {
