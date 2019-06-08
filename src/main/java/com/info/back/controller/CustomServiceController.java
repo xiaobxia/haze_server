@@ -1114,4 +1114,50 @@ public class CustomServiceController extends BaseController {
         return Result.success(results);
     }
 
+    /**
+     * 催收提醒列表
+     * @return
+     */
+    @RequestMapping("getOrderRemindList")
+   public String getOrderRemindList(HttpServletRequest request, ModelMap model){
+        HashMap<String, Object> params = getParametersO(request);
+        try {
+            Integer[] statuses = {21};
+            //查询状态为待还款的
+            params.put("statuses",statuses);
+            //时间为还有两天还款的
+            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar c = Calendar.getInstance();
+            c.add(Calendar.DAY_OF_MONTH, 1);
+            params.put("repaymentTimeStart",sf.format(c.getTime()));
+            c.add(Calendar.DAY_OF_MONTH,2);
+            params.put("repaymentTimeEnd",sf.format(c.getTime()));
+            PageConfig<Repayment> pageConfig = repaymentService.findPage(params);
+            List<Repayment> list = new ArrayList<>();
+            for(Repayment repayment : pageConfig.getItems()){
+                //查询用户成功借款次数
+                Integer loanSucCount = repaymentService.userBorrowCount(null,repayment.getUserId());
+                //该用户在还款表中无记录
+                if(loanSucCount != null && loanSucCount < 1 ){
+                    repayment.setLoanCount("首借");
+                }else{
+                    Integer loanCount = repaymentService.userBorrowCount(99999,repayment.getUserId());
+                    //该用户在还款表中 没有已还款的记录 但是在还款表中有且仅有一条数据
+                    if(loanCount < 1){
+                        repayment.setLoanCount("首借");
+                    }else{
+                        repayment.setLoanCount(loanCount.toString());
+                    }
+                }
+                list.add(repayment);
+            }
+            pageConfig.setItems(list);
+            model.addAttribute("pm", pageConfig);
+
+        } catch (Exception e) {
+            log.error("getRepaymentPage error:{}", e);
+        }
+        model.addAttribute("params", params);// 用于搜索框保留值
+        return "custom/orderRemind";
+   }
 }
