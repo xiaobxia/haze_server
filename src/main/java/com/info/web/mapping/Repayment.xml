@@ -211,147 +211,147 @@
         </if>
         <if test="noPayStatus != null and noPayStatus !='' ">
             AND  c.status != #{noPayStatus,jdbcType=INTEGER}
-            and  c.repayment_time between str_to_date(#{createTime,jdbcType=VARCHAR},'%Y-%m-%d') and date_add(#{createTime}, interval 1 day)
+            <!-- and  c.repayment_time between str_to_date(#{createTime,jdbcType=VARCHAR},'%Y-%m-%d') and date_add(#{createTime}, interval 1 day) -->
         </if>
         <if test="payed == 1">
             AND  c.status != '30' and c.status != '34'
-            and  c.repayment_time between str_to_date(#{createTime,jdbcType=VARCHAR},'%Y-%m-%d') and date_add(#{createTime}, interval 1 day)
+            <!--  and  c.repayment_time between str_to_date(#{createTime,jdbcType=VARCHAR},'%Y-%m-%d') and date_add(#{createTime}, interval 1 day) -->
 
+    </if>
+    <if test="jobId != null and jobId !='' ">
+        AND  a.job_id = #{jobId,jdbcType=INTEGER}
+    </if>
+    <if test="jobName != null and jobName !='' ">
+        AND  a.job_name LIKE CONCAT('%',#{jobName},'%')
+    </if>
+    <if test="assignType != null and assignType !='' ">
+        AND  a.assign_type = #{assignType,jdbcType=INTEGER}
+    </if>
+    <if test="borrowOrderId != null and borrowOrderId !='' ">
+        AND  a.borrow_order_id = #{borrowOrderId,jdbcType=INTEGER}
+    </if>
+    <if test="browerType != null and browerType != ''">
+        AND  u.brower_type = #{browerType}
+    </if>
+    <if test="queryType!=null and queryType=='subPay' and querylimit!=null">
+        order by a.id asc limit 0,#{querylimit}
+    </if>
+</sql>
+<select id="findAssignParamsCount"  resultType="int" parameterType="map">
+    SELECT count(1) from (select a.id as id,a.job_name as jobName,a.create_time as createTime,u.realname as
+    userName,u.user_phone as userPhone,u.customer_type as customerType,c.`status`,c.repayment_amount/100 as
+    repaymentMoney,c.repayment_time expectedTime,u.user_sex sex from asset_borrow_assign a
+    inner join asset_repayment c on c.asset_order_id=a.borrow_order_id
+    inner join user_info u on u.id=c.user_id
+    left join borrow_remark r
+    on a.borrow_order_id = r.assign_id and r.last_flag =1 and left(a.create_time,10) = left(r.create_time,10)
+    <include refid="selectAssignSql"/>
+    ) f
+</select>
+<update id="updateAssetBorrowAssignById" parameterType="com.info.web.pojo.AssetBorrowAssign">
+    update asset_borrow_assign
+    <set>
+        <if test="updateTime != null and updateTime != ''">
+            update_time = #{updateTime},
         </if>
-        <if test="jobId != null and jobId !='' ">
-            AND  a.job_id = #{jobId,jdbcType=INTEGER}
+        <if test="jobId != null and jobId != '' ">
+            job_id = #{jobId},
         </if>
-        <if test="jobName != null and jobName !='' ">
-            AND  a.job_name LIKE CONCAT('%',#{jobName},'%')
+        <if test="jobName != null and jobName != ''">
+            job_name = #{jobName},
         </if>
-        <if test="assignType != null and assignType !='' ">
-            AND  a.assign_type = #{assignType,jdbcType=INTEGER}
+        <if test="remarkId != null and remarkId != '' ">
+            remark_id = #{remarkId},
         </if>
-        <if test="borrowOrderId != null and borrowOrderId !='' ">
-            AND  a.borrow_order_id = #{borrowOrderId,jdbcType=INTEGER}
+        <if test="borrowOrderId != null and borrowOrderId != '' ">
+            borrow_order_id = #{borrowOrderId},
         </if>
-        <if test="browerType != null and browerType != ''">
-            AND  u.brower_type = #{browerType}
+        <if test="assignType != null and assignType != ''">
+            assign_Type = #{assignType}
         </if>
-        <if test="queryType!=null and queryType=='subPay' and querylimit!=null">
-            order by a.id asc limit 0,#{querylimit}
-        </if>
-    </sql>
-    <select id="findAssignParamsCount"  resultType="int" parameterType="map">
-        SELECT count(1) from (select a.id as id,a.job_name as jobName,a.create_time as createTime,u.realname as
-        userName,u.user_phone as userPhone,u.customer_type as customerType,c.`status`,c.repayment_amount/100 as
-        repaymentMoney,c.repayment_time expectedTime,u.user_sex sex from asset_borrow_assign a
-        inner join asset_repayment c on c.asset_order_id=a.borrow_order_id
-        inner join user_info u on u.id=c.user_id
-        left join borrow_remark r
-        on a.borrow_order_id = r.assign_id and r.last_flag =1 and left(a.create_time,10) = left(r.create_time,10)
-        <include refid="selectAssignSql"/>
-        ) f
-    </select>
-    <update id="updateAssetBorrowAssignById" parameterType="com.info.web.pojo.AssetBorrowAssign">
-        update asset_borrow_assign
-        <set>
-            <if test="updateTime != null and updateTime != ''">
-                update_time = #{updateTime},
-            </if>
-            <if test="jobId != null and jobId != '' ">
-                job_id = #{jobId},
-            </if>
-            <if test="jobName != null and jobName != ''">
-                job_name = #{jobName},
-            </if>
-            <if test="remarkId != null and remarkId != '' ">
-                remark_id = #{remarkId},
-            </if>
-            <if test="borrowOrderId != null and borrowOrderId != '' ">
-                borrow_order_id = #{borrowOrderId},
-            </if>
-            <if test="assignType != null and assignType != ''">
-                assign_Type = #{assignType}
-            </if>
-        </set>
-        where id = #{id}
-    </update>
-
-
+    </set>
+    where id = #{id}
+</update>
 
 
 
-    <sql id="Base_Column_List" >
-    id, user_id, asset_order_id, repayment_amount, repaymented_amount, repayment_principal,
-    repayment_interest, plan_late_fee, true_late_fee, late_fee_apr, credit_repayment_time,
-    period, repayment_time, repayment_real_time, late_fee_start_time, interest_update_time,
-    late_day, created_at, updated_at, auto_debit_fail_times, renewal_count, status,collection,repayment_no
-  </sql>
-    <sql id="Blob_Column_List" >
-    remark
-  </sql>
-    <sql id="selectSql">
-        from asset_repayment a LEFT JOIN user_info u on u.id = a.user_id
-        left join asset_borrow_order abo on a.asset_order_id = abo.id
-        where 1 = 1
-        <if test="statuses != null and statuses != '' and statuses.length > 0">
-            and abo.status in
-            <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
-                ${item}
-            </foreach>
-        </if>
-        <if test="assetOrderId != null and asssetOrderId != ''">
-            and a.asset_order_id = #{assetOrderId}
-        </if>
-        <if test="repaymentTimeStart != null and repaymentTimeStart != ''">
-            <![CDATA[    and a.repayment_time >= #{repaymentTimeStart}   ]]>
+
+
+<sql id="Base_Column_List" >
+id, user_id, asset_order_id, repayment_amount, repaymented_amount, repayment_principal,
+repayment_interest, plan_late_fee, true_late_fee, late_fee_apr, credit_repayment_time,
+period, repayment_time, repayment_real_time, late_fee_start_time, interest_update_time,
+late_day, created_at, updated_at, auto_debit_fail_times, renewal_count, status,collection,repayment_no
+</sql>
+<sql id="Blob_Column_List" >
+remark
+</sql>
+<sql id="selectSql">
+    from asset_repayment a LEFT JOIN user_info u on u.id = a.user_id
+    left join asset_borrow_order abo on a.asset_order_id = abo.id
+    where 1 = 1
+    <if test="statuses != null and statuses != '' and statuses.length > 0">
+        and abo.status in
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+            ${item}
+        </foreach>
+    </if>
+    <if test="assetOrderId != null and asssetOrderId != ''">
+        and a.asset_order_id = #{assetOrderId}
+    </if>
+    <if test="repaymentTimeStart != null and repaymentTimeStart != ''">
+        <![CDATA[    and a.repayment_time >= #{repaymentTimeStart}   ]]>
+    </if>
+    <if test="repaymentTimeEnd != null and repaymentTimeEnd != ''">
+        <![CDATA[    and a.repayment_time < #{repaymentTimeEnd}   ]]>
+    </if>
+    <if test="repaymentedTimeStart != null and repaymentedTimeStart != ''">
+        <![CDATA[ and a.repayment_real_time >=str_to_date(#{repaymentedTimeStart},'%Y-%m-%d') ]]>
+    </if>
+    <if test="repaymentedTimeEnd != null and repaymentedTimeEnd != ''">
+        <![CDATA[ and a.repayment_real_time <  str_to_date(#{repaymentedTimeEnd},'%Y-%m-%d') ]]>
+    </if>
+    <if test="userAccountLike != null and userAccountLike != ''">
+        <![CDATA[ and u.realname  LIKE concat(#{userAccountLike},'%') ]]>
+    </if>
+    <if test="userMobileLike != null and userMobileLike != ''">
+        <![CDATA[ and u.user_phone = #{userMobileLike} ]]>
+    </if>
+    <if test="lateDayStart != null and lateDayStart != ''">
+        <![CDATA[ and a.late_day >= #{lateDayStart} ]]>
+    </if>
+    <if test="lateDayEnd != null and lateDayEnd != ''">
+        <![CDATA[ and a.late_day <= #{lateDayEnd} ]]>
+    </if>
+    <if test="productAmount != null and productAmount != ''">
+      and abo.money_amount = #{productAmount}
+    </if>
+</sql>
+
+<sql id="selectSqlPrecise">
+    from asset_repayment a LEFT JOIN user_info u on u.id = a.user_id
+    where 1 = 1
+    <if test="statuses != null and statuses != '' and statuses.length > 0">
+        and a.status in
+        <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
+            ${item}
+        </foreach>
+    </if>
+    <if test="assetOrderId != null and asssetOrderId != ''">
+        and a.asset_order_id = #{assetOrderId}
+    </if>
+    <!--    <if test="repaymentTimeStart != null and repaymentTimeStart != ''">
+          <![CDATA[    and a.repayment_time >= #{repaymentTimeStart}   ]]>
         </if>
         <if test="repaymentTimeEnd != null and repaymentTimeEnd != ''">
-            <![CDATA[    and a.repayment_time < #{repaymentTimeEnd}   ]]>
+          <![CDATA[    and a.repayment_time < #{repaymentTimeEnd}   ]]>
         </if>
         <if test="repaymentedTimeStart != null and repaymentedTimeStart != ''">
-            <![CDATA[ and a.repayment_real_time >=str_to_date(#{repaymentedTimeStart},'%Y-%m-%d') ]]>
+          <![CDATA[ and DATE_FORMAT(a.repayment_real_time,'%Y-%m-%d') >= #{repaymentedTimeStart} ]]>
         </if>
         <if test="repaymentedTimeEnd != null and repaymentedTimeEnd != ''">
-            <![CDATA[ and a.repayment_real_time <  str_to_date(#{repaymentedTimeEnd},'%Y-%m-%d') ]]>
-        </if>
-        <if test="userAccountLike != null and userAccountLike != ''">
-            <![CDATA[ and u.realname  LIKE concat(#{userAccountLike},'%') ]]>
-        </if>
-        <if test="userMobileLike != null and userMobileLike != ''">
-            <![CDATA[ and u.user_phone = #{userMobileLike} ]]>
-        </if>
-        <if test="lateDayStart != null and lateDayStart != ''">
-            <![CDATA[ and a.late_day >= #{lateDayStart} ]]>
-        </if>
-        <if test="lateDayEnd != null and lateDayEnd != ''">
-            <![CDATA[ and a.late_day <= #{lateDayEnd} ]]>
-        </if>
-        <if test="productAmount != null and productAmount != ''">
-          and abo.money_amount = #{productAmount}
-        </if>
-    </sql>
-
-    <sql id="selectSqlPrecise">
-        from asset_repayment a LEFT JOIN user_info u on u.id = a.user_id
-        where 1 = 1
-        <if test="statuses != null and statuses != '' and statuses.length > 0">
-            and a.status in
-            <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
-                ${item}
-            </foreach>
-        </if>
-        <if test="assetOrderId != null and asssetOrderId != ''">
-            and a.asset_order_id = #{assetOrderId}
-        </if>
-        <!--    <if test="repaymentTimeStart != null and repaymentTimeStart != ''">
-              <![CDATA[    and a.repayment_time >= #{repaymentTimeStart}   ]]>
-            </if>
-            <if test="repaymentTimeEnd != null and repaymentTimeEnd != ''">
-              <![CDATA[    and a.repayment_time < #{repaymentTimeEnd}   ]]>
-            </if>
-            <if test="repaymentedTimeStart != null and repaymentedTimeStart != ''">
-              <![CDATA[ and DATE_FORMAT(a.repayment_real_time,'%Y-%m-%d') >= #{repaymentedTimeStart} ]]>
-            </if>
-            <if test="repaymentedTimeEnd != null and repaymentedTimeEnd != ''">
-              <![CDATA[ and DATE_FORMAT(a.repayment_real_time,'%Y-%m-%d') <= #{repaymentedTimeEnd}  ]]>
-            </if>-->
+          <![CDATA[ and DATE_FORMAT(a.repayment_real_time,'%Y-%m-%d') <= #{repaymentedTimeEnd}  ]]>
+        </if>-->
         <if test="userAccountLike != null and userAccountLike != ''">
             <![CDATA[ and u.realname  = #{userAccountLike} ]]>
         </if>
@@ -1216,5 +1216,9 @@
        <if test="status != null and status != ''">
            and status in (30,34)
        </if>
+    </select>
+
+    <select id="selectAssetBorrowAssign" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select borrow_order_id from asset_borrow_assign where id = #{id}
     </select>
 </mapper>

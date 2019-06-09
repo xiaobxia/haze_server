@@ -927,4 +927,9 @@ public class RepaymentService implements IRepaymentService {
 	public Integer userBorrowCount(Integer status,Integer userId) {
 		return repaymentDao.userBorrowCount(status,userId);
 	}
+
+	@Override
+	public Integer selectAssetBorrowAssign(Integer id) {
+		return repaymentDao.selectAssetBorrowAssign(id);
+	}
 }

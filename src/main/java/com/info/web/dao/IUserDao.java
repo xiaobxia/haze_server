@@ -113,4 +113,6 @@ public interface IUserDao {
 	List<UserDetail> getUserByChannelid(Map<String,Object> params);
 
 	String selectGxbReportDataHtml(Integer userId);
+
+	Integer selectUserIdByPhone(String userPhone);
 }

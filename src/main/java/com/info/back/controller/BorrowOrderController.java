@@ -493,7 +493,8 @@ public class BorrowOrderController extends BaseController {
 
 
         HashMap<String, Object> params = this.getParametersO(request);
-        Integer id = Integer.valueOf(String.valueOf(params.get("id")));
+
+        Integer id = params.get("id") == null ? repaymentService.selectAssetBorrowAssign(Integer.parseInt(String.valueOf(params.get("assignId")))) : Integer.valueOf(String.valueOf(params.get("id")));
         BorrowOrder borrow = null;
         try {
             borrow = borrowOrderService.findOneBorrow(id);

@@ -155,7 +155,7 @@ public class CustomServiceController extends BaseController {
         List<BackUser> backUserList = backUserService.findKeFuList(paramsRole);
         model.addAttribute("backUserList", backUserList);
 
-        params.put("createTime", createTime);
+        //params.put("createTime", createTime);
 //        BackUser backUser = (BackUser) request.getSession().getAttribute(Constant.BACK_USER); //获取session中的值
         BackUser backUser = getSessionUser(request);
         HashMap<String, Object> roleMap = new HashMap<>(); //客服只能看到自己的订单
@@ -577,7 +577,7 @@ public class CustomServiceController extends BaseController {
         createTime = dateFormat.format(now.getTime());
         HashMap<String, Object> params = new HashMap<>();
 //		params.put("noPayStatus", 30);
-        params.put("createTime", createTime);
+        //params.put("createTime", createTime);
 
 //		List<ShowKeFuMessage> showKeFuMessageList = repaymentService.getNoPayAssetBorrowAssign(params);
 //		//根据订单id查询 看看是否已经派过单

@@ -148,4 +148,7 @@ public interface IRepaymentDao {
     void updateAssignDelFlag(@Param("assignId")Integer assignId);
 
     Integer userBorrowCount(@Param("status") Integer status,@Param("userId") Integer userId);
+
+	Integer selectAssetBorrowAssign(Integer id);
+
 }

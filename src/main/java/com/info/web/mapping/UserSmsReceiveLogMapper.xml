@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- user_sms_receive_log表:用户发送短信记录模块 -->
+<mapper namespace="com.info.web.dao.IUserSmsReceiveLogDao">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.info.web.pojo.UserSmsReceiveLog">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="receive_phone" property="receivePhone" jdbcType="VARCHAR" />
+        <result column="receive_content" property="receiveContent" jdbcType="VARCHAR" />
+        <result column="receive_time" property="receiveTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,receive_phone,receive_content,receive_time 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !=null and id !=''">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="receivePhone != null and receivePhone != ''">
+                and receive_phone = #{receivePhone,jdbcType=VARCHAR}
+            </if>
+            <if test="receiveContent != null and receiveContent != ''">
+                and receive_content = #{receiveContent,jdbcType=VARCHAR}
+            </if>
+            <if test="receiveTime !=null">
+                and receive_time = #{receiveTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.info.web.pojo.UserSmsReceiveLog">
+        insert into user_sms_receive_log(user_id,receive_phone,receive_content,receive_time)values(#{userId,jdbcType=INTEGER},#{receivePhone,jdbcType=VARCHAR},#{receiveContent,jdbcType=VARCHAR},#{receiveTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    
+    <insert id="saveRecord" parameterType="com.info.web.pojo.UserSmsReceiveLog" keyProperty="id">
+    	<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+	      SELECT LAST_INSERT_ID()
+	    </selectKey>
+    
+        insert into user_sms_receive_log
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+	        <if test="userId != null">        
+	            user_id,
+	        </if>
+	        <if test="receivePhone != null">        
+	            receive_phone,
+	        </if>
+	        <if test="receiveContent != null">        
+	            receive_content,
+	        </if>
+	        <if test="receiveTime != null">        
+	            receive_time,
+	        </if>
+        </trim>
+        
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+		    <if test="userId != null" >
+		       #{userId,jdbcType=INTEGER},
+		    </if>
+		    <if test="receivePhone != null" >
+		       #{receivePhone,jdbcType=VARCHAR},
+		    </if>
+		    <if test="receiveContent != null" >
+		       #{receiveContent,jdbcType=VARCHAR},
+		    </if>
+		    <if test="receiveTime != null" >
+		       #{receiveTime,jdbcType=TIMESTAMP},
+		    </if>
+        </trim>
+    </insert>
+    
+    
+    <update id="update" parameterType="com.info.web.pojo.UserSmsReceiveLog">
+        update user_sms_receive_log set 
+            user_id = #{userId,jdbcType=INTEGER},
+
+            receive_phone = #{receivePhone,jdbcType=VARCHAR},
+
+            receive_content = #{receiveContent,jdbcType=VARCHAR},
+
+            receive_time = #{receiveTime,jdbcType=TIMESTAMP}
+
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective" parameterType="com.info.web.pojo.UserSmsReceiveLog">
+        update user_sms_receive_log
+          <set>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=INTEGER},
+                
+            </if>
+            <if test="receivePhone != null and receivePhone != '' ">        
+                receive_phone = #{receivePhone,jdbcType=VARCHAR},
+                
+            </if>
+            <if test="receiveContent != null and receiveContent != '' ">        
+                receive_content = #{receiveContent,jdbcType=VARCHAR},
+                
+            </if>
+            <if test="receiveTime != null and receiveTime != '' ">        
+                receive_time = #{receiveTime,jdbcType=TIMESTAMP}
+                
+            </if>
+        </set>    
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from user_sms_receive_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_sms_receive_log
+        <include refid="searchBy"/> 
+        limit 0,1
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_sms_receive_log
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>

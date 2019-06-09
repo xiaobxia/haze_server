@@ -242,6 +242,8 @@ public interface IRepaymentService {
 	//查找用户借款次数
 	Integer userBorrowCount(Integer status,Integer userId);
 
+	Integer selectAssetBorrowAssign(Integer id);
+
 }
 
 

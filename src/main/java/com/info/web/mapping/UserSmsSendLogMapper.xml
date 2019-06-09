@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- user_sms_send_log表:用户发送短信记录模块 -->
+<mapper namespace="com.info.web.dao.IUserSmsSendLogDao">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.info.web.pojo.UserSmsSendLog">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="send_phone" property="sendPhone" jdbcType="VARCHAR" />
+        <result column="send_content" property="sendContent" jdbcType="VARCHAR" />
+        <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+        <result column="send_template_id" property="sendTemplateId" jdbcType="INTEGER" />
+        <result column="send_deliver" property="sendDeliver" jdbcType="INTEGER" />
+        <result column="sms_uuid" property="smsUuid" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,send_phone,send_content,send_time,send_template_id,send_deliver,sms_uuid 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !=null and id !=''">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="sendPhone != null and sendPhone != ''">
+                and send_phone = #{sendPhone,jdbcType=VARCHAR}
+            </if>
+            <if test="sendContent != null and sendContent != ''">
+                and send_content = #{sendContent,jdbcType=VARCHAR}
+            </if>
+            <if test="sendTime !=null">
+                and send_time = #{sendTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="sendTemplateId != null and sendTemplateId != ''">
+                and send_template_id = #{sendTemplateId,jdbcType=INTEGER}
+            </if>
+            <if test="sendDeliver != null and sendDeliver != ''">
+                and send_deliver = #{sendDeliver,jdbcType=INTEGER}
+            </if>
+            <if test="smsUuid != null and smsUuid != ''">
+                and sms_uuid = #{smsUuid,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.info.web.pojo.UserSmsSendLog">
+        insert into user_sms_send_log(user_id,send_phone,send_content,send_time,send_template_id,send_deliver,sms_uuid)values(#{userId,jdbcType=INTEGER},#{sendPhone,jdbcType=VARCHAR},#{sendContent,jdbcType=VARCHAR},#{sendTime,jdbcType=TIMESTAMP},#{sendTemplateId,jdbcType=INTEGER},#{sendDeliver,jdbcType=INTEGER},#{smsUuid,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <insert id="saveRecord" parameterType="com.info.web.pojo.UserSmsSendLog" keyProperty="id">
+    	<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+	      SELECT LAST_INSERT_ID()
+	    </selectKey>
+    
+        insert into user_sms_send_log
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+	        <if test="userId != null">        
+	            user_id,
+	        </if>
+	        <if test="sendPhone != null">        
+	            send_phone,
+	        </if>
+	        <if test="sendContent != null">        
+	            send_content,
+	        </if>
+	        <if test="sendTime != null">        
+	            send_time,
+	        </if>
+	        <if test="sendTemplateId != null">        
+	            send_template_id,
+	        </if>
+	        <if test="sendDeliver != null">        
+	            send_deliver,
+	        </if>
+	        <if test="smsUuid != null">        
+	            sms_uuid,
+	        </if>
+        </trim>
+        
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+		    <if test="userId != null" >
+		       #{userId,jdbcType=INTEGER},
+		    </if>
+		    <if test="sendPhone != null" >
+		       #{sendPhone,jdbcType=VARCHAR},
+		    </if>
+		    <if test="sendContent != null" >
+		       #{sendContent,jdbcType=VARCHAR},
+		    </if>
+		    <if test="sendTime != null" >
+		       #{sendTime,jdbcType=TIMESTAMP},
+		    </if>
+		    <if test="sendTemplateId != null" >
+		       #{sendTemplateId,jdbcType=INTEGER},
+		    </if>
+		    <if test="sendDeliver != null" >
+		       #{sendDeliver,jdbcType=INTEGER},
+		    </if>
+		    <if test="smsUuid != null" >
+		       #{smsUuid,jdbcType=VARCHAR},
+		    </if>
+        </trim>
+    </insert>
+    
+    
+    <update id="update" parameterType="com.info.web.pojo.UserSmsSendLog">
+        update user_sms_send_log set 
+            user_id = #{userId,jdbcType=INTEGER},
+
+            send_phone = #{sendPhone,jdbcType=VARCHAR},
+
+            send_content = #{sendContent,jdbcType=VARCHAR},
+
+            send_time = #{sendTime,jdbcType=TIMESTAMP},
+
+            send_template_id = #{sendTemplateId,jdbcType=INTEGER},
+
+            send_deliver = #{sendDeliver,jdbcType=INTEGER},
+
+            sms_uuid = #{smsUuid,jdbcType=VARCHAR}
+
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="com.info.web.pojo.UserSmsSendLog">
+        update user_sms_send_log
+          <set>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=INTEGER},
+                
+            </if>
+            <if test="sendPhone != null and sendPhone != '' ">        
+                send_phone = #{sendPhone,jdbcType=VARCHAR},
+                
+            </if>
+            <if test="sendContent != null and sendContent != '' ">        
+                send_content = #{sendContent,jdbcType=VARCHAR},
+                
+            </if>
+            <if test="sendTime != null and sendTime != '' ">        
+                send_time = #{sendTime,jdbcType=TIMESTAMP},
+                
+            </if>
+            <if test="sendTemplateId != null and sendTemplateId != '' ">        
+                send_template_id = #{sendTemplateId,jdbcType=INTEGER},
+                
+            </if>
+            <if test="sendDeliver != null and sendDeliver != '' ">        
+                send_deliver = #{sendDeliver,jdbcType=INTEGER},
+                
+            </if>
+            <if test="smsUuid != null and smsUuid != '' ">        
+                sms_uuid = #{smsUuid,jdbcType=VARCHAR}
+                
+            </if>
+        </set>    
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from user_sms_send_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_sms_send_log
+        <include refid="searchBy"/> 
+        limit 0,1
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_sms_send_log
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>
