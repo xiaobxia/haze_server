@@ -32,6 +32,7 @@
 						<input name="userAccount" value="${backUser.userAccount }"
 							   minlength="6" maxlength="16" class="required" type="text"
 							   alt="请输入用户名" size="30" />
+						<label style="color: red;" class="required-label">*</label>
 					</c:if>
 					<c:if test="${not empty backUser.id }">
 						${backUser.userAccount }
@@ -64,6 +65,7 @@
 				<dd>
 					<input name="userName" value="${backUser.userName }"
 						   class="required" type="text" alt="请输入用户真实姓名" size="30" />
+					<label style="color: red;" class="required-label">*</label>
 				</dd>
 			</dl>
 			<dl>
@@ -118,6 +120,7 @@
 				<dd>
 					<input name="userMobile" value="${backUser.userMobile }" type="text"
 						   class="required phone" alt="请输入手机" size="30" />
+					<label style="color: red;" class="required-label">*</label>
 				</dd>
 			</dl>
 			<dl>
@@ -149,9 +152,9 @@
 						<label>
 							状态:
 						</label>
-					</dt>\
+					</dt>
 					<dd>
-						<select name="status" class="textInput">
+						<select name="status" class="textInput" style="width: 100%">
 							<option value="1"
 									<c:if test="${backUser.status == 1}">
 										selected="selected"
