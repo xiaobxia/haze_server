@@ -3,6 +3,7 @@ package com.info.back.service;
 import java.util.HashMap;
 import java.util.List;
 
+import com.info.back.dao.IBackRoleDao;
 import com.info.web.pojo.BackUserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,10 +20,15 @@ import com.info.web.util.PageConfig;
 public class BackUserService implements IBackUserService {
 	@Autowired
 	private IBackUserDao backUserDao;
+
 	@Autowired
 	private IBackUserRoleDao backUserRoleDao;
+
 	@Autowired
 	private IPaginationDao paginationDao;
+
+	@Autowired
+	private IBackRoleDao iBackRoleDao;
 
 	@Override
 	public List<BackUser> findAll(HashMap<String, Object> params) {
@@ -142,5 +148,10 @@ public class BackUserService implements IBackUserService {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public int findRoleByUserId(Integer id) {
+		return iBackRoleDao.findRoleByUserId(id);
 	}
 }

@@ -132,14 +132,20 @@ public class CustomServiceController extends BaseController {
         if (status != null && !"".equals(status)) {
             Integer flag = Integer.parseInt(status);
             if (flag == 1) { //1 标记未已还
-                params.put("payStatus", 30); //根据是否还款查询
+                params.put("payStatus", 30); //根据是否还款查询 正常还款
                 //续期后的还款时间至少 大于当前时间是要比大于一天的
                 Calendar nowCalendar = Calendar.getInstance();
                 nowCalendar.add(Calendar.DATE, 1);
                 String xuqiPayTime = dateFormat.format(nowCalendar.getTime());
                 params.put("xuqiPayTime", xuqiPayTime); //续期还款
             } else if (flag == 0) { //未还
-                params.put("noPayStatus", 30);
+                params.put("noPayStatus",21);
+            }else if(flag == 2){
+                params.put("yuqiStatus",-11);
+            }else if(flag == 3){
+                params.put("bufenStatus",23);
+            }else if(flag == 4){
+                params.put("yqhuanStatus",34);
             }
         }
         if (jobName != null && !"".equals(jobName)) {
@@ -154,7 +160,6 @@ public class CustomServiceController extends BaseController {
         paramsRole.put("status", 1);
         List<BackUser> backUserList = backUserService.findKeFuList(paramsRole);
         model.addAttribute("backUserList", backUserList);
-
         //params.put("createTime", createTime);
 //        BackUser backUser = (BackUser) request.getSession().getAttribute(Constant.BACK_USER); //获取session中的值
         BackUser backUser = getSessionUser(request);

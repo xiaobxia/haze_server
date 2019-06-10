@@ -182,15 +182,17 @@
     <select id="seleShowKeFuList"  resultType="com.info.web.pojo.ShowKeFuMessage" parameterType="map">
         select r.remark_flag as remarkFlag,CONCAT(r.create_time,r.remark_content) as remarkContent,a.id as id,a.job_name as jobName,a.create_time as createTime,u.realname as userName,u.user_phone as userPhone,u.customer_type as customerType,
         a.borrow_order_id as borrowOrderId,a.assign_type as assignType,u.brower_type as browerType,
-        case when DATE(c.`repayment_time`)= DATE(a.`create_time`) then c.`status` else 30 end as `status`,c.repayment_amount/100 as repaymentMoney,c.repayment_time expectedTime,u.user_sex sex
+        case
+        when DATE(c.`repayment_time`)= DATE(a.`create_time`) then bo.`status`
+        else bo.`status` end as `status`,c.repayment_amount/100 as repaymentMoney,c.repayment_time expectedTime,u.user_sex sex,c.late_day as lateDay
         from asset_borrow_assign a
         inner join asset_repayment c on c.asset_order_id=a.borrow_order_id
         inner join user_info u on u.id=c.user_id
+        left join asset_borrow_order bo on bo.id = c.asset_order_id
         left join borrow_remark r
         on a.borrow_order_id = r.assign_id and r.last_flag =1 and left(a.create_time,10) = left(r.create_time,10)
         <include refid="selectAssignSql" />
-        ORDER BY a.id
-
+        ORDER BY c.repayment_time desc
     </select>
 
     <sql id="selectAssignSql">
@@ -207,11 +209,20 @@
             <![CDATA[  and a.create_time >= str_to_date(#{createTime,jdbcType=VARCHAR},'%Y-%m-%d') ]]>
         </if>
         <if test="payStatus != null and payStatus !='' ">
-            AND  (c.status = #{payStatus,jdbcType=INTEGER} or c.repayment_time > str_to_date(#{xuqiPayTime,jdbcType=VARCHAR},'%Y-%m-%d'))
+            AND  (bo.status = #{payStatus,jdbcType=INTEGER} or c.repayment_time > str_to_date(#{xuqiPayTime,jdbcType=VARCHAR},'%Y-%m-%d'))
+        </if>
+        <if test="yqhuanStatus != null">
+          AND bo.status = #{yqhuanStatus}
         </if>
         <if test="noPayStatus != null and noPayStatus !='' ">
-            AND  c.status != #{noPayStatus,jdbcType=INTEGER}
+            AND  bo.status = #{noPayStatus}
             <!-- and  c.repayment_time between str_to_date(#{createTime,jdbcType=VARCHAR},'%Y-%m-%d') and date_add(#{createTime}, interval 1 day) -->
+        </if>
+        <if test="bufenStatus != null and bufenStatus !=''">
+            AND  bo.status = #{bufenStatus,jdbcType=INTEGER}
+        </if>
+        <if test="yuqiStatus != null and yuqiStatus != ''">
+            and bo.status = #{yuqiStatus}
         </if>
         <if test="payed == 1">
             AND  c.status != '30' and c.status != '34'
@@ -240,9 +251,10 @@
 <select id="findAssignParamsCount"  resultType="int" parameterType="map">
     SELECT count(1) from (select a.id as id,a.job_name as jobName,a.create_time as createTime,u.realname as
     userName,u.user_phone as userPhone,u.customer_type as customerType,c.`status`,c.repayment_amount/100 as
-    repaymentMoney,c.repayment_time expectedTime,u.user_sex sex from asset_borrow_assign a
+    repaymentMoney,c.repayment_time expectedTime,u.user_sex sex,c.late_day as lateDay  from asset_borrow_assign a
     inner join asset_repayment c on c.asset_order_id=a.borrow_order_id
     inner join user_info u on u.id=c.user_id
+    left join asset_borrow_order bo on bo.id = c.asset_order_id
     left join borrow_remark r
     on a.borrow_order_id = r.assign_id and r.last_flag =1 and left(a.create_time,10) = left(r.create_time,10)
     <include refid="selectAssignSql"/>

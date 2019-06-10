@@ -132,23 +132,37 @@
 									<c:if test="${params.get('payStatus') != null and params.get('payStatus') != null}">
 										selected="selected"
 									</c:if>
-							>已还</option>
-
+							>正常还款</option>
+							<option value="4"
+									<c:if test="${params.get('yqhuanStatus') != null and params.get('yqhuanStatus') != null}">
+										selected="selected"
+									</c:if>
+							>逾期还款</option>
+							<option value="3"
+									<c:if test="${params.get('bufenStatus') != null and params.get('bufenStatus') != null}">
+										selected="selected"
+									</c:if>
+							>部分还款</option>
 							<option value="0"
 									<c:if test="${params.get('noPayStatus') != null and params.get('noPayStatus') != null}">
 										selected="selected"
 									</c:if>
 							>未还</option>
+							<option value="2"
+									<c:if test="${params.get('yuqiStatus') != null and params.get('yuqiStatus') != null}">
+										selected="selected"
+									</c:if>
+							>已逾期</option>
 						</select>
 					</td>
-					<td>
+					<%--<td>
 						<span style="display: inline-block;vertical-align: -1px;">标签：</span>
 						<select name="labelType" class="textInput" id="firstclassify" style="width:100px;vertical-align: bottom;">
 							<option value="">----请选择----</option>
 							<option value="user_remark_online">在线客服</option>
 							<option value="user_remark">电话客服</option>
 						</select>
-					</td>
+					</td>--%>
 					<td>
 						用户来源
 						<select name="browerType" class="textInput">
@@ -232,6 +246,9 @@
 				<th align="center"  >
 					状态
 				</th>
+				<th align="center">
+					逾期天数
+				</th>
 				<th align="center" >
 					客服
 				</th>
@@ -251,7 +268,7 @@
 				<tr target="sid_support" rel="${in.id }">
 					<td>
 						<c:choose>
-							<c:when test="${in.status == 30}">
+							<c:when test="${in.status == 30 || in.status == 34 || in.status == 23}">
 
 							</c:when>
 							<c:otherwise>
@@ -299,15 +316,36 @@
 							${in.expectedTime }
 					</td>
 					<td>
-						<c:choose>
+						<c:if test="${in.status == 30}">
+							正常还款
+						</c:if>
+						<c:if test="${in.status == 34}">
+							逾期还款
+						</c:if>
+						<c:if test="${in.status == 23}">
+							部分还款
+						</c:if>
+						<c:if test="${in.status == -11}">
+                            已逾期
+						</c:if>
+						<c:if test="${in.status == 21}">
+                            未还款
+						</c:if>
+						<%--<c:choose>
 							<c:when test="${in.status == 30}">
 								已还款
+							</c:when>
+							<c:when test="${in.status == -11}">
+								已逾期
 							</c:when>
 							<c:otherwise>
 								未还款
 							</c:otherwise>
-						</c:choose>
+						</c:choose>--%>
 					</td>
+					<Td>
+						${in.lateDay}
+					</Td>
 					<td>
 							${in.jobName}
 					</td>

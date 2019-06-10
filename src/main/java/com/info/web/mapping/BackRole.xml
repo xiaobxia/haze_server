@@ -132,6 +132,10 @@
 		LEFT JOIN back_user bu
 		  ON bu.id = bur.user_id
 	  WHERE bu.id = #{userId}  AND br.role_name NOT IN('普通客服','在线客服','客服','客服部','普通客服','线上客服','推广员','推广管理')
+
+	</select>
+	<select id ="findRoleByUserId" resultType="integer" parameterType="integer">
+		SELECT count(id) FROM  back_user_role where user_id = #{id}
 	</select>
 	<!--&lt;!&ndash; 客服与普通客服不应该显示主页数据查询 1 / 0 &ndash;&gt;-->
 	<!--<select id="catchCustomerManager" parameterType="long" resultType="Integer">-->

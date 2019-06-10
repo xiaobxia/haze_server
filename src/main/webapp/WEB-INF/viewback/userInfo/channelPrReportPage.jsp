@@ -123,7 +123,6 @@
 						</td>
 						<td>
 						<fmt:formatDate value="${channel.reportDate}" pattern="yyyy-MM-dd" />
-							
 						</td>
 						<td>
 							${channel.channelProvince}
@@ -187,7 +186,6 @@
 <!-- 						<td> -->
 <%-- 							<fmt:formatDate value="${channel.createdAt}" pattern="yyyy-MM-dd HH:mm:ss"/> --%>
 <!-- 						</td> -->
-						 
 					</tr>
 				</c:forEach>
 				

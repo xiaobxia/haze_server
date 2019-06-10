@@ -13,6 +13,7 @@ public class ShowKeFuMessage extends AssetBorrowAssign {
     private String browerType;
     private String remarkFlag;
     private String remarkContent;
+    private Integer lateDay =0;
 
     public String getBrowerType() {
         return browerType;
@@ -108,5 +109,13 @@ public class ShowKeFuMessage extends AssetBorrowAssign {
 
     public void setRemarkContent(String remarkContent) {
         this.remarkContent = remarkContent;
+    }
+
+    public Integer getLateDay() {
+        return lateDay;
+    }
+
+    public void setLateDay(Integer lateDay) {
+        this.lateDay = lateDay;
     }
 }

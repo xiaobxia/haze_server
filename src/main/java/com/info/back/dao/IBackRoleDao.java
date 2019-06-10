@@ -3,6 +3,7 @@ package com.info.back.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.info.web.pojo.BackModule;
@@ -105,6 +106,8 @@ public interface IBackRoleDao {
      * @return
      */
     public List<Integer> catchCustomerManager(long userId);
+
+    int findRoleByUserId(@Param("id") Integer id);
 
 
 }

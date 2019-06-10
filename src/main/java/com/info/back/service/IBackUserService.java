@@ -108,6 +108,7 @@ public interface IBackUserService {
     void updateAllById(BackUser backUser);
 
     String getBackUserIdByPhone(String phone);
+
     List<String> selectBackUserNameByIds(String[] ids);
 
     List<BackUser> selectBackUserByIds(String[] ids);
@@ -115,5 +116,7 @@ public interface IBackUserService {
 	BackUser selectUserById(Integer userId);
 
 	boolean loginUserIsSuperAdmin(String userId);
+
+	int findRoleByUserId(Integer id );
 
 }
