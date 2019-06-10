@@ -690,7 +690,7 @@
 				<c:forEach items="${subMenu}" var="item" varStatus="count">
 					<div class="accordionHeader">
 						<c:if test="${ count.index==0}">
-							<h2 class="collapsable">
+							<h2 class="">
 								<img src="${basePath }/images/menu/${item.moduleName }.png" alt="">
 								<span>icon</span>${item.moduleName }
 							</h2>
