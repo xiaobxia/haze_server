@@ -66,7 +66,6 @@ public class UserManageController extends BaseController{
 	public String gotoUserManage(HttpServletRequest request,Model model) {
 		HashMap<String, Object> params = getParametersO(request);
 		try {
-
 			String status=request.getParameter("status");
 			String userId=request.getParameter("id");
 			String realname=request.getParameter("realname");
@@ -81,7 +80,6 @@ public class UserManageController extends BaseController{
 			if(StringUtils.isNotBlank(channelSuperCode) && channelSuperCode.equals("-999")){
 				params.put("channelSuperCode",null);
 				params.put("userFrom",0);
-
 			}
 			if(StringUtils.isNotBlank(channelName) && channelName.equals("自然流量")){
 				params.put("channelName",null);
@@ -182,7 +180,7 @@ public class UserManageController extends BaseController{
 				List<BorrowOrder> list = borrowOrderService.findByUserId(Integer.valueOf(id));
 				if(list.size()>0){
 					bool = false;
-					SpringUtils.renderDwzResult(response, bool, "该用户为借款中状态,不能删除!", DwzResult.CALLBACK_RELOADPAGE);
+					SpringUtils.renderDwzResult(response, bool, "该用户为借款中状态,不能注销/删除!", DwzResult.CALLBACK_RELOADPAGE);
 				}else{
 					User usr=this.userService.searchByUserid(Integer.parseInt(id));
 					if(!StringUtils.isBlank(usr.getUserName())){
