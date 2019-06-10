@@ -41,9 +41,6 @@
                nowrapTD="false">
             <thead>
             <tr>
-                <th align="center" width="30">
-                    <input type="checkbox" group="idsBorrow" id="checkedAllBorrow" onclick="selectAllMerchant();">
-                </th>
                 <th align="center"  >
                     序号
                 </th>
@@ -85,10 +82,7 @@
             </thead>
             <tbody>
             <c:forEach var="repayment" items="${pm.items }" varStatus="status">
-                <tr target="repaymentId" rel="${repayment.id }"  onclick="rowClickMerchant(${borrow.id })">
-                    <td>
-                        <input name="idsBorrow" id="borrow${repayment.id }" value="${repayment.id }" 	onclick="rowClickMerchant(${repayment.id })" type="checkbox">
-                    </td>
+                <tr target="sid_support" rel="${repayment.assetOrderId}">
                     <td>
                             ${status.count}
                     </td>
@@ -141,26 +135,6 @@
         alertMsg.error(${message});
     }
 
-    function selectAllMerchant(){
-        var isAll = $("#checkedAllBorrow").attr("checked");
-        $("input[name=idsBorrow]:not(:disabled)").each(function(){
-            if(isAll=="checked"){
-                $(this).attr("checked","checked");
-            }else{
-                $(this).removeAttr("checked");
-            }
-        });
-    }
-    function rowClickMerchant(id){
-        if($("#borrow"+id).attr("disabled")!="disabled"){
-            var cked = $("#borrow"+id).attr("checked");
-            if(cked == "checked"){
-                $("#borrow"+id).removeAttr("checked");
-            }else{
-                $("#borrow"+id).attr("checked","checked");
-            }
-        }
-    }
     if (renderLoanSuccessCount) {
         setTimeout(function () {
             renderLoanSuccessCount()

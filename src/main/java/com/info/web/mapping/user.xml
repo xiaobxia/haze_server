@@ -680,7 +680,7 @@
 	<!-- 用户列表 -->
 	<select id="selectUserCount" resultType="int" parameterType="Map" fetchSize="200">
 		SELECT
-		count(uc.id)
+		count(distinct (uc.id))
 		FROM
 		user_info uc
 		LEFT JOIN user_card_info card ON card.user_id = uc.id
@@ -807,7 +807,7 @@
 	</select>
 	<!-- 用户列表 多条件查询 -->
 	<select id="selectUserPage" resultType="map" parameterType="HashMap">
-		SELECT DISTINCT
+		SELECT distinct (uc.id),
 		uc.id as id,
 		ui.channel_super_code as channelSuperCode,
 		IFNULL(ui.channel_super_name,"自然流量") as channelSuperName,
