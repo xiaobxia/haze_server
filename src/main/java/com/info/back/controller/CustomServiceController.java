@@ -22,6 +22,7 @@ import com.info.web.util.aliyun.RocketMqUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.jsoup.helper.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -725,7 +726,8 @@ public class CustomServiceController extends BaseController {
                     // 取最近一次排班日期+1
                     String lastClassDate = onlineCustomService.getLastClassDate();
                     Calendar calendar = Calendar.getInstance();
-                    if (!lastClassDate.equals("null")) {
+                    //if (!lastClassDate.equals("null")) {
+                    if (org.apache.commons.lang3.StringUtils.isNotBlank(lastClassDate)) {
                         calendar.setTime(sf.parse(lastClassDate));
                     }
                     calendar.add(Calendar.DATE, +1);

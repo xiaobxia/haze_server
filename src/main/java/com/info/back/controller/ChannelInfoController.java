@@ -735,7 +735,7 @@ public class ChannelInfoController extends BaseController {
                 model.addAttribute("channelSuperInfos", channelSuperInfos);
                 model.addAttribute("pm", pageConfig);
             }else{
-                params.put("uc","uc");
+               /* params.put("uc","uc");*/
                 PageConfig<ChannelReport> pageConfig = channelReportService.findPage(params);
                 //PageConfig<OutChannelLook> pageConfigs = channelReportService.findPageOut(params);
 //                List<ChannelInfo> channelList = channelInfoService.findAll(chMap);

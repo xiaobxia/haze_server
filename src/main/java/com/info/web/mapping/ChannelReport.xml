@@ -99,9 +99,9 @@
             <if test="countDate != null and countDate != ''">
                 and a.report_date = #{countDate}
             </if>
-            <if test="uc != null">
+          <!--  <if test="uc != null">
 				and a.uv_count != 0
-			</if>
+			</if>-->
 		</where>
 	</sql>
 	<select id="getRegisterNow" parameterType="String" resultType="int">
