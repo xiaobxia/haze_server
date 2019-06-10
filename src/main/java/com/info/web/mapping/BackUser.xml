@@ -181,7 +181,9 @@
     <select id="getBackUserIdByPhone" resultType="String" parameterType="String">
         select id from back_user where user_mobile = #{phone}
     </select>
-
+    <select id="getBackUserIdByUserName" resultType="String" parameterType="String">
+        select id from back_user where user_name = #{jobName}
+    </select>
     <update id="updateAllById" parameterType="BackUser">
         update back_user
         <set>

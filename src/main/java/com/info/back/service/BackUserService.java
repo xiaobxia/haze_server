@@ -124,6 +124,11 @@ public class BackUserService implements IBackUserService {
 	}
 
 	@Override
+	public String getBackUserIdByUserName(String jobName) {
+		return backUserDao.getBackUserIdByUserName(jobName);
+	}
+
+	@Override
 	public List<String> selectBackUserNameByIds(String[] ids) {
 		return backUserDao.selectBackUserNameByIds(ids);
 	}

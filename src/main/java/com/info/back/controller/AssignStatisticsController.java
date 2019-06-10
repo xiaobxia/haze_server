@@ -113,6 +113,11 @@ public class AssignStatisticsController extends AssignController {
                     String backUserId =backUserService.getBackUserIdByPhone(String.valueOf(params.get("mobile")));
                     params.put("jobId",backUserId);
                 }
+                //通过客服名字查询id
+                if(params.get("jobName")!=null){
+                    String backUserId =backUserService.getBackUserIdByUserName(String.valueOf(params.get("jobName")));
+                    params.put("jobId",backUserId);
+                }
                 //有开始时间则判断结束时间 或给默认值
                 if(params.get("startDate")!=null){
                     if(params.get("endDate")==null){

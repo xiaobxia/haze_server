@@ -82,6 +82,7 @@ public interface IBackUserDao {
     void pyhsicalDeleteById(Integer id);
 
 	String getBackUserIdByPhone(@Param("phone")String phone);
+	String getBackUserIdByUserName(@Param("jobName") String jobName);
     List<String> selectBackUserNameByIds(@Param("ids")String[] ids);
     List<BackUser> selectBackUserByIds(@Param("ids")String[] ids);
 

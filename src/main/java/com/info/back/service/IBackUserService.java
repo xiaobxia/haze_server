@@ -7,6 +7,7 @@ import com.info.web.pojo.BackLog;
 import com.info.web.pojo.BackUser;
 import com.info.web.pojo.BackUserRole;
 import com.info.web.util.PageConfig;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 
@@ -108,6 +109,8 @@ public interface IBackUserService {
     void updateAllById(BackUser backUser);
 
     String getBackUserIdByPhone(String phone);
+
+	String getBackUserIdByUserName(String jobName);
 
     List<String> selectBackUserNameByIds(String[] ids);
 
