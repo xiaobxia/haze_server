@@ -1152,6 +1152,8 @@ public class BorrowOrderController extends BaseController {
         User user = userService.searchByUserid(borrow.getUserId());
         Integer score =repaymentDetailService.findRiskScore(Integer.valueOf(user.getId()));
         model.addAttribute("score",score);
+        //运营商报告
+        model.addAttribute("operatorHtml", userService.selectGxbReportDataHtml(Integer.parseInt(user.getId())));
         try {
             return saveUpdateBorrowJx(request, response, model, borrowOrder);
         } catch (Exception e) {
