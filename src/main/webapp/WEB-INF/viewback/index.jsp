@@ -416,6 +416,9 @@
 						var canvasWH = zoom * 110/2
 						var canvasHH = zoom * 110/2
 						var lineW = zoom * 7
+						console.log(this)
+						console.log($(this))
+						console.log($(this).get(0))
 						var canvas = $(this).get(0);
 						var constrast = parseFloat(curr/total).toFixed(2); //比例
 						var context = null;
@@ -763,237 +766,235 @@
 							<span>欢迎,${BACK_USER.userAccount}</span>
 						</p>
 					</div>
-					<c:if test="${isShow==true}">
-						<div style="font-size: 16px" class="index-page-wrap pageFormContent">
-							<div class="left-main">
-								<div class="main-title">
-									<img src="${basePath }/images/shouyeimg/总体概况.png" alt="">
-									<span>总体概况</span>
+					<div style="font-size: 16px" class="index-page-wrap pageFormContent">
+						<div class="left-main">
+							<div class="main-title">
+								<img src="${basePath }/images/shouyeimg/总体概况.png" alt="">
+								<span>总体概况</span>
+							</div>
+							<div class="circle-card left">
+								<div class="circle-wrap">
+									<canvas class="myChart" id="ljfkje-c"></canvas>
 								</div>
-								<div class="circle-card left">
-									<div class="circle-wrap">
-										<canvas class="myChart" id="ljfkje-c"></canvas>
+								<div class="detail-wrap">
+									<div id="ljfkje-n" class="number blue number-text">--</div>
+									<div class="text">累计放款金额/笔数</div>
+								</div>
+							</div>
+							<div class="circle-card">
+								<div class="circle-wrap">
+									<canvas class="myChart" id="yhkje-c"></canvas>
+								</div>
+								<div class="detail-wrap">
+									<div id="yhkje-n" class="number green number-text">--</div>
+									<div class="text">已回款金额/笔数</div>
+								</div>
+							</div>
+							<div class="circle-card left">
+								<div class="circle-wrap">
+									<canvas class="myChart" id="dhkje-c"></canvas>
+								</div>
+								<div class="detail-wrap">
+									<div id="dhkje-n" class="number yellow number-text">--</div>
+									<div class="text">待回款金额/笔数</div>
+								</div>
+							</div>
+							<div class="circle-card">
+								<div class="circle-wrap">
+									<canvas class="myChart" id="wyqdsje-c"></canvas>
+								</div>
+								<div class="detail-wrap">
+									<div id="wyqdsje-n" class="number red number-text">--</div>
+									<div class="text">未逾期待收金额/笔数</div>
+								</div>
+							</div>
+							<div class="main-title" style="margin-top: 30px">
+								<img src="${basePath }/images/shouyeimg/逾期数据.png" alt="">
+								<span>逾期数据</span>
+							</div>
+							<div class="info-card">
+								<div class="row">
+									<div class="info-item left">
+										<span>3天内到期</span>
+										<span id="stndq-n" class="fix number-text">--</span>
+										<span class="yellow-tag text-tag">即将到期</span>
 									</div>
-									<div class="detail-wrap">
-										<div id="ljfkje-n" class="number blue number-text">--</div>
-										<div class="text">累计放款金额/笔数</div>
+									<div class="info-item">
+										<span>放款失败金额/笔数</span>
+										<span id="fksbje-n" class="number-text">--</span>
+										<span id="fksbbs-n" class="number-text">--</span>
 									</div>
 								</div>
-								<div class="circle-card">
-									<div class="circle-wrap">
-										<canvas class="myChart" id="yhkje-c"></canvas>
+								<div class="row">
+									<div class="info-item left">
+										<span>逾期1~3天</span>
+										<span id="uqydst-n" class="fix number-text">--</span>
+										<span class="red-tag text-tag">逾期</span>
 									</div>
-									<div class="detail-wrap">
-										<div id="yhkje-n" class="number green number-text">--</div>
-										<div class="text">已回款金额/笔数</div>
-									</div>
-								</div>
-								<div class="circle-card left">
-									<div class="circle-wrap">
-										<canvas class="myChart" id="dhkje-c"></canvas>
-									</div>
-									<div class="detail-wrap">
-										<div id="dhkje-n" class="number yellow number-text">--</div>
-										<div class="text">待回款金额/笔数</div>
+									<div class="info-item">
+										<span>逾期3~7天</span>
+										<span id="uqsdqt-n" class="fix number-text">--</span>
+										<span class="red-tag text-tag">逾期</span>
 									</div>
 								</div>
-								<div class="circle-card">
-									<div class="circle-wrap">
-										<canvas class="myChart" id="wyqdsje-c"></canvas>
+								<div class="row">
+									<div class="info-item left">
+										<span>逾期7~15天</span>
+										<span id="uqqdswt-n" class="fix number-text">--</span>
+										<span class="red-tag text-tag">逾期</span>
 									</div>
-									<div class="detail-wrap">
-										<div id="wyqdsje-n" class="number red number-text">--</div>
-										<div class="text">未逾期待收金额/笔数</div>
-									</div>
-								</div>
-								<div class="main-title" style="margin-top: 30px">
-									<img src="${basePath }/images/shouyeimg/逾期数据.png" alt="">
-									<span>逾期数据</span>
-								</div>
-								<div class="info-card">
-									<div class="row">
-										<div class="info-item left">
-											<span>3天内到期</span>
-											<span id="stndq-n" class="fix number-text">--</span>
-											<span class="yellow-tag text-tag">即将到期</span>
-										</div>
-										<div class="info-item">
-											<span>放款失败金额/笔数</span>
-											<span id="fksbje-n" class="number-text">--</span>
-											<span id="fksbbs-n" class="number-text">--</span>
-										</div>
-									</div>
-									<div class="row">
-										<div class="info-item left">
-											<span>逾期1~3天</span>
-											<span id="uqydst-n" class="fix number-text">--</span>
-											<span class="red-tag text-tag">逾期</span>
-										</div>
-										<div class="info-item">
-											<span>逾期3~7天</span>
-											<span id="uqsdqt-n" class="fix number-text">--</span>
-											<span class="red-tag text-tag">逾期</span>
-										</div>
-									</div>
-									<div class="row">
-										<div class="info-item left">
-											<span>逾期7~15天</span>
-											<span id="uqqdswt-n" class="fix number-text">--</span>
-											<span class="red-tag text-tag">逾期</span>
-										</div>
-										<div class="info-item">
-											<span>逾期15天以上</span>
-											<span id="uqswtys-n" class="fix number-text">--</span>
-											<span class="red-tag text-tag">逾期</span>
-										</div>
+									<div class="info-item">
+										<span>逾期15天以上</span>
+										<span id="uqswtys-n" class="fix number-text">--</span>
+										<span class="red-tag text-tag">逾期</span>
 									</div>
 								</div>
 							</div>
-							<div class="right-main">
-								<div class="main-title">
-									<img src="${basePath }/images/shouyeimg/当日运营数据.png" alt="">
-									<span>当日运营数据</span>
+						</div>
+						<div class="right-main">
+							<div class="main-title">
+								<img src="${basePath }/images/shouyeimg/当日运营数据.png" alt="">
+								<span>当日运营数据</span>
+							</div>
+							<div class="notice-wrap">
+								<div class="title title-active">
+									<span>总用户量</span>
+									<span id="zyhl" class="number-text">--</span>
+									<span id="zyhl-b">--</span>
 								</div>
-								<div class="notice-wrap">
-									<div class="title title-active">
-										<span>总用户量</span>
-										<span id="zyhl" class="number-text">--</span>
-										<span id="zyhl-b">--</span>
+								<div class="title title-active-2">
+									<div class="left">
+										<div>当日注册用户数</div>
+										<div id="drzcyhs" class="number-text">--</div>
 									</div>
-									<div class="title title-active-2">
-										<div class="left">
-											<div>当日注册用户数</div>
-											<div id="drzcyhs" class="number-text">--</div>
+									<div class="right">
+										<div>当日申请用户数</div>
+										<div id="drsqyhs" class="number-text">--</div>
+									</div>
+								</div>
+								<div class="title">
+									<div class="left">
+										<div>当日放款金额</div>
+										<div id="drfkje" class="number-text">--</div>
+									</div>
+									<div class="right">
+										<div>当日放款订单</div>
+										<div id="drfkdd" class="number-text">--</div>
+									</div>
+								</div>
+								<div class="main-wrap">
+									<div class="item left">
+										<div class="icon">
+											<img src="${basePath }/images/shouyeimg/当日放款金额.png" alt="">
 										</div>
-										<div class="right">
-											<div>当日申请用户数</div>
-											<div id="drsqyhs" class="number-text">--</div>
+										<div class="text">
+											<div>当日复借金额</div>
+											<div id="drfjje-n" class="number-text">--</div>
 										</div>
 									</div>
-									<div class="title">
-										<div class="left">
-											<div>当日放款金额</div>
-											<div id="drfkje" class="number-text">--</div>
+									<div class="item">
+										<div class="icon">
+											<img src="${basePath }/images/shouyeimg/当日放款订单.png" alt="">
 										</div>
-										<div class="right">
-											<div>当日放款订单</div>
-											<div id="drfkdd" class="number-text">--</div>
+										<div class="text">
+											<div>当日复借订单</div>
+											<div id="drfjdd" class="number-text">--</div>
 										</div>
 									</div>
-									<div class="main-wrap">
-										<div class="item left">
-											<div class="icon">
-												<img src="${basePath }/images/shouyeimg/当日放款金额.png" alt="">
-											</div>
-											<div class="text">
-												<div>当日复借金额</div>
-												<div id="drfjje-n" class="number-text">--</div>
-											</div>
+									<div class="item left">
+										<div class="icon">
+											<img src="${basePath }/images/shouyeimg/当日到期金额.png" alt="">
 										</div>
-										<div class="item">
-											<div class="icon">
-												<img src="${basePath }/images/shouyeimg/当日放款订单.png" alt="">
-											</div>
-											<div class="text">
-												<div>当日复借订单</div>
-												<div id="drfjdd" class="number-text">--</div>
-											</div>
+										<div class="text">
+											<div>当日到期金额</div>
+											<div id="drdqje" class="number-text">--</div>
 										</div>
-										<div class="item left">
-											<div class="icon">
-												<img src="${basePath }/images/shouyeimg/当日到期金额.png" alt="">
-											</div>
-											<div class="text">
-												<div>当日到期金额</div>
-												<div id="drdqje" class="number-text">--</div>
-											</div>
+									</div>
+									<div class="item">
+										<div class="icon">
+											<img src="${basePath }/images/shouyeimg/当日到期订单.png" alt="">
 										</div>
-										<div class="item">
-											<div class="icon">
-												<img src="${basePath }/images/shouyeimg/当日到期订单.png" alt="">
-											</div>
-											<div class="text">
-												<div>当日到期订单</div>
-												<div id="drdqdd" class="number-text">--</div>
-											</div>
+										<div class="text">
+											<div>当日到期订单</div>
+											<div id="drdqdd" class="number-text">--</div>
 										</div>
-										<div class="sub-item left">
-											<div class="text">
-												<div>全额还款金额</div>
-												<div id="qehkje" class="number-text">--</div>
-											</div>
+									</div>
+									<div class="sub-item left">
+										<div class="text">
+											<div>全额还款金额</div>
+											<div id="qehkje" class="number-text">--</div>
 										</div>
-										<div class="sub-item">
-											<div class="text">
-												<div>全额还款订单</div>
-												<div id="eqhkdd" class="number-text">--</div>
-											</div>
+									</div>
+									<div class="sub-item">
+										<div class="text">
+											<div>全额还款订单</div>
+											<div id="eqhkdd" class="number-text">--</div>
 										</div>
-										<div class="sub-item left">
-											<div class="text">
-												<div>当日展期金额</div>
-												<div id="drzqje" class="number-text">--</div>
-											</div>
+									</div>
+									<div class="sub-item left">
+										<div class="text">
+											<div>当日展期金额</div>
+											<div id="drzqje" class="number-text">--</div>
 										</div>
-										<div class="sub-item">
-											<div class="text">
-												<div>当日展期订单</div>
-												<div id="drzqdd" class="number-text">--</div>
-											</div>
+									</div>
+									<div class="sub-item">
+										<div class="text">
+											<div>当日展期订单</div>
+											<div id="drzqdd" class="number-text">--</div>
 										</div>
-										<div class="sub-item left">
-											<div class="text">
-												<div>当日待收金额</div>
-												<div id="drdsje" class="number-text">--</div>
-											</div>
+									</div>
+									<div class="sub-item left">
+										<div class="text">
+											<div>当日待收金额</div>
+											<div id="drdsje" class="number-text">--</div>
 										</div>
-										<div class="sub-item">
-											<div class="text">
-												<div>当日待收订单</div>
-												<div id="drdsdd" class="number-text">--</div>
-											</div>
+									</div>
+									<div class="sub-item">
+										<div class="text">
+											<div>当日待收订单</div>
+											<div id="drdsdd" class="number-text">--</div>
 										</div>
-										<div class="item left">
-											<div class="icon">
-												<img src="${basePath }/images/shouyeimg/当日放款率.png" alt="">
-											</div>
-											<div class="text">
-												<div>当日放款率</div>
-												<div id="drfkl" class="number-text">--</div>
-											</div>
+									</div>
+									<div class="item left">
+										<div class="icon">
+											<img src="${basePath }/images/shouyeimg/当日放款率.png" alt="">
 										</div>
-										<div class="item">
-											<div class="icon">
-												<img src="${basePath }/images/shouyeimg/当日通过率.png" alt="">
-											</div>
-											<div class="text">
-												<div>当日通过率</div>
-												<div id="drtgl" class="number-text">--</div>
-											</div>
+										<div class="text">
+											<div>当日放款率</div>
+											<div id="drfkl" class="number-text">--</div>
 										</div>
-										<div class="item left">
-											<div class="icon">
-												<img src="${basePath }/images/shouyeimg/当日回款率.png" alt="">
-											</div>
-											<div class="text">
-												<div>当日回款率</div>
-												<div id="drhkl" class="number-text">--</div>
-											</div>
+									</div>
+									<div class="item">
+										<div class="icon">
+											<img src="${basePath }/images/shouyeimg/当日通过率.png" alt="">
 										</div>
-										<div class="item">
-											<div class="icon">
-												<img src="${basePath }/images/shouyeimg/当日复借率.png" alt="">
-											</div>
-											<div class="text">
-												<div>当日复借率</div>
-												<div id="drfjlImg" class="number-text">--</div>
-											</div>
+										<div class="text">
+											<div>当日通过率</div>
+											<div id="drtgl" class="number-text">--</div>
+										</div>
+									</div>
+									<div class="item left">
+										<div class="icon">
+											<img src="${basePath }/images/shouyeimg/当日回款率.png" alt="">
+										</div>
+										<div class="text">
+											<div>当日回款率</div>
+											<div id="drhkl" class="number-text">--</div>
+										</div>
+									</div>
+									<div class="item">
+										<div class="icon">
+											<img src="${basePath }/images/shouyeimg/当日复借率.png" alt="">
+										</div>
+										<div class="text">
+											<div>当日复借率</div>
+											<div id="drfjlImg" class="number-text">--</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</c:if>
+					</div>
 				</div>
 			</div>
 		</div>
