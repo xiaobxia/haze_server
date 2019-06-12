@@ -305,6 +305,9 @@
 			box-sizing: border-box;
 			padding-left: 205px;
 		}
+		.aways-h {
+			display: none !important;
+		}
 	</style>
 	<script src="${basePath }/js/dwz.ui.js" type="text/javascript"></script>
 	<script src="${basePath }/js/speedup.js" type="text/javascript"></script>
@@ -731,6 +734,15 @@
 						</ul>
 					</div>
 				</c:forEach>
+				<div class="accordionHeader aways-h">
+					<h2 class="">
+					</h2>
+				</div>
+				<div class="accordionContent aways-h">
+					<ul class="tree treeFolder">
+						<li><div><div class="node"></div><div class="file"></div></div></li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
