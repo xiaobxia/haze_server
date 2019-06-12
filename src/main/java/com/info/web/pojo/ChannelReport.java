@@ -88,6 +88,13 @@ public class ChannelReport implements Serializable {
     private String repayRatio;
 
     private Integer channelRateType;
+    //续借人数
+    private Integer xujieCount = 0;
+    //当日回全款数
+    private Integer allRepayCount=0;
+    //当日回款总数
+    private Integer allLoanCount;
+
     /**
      * 2019、05/18新增
      * @return
@@ -602,5 +609,29 @@ public class ChannelReport implements Serializable {
 
     public void setChannelRateType(Integer channelRateType) {
         this.channelRateType = channelRateType;
+    }
+
+    public Integer getXujieCount() {
+        return xujieCount;
+    }
+
+    public void setXujieCount(Integer xujieCount) {
+        this.xujieCount = xujieCount;
+    }
+
+    public Integer getAllRepayCount() {
+        return allRepayCount;
+    }
+
+    public void setAllRepayCount(Integer allRepayCount) {
+        this.allRepayCount = allRepayCount;
+    }
+
+    public Integer getAllLoanCount() {
+        return allLoanCount;
+    }
+
+    public void setAllLoanCount(Integer allLoanCount) {
+        this.allLoanCount = allLoanCount;
     }
 }

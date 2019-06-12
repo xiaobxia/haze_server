@@ -86,14 +86,14 @@
 	</select>
 	<select id="findTodayMoneyCount" resultType="map" parameterType="Integer">
 		select IFNULL(sum(repayment_amount),0) as money,IFNULL(sum(repaymented_amount),0) as repaymentedAmount,IFNULL(count(id),0) as countNumber
-		from asset_repayment  where DATE_FORMAT( repayment_real_time, '%Y-%m-%d' ) =  DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+		from asset_repayment  where DATE_FORMAT( repayment_time, '%Y-%m-%d' ) =  DATE_FORMAT( NOW( ), '%Y-%m-%d' )
           <if test="_parameter != null and _parameter != ''">
 			  and status =#{status}
 		  </if>
 	</select>
 	<select id="findMoneyToday" resultType="map" parameterType="Integer">
     select IFNULL(sum(repayment_amount),0) as money,IFNULL(sum(repaymented_amount),0) as repaymentedAmount,IFNULL(count(id),0) as countNumber
-		from asset_repayment  where DATE_FORMAT( repayment_time, '%Y-%m-%d' ) =  DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+		from asset_repayment  where DATE_FORMAT( repayment_time, '%Y-%m-%d' ) =  DATE_FORMAT( NOW( ), '%Y-%m-%d' ) and status = 21
 	</select>
     <select id="lateMoney" resultType="java.math.BigDecimal" >
 		select IFNULL(sum(repayment_amount),0) from asset_repayment
@@ -117,7 +117,8 @@
 	<select id="extendToday" resultType="map">
 		SELECT
 		IFNULL(sum(sum_fee),0) AS extendMoney,
-			count( id ) AS extendCount
+			count( id ) AS extendCount,
+		IFNULL(SUM(repayment_principal),0) AS repaymentPrincipal
 		FROM
 			asset_renewal_record
 		WHERE

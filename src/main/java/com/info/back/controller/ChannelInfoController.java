@@ -735,7 +735,7 @@ public class ChannelInfoController extends BaseController {
                 model.addAttribute("channelSuperInfos", channelSuperInfos);
                 model.addAttribute("pm", pageConfig);
             }else{
-               /* params.put("uc","uc");*/
+               // params.put("uc",0);
                 PageConfig<ChannelReport> pageConfig = channelReportService.findPage(params);
                 //PageConfig<OutChannelLook> pageConfigs = channelReportService.findPageOut(params);
 //                List<ChannelInfo> channelList = channelInfoService.findAll(chMap);
@@ -754,7 +754,7 @@ public class ChannelInfoController extends BaseController {
                 List<ChannelReport> list = new ArrayList<>();
                for(ChannelReport channelReport : pageConfig.getItems() ){
                    //qq占比
-                    Integer qqCount= channelInfoService.findqqCount(channelReport.getChannelid());
+                    Integer qqCount= channelInfoService.findqqCount(channelReport.getChannelid(),channelReport.getReportDate());
                     if(qqCount != null && channelReport.getRegisterCount()!=null && channelReport.getRegisterCount()!=0){
                         Double  qqRate = qqCount*(1.0)/channelReport.getRegisterCount()*(1.0);
                         DecimalFormat df = new DecimalFormat("0.00");
@@ -763,7 +763,7 @@ public class ChannelInfoController extends BaseController {
                         channelReport.setQqRate("0.00");
                     }
                     //微信占比
-                    Integer wechatCount = channelInfoService.findWechatCount(channelReport.getChannelid());
+                    Integer wechatCount = channelInfoService.findWechatCount(channelReport.getChannelid(),channelReport.getReportDate());
                     if(wechatCount != null && channelReport.getRegisterCount()!=null && channelReport.getRegisterCount()!=0){
                         Double wechatRate = wechatCount*(1.0)/channelReport.getRegisterCount()*(1.0);
                         DecimalFormat df = new DecimalFormat("0.00");
@@ -796,12 +796,27 @@ public class ChannelInfoController extends BaseController {
                    List<String> idList=channelInfoService.findUserId(channelReport.getChannelid());
                    if(idList.size()>0) {
                        DecimalFormat df = new DecimalFormat("0.00");
-                       //放款笔数
+                       //放款笔数 当日所有
                        int loanCount = channelInfoService.findLoanCount(channelReport.getReportDate(), idList);
-                       channelReport.setLoanCount(loanCount);
+                       channelReport.setAllLoanCount(loanCount);
+                       //续借放款人数 （当天放款人中 哪些人是续借放款类型 即 当天放款人中哪些是老用户）
+                       int xujieLoanCount = channelInfoService.xujieSucCount(idList,channelReport.getReportDate());
+                       //当日新用户放款笔数（当日所有放款数-续借放款人数）
+                       if(loanCount < xujieLoanCount){
+                           channelReport.setLoanCount(0);
+                       }else{
+                           int dayLoanCount = loanCount-xujieLoanCount;
+                           channelReport.setLoanCount(dayLoanCount);
+                       }
                        //申请笔数
                        int applyCount = channelInfoService.findApplyCount(channelReport.getReportDate(), idList);
                        channelReport.setBorrowApplyCount(applyCount);
+                       //续借人数
+                       int xujieCount = channelInfoService.xujieCount(idList,channelReport.getReportDate());
+                       channelReport.setXujieCount(xujieCount);
+                       //当日回全款数
+                       int allRepayCount = channelInfoService.findAllRepayCount(channelReport.getReportDate(),idList);
+                       channelReport.setAllRepayCount(allRepayCount);
                        //放款率 放款笔数/当日总注册数
                        if(channelReport.getRegisterCount() != 0){
                            double loanRate = channelReport.getLoanCount()*(1.0)/channelReport.getRegisterCount()*(1.0);
