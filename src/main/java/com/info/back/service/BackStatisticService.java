@@ -10,7 +10,6 @@ import java.util.Map;
 import com.info.web.pojo.MyPageReportInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.stereotype.Service;
 
 import com.info.back.dao.IApplyBorrowStatisticDao;
@@ -29,7 +28,6 @@ import com.info.web.pojo.BackConfigParams;
 import com.info.web.pojo.PlatformReport;
 import com.info.web.util.DateUtil;
 import com.info.web.util.PageConfig;
-import sun.util.resources.ga.LocaleNames_ga;
 
 @Service("backStatisticService")
 public class BackStatisticService implements IBackStatisticService {
