@@ -443,7 +443,7 @@ public class RepaymentService implements IRepaymentService {
 				Integer lateFee = (int) ((re.getRepaymentPrincipal() + re.getRepaymentInterest()) * re.getLateFeeApr() / 10000 * between);
 				BigDecimal productLateFee = borrowProductConfigDao.queryByOrderId(re.getAssetOrderId());
 				if (productLateFee != null) {
-					lateFee = productLateFee.intValue();
+					lateFee = productLateFee.intValue() * re.getLateDay().intValue();
 				}
                 // 更新用户最近一次逾期总天数、历史逾期总记录数
                 User user = userService.selectCollectionByUserId(re.getUserId());
