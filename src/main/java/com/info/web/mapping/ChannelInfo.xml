@@ -594,6 +594,41 @@
 			#{userId}
 		</foreach>
 	</select>
+	<select id="findAllRepayCount" resultType="java.lang.Integer">
+		select count(id) as repayCount from asset_repayment where status =30
+		and DATE_FORMAT(repayment_real_time,'%Y-%m-%d') =DATE_FORMAT(#{repayTime},'%Y-%m-%d')
+		and user_id in
+		<foreach collection="userId" item="userId" separator="," open="(" close=")">
+			#{userId}
+		</foreach>
+	</select>
+	<select id="xujieCount" resultType="java.lang.Integer">
+		SELECT
+		count(ui.id )
+		FROM
+		user_info ui
+		LEFT JOIN asset_borrow_order bo  on bo.user_id = ui.id
+		WHERE
+		bo.customer_type = 1  and DATE_FORMAT(bo.order_time, '%Y-%m-%d' ) = DATE_FORMAT(#{applyTime}, '%Y-%m-%d' )
+		AND ui.id IN
+		<foreach collection="userId" item="userId" separator="," open="(" close=")">
+			#{userId}
+		</foreach>
+	</select>
+	<select id="xujieSucCount" resultType="java.lang.Integer">
+		SELECT
+		count( ui.id ) AS loanCount
+		FROM
+		user_info ui
+		LEFT JOIN asset_repayment ar ON ar.user_id = ui.id
+		WHERE
+		ar.STATUS IN ( '21', '23', '30' )
+		AND DATE_FORMAT( ar.credit_repayment_time, '%Y-%m-%d' ) = DATE_FORMAT(#{loanTime},'%Y-%m-%d')
+		AND ui.id IN
+		<foreach collection="userId" item="userId" separator="," open="(" close=")">
+			#{userId}
+		</foreach>
+	</select>
 	<select id="findApplyCount" resultType="java.lang.Integer">
 		SELECT count(1) as borrowCountToday FROM asset_borrow_order t
 		WHERE   DATE_FORMAT( order_time, '%Y-%m-%d' ) = DATE_FORMAT(#{applyTime}, '%Y-%m-%d' )
@@ -609,11 +644,11 @@
 	<select id="findUserId" resultMap="userList" parameterType="java.lang.Integer">
 		select id from user_info where user_from=#{channeId}
 	</select>
-	<select id="findqqCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
-		SELECT COUNT(id) from user_info where qq_wechat=1 and user_from=#{channelId}
+	<select id="findqqCount" resultType="java.lang.Integer">
+		SELECT COUNT(id) from user_info where qq_wechat=1 and user_from=#{channelId} and DATE_FORMAT( create_time, '%Y-%m-%d' ) = DATE_FORMAT( #{reportDate}, '%Y-%m-%d' )
 	</select>
-	<select id="findWechatCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
-		SELECT COUNT(id) from user_info where qq_wechat=2 and user_from=#{channelId}
+	<select id="findWechatCount" resultType="java.lang.Integer">
+		SELECT COUNT(id) from user_info where qq_wechat=2 and user_from=#{channelId} and DATE_FORMAT( create_time, '%Y-%m-%d' ) = DATE_FORMAT( #{reportDate}, '%Y-%m-%d' )
 	</select>
 
 	<update id="saveChannelUrl" parameterType="com.info.web.pojo.ChannelInfo">

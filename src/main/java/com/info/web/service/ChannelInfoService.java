@@ -329,17 +329,32 @@ public class ChannelInfoService implements IChannelInfoService {
 	}
 
 	@Override
-	public Integer findqqCount(Integer channelId) {
-		return channelInfoDao.findqqCount(channelId);
+	public Integer findqqCount(Integer channelId,Date reportDate) {
+		return channelInfoDao.findqqCount(channelId , reportDate);
 	}
 
 	@Override
-	public Integer findWechatCount(Integer channelId) {
-		return channelInfoDao.findWechatCount(channelId);
+	public Integer findWechatCount(Integer channelId,Date reportDate) {
+		return channelInfoDao.findWechatCount(channelId,reportDate);
 	}
 
     @Override
     public Integer findApplyCount(Date applyTime, List<String> userId) {
         return channelInfoDao.findApplyCount(applyTime,userId);
     }
+
+	@Override
+	public Integer xujieCount(List<String> userId,Date applyTime) {
+		return channelInfoDao.xujieCount(userId,applyTime);
+	}
+
+	@Override
+	public Integer xujieSucCount(List<String> userId, Date loanTime) {
+		return channelInfoDao.xujieSucCount(userId,loanTime);
+	}
+
+	@Override
+	public Integer findAllRepayCount(Date repayTime, List<String> userId) {
+		return channelInfoDao.findAllRepayCount(repayTime,userId);
+	}
 }

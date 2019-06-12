@@ -227,7 +227,44 @@ public interface IChannelInfoService {
 	Integer findRepayCount(Date repayTime, List<String> userId);
 
 	List<String> findUserId(Integer channelId);
-	Integer findqqCount(Integer channelId);
-	Integer findWechatCount(Integer channelId);
+
+	/**
+	 * 查询当天用户通过qq注册的数量
+	 * @param channelId
+	 * @param reportDate
+	 * @return
+	 */
+	Integer findqqCount(Integer channelId,Date reportDate);
+
+	/**
+	 * 查询当天用户微信注册的数量
+	 * @param channelId
+	 * @param reportDate
+	 * @return
+	 */
+	Integer findWechatCount(Integer channelId,Date reportDate);
 	Integer findApplyCount(Date applyTime, List<String> userId);
+
+	/**
+	 * 批量查询用户是否为老用户
+	 * @param userId
+	 * @return
+	 */
+	Integer xujieCount( List<String> userId,Date applyTime);
+
+	/**
+	 * 续借放款人数
+	 * @param userId
+	 * @param loanTime
+	 * @return
+	 */
+	Integer xujieSucCount( List<String> userId,Date loanTime);
+
+	/**
+	 * 查询当日回全款数
+	 * @param repayTime
+	 * @param userId
+	 * @return
+	 */
+	Integer findAllRepayCount( Date repayTime, List<String> userId);
 }

@@ -92,10 +92,25 @@ public interface IChannelInfoDao {
 	 * @return
 	 */
 	Integer findRepayCount(@Param("repayTime")Date repayTime,@Param("userId") List<String> userId);
+
+	/**
+	 * 查询当日回全款的用户数
+	 * @param repayTime
+	 * @param userId
+	 * @return
+	 */
+	Integer findAllRepayCount(@Param("repayTime") Date repayTime,@Param("userId") List<String> userId);
     Integer findApplyCount(@Param("applyTime") Date applyTime,@Param("userId") List<String> userId);
 	List<String> findUserId(@Param("channeId") Integer channeId);
-    Integer findqqCount(@Param("channelId") Integer channelId);
-    Integer findWechatCount(@Param("channelId") Integer channelId);
-
+    Integer findqqCount(@Param("channelId") Integer channelId,@Param("reportDate") Date reportDate);
+    Integer findWechatCount(@Param("channelId") Integer channelId,@Param("reportDate") Date reportDate);
+	/**
+	 * 当天续借人数
+	 * @param userId
+	 * @param applyTime
+	 * @return
+	 */
+    Integer xujieCount(@Param("userId") List<String> userId,@Param("applyTime") Date applyTime);
+    Integer xujieSucCount(@Param("userId") List<String> userId,@Param("loanTime") Date loanTime);
     Integer saveChannelUrl(ChannelInfo channelInfo);
 }

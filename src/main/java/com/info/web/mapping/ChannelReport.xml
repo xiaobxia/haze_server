@@ -99,7 +99,7 @@
             <if test="countDate != null and countDate != ''">
                 and a.report_date = #{countDate}
             </if>
-          <!--  <if test="uc != null">
+         <!--  <if test="uc ==0">
 				and a.uv_count != 0
 			</if>-->
 		</where>
@@ -182,7 +182,7 @@
 	</select>
 	<select id="findPrAllCount" resultType="Integer" parameterType="HashMap">
 
-		SELECT COUNT(1) FROM (SELECT COUNT(1) FROM channel_report
+		SELECT COUNT(1) FROM (SELECT COUNT(1) FROM channel_report a
 		LEFT JOIN
 		channel_info b ON a.channelid = b.id
 		<where>
