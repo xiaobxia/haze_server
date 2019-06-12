@@ -416,9 +416,6 @@
 						var canvasWH = zoom * 110/2
 						var canvasHH = zoom * 110/2
 						var lineW = zoom * 7
-						console.log(this)
-						console.log($(this))
-						console.log($(this).get(0))
 						var canvas = $(this).get(0);
 						var constrast = parseFloat(curr/total).toFixed(2); //比例
 						var context = null;

@@ -63,17 +63,23 @@
         font-size: 14px;
         background: none;
     }
+    .form-wrap .item-wrap{
+        position: absolute;
+    }
 
     .suolue-box {
-        width: 15%;
+        width: 300px;
         padding: 5px 0;
         padding-left: 10px;
         border: 1px solid #ddd;
         margin-left: 25px;
-        position: absolute;
+        position: relative;
         left: 400px;
-        top: 20px;
         border-radius: 4px;
+    }
+
+    .suolue-box p {
+        float: none;
     }
 
     .suolue-box input {
@@ -172,15 +178,17 @@
             <div class="peizhi-pannel f-cb">
                 <div class="title-peizhi">支付宝账号配置</div>
                 <div class="form-wrap">
-                    <div class="form-item">
-                        <label>支付宝账号</label>
-                        <input class="text-input" type="text" placeholder="请输入" name="payAccount"
-                               value="${payAccount}">
-                    </div>
-                    <div class="form-item">
-                        <label>收款人</label>
-                        <input class="text-input" type="text" placeholder="请输入" name="accountName"
-                               value="${accountName}">
+                    <div class="item-wrap">
+                        <div class="form-item">
+                            <label>支付宝账号</label>
+                            <input class="text-input" type="text" placeholder="请输入" name="payAccount"
+                                   value="${payAccount}">
+                        </div>
+                        <div class="form-item">
+                            <label>收款人</label>
+                            <input class="text-input" type="text" placeholder="请输入" name="accountName"
+                                   value="${accountName}">
+                        </div>
                     </div>
                     <div class="suolue-box">
                         <div class="preview">
@@ -201,15 +209,17 @@
             <div class="peizhi-pannel f-cb">
                 <div class="title-peizhi">微信账号配置</div>
                 <div class="form-wrap">
-                    <div class="form-item">
-                        <label>微信账号</label>
-                        <input class="text-input" type="text" placeholder="请输入" name="payAccountWe"
-                               value="${payAccount}">
-                    </div>
-                    <div class="form-item">
-                        <label>收款人</label>
-                        <input class="text-input" type="text" placeholder="请输入" name="weAccountName"
-                               value="${weAccountName}">
+                    <div class="item-wrap">
+                        <div class="form-item">
+                            <label>微信账号</label>
+                            <input class="text-input" type="text" placeholder="请输入" name="payAccountWe"
+                                   value="${payAccount}">
+                        </div>
+                        <div class="form-item">
+                            <label>收款人</label>
+                            <input class="text-input" type="text" placeholder="请输入" name="weAccountName"
+                                   value="${weAccountName}">
+                        </div>
                     </div>
                     <div class="suolue-box">
                         <div class="preview">
