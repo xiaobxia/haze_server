@@ -1,6 +1,7 @@
 package com.info.back.dao;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -28,11 +29,13 @@ public interface ISendMoneyStatisticDao {
 	public List<Integer> findOldToday(String customerType);
 	Map<String,Object> findAllPendingRepayMoney(Integer param);
 	Map<String,Object> findTodayMoneyCount(Integer status);
+	Map<String,Object> findMoneyTodayAll();
 	Integer applyCountToday();
 	Integer applyUserCount();
 	BigDecimal lateMoney(@Param("fristNumber") Integer fristNumber, @Param("endNumbers") Integer endNumbers);
-    BigDecimal threeMoney();
+    BigDecimal threeMoney(@Param("addTime") Date addTime);
     Map<String,Object> extendToday();
+    Map<String,Object> extendTodayAll();
     Map<String,Object> reBorrow();
 	Map<String,Object> findMoneyToday();
 }

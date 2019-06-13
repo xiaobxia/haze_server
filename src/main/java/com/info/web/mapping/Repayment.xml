@@ -312,16 +312,16 @@ remark
         and a.asset_order_id = #{assetOrderId}
     </if>
     <if test="repaymentTimeStart != null and repaymentTimeStart != ''">
-        <![CDATA[    and a.repayment_time >= #{repaymentTimeStart}   ]]>
+        <![CDATA[    and  DATE_FORMAT(a.repayment_time,'%Y-%m-%d') >= #{repaymentTimeStart}   ]]>
     </if>
     <if test="repaymentTimeEnd != null and repaymentTimeEnd != ''">
-        <![CDATA[    and a.repayment_time < #{repaymentTimeEnd}   ]]>
+        <![CDATA[    and  DATE_FORMAT(a.repayment_time,'%Y-%m-%d') <= #{repaymentTimeEnd}   ]]>
     </if>
     <if test="repaymentedTimeStart != null and repaymentedTimeStart != ''">
-        <![CDATA[ and a.repayment_real_time >=str_to_date(#{repaymentedTimeStart},'%Y-%m-%d') ]]>
+        <![CDATA[ and  DATE_FORMAT(a.repayment_real_time,'%Y-%m-%d') >=str_to_date(#{repaymentedTimeStart},'%Y-%m-%d') ]]>
     </if>
     <if test="repaymentedTimeEnd != null and repaymentedTimeEnd != ''">
-        <![CDATA[ and a.repayment_real_time <  str_to_date(#{repaymentedTimeEnd},'%Y-%m-%d') ]]>
+        <![CDATA[ and DATE_FORMAT(a.repayment_real_time,'%Y-%m-%d')  <=  str_to_date(#{repaymentedTimeEnd},'%Y-%m-%d') ]]>
     </if>
     <if test="userAccountLike != null and userAccountLike != ''">
         <![CDATA[ and u.realname  LIKE concat(#{userAccountLike},'%') ]]>

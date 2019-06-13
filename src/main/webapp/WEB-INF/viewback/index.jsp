@@ -933,25 +933,25 @@
 									</div>
 									<div class="sub-item left">
 										<div class="text">
-											<div>当日展期金额</div>
+											<div>展期金额</div>
 											<div id="drzqje" class="number-text">--</div>
 										</div>
 									</div>
 									<div class="sub-item">
 										<div class="text">
-											<div>当日展期订单</div>
+											<div>展期订单</div>
 											<div id="drzqdd" class="number-text">--</div>
 										</div>
 									</div>
 									<div class="sub-item left">
 										<div class="text">
-											<div>当日待收金额</div>
+											<div>待收金额</div>
 											<div id="drdsje" class="number-text">--</div>
 										</div>
 									</div>
 									<div class="sub-item">
 										<div class="text">
-											<div>当日待收订单</div>
+											<div>待收订单</div>
 											<div id="drdsdd" class="number-text">--</div>
 										</div>
 									</div>

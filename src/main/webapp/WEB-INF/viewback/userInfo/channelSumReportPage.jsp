@@ -28,12 +28,12 @@
                         <input type="text" name="channelName"
                                value="${params.channelName}" />
                     </td>
-
+<%--
                     <td>
 							添加时间：
 							<input type="text" name="beginTime" id="beginTime" value="${params.beginTime}" class="date textInput readonly" datefmt="yyyy-MM-dd"  readonly="readonly"/>
 							到<input type="text" name="endTime" id="endTime" value="${params.endTime}" class="date textInput readonly" datefmt="yyyy-MM-dd"  readonly="readonly"/>
-						</td>
+						</td>--%>
 					<td>
 						<div class="buttonActive">
 							<div class="buttonContent">
