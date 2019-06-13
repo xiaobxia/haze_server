@@ -1651,13 +1651,16 @@
 		</foreach>-->
 	</select>
 	<select id ="findRepayCount" resultType="java.lang.Integer">
-		SELECT
-		COUNT(bo.id) FROM asset_borrow_order bo
-		LEFT JOIN user_info ui ON ui.id = bo.user_id
-		WHERE ui.user_from = #{channelId}
-		AND DATE_FORMAT( bo.loan_end_time, '%Y%m%d')= DATE_FORMAT( #{loanTime}, '%Y%m%d')
-		and bo.status in
-		<foreach collection="statusList" item="status" open="("
+        SELECT
+        COUNT(bo.id)
+        FROM
+        asset_borrow_order bo
+        left join asset_repayment ar on ar.asset_order_id = bo.id
+        LEFT JOIN user_info ui ON ui.id = bo.user_id
+        WHERE ui.user_from = #{channelId}
+        AND DATE_FORMAT( ar.repayment_time, '%Y%m%d')= DATE_FORMAT(#{loanTime}, '%Y%m%d')
+        AND ar.STATUS in
+        <foreach collection="statusList" item="status" open="("
 				 separator="," close=")">
 			#{status}
 		</foreach>

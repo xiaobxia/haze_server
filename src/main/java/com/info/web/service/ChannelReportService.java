@@ -912,12 +912,14 @@ public class ChannelReportService implements IChannelReportService {
                  //查询首放已还数量
                   Integer firstRepayCount = iBorrowOrderService.findRepayCount(oveChannelInfo.getChannelId(),new ArrayList<Integer>(){{
                       add(30);add(34);
-                  }},oveChannelInfo.getLoanTime(),"0");
+                  }},oveChannelInfo.getLoanTime(),null);
                   oveChannelInfo.setFirstRepayCount(firstRepayCount);
                   //首放逾期率 (首放数量-首放已还数量)/首放数量
                   if(oveChannelInfo.getFirstLoanCount() != 0){
                       double firstOveRate = (oveChannelInfo.getFirstLoanCount()-oveChannelInfo.getFirstRepayCount())*(1.0)/oveChannelInfo.getFirstLoanCount()*(1.0);
                       oveChannelInfo.setFirstOveRate(df.format(firstOveRate));
+                  }else{
+                      oveChannelInfo.setFirstOveRate("0.00%");
                   }
                   //复借数量
                   Integer reLoanCount = iBorrowOrderService.findOveChannle(oveChannelInfo.getChannelId(), new ArrayList<Integer>(){{
@@ -932,6 +934,8 @@ public class ChannelReportService implements IChannelReportService {
                   if(oveChannelInfo.getReLoanCount() != 0){
                       double  reOveRate = ((oveChannelInfo.getReLoanCount()-oveChannelInfo.getReRepayCount())*(1.0)/oveChannelInfo.getReLoanCount()*(1.0));
                       oveChannelInfo.setReOveRate(df.format(reOveRate));
+                  }else{
+                      oveChannelInfo.setReOveRate("0.00%");
                   }
                   //展期数量
                   Integer extendCount = iBorrowOrderService.findExtendChannel(oveChannelInfo.getChannelId(),oveChannelInfo.getLoanTime());
