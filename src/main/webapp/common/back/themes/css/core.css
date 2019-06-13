@@ -322,9 +322,9 @@ a:hover {text-decoration:underline;}
 .grid .gridTbody { }
 
 .grid table { border:0; border-collapse:collapse;table-layout:fixed;}
-.grid .gridHeader th { padding:0 3px; vertical-align:top; white-space:nowrap; line-height:21px; cursor:default;text-align: center;font-weight: 600;}
+.grid .gridHeader th { padding:0 3px; vertical-align:top; white-space:nowrap; line-height:21px; cursor:default;text-align: center;font-weight: 600;border-right:1px solid #ededed;}
 .grid .gridHeader th.hover, .grid .gridHeader th.thSelected { background-position:0 -50px;}
-.grid .gridTbody td { overflow:hidden; padding:0 3px; border-bottom:solid 1px #ededed; vertical-align:middle; line-height:30px; font-size: 14px;text-align: center;}
+.grid .gridTbody td { overflow:hidden; padding:0 3px; border-bottom:solid 1px #ededed; border-right:1px solid #ededed;vertical-align:middle; line-height:30px; font-size: 14px;text-align: center;}
 .grid .gridTbody td div { display:block; overflow:hidden; height:30px; white-space:nowrap; line-height:30px;}
 .grid .gridTbody td div a{line-height:30px;}
 

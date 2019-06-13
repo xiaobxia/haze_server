@@ -58,7 +58,7 @@
 					<th align="center"  >
 						7天期限放款单数
 					</th>
-					<th align="center" >
+					<th align="center" style="display: none">
 						14天期限放款单数
 					</th>
 					<th align="center" >
@@ -67,7 +67,7 @@
 					<th align="center" >
 						7天期限放款总额
 					</th>
-					<th align="center" >
+					<th align="center" style="display: none">
 						14天期限放款总额
 					</th>
 					<th align="center" >
@@ -112,7 +112,7 @@
 						<td>
 							${loan.loanSevendayCount}
 						</td>
-						<td>
+						<td style="display: none">
 							${loan.loanFourdayCount}
 						</td>
 						<td>
@@ -121,7 +121,7 @@
 						<td>
 							<fmt:formatNumber pattern='###,###,##0.00' value="${loan.sevendayMoenyCount}"/>
 						</td>
-						<td>
+						<td style="display: none">
 							<fmt:formatNumber pattern='###,###,##0.00' value="${loan.fourdayMoneyCount}"/>
 						</td>
 						<td>

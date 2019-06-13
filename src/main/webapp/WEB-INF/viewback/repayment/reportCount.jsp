@@ -56,7 +56,7 @@
 				<th align="center"  >
 					7天期限逾期率
 				</th>
-				<th align="center" >
+				<th align="center" style="display: none">
 					14天期限逾期率
 				</th>
 				<th align="center" >
@@ -88,7 +88,7 @@
 					<td>
 						<fmt:formatNumber pattern='###,###,##0.00' value="${report.overdueRateSeven / 100.00}"/>%
 					</td>
-					<td>
+					<td style="display: none">
 						<fmt:formatNumber pattern='###,###,##0.00' value="${report.overdueRateFourteen / 100.00}"/>%
 					</td>
 					<td>
