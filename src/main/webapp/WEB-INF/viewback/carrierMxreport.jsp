@@ -19,13 +19,13 @@
     <link href="${basePath}/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
     <link href="${basePath}/styles.css" rel="stylesheet" media="screen">
 
-    <script src="${basePath}/jquery-1.9.1.min.js.下载"></script>
-    <script src="${basePath}/bootstrap.min.js.下载"></script>
-    <script src="${basePath}/bootstrap-table-expandable.js.下载"></script>
-    <script src="${basePath}/bootstrap-datetimepicker.min.js.下载"></script>
-    <script src="${basePath}/bootstrap-datetimepicker.zh-CN.js.下载"></script>
-    <script src="${basePath}/scripts.js.下载"></script>
-    <script src="${basePath}/mx.js.下载"></script>
+    <script src="${basePath}/jquery-1.9.1.min.js"></script>
+    <script src="${basePath}/bootstrap.min.js"></script>
+    <script src="${basePath}/bootstrap-table-expandable.js"></script>
+    <script src="${basePath}/bootstrap-datetimepicker.min.js"></script>
+    <script src="${basePath}/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="${basePath}/scripts.js"></script>
+    <script src="${basePath}/mx.js"></script>
 
 </head>
 <body>
