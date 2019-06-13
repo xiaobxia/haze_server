@@ -979,10 +979,10 @@ public class CustomServiceController extends BaseController {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(new Date());
             String dateStart = sf.format(calendar.getTime());
-            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + 1);
-            String dateEnd = sf.format(calendar.getTime());
+           /* calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + 1);
+            String dateEnd = sf.format(calendar.getTime());*/
             params.put("repaymentTimeStart", dateStart);
-            params.put("repaymentTimeEnd", dateEnd);
+            params.put("repaymentTimeEnd", dateStart);
             params.put("statuses", statuses);
             PageConfig<Repayment> pageConfig = repaymentService.findPage(params);
             List<Repayment> list = new ArrayList<>();

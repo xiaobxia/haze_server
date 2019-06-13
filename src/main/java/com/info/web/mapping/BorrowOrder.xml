@@ -1620,11 +1620,22 @@
 		count( bo.id )
 		FROM
 		asset_borrow_order bo
+		LEFT JOIN user_info ui ON ui.id = bo.user_id
+		WHERE
+		ui.user_from = #{channelId}
+		AND DATE_FORMAT( bo.loan_end_time, '%Y%m%d' )= DATE_FORMAT( #{loanTime}, '%Y%m%d' )
+		<if test ="customerType != null and customerType != ''">
+			and bo.customer_type=1
+		</if>
+		<!--SELECT
+		count( bo.id )
+		FROM
+		asset_borrow_order bo
 		LEFT JOIN order_change_log cl ON cl.borrow_id = bo.id
 		LEFT JOIN user_info ui ON ui.id = bo.user_id
 		WHERE
 		ui.user_from = #{channelId}
-		AND DATE_FORMAT( bo.loan_time, '%Y%m%d' )= DATE_FORMAT( #{loanTime}, '%Y%m%d' )
+		AND DATE_FORMAT( bo.loan_end_time, '%Y%m%d' )= DATE_FORMAT( #{loanTime}, '%Y%m%d' )
 		AND cl.before_status in
 		<foreach collection="statusList" item="status" open="("
 				 separator="," close=")">
@@ -1632,7 +1643,7 @@
 		</foreach>
 		<if test ="customerType != null and customerType != ''">
 			and bo.customer_type=1
-		</if>
+		</if>-->
 		<!--<foreach collection="statusList" item="status" open="("
 				 separator="," close=")">
 			#{status}
@@ -1644,7 +1655,7 @@
 		COUNT(bo.id) FROM asset_borrow_order bo
 		LEFT JOIN user_info ui ON ui.id = bo.user_id
 		WHERE ui.user_from = #{channelId}
-		AND DATE_FORMAT( bo.loan_time, '%Y%m%d')= DATE_FORMAT( #{loanTime}, '%Y%m%d')
+		AND DATE_FORMAT( bo.loan_end_time, '%Y%m%d')= DATE_FORMAT( #{loanTime}, '%Y%m%d')
 		and bo.status in
 		<foreach collection="statusList" item="status" open="("
 				 separator="," close=")">
@@ -1655,11 +1666,10 @@
 		</if>
 	</select>
 	<select id="findExtendChannel" resultType="java.lang.Integer">
-		select count(id) from asset_renewal_record where user_id in
-		<foreach collection="userList" item="userId" open="("
-				 separator="," close=")">
-			#{userId}
-		</foreach>
-		 and status=1 and created_at = #{loanTime}
+		select count(ar.id) from asset_renewal_record ar
+		LEFT JOIN user_info ui on ar.user_id = ui.id
+		where
+		  ui.user_from = #{channelId}
+		 and ar.status=1 and ar.created_at = #{loanTime}
 	</select>
 </mapper>

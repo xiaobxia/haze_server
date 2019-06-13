@@ -135,5 +135,5 @@ public interface IBorrowOrderDao {
 	//针对某些id查询符合某些状态的总数
 	Integer findOveChannle(@Param("channelId") Integer channelId,@Param("statusList") List<Integer> statusList,@Param("loanTime") String loanTime,@Param("customerType") String customerType);
 	Integer findRepayCount(@Param("channelId") Integer channelId,@Param("statusList") List<Integer> statusList,@Param("loanTime") String loanTime,@Param("customerType") String customerType);
-	Integer findExtendChannel(@Param("userList") List<String> userList,@Param("loanTime") String loanTime);
+	Integer findExtendChannel(@Param("channelId") Integer channelId,@Param("loanTime") String loanTime);
 }

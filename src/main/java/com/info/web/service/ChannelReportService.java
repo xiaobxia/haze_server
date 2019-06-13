@@ -901,7 +901,9 @@ public class ChannelReportService implements IChannelReportService {
           List<OveChannelInfo> list = new ArrayList<OveChannelInfo>();
           for(OveChannelInfo oveChannelInfo : pageConfig.getItems()){
               //根据渠道id 查询该渠道的所有用户id
+/*
               List<String> idList=channelInfoService.findUserId(oveChannelInfo.getChannelId());
+*/
                   //查询首放数量
                  Integer firstLoanCount = iBorrowOrderService.findOveChannle(oveChannelInfo.getChannelId(), new ArrayList<Integer>(){{
                       add(21);
@@ -932,7 +934,7 @@ public class ChannelReportService implements IChannelReportService {
                       oveChannelInfo.setReOveRate(df.format(reOveRate));
                   }
                   //展期数量
-                  Integer extendCount = iBorrowOrderService.findExtendChannel(idList,oveChannelInfo.getLoanTime());
+                  Integer extendCount = iBorrowOrderService.findExtendChannel(oveChannelInfo.getChannelId(),oveChannelInfo.getLoanTime());
                   oveChannelInfo.setExtendCount(extendCount);
                   //总放量 展期数量+首放数量+复借数量
                   Integer allLoanCount = oveChannelInfo.getFirstLoanCount()+oveChannelInfo.getReLoanCount()+oveChannelInfo.getExtendCount();

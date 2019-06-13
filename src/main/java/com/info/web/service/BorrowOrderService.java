@@ -2599,8 +2599,8 @@ public class BorrowOrderService implements IBorrowOrderService {
     }
 
     @Override
-    public Integer findExtendChannel(List<String> userList, String loanTime) {
-        return borrowOrderDao.findExtendChannel(userList,loanTime);
+    public Integer findExtendChannel(Integer channelId, String loanTime) {
+        return borrowOrderDao.findExtendChannel(channelId,loanTime);
     }
 
 }
