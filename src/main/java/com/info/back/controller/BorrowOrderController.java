@@ -193,9 +193,7 @@ public class BorrowOrderController extends BaseController {
                 } else if (params.get("bType").toString().contains("fengk")) {
                     // 初审
                     if ("fengk_Trial".equals(params.get("bType"))) {
-                        params.put("statusList", Arrays.asList(BorrowOrder.STATUS_CSTG, BorrowOrder.STATUS_DCS, BorrowOrder.STATUS_CSBH
-                                // ,
-                                // BorrowOrder.STATUS_JSJJ
+                        params.put("statusList", Arrays.asList(BorrowOrder.STATUS_CSTG, BorrowOrder.STATUS_DCS, BorrowOrder.STATUS_CSBH,666,667
                         ));
                         // 复审
                     } else if ("fengk_Review".equals(params.get("bType")) || "fengk_order".equals(params.get("bType"))) {

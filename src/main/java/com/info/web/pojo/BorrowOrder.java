@@ -303,6 +303,7 @@ public class BorrowOrder {
 		//添加AI状态
 		borrowStatusMap.put(666, "待AI验证");
 		borrowStatusMap.put(667, "AI验证失败");
+		borrowStatusMap.put(-50, "驳回并拉黑");
 	}
 
  
