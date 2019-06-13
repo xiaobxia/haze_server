@@ -113,4 +113,5 @@ public interface IChannelInfoDao {
     Integer xujieCount(@Param("userId") List<String> userId,@Param("applyTime") Date applyTime);
     Integer xujieSucCount(@Param("userId") List<String> userId,@Param("loanTime") Date loanTime);
     Integer saveChannelUrl(ChannelInfo channelInfo);
+    List<String> findLoanUserId(@Param("userId") List<String> userId,@Param("loanTime") Date loanTime);
 }

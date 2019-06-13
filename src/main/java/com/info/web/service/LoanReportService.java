@@ -62,8 +62,6 @@ public class LoanReportService implements ILoanReportService {
 			/*设置查询时间*/
 			
 			Calendar cal = Calendar.getInstance();
-			 
-			
 			Integer checkDate = 0;
 			String time = DateUtil.getDateFormat(cal.getTime(),"yyyy-MM-dd HH:mm:ss");
 			checkDate=Integer.valueOf(time.substring(11, 13));
@@ -91,9 +89,11 @@ public class LoanReportService implements ILoanReportService {
 			//放款单数
 			Integer loanOrderCount = loanReportDao.findLoanCount(param);
 			//添加续期放款单数(续期一笔计算为成功放款一笔)
-			Integer loanOrderRenewalCount = loanReportDao.findRenewalLoanCount(param);
-			loanReport.setLoanOrderCount(loanOrderCount+loanOrderRenewalCount);
-			//放款总额
+			/*Integer loanOrderRenewalCount = loanReportDao.findRenewalLoanCount(param);
+			loanReport.setLoanOrderCount(loanOrderCount+loanOrderRenewalCount);*/
+			//暂不采取
+			loanReport.setLoanOrderCount(loanOrderCount);
+			//放款总额 添加续期放款单数(续期一笔计算为成功放款一笔)
 			Long moneyAmountCount = loanReportDao.findMoneyCount(param);
 			//   /100
 			BigDecimal a = new BigDecimal(moneyAmountCount);
@@ -101,22 +101,22 @@ public class LoanReportService implements ILoanReportService {
 			a1 = a.divide(new BigDecimal(100), 0,
 						BigDecimal.ROUND_HALF_UP);
 		
-			//添加续期放款总额(续期一笔计算为成功放款一笔)
+			/*//添加续期放款总额(续期一笔计算为成功放款一笔)
 			Long RenewalmoneyAmountCount = loanReportDao.findRenewalMoneyCount(param);
 			BigDecimal b = new BigDecimal(RenewalmoneyAmountCount);
 			BigDecimal b1 = BigDecimal.ZERO;
 			b1 = b.divide(new BigDecimal(100), 0,
 					BigDecimal.ROUND_HALF_UP);
-			
-			loanReport.setMoneyAmountCount((a1.add(b1)).longValue());
-			
+			loanReport.setMoneyAmountCount((a1.add(b1)).longValue());*/
+			//暂不采取 添加续期放款总额(续期一笔计算为成功放款一笔)
+            loanReport.setMoneyAmountCount(a1.longValue());
+
 			param.clear();
 			param.put("startDate", startDate);
 			//param.put("endDate",endDate);
 			param.put("loanTerm", "7");
 			param.put("inStatus", inStatus);
 			DateUtil.sqlOptimization4DateFormat(param,"startDate");
-
 			//7天放款单数
 			Integer loanSevendayCount = loanReportDao.findLoanCount(param);
 			Integer loanSevendayRenewalCount = loanReportDao.findRenewalLoanCount(param);//添加7天续期放款单数
@@ -152,7 +152,7 @@ public class LoanReportService implements ILoanReportService {
 			four3 = (four1.add(four2)).divide(new BigDecimal(100), 0,
 					BigDecimal.ROUND_HALF_UP);
 			loanReport.setFourdayMoneyCount(Integer.valueOf(four3.toString()));
-			
+
 			param.clear();
 			param.put("startDate", startDate);
 //			param.put("endDate",endDate);
@@ -162,17 +162,22 @@ public class LoanReportService implements ILoanReportService {
 			//老用户放款单数
 			Integer oldLoanOrderCount = loanReportDao.findLoanCount(param);
 			/* 老用户续期放款单数(只要续期，都视为老用户)*/
+/*
 			loanReport.setOldLoanOrderCount(oldLoanOrderCount+loanOrderRenewalCount);
+*/          //暂不采取老用户续期放款单数（只要续期，都视为老用户）
+            loanReport.setOldLoanOrderCount(oldLoanOrderCount);
 			//老用户放款总额
 			Long oldLoanMoneyCount = loanReportDao.findMoneyCount(param);
 			/* 老用户续期放款金额(只要续期，都视为老用户)*/
 			BigDecimal old1 = new BigDecimal(oldLoanMoneyCount);
 		
 			BigDecimal old3 = BigDecimal.ZERO;
-			old3 = (old1.add(b)).divide(new BigDecimal(100), 0,
-					BigDecimal.ROUND_HALF_UP);
+			/*old3 = (old1.add(b)).divide(new BigDecimal(100), 0,
+					BigDecimal.ROUND_HALF_UP);*/
+			//暂不采取 老用户续期放款金额(只要续期，都视为老用户)*/
+			old3 = (old1.divide(new BigDecimal(100), 0,
+					BigDecimal.ROUND_HALF_UP));
 			loanReport.setOldLoanMoneyCount(old3.longValue());
-			
 			param.clear();
 			param.put("startDate", startDate);
 //			param.put("endDate",endDate);

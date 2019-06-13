@@ -586,6 +586,14 @@
 			#{userId}
 		</foreach>
 	</select>
+	<select id="findLoanUserId" resultMap="userList">
+		select user_id from asset_repayment where status in('21','23','30')
+		and DATE_FORMAT(credit_repayment_time,'%Y-%m-%d') =DATE_FORMAT(#{loanTime},'%Y-%m-%d')
+		and user_id in
+		<foreach collection="userId" item="userId" separator="," open="(" close=")">
+			#{userId}
+		</foreach>
+	</select>
 	<select id="findRepayCount" resultType="java.lang.Integer">
 		select count(id) as repayCount from asset_repayment where status in ('23','30','34')
 		and DATE_FORMAT(repayment_real_time,'%Y-%m-%d') =DATE_FORMAT(#{repayTime},'%Y-%m-%d')
@@ -617,14 +625,13 @@
 	</select>
 	<select id="xujieSucCount" resultType="java.lang.Integer">
 		SELECT
-		count( ui.id ) AS loanCount
+		count(1) AS loanCount
 		FROM
-		user_info ui
-		LEFT JOIN asset_repayment ar ON ar.user_id = ui.id
+		asset_borrow_order
 		WHERE
-		ar.STATUS IN ( '21', '23', '30' )
-		AND DATE_FORMAT( ar.credit_repayment_time, '%Y-%m-%d' ) = DATE_FORMAT(#{loanTime},'%Y-%m-%d')
-		AND ui.id IN
+		customer_type = 1 and `status` in (21,30,34)
+		AND DATE_FORMAT( updated_at, '%Y-%m-%d' ) = DATE_FORMAT(#{loanTime},'%Y-%m-%d')
+		AND user_id IN
 		<foreach collection="userId" item="userId" separator="," open="(" close=")">
 			#{userId}
 		</foreach>

@@ -3,6 +3,7 @@ package com.info.web.dao;
 import com.info.web.pojo.*;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import sun.awt.image.IntegerComponentRaster;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
@@ -132,6 +133,7 @@ public interface IBorrowOrderDao {
 	List<String> getUserIdList();
 	List<String> getUserIdList2();
 	//针对某些id查询符合某些状态的总数
-	Integer findOveChannle(@Param("userList")List<String> userList,@Param("statusList") List<Integer> statusList,@Param("loanTime") String loanTime, @Param("userType") Integer userType);
+	Integer findOveChannle(@Param("channelId") Integer channelId,@Param("statusList") List<Integer> statusList,@Param("loanTime") String loanTime,@Param("customerType") String customerType);
+	Integer findRepayCount(@Param("channelId") Integer channelId,@Param("statusList") List<Integer> statusList,@Param("loanTime") String loanTime,@Param("customerType") String customerType);
 	Integer findExtendChannel(@Param("userList") List<String> userList,@Param("loanTime") String loanTime);
 }

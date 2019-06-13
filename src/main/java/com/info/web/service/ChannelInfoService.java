@@ -357,4 +357,9 @@ public class ChannelInfoService implements IChannelInfoService {
 	public Integer findAllRepayCount(Date repayTime, List<String> userId) {
 		return channelInfoDao.findAllRepayCount(repayTime,userId);
 	}
+
+	@Override
+	public List<String> findLoanUserId(List<String> userId, Date loanTime) {
+		return channelInfoDao.findLoanUserId(userId,loanTime);
+	}
 }

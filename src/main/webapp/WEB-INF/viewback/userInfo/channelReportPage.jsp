@@ -282,7 +282,7 @@
 					<%--</td>--%>
 					<td>
 						<!--申请借款数=当日总申请借款数-续借人数 -->
-							${channel.borrowApplyCount-xujieCount}
+							${channel.borrowApplyCount-channel.xujieCount}
 						/
 							${channel.borrowApplyCount}
 					</td>

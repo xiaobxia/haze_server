@@ -267,4 +267,12 @@ public interface IChannelInfoService {
 	 * @return
 	 */
 	Integer findAllRepayCount( Date repayTime, List<String> userId);
+
+	/**
+	 * 续借放款人
+	 * @param userId
+	 * @param loanTime
+	 * @return
+	 */
+	List<String> findLoanUserId(@Param("userId") List<String> userId,@Param("loanTime") Date loanTime);
 }

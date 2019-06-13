@@ -112,11 +112,15 @@
 					<td>${channel.firstOveRate }</td>
 					<td>${channel.reLoanCount }</td>
 					<td>${channel.reRepayCount }</td>
-					<td>${channel.reOveRate }</td>
+					<td>
+						${channel.reOveRate}
+					</td>
 					<td>${channel.extendCount }</td>
 					<td>${channel.allLoanCount }</td>
 					<td>${channel.allRepayCount }</td>
-					<td>${channel.allOveRate }</td>
+					<td>
+						${channel.allOveRate}
+					</td>
 <%--
 					<td>${channel.channelStatus }</td>
 --%>

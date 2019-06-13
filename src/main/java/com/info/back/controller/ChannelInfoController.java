@@ -799,8 +799,10 @@ public class ChannelInfoController extends BaseController {
                        //放款笔数 当日所有
                        int loanCount = channelInfoService.findLoanCount(channelReport.getReportDate(), idList);
                        channelReport.setAllLoanCount(loanCount);
+                       //当日放款用户id
+                      /* List<String> loanUserId = channelInfoService.findLoanUserId(idList,channelReport.getReportDate());*/
                        //续借放款人数 （当天放款人中 哪些人是续借放款类型 即 当天放款人中哪些是老用户）
-                       int xujieLoanCount = channelInfoService.xujieSucCount(idList,channelReport.getReportDate());
+                      int xujieLoanCount = channelInfoService.xujieSucCount(idList,channelReport.getReportDate());
                        //当日新用户放款笔数（当日所有放款数-续借放款人数）
                        if(loanCount < xujieLoanCount){
                            channelReport.setLoanCount(0);

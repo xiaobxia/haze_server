@@ -1,5 +1,6 @@
 package com.info.web.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -127,5 +128,5 @@ public interface IChannelReportDao {
 
     Integer findBaseChannelInfoCount(Map<String,Object> params);
 
-	Integer findOveChannel(Integer channelId);
+	BigDecimal findOveChannel(Integer channelId);
 }

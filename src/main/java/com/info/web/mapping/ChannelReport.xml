@@ -1061,7 +1061,7 @@
 		ORDER BY
 			r.report_date DESC
 	</select>
-	<select id="findOveChannel" resultType="java.lang.Integer" parameterType="java.lang.Integer">
-        select ifNULL(ROUND((IFNULL(SUM(late_day_count),0) /IFNULL(SUM(register_count),0)*100),2),0) FROM channel_report  where channelid =#{channelId}
+	<select id="findOveChannel" resultType="java.math.BigDecimal" parameterType="java.lang.Integer">
+           select ifNULL(ROUND((IFNULL(SUM(late_day_count),0) /IFNULL(SUM(register_count),0)),4),0) FROM channel_report  where channelid =#{channelId}
 	</select>
 </mapper>
