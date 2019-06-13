@@ -50,13 +50,13 @@
 				AND uc.status=#{status}
 			</if>
 			<if test="addStartTime !=null and addStartTime !='' and addEndTiem!=null and addEndTiem!='' " >
-				<![CDATA[AND uc.create_time>=#{addStartTime} AND uc.create_time<=#{addEndTiem}]]>
+				<![CDATA[AND  DATE_FORMAT( uc.create_time,'%Y-%m-%d') >= #{addStartTime} AND DATE_FORMAT( uc.create_time,'%Y-%m-%d') <= #{addEndTiem}]]>
 			</if>
 			<if test="addStartTime !=null and addStartTime !='' and (addEndTiem==null || addEndTiem=='') " >
-				<![CDATA[AND uc.create_time>=#{addStartTime}]]>
+				<![CDATA[AND DATE_FORMAT( uc.create_time,'%Y-%m-%d') >= #{addStartTime}]]>
 			</if>
 			<if test="addEndTiem!=null and addEndTiem!='' and (addStartTime==null and addStartTime =='')  " >
-				<![CDATA[AND uc.create_time<=#{addEndTiem}]]>
+				<![CDATA[AND DATE_FORMAT( uc.create_time,'%Y-%m-%d') <= #{addEndTiem}]]>
 			</if>
 		</where>
 		order by uc.create_time desc
@@ -80,15 +80,14 @@
 				AND uc.status=#{status}
 			</if>
 			<if test="addStartTime !=null and addStartTime !='' and addEndTiem!=null and addEndTiem!='' " >
-				<![CDATA[AND uc.create_time>=#{addStartTime} AND uc.create_time<=#{addEndTiem}]]>
+				<![CDATA[AND DATE_FORMAT( uc.create_time,'%Y-%m-%d') >= #{addStartTime} AND DATE_FORMAT( uc.create_time,'%Y-%m-%d') <= #{addEndTiem}]]>
 			</if>
 			<if test="addStartTime !=null and addStartTime !='' and (addEndTiem==null || addEndTiem=='') " >
-				<![CDATA[AND uc.create_time>=#{addStartTime}]]>
+				<![CDATA[AND DATE_FORMAT( uc.create_time,'%Y-%m-%d') >= #{addStartTime}]]>
 			</if>
 			<if test="addEndTiem!=null and addEndTiem!='' and (addStartTime==null and addStartTime =='')  " >
-				<![CDATA[AND uc.create_time<=#{addEndTiem}]]>
+				<![CDATA[AND DATE_FORMAT( uc.create_time,'%Y-%m-%d') <= #{addEndTiem}]]>
 			</if>
-
 		</where>
 	</select>
 	<select id="selectUserBankCard" parameterType="map" resultType="com.info.web.pojo.UserCardInfo" >

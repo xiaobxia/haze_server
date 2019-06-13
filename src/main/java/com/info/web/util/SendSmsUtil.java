@@ -60,10 +60,12 @@ public class SendSmsUtil {
 	 * @param telephone 手机号
 	 * @param content   内容
 	 * @return boolean b
-	 * @throws Exception ex
 	 */
-	public static boolean sendSmsDiyCL(String telephone, String temp, String content) throws Exception{
+	public static boolean sendSmsDiyCL(String telephone, String temp, String content){
 		loger.info("sendSms:" + telephone + "   sms=" + content);
+        if (!"online".equals(PropertiesUtil.get("profile"))) {
+            return true;
+        }
         return cloudsp(telephone, temp, content, notify_account, notify_pswd, notify_sign);
     }
 

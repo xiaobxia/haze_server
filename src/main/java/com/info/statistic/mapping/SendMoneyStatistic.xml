@@ -81,7 +81,7 @@
 		  and status in (21,-11,-20)
 	  </if>
 	  <if test="_parameter ==3">
-		  and status =21
+		  and status =21 and late_day &lt; 1
 	  </if>
 	</select>
 	<select id="findTodayMoneyCount" resultType="map" parameterType="Integer">
@@ -90,6 +90,10 @@
           <if test="_parameter != null and _parameter != ''">
 			  and status =#{status}
 		  </if>
+	</select>
+	<select id="findMoneyTodayAll" resultType="map">
+		select IFNULL(sum(repayment_amount),0) as money,IFNULL(sum(repaymented_amount),0) as repaymentedAmount,IFNULL(count(id),0) as countNumber
+		from asset_repayment  where DATE_FORMAT( repayment_real_time, '%Y-%m-%d' ) =  DATE_FORMAT( NOW( ), '%Y-%m-%d' ) and status = 30
 	</select>
 	<select id="findMoneyToday" resultType="map" parameterType="Integer">
     select IFNULL(sum(repayment_amount),0) as money,IFNULL(sum(repaymented_amount),0) as repaymentedAmount,IFNULL(count(id),0) as countNumber
@@ -110,9 +114,11 @@
 			IFNULL(sum(repayment_amount),0)
 		FROM
 			asset_repayment
-		WHERE
-			 DATE_FORMAT( repayment_time, '%Y-%m-%d' ) BETWEEN ( SELECT date_sub( curdate( ), INTERVAL 2 DAY ) )
-			AND DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+		WHERE 1=1
+		<![CDATA[ AND DATE_FORMAT( repayment_time, '%Y-%m-%d' )	> DATE_FORMAT(NOW(), '%Y-%m-%d' ) ]]>
+		<![CDATA[ AND DATE_FORMAT( repayment_time, '%Y-%m-%d' ) <= DATE_FORMAT(#{addTime}, '%Y-%m-%d' ) ]]>
+		<!--BETWEEN ( SELECT date_sub( curdate( ), INTERVAL 2 DAY ) )
+		AND DATE_FORMAT( NOW( ), '%Y-%m-%d' )-->
 	</select>
 	<select id="extendToday" resultType="map">
 		SELECT
@@ -122,8 +128,20 @@
 		FROM
 			asset_renewal_record
 		WHERE
-		 DATE_FORMAT( updated_at, '%Y-%m-%d' )  =  DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+		<!-- DATE_FORMAT( updated_at, '%Y-%m-%d' )  =  DATE_FORMAT( NOW( ), '%Y-%m-%d' ) -->
+		DATE_FORMAT(old_repayment_time , '%Y-%m-%d' )  =  DATE_FORMAT( NOW( ), '%Y-%m-%d' )
 		 and status =1
+	</select>
+	<select id="extendTodayAll" resultType="map">
+		SELECT
+		IFNULL(sum(sum_fee),0) AS extendMoney,
+		count( id ) AS extendCount,
+		IFNULL(SUM(repayment_principal),0) AS repaymentPrincipal
+		FROM
+		asset_renewal_record
+		WHERE
+		 DATE_FORMAT( created_at, '%Y-%m-%d' )  =  DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+		and status =1
 	</select>
 	<select id="reBorrow" resultType="map">
 		SELECT
@@ -133,8 +151,7 @@
 			asset_borrow_order
 		WHERE
 			customer_type = 1
-			AND STATUS = 21
-			AND  DATE_FORMAT( loan_time, '%Y-%m-%d' ) =  DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+			AND  DATE_FORMAT( created_at, '%Y-%m-%d' ) =  DATE_FORMAT( NOW( ), '%Y-%m-%d' )
 	</select>
     <select id="loanMoneyToday" resultType="map">
 	SELECT
