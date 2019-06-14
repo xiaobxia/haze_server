@@ -54,7 +54,7 @@
 		</div>
 	</div>
 	<div class="pageContent">
-		<table class="table" width="100%" layoutH="114">
+		<table class="table" width="100%" layoutH="120">
 			<thead>
 				<tr>
 					<th align="center">姓名</th>

@@ -48,7 +48,7 @@
 		<jsp:include page="${BACK_URL}/rightSubList">
 			<jsp:param value="${searchParams.myId}" name="parentId"/>
 		</jsp:include>
-		<table class="table" width="100%" layoutH="114">
+		<table class="table" width="100%" layoutH="160">
 			<thead>
 				<tr>
 					<th align="center">用户ID</th>
