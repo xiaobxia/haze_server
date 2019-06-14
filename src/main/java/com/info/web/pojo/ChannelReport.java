@@ -60,17 +60,17 @@ public class ChannelReport implements Serializable {
     private Integer iosCount = 0;//ios注册量
     private Integer pcCount = 0;//pc注册量
     /*2018-04-18新增*/
-    private Integer dayRealnameCount;
-    private Integer dayBankCount;
-    private Integer dayContactCount;
-    private Integer dayTdCount;
-    private Integer dayAlipayCount;
-    private Integer dayZhimaCount;
-    private Integer dayCompanyCount;
-    private Integer dayBlackUserCount;
-    private Integer dayBorrowApplyCount;
-    private Integer dayBorrowSucCount;
-    private Integer dayOverdueCount;
+    private Integer dayRealnameCount = 0;
+    private Integer dayBankCount = 0;
+    private Integer dayContactCount = 0;
+    private Integer dayTdCount = 0;
+    private Integer dayAlipayCount = 0;
+    private Integer dayZhimaCount = 0;
+    private Integer dayCompanyCount = 0;
+    private Integer dayBlackUserCount = 0;
+    private Integer dayBorrowApplyCount = 0;
+    private Integer dayBorrowSucCount = 0;
+    private Integer dayOverdueCount = 0;
     /*--*/
     private String qqRate;
     private String wechatRate;
@@ -93,7 +93,7 @@ public class ChannelReport implements Serializable {
     //当日回全款数
     private Integer allRepayCount=0;
     //当日回款总数
-    private Integer allLoanCount;
+    private Integer allLoanCount = 0;
 
     /**
      * 2019、05/18新增
