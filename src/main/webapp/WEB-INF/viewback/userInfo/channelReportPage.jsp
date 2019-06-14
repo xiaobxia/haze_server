@@ -50,7 +50,7 @@
 		<jsp:include page="${BACK_URL}/rightSubList">
 			<jsp:param value="${params.myId}" name="parentId"/>
 		</jsp:include>
-		<table class="table" style="width: 100%;" layoutH="160" nowrapTD="false" ifScrollTable="true">
+		<table class="table" layoutH="160" nowrapTD="false" ifScrollTable="true">
 			<thead>
 			<tr>
 				<th align="center"  >
