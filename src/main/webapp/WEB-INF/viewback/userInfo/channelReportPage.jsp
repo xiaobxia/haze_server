@@ -338,7 +338,7 @@
 						<c:choose>
 							<c:when test="${channel.channelName != null}">
 								<!--当日借款率=当日新用户申请数/当日注册数-->
-								<c:if test="${channel.borrowApplyCount  gt 0 and channel.registerCount gt 0}">
+								<c:if test="${(channel.borrowApplyCount -channel.xujieCount)  gt 0 and channel.registerCount gt 0}">
 									<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${(channel.borrowApplyCount - channel.xujieCount) / channel.registerCount}" />
 								</c:if>
 								<c:if test="${(channel.borrowApplyCount -channel.xujieCount) eq 0 or channel.registerCount eq 0 }">
