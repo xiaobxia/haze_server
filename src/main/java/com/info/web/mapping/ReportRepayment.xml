@@ -164,13 +164,14 @@
   </select>
   <select id="findOverdueRateSByReport" resultType="map" parameterType="map" >
     <![CDATA[
-    select datediff(#{reportTime},DATE_FORMAT(late_fee_start_time,'%Y-%m-%d')) + 1 as lateDay,
-	count(1) as countAll,
-	IFNULL(sum(repayment_principal + repayment_interest),0) as amountAll
-	from asset_repayment
-	where DATE_FORMAT(late_fee_start_time,'%Y-%m-%d') <= #{reportTime}
-	and (`status` = -11 OR DATE_FORMAT(repayment_real_time,'%Y-%m-%d') > #{reportTime})
-	group by datediff(#{reportTime},DATE_FORMAT(late_fee_start_time,'%Y-%m-%d'))
+    select datediff(#{reportTime},DATE_FORMAT(ar.late_fee_start_time,'%Y-%m-%d')) + 1 as lateDay,
+	count(ar.id) as countAll,
+	IFNULL(sum(ar.repayment_principal + ar.repayment_interest),0) as amountAll
+	from asset_repayment ar
+	 left join asset_borrow_order bo on ar.asset_order_id = bo.id
+	where DATE_FORMAT(ar.late_fee_start_time,'%Y-%m-%d') <= #{reportTime}
+	and (bo.`status` = -11 OR DATE_FORMAT(ar.repayment_real_time,'%Y-%m-%d') > #{reportTime})
+	group by datediff(#{reportTime},DATE_FORMAT(ar.late_fee_start_time,'%Y-%m-%d'))
     ]]>
   </select>
 
