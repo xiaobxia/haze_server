@@ -40,7 +40,7 @@
                             <c:forEach var="borrowStatus" items="${BORROW_STATUS_ALL}">
                                 <c:choose>
                                     <c:when test="${bType=='fengk_Trial'}">
-                                        <c:if test="${borrowStatus.key eq STATUS_CSTG or borrowStatus.key eq STATUS_DCS or borrowStatus.key eq STATUS_CSBH}">
+                                        <c:if test="${borrowStatus.key eq STATUS_CSTG or borrowStatus.key eq STATUS_DCS or borrowStatus.key eq STATUS_CSBH or borrowStatus.key eq 666 or borrowStatus.key eq 667}">
                                             <option value="${borrowStatus.key}"
                                                     <c:if test="${borrowStatus.key eq params.borrowStatus}">selected="selected"</c:if> >${borrowStatus.value}</option>
                                         </c:if>
