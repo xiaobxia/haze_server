@@ -100,7 +100,8 @@
                 and a.report_date = #{countDate}
             </if>
           <if test="uv != null and uv != ''">
-				and a.uv_count &gt; 0
+				and (a.uv_count &gt; 0 or a.attestation_realname_count  &gt; 0 or a.register_count &gt; 0
+				or a.contact_count &gt; 0 or a.jxl_count &gt; 0 or a.borrow_apply_count &gt; 0 or a.borrow_suc_count &gt; 0)
 			</if>
 		</where>
 	</sql>
