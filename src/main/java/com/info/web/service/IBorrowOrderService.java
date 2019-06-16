@@ -418,4 +418,6 @@ public interface IBorrowOrderService {
 
     Integer findExtendChannel(Integer channelId,String loanTime);
 
+    Integer findRenewalCount(Integer channelId,String loanTime);
+
 }

@@ -1013,7 +1013,7 @@
 			LEFT JOIN channel_super_info s ON s.id = c.channel_super_id
 		where 1=1
 			<if test="channelid != null and channelid != ''">
-				and a.channelid= #{channelid}
+				and r.channelid= #{channelid}
 			</if>
 			<if test="channelCode != null and channelCode != ''">
 				and c.channel_code = #{channelCode}
@@ -1042,7 +1042,7 @@
 			LEFT JOIN channel_super_info s ON s.id = c.channel_super_id
 		where 1=1
 		<if test="channelid != null and channelid != ''">
-			and a.channelid= #{channelid}
+			and r.channelid= #{channelid}
 		</if>
 		<if test="channelCode != null and channelCode != ''">
 			and c.channel_code = #{channelCode}

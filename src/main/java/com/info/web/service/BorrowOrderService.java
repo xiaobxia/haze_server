@@ -2603,4 +2603,9 @@ public class BorrowOrderService implements IBorrowOrderService {
         return borrowOrderDao.findExtendChannel(channelId,loanTime);
     }
 
+    @Override
+    public Integer findRenewalCount(Integer channelId, String loanTime) {
+        return borrowOrderDao.findRenewalCount(channelId,loanTime);
+    }
+
 }

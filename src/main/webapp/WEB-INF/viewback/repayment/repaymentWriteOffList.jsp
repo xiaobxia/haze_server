@@ -21,7 +21,9 @@
 						<input type="text" name="userMobileLike" id="userMobileLike"
 							   value="${params.userMobileLike }" />
 					</td>
-<%--					<td>
+<%--
+					--%>
+					<td>
 						预期还款时间:
 						<input type="text" name="repaymentTimeStart" id="repaymentTimeStart"
 							   class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly"
@@ -50,7 +52,7 @@
 								<option <c:if test="${'-20' == params.statuses[0]}"> selected </c:if>  value="-20">已坏账</option>
 							</c:if>
 						</select>
-					</td>--%>
+					</td>
 					<td id="overdueStatusTd">
 						逾期时长:
 						<select id="overdueStatus" name="overdueStatus">
