@@ -2,11 +2,12 @@ package com.info.back.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.info.back.pojo.mxreport.*;
+import com.info.back.utils.PropertiesUtil;
 import com.info.risk.utils.GzipUtil;
 import com.info.web.controller.BaseController;
 import com.info.web.pojo.UserContacts;
-import com.info.web.service.UserContactsService;
-import com.info.web.service.UserService;
+import com.info.web.service.IUserContactsService;
+import com.info.web.service.IUserService;
 import com.info.web.util.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -29,9 +30,10 @@ import java.util.stream.Collectors;
 public class MxController extends BaseController {
 
 	@Autowired
-	private UserContactsService userContactsService;
+	private IUserContactsService userContactsService;
 
 	@Autowired
+	private IUserService userService;
 
 	@RequestMapping("getAllInfo")
 	public String getUserPage(HttpServletRequest request, Model model) throws IOException {
@@ -45,8 +47,10 @@ public class MxController extends BaseController {
 
 			Map<String, String> userContactsMap = userContactsList.stream().collect(Collectors.toMap(UserContacts::getContactPhone, UserContacts::getContactName));
 
-			String Authorization = "token c98ee41f2cdf43c3be8318748545a3de";
-			String host = "https://api.51datakey.com/carrier/v3/mobiles/18685170194/mxreport?task_id=d1188780-9006-11e9-84fc-00163e10becc";
+			//String Authorization = "token c98ee41f2cdf43c3be8318748545a3de";
+			String Authorization = "token " + PropertiesUtil.get("mxToken");
+			String host = userService.selectReportDataHtml(Integer.parseInt(userId));
+			//String host = "https://api.51datakey.com/carrier/v3/mobiles/18685170194/mxreport?task_id=d1188780-9006-11e9-84fc-00163e10becc";
 
 			InputStream authorization = HttpUtil.MxGet(host, Authorization);
 

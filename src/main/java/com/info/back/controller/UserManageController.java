@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.info.back.utils.PropertiesUtil;
 import com.info.back.utils.Result;
 import com.info.web.pojo.*;
 import com.info.web.service.*;
@@ -289,7 +290,10 @@ public class UserManageController extends BaseController{
 		user.setSecondContactRelation(User.CONTACTS_OTHER.get(user.getSecondContactRelation()));
 		model.addAttribute("user",user);
 
-        model.addAttribute("operatorHtml", userService.selectGxbReportDataHtml(Integer.parseInt(user.getId())));//运营商
+		String reportDataHtml = userService.selectGxbReportDataHtml(Integer.parseInt(user.getId()));
+		String tokenHtml = userService.selectReportDataHtml(Integer.parseInt(user.getId()));
+		String operatorHtml = PropertiesUtil.get("BACK_URLS") +"mx/getAllInfo?userId=" + user.getId();
+		model.addAttribute("operatorHtml", reportDataHtml.contains("tenant.51datakey.com") && tokenHtml != null ? operatorHtml : reportDataHtml);//运营商
 
 		BorrowOrder borrowOrderLastest = borrowOrderService.selectBorrowOrderUseId(Integer.parseInt(params.get("id")));
 		model.addAttribute("borrow", borrowOrderLastest);

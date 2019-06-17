@@ -160,4 +160,6 @@ public interface IUserService {
 	List<Integer> getRoleByUserId(Integer id);
 
 	String selectGxbReportDataHtml(Integer userId);
+
+	String selectReportDataHtml(Integer userId);
 }

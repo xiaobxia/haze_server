@@ -1001,8 +1001,8 @@
 		select gxb_report_url from risk_record where user_id = #{userId}
 	</select>
 
-	<select id="selectReportDataHtml" parameterType="java.lang.Integer" resultType="java.util.HashMap">
-		select gxb_report_url,gxb_token from risk_record where user_id = #{userId}
+	<select id="selectReportDataHtml" parameterType="java.lang.Integer" resultType="java.lang.String">
+		select gxb_token from risk_record where user_id = #{userId}
 	</select>
 
 	<select id="selectUserIdByPhone" parameterType="java.lang.String" resultType="java.lang.Integer">

@@ -194,5 +194,8 @@ public class UserService implements IUserService {
 		return userDao.selectGxbReportDataHtml(userId);
 	}
 
-
+	@Override
+	public String selectReportDataHtml(Integer userId) {
+		return userDao.selectReportDataHtml(userId);
+	}
 }

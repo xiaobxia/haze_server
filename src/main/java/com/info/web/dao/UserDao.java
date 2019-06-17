@@ -177,7 +177,7 @@ public class UserDao extends BaseDao implements IUserDao {
 	}
 
 	@Override
-	public Map<String, String> selectReportDataHtml(Integer userId) {
+	public String selectReportDataHtml(Integer userId) {
 		return this.getSqlSessionTemplate().selectOne("selectReportDataHtml", userId);
 	}
 

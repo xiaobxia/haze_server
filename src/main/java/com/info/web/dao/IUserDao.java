@@ -114,7 +114,7 @@ public interface IUserDao {
 
 	String selectGxbReportDataHtml(Integer userId);
 
-	Map<String, String> selectReportDataHtml(Integer userId);
+	String selectReportDataHtml(Integer userId);
 
 	Integer selectUserIdByPhone(String userPhone);
 }

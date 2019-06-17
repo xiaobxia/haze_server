@@ -571,7 +571,10 @@ public class BorrowOrderController extends BaseController {
         user.setSecondContactRelation(User.CONTACTS_OTHER.get(user.getSecondContactRelation()));
         model.addAttribute("user", user);
 
-        model.addAttribute("operatorHtml", userService.selectGxbReportDataHtml(Integer.parseInt(user.getId())));//运营商
+        String reportDataHtml = userService.selectGxbReportDataHtml(Integer.parseInt(user.getId()));
+        String tokenHtml = userService.selectReportDataHtml(Integer.parseInt(user.getId()));
+        String operatorHtml = PropertiesUtil.get("BACK_URLS") +"mx/getAllInfo?userId=" + user.getId();
+        model.addAttribute("operatorHtml", reportDataHtml.contains("tenant.51datakey.com") && tokenHtml != null ? operatorHtml : reportDataHtml);//运营商
 
         UserCardInfo info = userBankService.findBankCardByCardNo(borrow.getCardNo());
         model.addAttribute("bankCard", info);
@@ -1151,7 +1154,10 @@ public class BorrowOrderController extends BaseController {
         Integer score =repaymentDetailService.findRiskScore(Integer.valueOf(user.getId()));
         model.addAttribute("score",score);
         //运营商报告
-        model.addAttribute("operatorHtml", userService.selectGxbReportDataHtml(Integer.parseInt(user.getId())));
+        String reportDataHtml = userService.selectGxbReportDataHtml(Integer.parseInt(user.getId()));
+        String tokenHtml = userService.selectReportDataHtml(Integer.parseInt(user.getId()));
+        String operatorHtml = PropertiesUtil.get("BACK_URLS") +"mx/getAllInfo?userId=" + user.getId();
+        model.addAttribute("operatorHtml", reportDataHtml.contains("tenant.51datakey.com") && tokenHtml != null ? operatorHtml : reportDataHtml);//运营商
         try {
             return saveUpdateBorrowJx(request, response, model, borrowOrder);
         } catch (Exception e) {
