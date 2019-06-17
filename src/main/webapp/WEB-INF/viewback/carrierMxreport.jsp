@@ -420,6 +420,7 @@
                 <thead>
                 <tr class="center">
                     <th>号码</th>
+                    <th>在通讯录中姓名</th>
                     <th>归属地</th>
                     <th>通话次数</th>
                     <th>通话时长（秒）</th>
@@ -431,6 +432,7 @@
                     <c:forEach var="item" items="${reportBasic.friendCircle.peerNumTop33m}" varStatus="status">
                         <tr class="center">
                             <td>${item.peerNumber}</td>
+                            <td>${userContactsMap[item.peerNumber]}</td>
                             <td>${item.peerNumLoc}</td>
                             <td>${item.callCnt}</td>
                             <td>${item.callTime}</td>
@@ -449,6 +451,7 @@
                 <thead>
                 <tr class="center">
                     <th>号码</th>
+                    <th>在通讯录中姓名</th>
                     <th>归属地</th>
                     <th>通话次数</th>
                     <th>通话时长（秒）</th>
@@ -460,6 +463,7 @@
                     <c:forEach var="item" items="${reportBasic.friendCircle.peerNumTop36m}" varStatus="status">
                         <tr class="center">
                             <td>${item.peerNumber}</td>
+                            <td>${userContactsMap[item.peerNumber]}</td>
                             <td>${item.peerNumLoc}</td>
                             <td>${item.callCnt}</td>
                             <td>${item.callTime}</td>
