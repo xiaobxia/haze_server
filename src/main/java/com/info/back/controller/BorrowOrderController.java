@@ -928,8 +928,8 @@ public class BorrowOrderController extends BaseController {
                             SpringUtils.renderDwzResult(response, false, "当前状态为:<b>" + borrowOrderR.getStatusName() + "</b>,该借款状态不支持继续审核！",
                                     DwzResult.CALLBACK_CLOSECURRENT, params.get("parentId").toString());
                         } else {
-                            //处于放款状态或正在放款支付中的无法进行更新订单操作
-                            if (BorrowOrder.STATUS_FKZ.equals(borrowOrderR.getStatus()) && (BorrowOrder.SUB_SUBMIT.equals(borrowOrderR.getPaystatus()) || BorrowOrder.SUB_PAY_CSZT.equals(borrowOrderR.getPaystatus()))) {
+                            //处于放款状态或正在放款支付中的无法进行更新订单操作 BorrowOrder.STATUS_FKZ.equals(borrowOrderR.getStatus()) &&     、|| BorrowOrder.SUB_PAY_CSZT.equals(borrowOrderR.getPaystatus())
+                            if (BorrowOrder.SUB_SUBMIT.equals(borrowOrderR.getPaystatus())) {
                                 SpringUtils.renderDwzResult(response, false, "操作失败,原因：该订单处于放款或支付处理中，不能被进行此操作，如有疑问请联系技术人员！",
                                         DwzResult.CALLBACK_CLOSECURRENT, params.get("parentId").toString());
                                 model.addAttribute("params", params);

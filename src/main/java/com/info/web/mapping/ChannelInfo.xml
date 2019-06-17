@@ -289,7 +289,7 @@
 			</if>-->
 
 			<if test="channelTel != null and channelTel != ''">
-				and a.channel_tel = # {channelTel}
+				and a.channel_tel = #{channelTel}
 			</if>
 			<if test="beginTime !=null and beginTime !=''">
 		    		<![CDATA[	and DATE_FORMAT(a.created_at,'%Y-%m-%d') >=  #{beginTime}  ]]>

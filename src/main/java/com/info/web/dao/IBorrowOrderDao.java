@@ -132,6 +132,7 @@ public interface IBorrowOrderDao {
 	List<String> getUserIdWaitList();
 	List<String> getUserIdList();
 	List<String> getUserIdList2();
+	Integer findRenewalCount(@Param("channelId") Integer channelId,@Param("loanTime") String loanTime);
 	//针对某些id查询符合某些状态的总数
 	Integer findOveChannle(@Param("channelId") Integer channelId,@Param("statusList") List<Integer> statusList,@Param("loanTime") String loanTime,@Param("customerType") String customerType);
 	Integer findRepayCount(@Param("channelId") Integer channelId,@Param("statusList") List<Integer> statusList,@Param("loanTime") String loanTime,@Param("customerType") String customerType);

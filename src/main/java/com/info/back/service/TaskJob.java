@@ -30,6 +30,7 @@ import redis.clients.jedis.JedisCluster;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -1112,8 +1113,12 @@ public class TaskJob implements ITaskJob {
 					String requestUrl = PropertiesUtil.get("APP_HOST_API") + "/"+PropertiesUtil.get("PAY_CHANNEL")+"/withdraw/" + order.getUserId().toString() + "/" + order.getId().toString() + "/" + uuid + "/" + sign;
 					log.info("requestUrl = " + requestUrl);
 					//发送代付请求
-					String resultStr = HttpUtil.doGet(requestUrl,"UTF-8",null);
-					log.info("begin end order_id=" + order.getId() + " result=" + resultStr);
+					try {
+						String resultStr = HttpUtil.doGet(requestUrl,"UTF-8",null);
+						log.info("begin end order_id=" + order.getId() + " result=" + resultStr);
+					} catch (IOException e) {
+						log.info("请求代付接口异常，记录异常信息：order_id={}, error={}", order.getId() ,e.getMessage());
+					}
 //						borrowOrderService.autoFangkuan(order);
 //						borrowOrderService.requestPaysForSimgle(order);
 				}

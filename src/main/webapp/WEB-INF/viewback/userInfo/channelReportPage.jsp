@@ -338,7 +338,7 @@
 						<c:choose>
 							<c:when test="${channel.channelName != null}">
 								<!--当日借款率=当日新用户申请数/当日注册数-->
-								<c:if test="${channel.borrowApplyCount  gt 0 and channel.registerCount gt 0}">
+								<c:if test="${(channel.borrowApplyCount -channel.xujieCount)  gt 0 and channel.registerCount gt 0}">
 									<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${(channel.borrowApplyCount - channel.xujieCount) / channel.registerCount}" />
 								</c:if>
 								<c:if test="${(channel.borrowApplyCount -channel.xujieCount) eq 0 or channel.registerCount eq 0 }">
@@ -380,18 +380,18 @@
 								</c:if>
 								/
 								<!--总=当日放款数/当日申请数-->
-								<c:if test="${channel.allLoanCount gt 0 and channel.borrowApplyCount gt 0}">
-									<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.allLoanCount / channel.borrowApplyCount}" />
+								<c:if test="${channel.borrowSucCount gt 0 and channel.borrowApplyCount gt 0}">
+									<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.borrowSucCount / channel.borrowApplyCount}" />
 								</c:if>
-								<c:if test="${channel.allLoanCount  eq 0 or channel.borrowApplyCount eq 0}">
+								<c:if test="${channel.borrowSucCount  eq 0 or channel.borrowApplyCount eq 0}">
 									0.00%
 								</c:if>
 							</c:when>
 							<c:otherwise>
-								<c:if test="${channel.allLoanCount gt 0 and channel.borrowApplyCount gt 0}">
-									<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.allLoanCount / channel.borrowApplyCount}" />
+								<c:if test="${channel.borrowSucCount gt 0 and channel.borrowApplyCount gt 0}">
+									<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.borrowSucCount / channel.borrowApplyCount}" />
 								</c:if>
-								<c:if test="${channel.allLoanCount  eq 0 or channel.borrowApplyCount eq 0}">
+								<c:if test="${channel.borrowSucCount  eq 0 or channel.borrowApplyCount eq 0}">
 									0.00%
 								</c:if>
 							</c:otherwise>
@@ -420,8 +420,8 @@
 								</c:choose>
 								/
 								<c:choose>
-									<c:when test="${channel.allLoanCount gt 0}">
-										${channel.allLoanCount}
+									<c:when test="${channel.borrowSucCount gt 0}">
+										${channel.borrowSucCount}
 									</c:when>
 									<c:otherwise>
 										0
@@ -430,8 +430,8 @@
 							</c:when>
 							<c:otherwise>
 								<c:choose>
-									<c:when test="${channel.allLoanCount gt 0}">
-										${channel.allLoanCount}
+									<c:when test="${channel.borrowSucCount gt 0}">
+										${channel.borrowSucCount}
 									</c:when>
 									<c:otherwise>
 										0
@@ -453,19 +453,19 @@
 								</c:if>
 								/
 								<!--总=当日放款数/当日注册数-->
-								<c:if test ="${channel.allLoanCount gt 0 and channel.registerCount gt 0}">
-									<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.allLoanCount / channel.registerCount}" />
+								<c:if test ="${channel.borrowSucCount gt 0 and channel.registerCount gt 0}">
+									<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.borrowSucCount / channel.registerCount}" />
 								</c:if>
-								<c:if test = "${channel.allLoanCount eq 0 or channel.registerCount eq 0}">
+								<c:if test = "${channel.borrowSucCount eq 0 or channel.registerCount eq 0}">
 									0.00%
 								</c:if>
 							</c:when>
 							<c:otherwise>
 								<!--总=当日放款数/当日注册数-->
-								<c:if test ="${channel.allLoanCount gt 0 and channel.registerCount gt 0}">
-									<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.allLoanCount / channel.registerCount}" />
+								<c:if test ="${channel.borrowSucCount gt 0 and channel.registerCount gt 0}">
+									<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.borrowSucCount / channel.registerCount}" />
 								</c:if>
-								<c:if test = "${channel.allLoanCount eq 0 or channel.registerCount eq 0}">
+								<c:if test = "${channel.borrowSucCount eq 0 or channel.registerCount eq 0}">
 									0.00%
 								</c:if>
 							</c:otherwise>

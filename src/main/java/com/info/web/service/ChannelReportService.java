@@ -908,7 +908,9 @@ public class ChannelReportService implements IChannelReportService {
                  Integer firstLoanCount = iBorrowOrderService.findOveChannle(oveChannelInfo.getChannelId(), new ArrayList<Integer>(){{
                       add(21);
                   }}, oveChannelInfo.getLoanTime(), null);
-                 oveChannelInfo.setFirstLoanCount(firstLoanCount);
+                 Integer renewalCount = iBorrowOrderService.findRenewalCount(oveChannelInfo.getChannelId(),oveChannelInfo.getLoanTime());
+                 Integer renewal=renewalCount == null?0:renewalCount;
+                 oveChannelInfo.setFirstLoanCount(firstLoanCount + renewal);
                  //查询首放已还数量
                   Integer firstRepayCount = iBorrowOrderService.findRepayCount(oveChannelInfo.getChannelId(),new ArrayList<Integer>(){{
                       add(30);add(34);

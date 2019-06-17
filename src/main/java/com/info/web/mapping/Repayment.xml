@@ -341,10 +341,13 @@ remark
 </sql>
 
 <sql id="selectSqlPrecise">
+   <!-- from asset_repayment a LEFT JOIN user_info u on u.id = a.user_id
+    where 1 = 1-->
     from asset_repayment a LEFT JOIN user_info u on u.id = a.user_id
+    left join asset_borrow_order abo on a.asset_order_id = abo.id
     where 1 = 1
     <if test="statuses != null and statuses != '' and statuses.length > 0">
-        and a.status in
+        and abo.status in
         <foreach item="item" index="index" collection="statuses" open="(" separator="," close=")">
             ${item}
         </foreach>
@@ -352,30 +355,30 @@ remark
     <if test="assetOrderId != null and asssetOrderId != ''">
         and a.asset_order_id = #{assetOrderId}
     </if>
-    <!--    <if test="repaymentTimeStart != null and repaymentTimeStart != ''">
-          <![CDATA[    and a.repayment_time >= #{repaymentTimeStart}   ]]>
+      <if test="repaymentTimeStart != null and repaymentTimeStart != ''">
+          <![CDATA[    and DATE_FORMAT(a.repayment_time,'%Y-%m-%d') >= #{repaymentTimeStart}   ]]>
         </if>
         <if test="repaymentTimeEnd != null and repaymentTimeEnd != ''">
-          <![CDATA[    and a.repayment_time < #{repaymentTimeEnd}   ]]>
+          <![CDATA[    and DATE_FORMAT(a.repayment_time,'%Y-%m-%d') <= #{repaymentTimeEnd}   ]]>
         </if>
         <if test="repaymentedTimeStart != null and repaymentedTimeStart != ''">
           <![CDATA[ and DATE_FORMAT(a.repayment_real_time,'%Y-%m-%d') >= #{repaymentedTimeStart} ]]>
         </if>
         <if test="repaymentedTimeEnd != null and repaymentedTimeEnd != ''">
           <![CDATA[ and DATE_FORMAT(a.repayment_real_time,'%Y-%m-%d') <= #{repaymentedTimeEnd}  ]]>
-        </if>-->
+        </if>
         <if test="userAccountLike != null and userAccountLike != ''">
             <![CDATA[ and u.realname  = #{userAccountLike} ]]>
         </if>
         <if test="userMobileLike != null and userMobileLike != ''">
             <![CDATA[ and u.user_phone = #{userMobileLike} ]]>
         </if>
-        <!-- <if test="lateDayStart != null and lateDayStart != ''">
+       <if test="lateDayStart != null and lateDayStart != ''">
            <![CDATA[ and a.late_day >= #{lateDayStart} ]]>
          </if>
          <if test="lateDayEnd != null and lateDayEnd != ''">
            <![CDATA[ and a.late_day <= #{lateDayEnd} ]]>
-         </if>-->
+         </if>
     </sql>
     <select id="findMyLoan" resultType="map" parameterType="map">
         select id,asset_order_id,(repayment_amount - repaymented_amount) as debt,

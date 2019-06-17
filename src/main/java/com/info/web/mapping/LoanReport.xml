@@ -48,7 +48,7 @@
 			</if>
 			<if test="endTime !=null and endTime !=''">
 				<!--<![CDATA[	and DATE_FORMAT(a.report_date,'%Y-%m-%d') <=  #{endTime}  ]]>-->
-				<![CDATA[and a.report < #{endTimeChangeEnd}]]>
+				<![CDATA[and a.report_date < #{endTimeChangeEnd}]]>
 			</if>
 		</where>
 	</sql>
@@ -58,7 +58,7 @@
 		count(1)
 		from loan_report a
 		<include refid="Sql"/>
-		
+
 	</select>
 	<select id="findAll" resultMap="BaseResultMap"
 		parameterType="HashMap">

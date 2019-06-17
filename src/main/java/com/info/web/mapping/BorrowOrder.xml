@@ -1615,6 +1615,13 @@
     <select id="getUserIdList2" resultType="String">
 		select user_id from asset_borrow_order where status = 667 and created_at between DATE_SUB(NOW(),INTERVAL  5 HOUR) and DATE_SUB(NOW(),INTERVAL  4 HOUR)
 	</select>
+    <select id ="findRenewalCount" resultType="java.lang.Integer">
+        select count(ar.id) from asset_renewal_record ar
+		left join user_info ui on ui.id = ar.user_id
+		where
+		ui.user_from = #{channelId}
+		and DATE_FORMAT( ar.repayment_time, '%Y%m%d' ) = DATE_FORMAT( #{loanTime}, '%Y%m%d' )
+    </select>
 	<select id="findOveChannle" resultType="java.lang.Integer">
 		SELECT
 		count( bo.id )

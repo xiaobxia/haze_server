@@ -147,9 +147,9 @@ public class RepaymentController extends BaseController {
                 params.put("lateDayEnd", "60");
             }
             params.put("statuses", statuses);
-            if(params.get("userMobileLike")==null&&params.get("userAccountLike")==null){
+          /*  if(params.get("userMobileLike")==null&&params.get("userAccountLike")==null && overdueStatus.equals("")){
 
-            }else {
+            }else {*/
                 PageConfig<Repayment> pageConfig = repaymentService.findWriteOffPage(params);
                 List<Repayment> list = new ArrayList<>();
                 for(Repayment repayment : pageConfig.getItems()){
@@ -171,7 +171,7 @@ public class RepaymentController extends BaseController {
                 }
                 pageConfig.setItems(list);
                 model.addAttribute("pm", pageConfig);
-            }
+            /*}*/
 
         } catch (Exception e) {
             log.error("getRepaymentPage error:{}", e);
