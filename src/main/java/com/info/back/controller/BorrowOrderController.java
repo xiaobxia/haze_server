@@ -573,7 +573,7 @@ public class BorrowOrderController extends BaseController {
 
         String reportDataHtml = userService.selectGxbReportDataHtml(Integer.parseInt(user.getId()));
         String tokenHtml = userService.selectReportDataHtml(Integer.parseInt(user.getId()));
-        String operatorHtml = PropertiesUtil.get("BACK_URLS") +"mx/getAllInfo?userId=" + user.getId();
+        String operatorHtml = PropertiesUtil.get("BACK_URLS") +"back/mx/getAllInfo?userId=" + user.getId();
         model.addAttribute("operatorHtml", reportDataHtml.contains("tenant.51datakey.com") && tokenHtml != null ? operatorHtml : reportDataHtml);//运营商
 
         UserCardInfo info = userBankService.findBankCardByCardNo(borrow.getCardNo());
@@ -1156,7 +1156,7 @@ public class BorrowOrderController extends BaseController {
         //运营商报告
         String reportDataHtml = userService.selectGxbReportDataHtml(Integer.parseInt(user.getId()));
         String tokenHtml = userService.selectReportDataHtml(Integer.parseInt(user.getId()));
-        String operatorHtml = PropertiesUtil.get("BACK_URLS") +"mx/getAllInfo?userId=" + user.getId();
+        String operatorHtml = PropertiesUtil.get("BACK_URLS") +"back/mx/getAllInfo?userId=" + user.getId();
         model.addAttribute("operatorHtml", reportDataHtml.contains("tenant.51datakey.com") && tokenHtml != null ? operatorHtml : reportDataHtml);//运营商
         try {
             return saveUpdateBorrowJx(request, response, model, borrowOrder);
