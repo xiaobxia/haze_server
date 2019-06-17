@@ -72,7 +72,7 @@
         <jsp:include page="${BACK_URL}/rightSubList">
             <jsp:param value="${params.myId}" name="parentId"/>
         </jsp:include>
-        <table class="table" style="width: 100%;" layoutH="170"
+        <table class="table" style="width: 100%;" layoutH="220"
                nowrapTD="false">
             <thead>
             <tr>

@@ -40,7 +40,7 @@
 	}
 	function changeNumPerPage(val){ //改变每页数
 		$.cookie("numPerPage", val+"");
-		func_pageBreak({numPerPage:val},rel);
+		func_pageBreak({numPerPage:val, pageNum: 1},rel);
 	}
 	if($.cookie("numPerPage")==null){
 		var numPerPage = "${pm.pageSize }"; //每页显示条数
