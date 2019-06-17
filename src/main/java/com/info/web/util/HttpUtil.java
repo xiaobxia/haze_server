@@ -271,6 +271,25 @@ public class HttpUtil {
         return result;
     }
 
+    public static InputStream MxGet(String geturl, String Authorization) {
+        InputStream inputStream = null;
+        URL url = null;
+        try {
+            url = new URL(geturl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Accept-Encoding", "gzip,deflate,sdch");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setRequestProperty("Authorization", Authorization);
+            connection.connect();
+            connection.disconnect();
+            inputStream = connection.getInputStream();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return inputStream;
+    }
+
     /**
      * 调用 API
      *

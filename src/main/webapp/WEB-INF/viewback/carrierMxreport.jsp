@@ -65,6 +65,10 @@
         margin: 0 auto;
     }
 
+    .userinfocheck{
+        white-space: normal;
+    }
+
     .center {
         text-align: center;
     }
@@ -82,7 +86,7 @@
 
     .th {
 
-        background: rgb(70, 140, 180);
+        background: rgb(70, 140, 180)!important;
     }
 
     td {
@@ -111,7 +115,7 @@
         height: 30px;
         margin: 0 auto;
         border-bottom: none;
-        background: rgb(70, 140, 180);
+        background: rgb(200, 200, 200);
         line-height: 30px;
 
     }
@@ -134,25 +138,25 @@
             运营商报告
         </h3>
         <div style="text-align: right;font-size: 10px">
-            报告编号：${taskId}
+            报告时间：${reportBasic.userBasicInfo.updateTime}&nbsp;&nbsp;&nbsp;&nbsp;报告编号：${reportBasic.userBasicInfo.taskId}
         </div>
     </div>
     <div class="table">
-        <h5 class="h5">1.1用户基本信息</h5>
+        <h5 class="h5">用户基本信息</h5>
         <div class="tabbox">
             <table>
                 <tbody id="searchResultTable">
                 <tr>
                     <td>姓名：${reportBasic.userBasicInfo.name}</td>
-                    <td colspan="3">身份证号：${reportBasic.userBasicInfo.idcard}</td>
+                    <td colspan="3">身份证号：${reportBasic.userBasicInfo.idCard}</td>
                 </tr>
                 <tr>
-                    <td>姓名From客户：${reportBasic.userBasicInfo.nameFromCustom}</td>
-                    <td colspan="3">身份证号From客户：${reportBasic.userBasicInfo.idcardFromCustom}</td>
+                    <td>姓名From客户：${reportBasic.userBasicInfo.carrierName}</td>
+                    <td colspan="3">身份证号From客户：${reportBasic.userBasicInfo.carrierIdcard}</td>
                 </tr>
                 <tr>
                     <td>手机号码：${reportBasic.userBasicInfo.mobile}</td>
-                    <td>入网时长：${reportBasic.friendCircle.riskAnalysis.inTime}</td>
+                    <td>入网时长：${reportBasic.userBasicInfo.inTime}月</td>
                     <td>性别：${reportBasic.userBasicInfo.gender}</td>
                     <td>年龄：${reportBasic.userBasicInfo.age}</td>
                 </tr>
@@ -163,17 +167,142 @@
                 </tr>
                 <tr>
                     <td>籍贯：${reportBasic.userBasicInfo.nativePlace}</td>
-                    <td>手机号码归属地：${reportBasic.userBasicInfo.liveAddress}</td>
-                    <td>居住地址：${reportBasic.userBasicInfo.workAddress}</td>
-                    <td>工作地址：${reportBasic.userBasicInfo.workAddress}</td>
+                    <td>手机号码归属地：${reportBasic.userBasicInfo.phoneAttribution}</td>
+                    <td>居住地址：${reportBasic.userBasicInfo.liveAddress}</td>
+                    <td>工作地址：${reportBasic.userBasicInfo.liveAddress}</td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
+
+    <div class="table">
+        <div class="tabbox">
+            <h6 class="sort">用户信息检测(联系人数据)</h6><table>
+            <tbody>
+            <tr class="center ">
+                <td rowspan="9" style="text-align: center;vertical-align: middle;width: 15%">
+                    用户查询信息
+                </td>
+                <td style="width: 25%">查询过该用户的相关企业数量</td>
+                <td>${reportBasic.mxUserInfoCheck.checkSearchInfo.searchedOrgCnt}</td>
+            </tr>
+            <tr class="center">
+                <td>查询过该用户的相关企业类型</td>
+                <td>
+                    <c:forEach var="item" items="${reportBasic.mxUserInfoCheck.checkSearchInfo.searchedOrgType}" varStatus="status">
+                        ${item}
+                    </c:forEach>
+                </td>
+            </tr>
+            <tr class="center">
+                <td>身份证组合过的其他姓名</td>
+                <td>
+                    <c:forEach var="item" items="${reportBasic.mxUserInfoCheck.checkSearchInfo.idcardWithOtherNames}" varStatus="status">
+                        ${item}
+                    </c:forEach>
+                </td>
+            </tr>
+            <tr class="center">
+                <td>身份证组合过其他电话</td>
+                <td>
+                    <c:forEach var="item" items="${reportBasic.mxUserInfoCheck.checkSearchInfo.idcardWithOtherPhones}" varStatus="status">
+                        ${item}
+                    </c:forEach>
+                </td>
+            </tr>
+            <tr class="center">
+                <td>电话号码组合过其他姓名</td>
+                <td>
+                    <c:forEach var="item" items="${reportBasic.mxUserInfoCheck.checkSearchInfo.phoneWithOtherNames}" varStatus="status">
+                        ${item}
+                    </c:forEach>
+                </td>
+            </tr>
+            <tr class="center">
+                <td>电话号码组合过其他身份证</td>
+                <td>
+                    <c:forEach var="item" items="${reportBasic.mxUserInfoCheck.checkSearchInfo.phoneWithOtherIdcards}" varStatus="status">
+                        ${item}
+                    </c:forEach>
+                </td>
+            </tr>
+            <tr class="center">
+                <td>电话号码注册过的相关企业数量</td>
+                <td>${reportBasic.mxUserInfoCheck.checkSearchInfo.registerOrgCnt}</td>
+            </tr>
+            <tr class="center">
+                <td>电话号码注册过的相关企业类型</td>
+                <td>
+                    <c:forEach var="item" items="${reportBasic.mxUserInfoCheck.checkSearchInfo.registerOrgType}" varStatus="status">
+                        ${item}
+                    </c:forEach>
+                </td>
+
+            </tr>
+            <tr class="center">
+                <td>电话号码出现过的公开信息网站</td>
+                <td>
+                    <c:forEach var="item" items="${reportBasic.mxUserInfoCheck.checkSearchInfo.arisedOpenWeb}" varStatus="status">
+                        ${item}
+                    </c:forEach>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+    <!-- 用户信息检测  关注名单(Ⅱ类)-->
+    <div class="table">
+        <div class="tabbox">
+            <h6 class="sort">用户信息检测(关注名单(Ⅱ类))</h6><table>
+            <tbody>
+            <tr class="center ">
+                <td rowspan="6" class="hideborder" style="text-align: center;vertical-align: middle;width: 15%">
+                    关注名单(Ⅱ类)信息
+                </td>
+                <td style="width: 25%">关注名单综合评分</td>
+                <td>${reportBasic.mxUserInfoCheck.checkBlackInfo.phoneGrayScore}
+                    (分数范围0-100，40分以下为高危人群）
+                </td>
+            </tr>
+            <tr class="center">
+                <td>直接联系人中关注名单(Ⅱ类)人数</td>
+                <td>${reportBasic.mxUserInfoCheck.checkBlackInfo.contactsClass1BlacklistCnt}
+                    (直接联系人：和被查询号码有通话记录)
+                </td>
+            </tr>
+            <tr class="center">
+                <td>间接联系人中关注名单(Ⅱ类)人数</td>
+                <td>${reportBasic.mxUserInfoCheck.checkBlackInfo.contactsClass2BlacklistCnt}
+                    (和被查询人的直接联系人有通话记录)
+                </td>
+            </tr>
+            <tr class="center">
+                <td>直接联系人人数</td>
+                <td>${reportBasic.mxUserInfoCheck.checkBlackInfo.contactsClass1Cnt} (直接联系人：和被查询号码有通话记录)</td>
+            </tr>
+            <tr class="center">
+                <td>引起关注名单(Ⅱ类)的直接联系人数量</td>
+                <td>${reportBasic.mxUserInfoCheck.checkBlackInfo.contactsRouterCnt}
+                    (直接联系人有和关注名单(Ⅱ类)用户的通讯记录的号码数量)
+                </td>
+            </tr>
+            <tr class="center">
+                <td>直接联系人中引起间接关注名单(Ⅱ类)占比</td>
+                <td>${reportBasic.mxUserInfoCheck.checkBlackInfo.contactsRouterRatio}
+                    (直接联系人有和关注名单(Ⅱ类)用户的通讯记录的号码数量在直接联系人数量中的百分比)
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+
     <!--table2-->
     <div class="table">
-        <h5 class="h5">1.2 数据来源</h5>
+        <h5 class="h5">数据来源</h5>
         <div class="tabbox">
             <table>
                 <thead>
@@ -185,9 +314,9 @@
                 </thead>
                 <tbody>
                 <tr class="center">
-                    <td>${reportBasic.dataSource.sourceName}</td>
-                    <td>${reportBasic.dataSource.dataType}</td>
-                    <td>${reportBasic.dataSource.dataGainTime}</td>
+                    <td>${reportBasic.userBasicInfo.sourceNameZh}</td>
+                    <td>${reportBasic.userBasicInfo.dataType}</td>
+                    <td>${reportBasic.userBasicInfo.dataGainTime}</td>
                 </tr>
 
                 </tbody>
@@ -196,7 +325,7 @@
     </div>
     <!--table3-->
     <div class="table">
-        <h5 class="h5">1.3信息校验</h5>
+        <h5 class="h5">信息校验</h5>
         <div class="tabbox">
             <table>
                 <thead>
@@ -236,7 +365,7 @@
     </div>
     <!--table4-->
     <div class="table">
-        <h5 class="h5">1.4社交分析摘要</h5>
+        <h5 class="h5">社交分析摘要</h5>
         <h6 class="sort">朋友圈</h6>
         <div class="tabbox">
             <table>
@@ -277,7 +406,7 @@
                     <td>互通电话的号码数目</td>
                     <td class="center">${reportBasic.friendCircle.interPeerNum3m}</td>
                     <td class="center">${reportBasic.friendCircle.interPeerNum6m}</td>
-                    <td class="center"></td>
+                    <td class="center">近3/6月互有主叫和被叫的联系人电话号码数目（去重）</td>
                 </tr>
                 </tbody>
             </table>
@@ -299,14 +428,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="item" items="${reportBasic.friendCircle.callNumTop3m}" varStatus="status">
+                    <c:forEach var="item" items="${reportBasic.friendCircle.peerNumTop33m}" varStatus="status">
                         <tr class="center">
                             <td>${item.peerNumber}</td>
-                            <td>${item.city}</td>
-                            <td>${item.callNum}</td>
+                            <td>${item.peerNumLoc}</td>
+                            <td>${item.callCnt}</td>
                             <td>${item.callTime}</td>
-                            <td>${item.dialNum}</td>
-                            <td>${item.dialedNum}</td>
+                            <td>${item.dialCnt}</td>
+                            <td>${item.dialedCnt}</td>
                         </tr>
                     </c:forEach>
                 </tbody>
@@ -328,14 +457,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="item" items="${reportBasic.friendCircle.callNumTop6m}" varStatus="status">
+                    <c:forEach var="item" items="${reportBasic.friendCircle.peerNumTop36m}" varStatus="status">
                         <tr class="center">
                             <td>${item.peerNumber}</td>
-                            <td>${item.city}</td>
-                            <td>${item.callNum}</td>
+                            <td>${item.peerNumLoc}</td>
+                            <td>${item.callCnt}</td>
                             <td>${item.callTime}</td>
-                            <td>${item.dialNum}</td>
-                            <td>${item.dialedNum}</td>
+                            <td>${item.dialCnt}</td>
+                            <td>${item.dialedCnt}</td>
                         </tr>
                     </c:forEach>
                 </tbody>
@@ -357,14 +486,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="item" items="${reportBasic.friendCircle.callLocationTop3m}" varStatus="status">
+                    <c:forEach var="item" items="${reportBasic.friendCircle.locationTop33m}" varStatus="status">
                         <tr class="center">
-                            <td>${item.city}</td>
-                            <td>${item.callNum}</td>
-                            <td>${item.peerNumberCount}</td>
+                            <td>${item.location}</td>
+                            <td>${item.callCnt}</td>
+                            <td>${item.peerNumberCnt}</td>
                             <td>${item.callTime}</td>
-                            <td>${item.dialNum}</td>
-                            <td>${item.dialedNum}</td>
+                            <td>${item.dialCnt}</td>
+                            <td>${item.dialedCnt}</td>
                         </tr>
                     </c:forEach>
                 </tbody>
@@ -386,21 +515,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="item" items="${reportBasic.friendCircle.callLocationTop6m}" varStatus="status">
+                    <c:forEach var="item" items="${reportBasic.friendCircle.locationTop36m}" varStatus="status">
                         <tr class="center">
-                            <td>${item.city}</td>
-                            <td>${item.callNum}</td>
-                            <td>${item.peerNumberCount}</td>
+                            <td>${item.location}</td>
+                            <td>${item.callCnt}</td>
+                            <td>${item.peerNumberCnt}</td>
                             <td>${item.callTime}</td>
-                            <td>${item.dialNum}</td>
-                            <td>${item.dialedNum}</td>
+                            <td>${item.dialCnt}</td>
+                            <td>${item.dialedCnt}</td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="table">
+    <%--<div class="table">
         <h6 class="sort">是否呼叫指定联系人号码</h6>
         <div class="tabbox">
             <table>
@@ -476,10 +605,10 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </div>--%>
     <!--table5-->
     <div class="table">
-        <h5 class="h5">1.5 风险分析摘要</h5>
+        <h5 class="h5">风险分析摘要</h5>
         <h6 class="sort">风险识别</h6>
         <div class="tabbox">
             <table>
@@ -494,19 +623,19 @@
                 <tbody>
                 <tr>
                     <td>号码沉默度</td>
-                    <td class="center">${reportBasic.friendCircle.riskAnalysis.mobileSilence_3}</td>
-                    <td class="center">${reportBasic.friendCircle.riskAnalysis.mobileSilence_6}</td>
+                    <td class="center">${basicInfoCheckItemMap.mobile_silence_3m}</td>
+                    <td class="center">${basicInfoCheckItemMap.mobile_silence_6m}</td>
                     <td class="center">满分10分</td>
                 </tr>
                 <tr>
                     <td>欠费风险度</td>
-                    <td class="center">${reportBasic.friendCircle.riskAnalysis.arrearageRisk_3}</td>
-                    <td class="center">${reportBasic.friendCircle.riskAnalysis.arrearageRisk_6}</td>
+                    <td class="center">${basicInfoCheckItemMap.arrearage_risk_3m}</td>
+                    <td class="center">${basicInfoCheckItemMap.arrearage_risk_6m}</td>
                     <td class="center">满分10分</td>
                 </tr>
                 <tr>
                     <td>亲情网风险度</td>
-                    <td class="center">${reportBasic.friendCircle.riskAnalysis.bindingRisk}</td>
+                    <td class="center">${basicInfoCheckItemMap.binding_risk}</td>
                     <td class="center">--</td>
                     <td class="center">满分10分</td>
                 </tr>
@@ -524,15 +653,15 @@
                 <tbody>
                 <tr>
                     <td>申请人姓名+身份证号码是否出现在法院黑名单</td>
-                    <td class="center">${reportBasic.friendCircle.riskAnalysis.isNameAndIdcardInCourtBlack}</td>
+                    <td class="center">${basicInfoCheckItemMap.is_name_and_idcard_in_court_black}</td>
                 </tr>
                 <tr>
                     <td>申请人姓名+身份证号码是否出现在金融机构黑名单</td>
-                    <td class="center">${reportBasic.friendCircle.riskAnalysis.isNameAndIdcardInFinanceBlack}</td>
+                    <td class="center">${basicInfoCheckItemMap.is_name_and_idcard_in_finance_black}</td>
                 </tr>
                 <tr>
                     <td>申请人姓名+手机号码是否出现在金融机构黑名单</td>
-                    <td class="center">${reportBasic.friendCircle.riskAnalysis.isNameAndMobileInFinanceBlack}</td>
+                    <td class="center">${basicInfoCheckItemMap.is_name_and_mobile_in_finance_black}</td>
                 </tr>
                 </tbody>
             </table>
@@ -552,48 +681,22 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="center">
-                    <td>信用卡类</td>
-                    <td>${riskCheckItemMap.call_credit_card.callNum3m}</td>
-                    <td>${riskCheckItemMap.call_credit_car.callNum6m}</td>
-                    <td>${riskCheckItemMap.call_credit_card.callTime3m}</td>
-                    <td>${riskCheckItemMap.call_credit_card.callTime6m}</td>
-                </tr>
-                <tr class="center">
-                    <td>小额贷款类</td>
-                    <td>${riskCheckItemMap.call_loan.callNum3m}</td>
-                    <td>${riskCheckItemMap.call_loan.callNum6m}</td>
-                    <td>${riskCheckItemMap.call_loan.callTime3m}</td>
-                    <td>${riskCheckItemMap.call_loan.callTime6m}</td>
-                </tr>
-                <tr class="center">
-                    <td>催收公司类</td>
-                    <td>${riskCheckItemMap.call_collection.callNum3m}</td>
-                    <td>${riskCheckItemMap.call_collection.callNum6m}</td>
-                    <td>${riskCheckItemMap.call_collection.callTime3m}</td>
-                    <td>${riskCheckItemMap.call_collection.callTime6m}</td>
-                </tr>
-                <tr class="center">
-                    <td>110</td>
-                    <td>${riskCheckItemMap.call_110.callNum3m}</td>
-                    <td>${riskCheckItemMap.call_110.callNum6m}</td>
-                    <td>${riskCheckItemMap.call_110.callTime3m}</td>
-                    <td>${riskCheckItemMap.call_110.callTime6m}</td>
-                </tr>
-                <tr class="center">
-                    <td>120</td>
-                    <td>${riskCheckItemMap.call_120.callNum3m}</td>
-                    <td>${riskCheckItemMap.call_120.callNum6m}</td>
-                    <td>${riskCheckItemMap.call_120.callTime3m}</td>
-                    <td>${riskCheckItemMap.call_120.callTime6m}</td>
-                </tr>
+                    <c:forEach var="item" items="${reportBasic.callRiskAnalysis}" varStatus="status">
+                        <tr class="center">
+                            <td>${item.analysisDesc}</td>
+                            <td>${item.analysisPoint.callCnt3Month}</td>
+                            <td>${item.analysisPoint.callCnt6Month}</td>
+                            <td>${item.analysisPoint.callTime3Month}</td>
+                            <td>${item.analysisPoint.callTime6Month}</td>
+                        </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>
     </div>
     <!--table6-->
     <div class="table">
-        <h5 class="h5">1.6 活跃分析摘要</h5>
+        <h5 class="h5">活跃分析摘要</h5>
         <h6 class="sort">活跃识别</h6>
         <div class="tabbox">
             <table>
@@ -605,38 +708,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>通话活跃天数</td>
-                    <td class="center">${reportBasic.friendCircle.activeDegree.callDay_3}</td>
-                    <td class="center">${reportBasic.friendCircle.activeDegree.callDay_6}</td>
-                </tr>
-                <tr>
-                    <td>主叫次数</td>
-                    <td class="center">${reportBasic.friendCircle.activeDegree.dialNum_3}</td>
-                    <td class="center">${reportBasic.friendCircle.activeDegree.dialNum_6}</td>
-                </tr>
-                <tr>
-                    <td>被叫次数</td>
-                    <td class="center">${reportBasic.friendCircle.activeDegree.dialedNum_3}</td>
-                    <td class="center">${reportBasic.friendCircle.activeDegree.dialedNum_6}</td>
-                </tr>
-                <tr>
-                    <td>主叫时长（秒）</td>
-                    <td class="center">${reportBasic.friendCircle.activeDegree.dialDuration_3}</td>
-                    <td class="center">${reportBasic.friendCircle.activeDegree.dialDuration_6}</td>
-                </tr>
-                <tr>
-                    <td>被叫时长（秒）</td>
-                    <td class="center">${reportBasic.friendCircle.activeDegree.dialedDuration_3}</td>
-                    <td class="center">${reportBasic.friendCircle.activeDegree.dialedDuration_6}</td>
-                </tr>
+                <c:forEach var="item" items="${reportBasic.friendCircle.activeDegree}" varStatus="status">
+                    <tr>
+                        <td>${item.appPointZh}</td>
+                        <td class="center">${item.item.item3Month}</td>
+                        <td class="center">${item.item.item6Month}</td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
     </div>
     <!--table7-->
     <div class="table">
-        <h5 class="h5">1.7 消费分析摘要</h5>
+        <h5 class="h5">消费分析摘要</h5>
         <h6 class="sort">消费识别</h6>
         <div class="tabbox">
             <table>
@@ -648,26 +733,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>消费总额（分）</td>
-                    <td class="center">${reportBasic.friendCircle.consumptionAnalysis.totalFee_3}</td>
-                    <td class="center">${reportBasic.friendCircle.consumptionAnalysis.totalFee_6}</td>
-                </tr>
-                <tr>
-                    <td>充值次数</td>
-                    <td class="center">${reportBasic.friendCircle.consumptionAnalysis.rechargeTimes_3}</td>
-                    <td class="center">${reportBasic.friendCircle.consumptionAnalysis.rechargeTimes_6}</td>
-                </tr>
-                <tr>
-                    <td>单次充值最大金额（分）</td>
-                    <td class="center">${reportBasic.friendCircle.consumptionAnalysis.rechargeMaxAmount_3}</td>
-                    <td class="center">${reportBasic.friendCircle.consumptionAnalysis.rechargeMaxAmount_6}</td>
-                </tr>
-                <tr>
-                    <td>账单最新认证时间</td>
-                    <td class="center">${reportBasic.friendCircle.consumptionAnalysis.billLatestCertificationDay}</td>
-                    <td class="center">--</td>
-                </tr>
+                <c:forEach var="item" items="${reportBasic.friendCircle.consumptionDetail}" varStatus="status">
+                    <tr>
+                        <td>${item.appPointZh}</td>
+                        <td class="center">${item.item.item3Month}</td>
+                        <td class="center">${item.item.item6Month}</td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -686,43 +758,62 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="center">
-                <td>流量</td>
-                <td class="center">${reportBasic.friendCircle.consumptionAnalysis.webFee_1}</td>
-                <td class="center">${reportBasic.friendCircle.consumptionAnalysis.webFee_3}</td>
-                <td class="center">${reportBasic.friendCircle.consumptionAnalysis.webFee_6}</td>
-                <td class="center">${reportBasic.friendCircle.consumptionAnalysis.webFee_Avg_3}</td>
-                <td class="center">${reportBasic.friendCircle.consumptionAnalysis.webFee_Avg_6}</td>
-            </tr>
-            <tr class="center">
-                <td>短信</td>
-                <td class="center">${reportBasic.friendCircle.consumptionAnalysis.smsFee_1}</td>
-                <td class="center">${reportBasic.friendCircle.consumptionAnalysis.smsFee_3}</td>
-                <td class="center">${reportBasic.friendCircle.consumptionAnalysis.smsFee_6}</td>
-                <td class="center">${reportBasic.friendCircle.consumptionAnalysis.smsFee_Avg_3}</td>
-                <td class="center">${reportBasic.friendCircle.consumptionAnalysis.smsFee_Avg_6}</td>
-            </tr>
-            <tr class="center">
-                <td>通话</td>
-                <td class="center">${reportBasic.friendCircle.consumptionAnalysis.voiceFee_1}</td>
-                <td class="center">${reportBasic.friendCircle.consumptionAnalysis.voiceFee_3}</td>
-                <td class="center">${reportBasic.friendCircle.consumptionAnalysis.voiceFee_6}</td>
-                <td class="center">${reportBasic.friendCircle.consumptionAnalysis.voiceFee_Avg_3}</td>
-                <td class="center">${reportBasic.friendCircle.consumptionAnalysis.voiceFee_Avg_6}</td>
-            </tr>
-            <tr class="center">
-                <td>增值业务</td>
-                <td class="center">${reportBasic.friendCircle.consumptionAnalysis.vasFee_1}</td>
-                <td class="center">${reportBasic.friendCircle.consumptionAnalysis.vasFee_3}</td>
-                <td class="center">${reportBasic.friendCircle.consumptionAnalysis.vasFee_6}</td>
-                <td class="center">${reportBasic.friendCircle.consumptionAnalysis.vasFee_Avg_3}</td>
-                <td class="center">${reportBasic.friendCircle.consumptionAnalysis.vasFee_Avg_6}</td>
-            </tr>
+            <c:forEach var="item" items="${reportBasic.friendCircle.consumptionDetail}" varStatus="status">
+                <tr>
+                    <td>${item.appPointZh}</td>
+                    <td class="center">${item.item.item1Month}</td>
+                    <td class="center">${item.item.item3Month}</td>
+                    <td class="center">${item.item.item6Month}</td>
+                    <td class="center">${item.item.avgItem3Month}</td>
+                    <td class="center">${item.item.avgItem6Month}</td>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>
+
     <div class="table">
-        <h5 class="h5">1.8 漫游分析摘要(近6月漫游天数降序)</h5>
+        <h6 class="sort"> 运营商消费数据</h6>
+        <table>
+            <thead>
+            <tr class="center">
+                <td>运营商</td>
+                <td>号码</td>
+                <td>归属地</td>
+                <td>月份</td>
+                <td>呼叫次数</td>
+                <td>主叫次数</td>
+                <td>主叫时间(秒)</td>
+                <td>被叫次数</td>
+                <td>被叫时间(秒)</td>
+                <td>短信数量</td>
+                <td>话费消费(分)</td>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="item" items="${reportBasic.cellBehavior}" varStatus="status">
+                <c:forEach var="item1" items="${item.behavior}" varStatus="status1">
+                    <tr>
+                        <td class="userinfocheck">${item1.cellOperatorZh}</td>
+                        <td class="userinfocheck">${item.phoneNum}</td>
+                        <td class="userinfocheck">${item1.cellLoc}</td>
+                        <td class="userinfocheck">${item1.cellMth}</td>
+                        <td class="userinfocheck">${item1.callCnt}</td>
+                        <td class="userinfocheck">${item1.dialCnt}</td>
+                        <td class="userinfocheck">${item1.dialTime}</td>
+                        <td class="userinfocheck">${item1.dialedCnt}</td>
+                        <td class="userinfocheck">${item1.dialedTime}</td>
+                        <td class="userinfocheck">${item1.smsCnt}</td>
+                        <td class="userinfocheck">${item1.totalAmount}</td>
+                    </tr>
+                </c:forEach>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table">
+        <h5 class="h5">漫游分析摘要(近6月漫游天数降序)</h5>
         <div class="tabbox">
             <table>
                 <thead>
@@ -740,12 +831,12 @@
                     <c:forEach var="item" items="${reportBasic.friendCircle.roamAnalysis}" varStatus="status">
                         <tr class="center">
                             <td>${item.roamLocation}</td>
-                            <td>${item.roamDayNum_3}</td>
-                            <td>${item.roamDayNum_6}</td>
-                            <td>${item.maxRoamDayNum_3}</td>
-                            <td>${item.maxRoamDayNum_6}</td>
-                            <td>${item.continueRoamNum_3}</td>
-                            <td>${item.continueRoamNum_6}</td>
+                            <td>${item.roamDayCnt_3}</td>
+                            <td>${item.roamDayCnt_6}</td>
+                            <td>${item.maxRoamDayCnt_3}</td>
+                            <td>${item.maxRoamDayCnt_6}</td>
+                            <td>${item.continueRoamCnt_3}</td>
+                            <td>${item.continueRoamCnt_6}</td>
                         </tr>
                     </c:forEach>
                 </tbody>
@@ -753,9 +844,9 @@
         </div>
     </div>
     <!--table8-->
-    <h3>2.通话社交</h3>
+    <h3>通话社交</h3>
     <div class="table">
-        <h5 class="h5">2.1 总体统计</h5>
+        <h5 class="h5">总体统计</h5>
         <div class="tabbox">
             <table>
                 <thead>
@@ -769,83 +860,30 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>通话次数</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalNum_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalNum_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalNum_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalNum_Avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalNum_Avg_6}</td>
-                </tr>
-                <tr>
-                    <td>通话总时长（秒）</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalTime_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalTime_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalTime_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalTime_Avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalTime_Avg_6}</td>
-                </tr>
-                <tr>
-                    <td>通话号码数目</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalPeerNum_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalPeerNum_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalPeerNum_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalPeerNum_Avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalPeerNum_Avg_6}</td>
-                </tr>
-                <tr>
-                    <td>通话号码归属地总数</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalCityNum_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalCityNum_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalCityNum_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalCityNum_Avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalCityNum_Avg_6}</td>
-                </tr>
-                <tr>
-                    <td>主叫次数</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalDialNum_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalDialNum_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalDialNum_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalDialNum_Avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalDialNum_Avg_6}</td>
-                </tr>
-                <tr>
-                    <td>被叫次数</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalDialedNum_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalDialedNum_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalDialedNum_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalDialedNum_Avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalDialedNum_Avg_6}</td>
-                </tr>
-                <tr>
-                    <td>主叫号码数</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalDialPeerNum_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalDialPeerNum_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalDialPeerNum_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalDialPeerNum_Avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalDialPeerNum_Avg_6}</td>
-                </tr>
-                <tr>
-                    <td>被叫号码数</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalDialedPeerNum_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalDialedPeerNum_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalDialedPeerNum_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalDialedPeerNum_Avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callAnalysis.totalDialedPeerNum_Avg_6}</td>
-                </tr>
+                <c:forEach var="item" items="${reportBasic.friendCircle.activeDegree}" varStatus="status">
+                    <tr>
+                        <td>${item.appPointZh}</td>
+                        <td class="center">${item.item.item1Month}</td>
+                        <td class="center">${item.item.item3Month}</td>
+                        <td class="center">${item.item.item6Month}</td>
+                        <td class="center">${item.item.avgItem3Month}</td>
+                        <td class="center">${item.item.avgItem6Month}</td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
     </div>
     <!--table9-->
     <div class="table">
-        <h5 class="h5">2.2 详细统计</h5>
+        <h5 class="h5">详细统计</h5>
         <h6 style="clear:both" class="sort">联系人</h6>
         <div class="tabbox">
             <table>
                 <thead>
                 <tr class="center">
                     <td>号码</td>
+                    <td>在通讯录中姓名</td>
                     <td>号码标识</td>
                     <td>号码类型</td>
                     <td>归属地</td>
@@ -883,35 +921,41 @@
                     <c:forEach var="item" items="${reportBasic.friendCircle.callContactDetail}" varStatus="status">
                         <tr class="center">
                             <td>${item.peerNumber}</td>
-                            <td>${item.tag}</td>
-                            <td>${item.category}</td>
+                            <td>${userContactsMap[item.peerNumber]}
+                                <%--<c:choose>
+                                    <c:when test="${empty userContactsMap[item.peerNumber]}">未知</c:when>
+                                    <c:otherwise>${userContactsMap[item.peerNumber]}</c:otherwise>
+                                </c:choose>--%>
+                            </td>
+                            <td>${item.companyName}</td>
+                            <td>${item.groupName}</td>
                             <td>${item.city}</td>
-                            <td>${item.callNum1Week}</td>
-                            <td>${item.callNum1Month}</td>
-                            <td>${item.callNum3Month}</td>
-                            <td>${item.callNum6Month}</td>
+                            <td>${item.callCnt1Week}</td>
+                            <td>${item.callCnt1Month}</td>
+                            <td>${item.callCnt3Month}</td>
+                            <td>${item.callCnt6Month}</td>
                             <td>${item.callTime3Month}</td>
                             <td>${item.callTime6Month}</td>
-                            <td>${item.dialNum3Month}</td>
-                            <td>${item.dialNum6Month}</td>
-                            <td>${item.dialedNum3Month}</td>
-                            <td>${item.dialedNum6Month}</td>
-                            <td>${item.callNumMorning3Month}</td>
-                            <td>${item.callNumMorning6Month}</td>
-                            <td>${item.callNumNoon3Month}</td>
-                            <td>${item.callNumNoon6Month}</td>
-                            <td>${item.callNumAfternoon3Month}</td>
-                            <td>${item.callNumAfternoon6Month}</td>
-                            <td>${item.callNumEvening3Month}</td>
-                            <td>${item.callNumEvening6Month}</td>
-                            <td>${item.callNumNight3Month}</td>
-                            <td>${item.callNumNight6Month}</td>
-                            <td>${item.callNumWeekday3Month}</td>
-                            <td>${item.callNumWeekday6Month}</td>
-                            <td>${item.callNumWeekend3Month}</td>
-                            <td>${item.callNumWeekend6Month}</td>
-                            <td>${item.callNumHoliday3Month}</td>
-                            <td>${item.callNumHoliday6Month}</td>
+                            <td>${item.dialCnt3Month}</td>
+                            <td>${item.dialCnt6Month}</td>
+                            <td>${item.dialedCnt3Month}</td>
+                            <td>${item.dialedCnt6Month}</td>
+                            <td>${item.callCntMorning3Month}</td>
+                            <td>${item.callCntMorning6Month}</td>
+                            <td>${item.callCntNoon3Month}</td>
+                            <td>${item.callCntNoon6Month}</td>
+                            <td>${item.callCntAfternoon3Month}</td>
+                            <td>${item.callCntAfternoon6Month}</td>
+                            <td>${item.callCntEvening3Month}</td>
+                            <td>${item.callCntEvening6Month}</td>
+                            <td>${item.callCntNight3Month}</td>
+                            <td>${item.callCntNight6Month}</td>
+                            <td>${item.callCntWeekday3Month}</td>
+                            <td>${item.callCntWeekday6Month}</td>
+                            <td>${item.callCntWeekend3Month}</td>
+                            <td>${item.callCntWeekend6Month}</td>
+                            <td>${item.callCntHoliday3Month}</td>
+                            <td>${item.callCntHoliday6Month}</td>
                             <td>${item.callIfWholeDay3Month}</td>
                             <td>${item.callIfWholeDay6Month}</td>
                         </tr>
@@ -937,18 +981,18 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="item" items="${reportBasic.friendCircle.callDurationDetail3m}" varStatus="status">
-                        <tr class="center">
-                            <td>${item.timeStep}</td>
-                            <td>${item.totalNum}</td>
-                            <td>${item.peerNum}</td>
-                            <td>${item.totalTime}</td>
-                            <td>${item.dialNum}</td>
-                            <td>${item.dialedNum}</td>
-                            <td>${item.latestCall}</td>
-                            <td>${item.farthestCall}</td>
-                        </tr>
-                    </c:forEach>
+                <c:forEach var="item" items="${reportBasic.friendCircle['call_duration_detail_3m']}" varStatus="status">
+                    <tr class="center">
+                        <td>${item.timeStepZh}</td>
+                        <td>${item.item.totalCnt}</td>
+                        <td>${item.item.uniqNumCnt}</td>
+                        <td>${item.item.totalTime}</td>
+                        <td>${item.item.dialCnt}</td>
+                        <td>${item.item.dialedCnt}</td>
+                        <td>${item.item.latestCallTime}</td>
+                        <td>${item.item.farthestCallTime}</td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -970,18 +1014,18 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="item" items="${reportBasic.friendCircle.callDurationDetail6m}" varStatus="status">
-                        <tr class="center">
-                            <td>${item.timeStep}</td>
-                            <td>${item.totalNum}</td>
-                            <td>${item.peerNum}</td>
-                            <td>${item.totalTime}</td>
-                            <td>${item.dialNum}</td>
-                            <td>${item.dialedNum}</td>
-                            <td>${item.latestCall}</td>
-                            <td>${item.farthestCall}</td>
-                        </tr>
-                    </c:forEach>
+                <c:forEach var="item" items="${reportBasic.friendCircle['call_duration_detail_6m']}" varStatus="status">
+                    <tr class="center">
+                        <td>${item.timeStepZh}</td>
+                        <td>${item.item.totalCnt}</td>
+                        <td>${item.item.uniqNumCnt}</td>
+                        <td>${item.item.totalTime}</td>
+                        <td>${item.item.dialCnt}</td>
+                        <td>${item.item.dialedCnt}</td>
+                        <td>${item.item.latestCallTime}</td>
+                        <td>${item.item.farthestCallTime}</td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -1007,22 +1051,22 @@
                     <td>主叫时长比重</td>
                     <td>被叫时长比重</td>
                 </tr>
-                <c:forEach var="item" items="${reportBasic.friendCircle.callLocationDetail3m}" varStatus="status">
+                <c:forEach var="item" items="${reportBasic.friendCircle['contact_region_3m']}" varStatus="status">
                 <tr>
-                    <td class="center">${item.city}</td>
-                    <td class="center">${item.totalNum}</td>
-                    <td class="center">${item.peerNum}</td>
-                    <td class="center">${item.totalTime}</td>
-                    <td class="center">${item.dialNum}</td>
-                    <td class="center">${item.dialedNum}</td>
-                    <td class="center">${item.dialTime}</td>
-                    <td class="center">${item.dialedTime}</td>
-                    <td class="center">${item.dialAvgTime}</td>
-                    <td class="center">${item.dialedAvgTime}</td>
-                    <td class="center">${item.dialNumPercent}</td>
-                    <td class="center">${item.dialedNumPercent}</td>
-                    <td class="center">${item.dialTimePercent}</td>
-                    <td class="center">${item.dialedTimePercent}</td>
+                    <td class="center">${item.regionLoc}</td>
+                    <td class="center">${item.regionCallCnt}</td>
+                    <td class="center">${item.regionUniqNumCnt}</td>
+                    <td class="center">${item.regionCallTime}</td>
+                    <td class="center">${item.regionDialCnt}</td>
+                    <td class="center">${item.regionDialedCnt}</td>
+                    <td class="center">${item.regionDialTime}</td>
+                    <td class="center">${item.regionDialedTime}</td>
+                    <td class="center">${item.regionAvgDialTime}</td>
+                    <td class="center">${item.regionAvgDialedTime}</td>
+                    <td class="center">${item.regionDialCntPct}</td>
+                    <td class="center">${item.regionDialedCntPct}</td>
+                    <td class="center">${item.regionDialTimePct}</td>
+                    <td class="center">${item.regionDialedTimePct}</td>
                 </tr>
                 </c:forEach>
             </table>
@@ -1049,22 +1093,22 @@
                     <td>主叫时长比重</td>
                     <td>被叫时长比重</td>
                 </tr>
-                <c:forEach var="item" items="${reportBasic.friendCircle.callLocationDetail6m}" varStatus="status">
+                <c:forEach var="item" items="${reportBasic.friendCircle['contact_region_6m']}" varStatus="status">
                 <tr>
-                    <td class="center">${item.city}</td>
-                    <td class="center">${item.totalNum}</td>
-                    <td class="center">${item.peerNum}</td>
-                    <td class="center">${item.totalTime}</td>
-                    <td class="center">${item.dialNum}</td>
-                    <td class="center">${item.dialedNum}</td>
-                    <td class="center">${item.dialTime}</td>
-                    <td class="center">${item.dialedTime}</td>
-                    <td class="center">${item.dialAvgTime}</td>
-                    <td class="center">${item.dialedAvgTime}</td>
-                    <td class="center">${item.dialNumPercent}</td>
-                    <td class="center">${item.dialedNumPercent}</td>
-                    <td class="center">${item.dialTimePercent}</td>
-                    <td class="center">${item.dialedTimePercent}</td>
+                    <td class="center">${item.regionLoc}</td>
+                    <td class="center">${item.regionCallCnt}</td>
+                    <td class="center">${item.regionUniqNumCnt}</td>
+                    <td class="center">${item.regionCallTime}</td>
+                    <td class="center">${item.regionDialCnt}</td>
+                    <td class="center">${item.regionDialedCnt}</td>
+                    <td class="center">${item.regionDialTime}</td>
+                    <td class="center">${item.regionDialedTime}</td>
+                    <td class="center">${item.regionAvgDialTime}</td>
+                    <td class="center">${item.regionAvgDialedTime}</td>
+                    <td class="center">${item.regionDialCntPct}</td>
+                    <td class="center">${item.regionDialedCntPct}</td>
+                    <td class="center">${item.regionDialTimePct}</td>
+                    <td class="center">${item.regionDialedTimePct}</td>
                 </tr>
                 </c:forEach>
             </table>
@@ -1072,7 +1116,7 @@
     </div>
     <!--table10-->
     <div class="table">
-        <h5 class="h5">2.3 通话时间详细统计</h5>
+        <h5 class="h5">通话时间详细统计</h5>
         <div class="tabbox">
             <table>
                 <tbody>
@@ -1084,126 +1128,24 @@
                     <th>近3月月均</th>
                     <th>近6月月均</th>
                 </tr>
-                <tr>
-                    <td>单次通话最长时长（秒）</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.maxTime_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.maxTime_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.maxTime_6}</td>
-                    <td class="center">--</td>
-                    <td class="center">--</td>
-                </tr>
-                <tr>
-                    <td>单次通话最短时长（秒）</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.minTime_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.minTime_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.minTime_6}</td>
-                    <td class="center">--</td>
-                    <td class="center">--</td>
-                </tr>
-                <tr>
-                    <td>时长在1min内的通话次数</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.time1_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.time1_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.time1_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.time1_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.time1_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>时长在1min－5min内的通话次数</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.time2_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.time2_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.time2_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.time2_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.time2_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>时长在5min－10min内的通话次数</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.time3_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.time3_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.time3_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.time3_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.time3_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>时长在10min以上的通话次数</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.time4_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.time4_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.time4_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.time4_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.time4_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>白天(7:00-18:00)通话时长（秒）</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.daytimeTime_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.daytimeTime_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.daytimeTime_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.daytimeTime_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.daytimeTime_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>夜晚(18:00-7:00)通话时长（秒）</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.nightTime_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.nightTime_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.nightTime_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.nightTime_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.nightTime_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>本机号码归属地通话时长（秒）</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.localTime_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.localTime_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.localTime_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.localTime_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.localTime_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>本机号码归属地以外通话时长（秒）</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.remoteTime_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.remoteTime_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.remoteTime_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.remoteTime_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.remoteTime_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>白天(7:00-18:00)通话次数</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.daytimeNum_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.daytimeNum_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.daytimeNum_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.daytimeNum_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.daytimeNum_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>夜晚(18:00-7:00)通话次数</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.nightNum_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.nightNum_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.nightNum_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.nightNum_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.nightNum_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>本机号码归属地通话次数</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.localNum_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.localNum_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.localNum_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.localNum_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.localNum_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>本机号码归属地以外通话次数</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.remoteNum_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.remoteNum_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.remoteNum_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.remoteNum_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callTimeDetail.remoteNum_avg_6}</td>
-                </tr>
+                <c:forEach var="item" items="${reportBasic.friendCircle.callTimeDetail}" varStatus="status">
+                    <tr>
+                        <td>${item.appPointZh}</td>
+                        <td class="center">${item.item.item1Month}</td>
+                        <td class="center">${item.item.item3Month}</td>
+                        <td class="center">${item.item.item6Month}</td>
+                        <td class="center">${item.item.avgItem3Month}</td>
+                        <td class="center">${item.item.avgItem6Month}</td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
     </div>
     <!--table11-->
-    <h3>3.风险状况</h3>
+    <h3>风险状况</h3>
     <div class="table">
-        <h5 class="h5">3.1 风险统计</h5>
+        <h5 class="h5">风险统计</h5>
         <div class="tabbox">
             <table>
                 <thead>
@@ -1217,173 +1159,31 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>与110通话次数</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOf110_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOf110_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOf110_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOf110_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOf110_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>与110通话时长（秒）</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOf110_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOf110_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOf110_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOf110_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOf110_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>与120通话次数</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOf120_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOf120_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOf120_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOf120_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOf120_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>与120通话时长（秒）</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOf120_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOf120_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOf120_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOf120_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOf120_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>与贷款公司通话次数</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfLoanFirm_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfLoanFirm_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfLoanFirm_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfLoanFirm_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfLoanFirm_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>与贷款公司通话时长（秒）</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfLoanFirm_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfLoanFirm_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfLoanFirm_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfLoanFirm_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfLoanFirm_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>与信用卡机构通话次数</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfCreditCardCenter_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfCreditCardCenter_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfCreditCardCenter_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfCreditCardCenter_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfCreditCardCenter_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>与信用卡机构通话时长（秒）</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfCreditCardCenter_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfCreditCardCenter_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfCreditCardCenter_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfCreditCardCenter_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfCreditCardCenter_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>与澳门地区通话次数</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfMacon_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfMacon_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfMacon_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfMacon_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfMacon_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>与澳门地区通话时长（秒）</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfMacon_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfMacon_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfMacon_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfMacon_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfMacon_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>与催收公司通话次数</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfCollectionFirm_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfCollectionFirm_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfCollectionFirm_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfCollectionFirm_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfCollectionFirm_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>与催收公司通话时长（秒）</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfCollectionFirm_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfCollectionFirm_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfCollectionFirm_6}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfCollectionFirm_avg_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfCollectionFirm_avg_6}</td>
-                </tr>
-                <tr>
-                    <td>与律师通话次数</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfLawyer_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfLawyer_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfLawyer_6}</td>
-                    <td class="center">--</td>
-                    <td class="center">--</td>
-                </tr>
-                <tr>
-                    <td>与律师通话时长（秒）</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfLawyer_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfLawyer_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfLawyer_6}</td>
-                    <td class="center">--</td>
-                    <td class="center">--</td>
-                </tr>
-                <tr>
-                    <td>与中介通话次数</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfAgency_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfAgency_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfAgency_6}</td>
-                    <td class="center">--</td>
-                    <td class="center">--</td>
-                </tr>
-                <tr>
-                    <td>与中介通话时长（秒）</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfAgency_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfAgency_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfAgency_6}</td>
-                    <td class="center">--</td>
-                    <td class="center">--</td>
-                </tr>
-                <tr>
-                    <td>与诈骗类号码通话次数</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfFraud_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfFraud_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfFraud_6}</td>
-                    <td class="center">--</td>
-                    <td class="center">--</td>
-                </tr>
-                <tr>
-                    <td>与诈骗类号码通话时长（秒）</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfFraud_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfFraud_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfFraud_6}</td>
-                    <td class="center">--</td>
-                    <td class="center">--</td>
-                </tr>
-                <tr>
-                    <td>与骚扰类号码通话次数</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfNuisance_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfNuisance_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.numbersOfNuisance_6}</td>
-                    <td class="center">--</td>
-                    <td class="center">--</td>
-                </tr>
-                <tr>
-                    <td>与骚扰类号码通话时长（秒）</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfNuisance_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfNuisance_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callThirdPartDetail.timesOfNuisance_6}</td>
-                    <td class="center">--</td>
-                    <td class="center">--</td>
-                </tr>
+                <c:forEach var="item" items="${reportBasic.callRiskAnalysis}" varStatus="status">
+                    <tr class="center">
+                        <td>与${item.analysisDesc}通话次数</td>
+                        <td>${item.analysisPoint.callCnt1Month}</td>
+                        <td>${item.analysisPoint.callCnt3Month}</td>
+                        <td>${item.analysisPoint.callCnt6Month}</td>
+                        <td>${item.analysisPoint.avgCallCnt3Month}</td>
+                        <td>${item.analysisPoint.avgCallCnt6Month}</td>
+                    </tr>
+                    <tr class="center">
+                        <td>与${item.analysisDesc}通话时长（秒）</td>
+                        <td>${item.analysisPoint.callTime1Month}</td>
+                        <td>${item.analysisPoint.callTime3Month}</td>
+                        <td>${item.analysisPoint.callTime6Month}</td>
+                        <td>${item.analysisPoint.avgCallTime3Month}</td>
+                        <td>${item.analysisPoint.avgCallTime6Month}</td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
     </div>
     <!--table12-->
     <div class="table">
-        <h5 class="h5">3.2 稳定性</h5>
+        <h5 class="h5">稳定性</h5>
         <div class="tabbox">
             <table>
                 <thead>
@@ -1395,55 +1195,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>是否亲情网用户</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.isFamilyNetMember_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.isFamilyNetMember_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.isFamilyNetMember_6}</td>
-                </tr>
-                <tr>
-                    <td>是否亲情网户主</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.isFamilyNetMaster_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.isFamilyNetMaster_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.isFamilyNetMaster_6}</td>
-
-                </tr>
-                <tr>
-                    <td>连续充值月数</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.rechargeMonths_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.rechargeMonths_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.rechargeMonths_6}</td>
-                </tr>
-                <tr>
-                    <td>常联系地址是否为手机归属地</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.isAddressMatchPhone_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.isAddressMatchPhone_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.isAddressMatchPhone_6}</td>
-                </tr>
-                <tr>
-                    <td>通话次数 小于 使用月数＊1次</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.numbersOfVoiceCallLess_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.numbersOfVoiceCallLess_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.numbersOfVoiceCallLess_6}</td>
-                </tr>
-                <tr>
-                    <td>通话次数 大于 使用月数＊300次</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.numbersOfVoiceCallMore_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.numbersOfVoiceCallMore_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.numbersOfVoiceCallMore_6}</td>
-                </tr>
-                <tr>
-                    <td>连续欠费月数</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.unpaidMonths_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.unpaidMonths_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.unpaidMonths_6}</td>
-                </tr>
-                <tr>
-                    <td>本机号码归属地使用月数</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.liveMonths_1}</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.liveMonths_3}</td>
-                    <td class="center">${reportBasic.friendCircle.callFamilyDetail.liveMonths_6}</td>
-                </tr>
+                <c:forEach var="item" items="${reportBasic.callFamilyDetail}" varStatus="status">
+                    <tr>
+                        <td>${item.appPointZh}</td>
+                        <td class="center">${item.item.item1Month}</td>
+                        <td class="center">${item.item.item3Month}</td>
+                        <td class="center">${item.item.item6Month}</td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -1461,90 +1220,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="center">
-                    <td>与银行通话次数</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.numbersOfBank_1}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.numbersOfBank_3}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.numbersOfBank_6}</td>
-                </tr>
-                <tr class="center">
-                    <td>与银行通话时长（秒）</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.timesOfBank_1}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.timesOfBank_3}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.timesOfBank_6}</td>
-                </tr>
-                <tr class="center">
-                    <td>与航旅机构通话次数</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.numbersOfRailwayAirway_1}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.numbersOfRailwayAirway_3}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.numbersOfRailwayAirway_6}</td>
-                </tr>
-                <tr class="center">
-                    <td>与航旅机构通话时长（秒）</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.timesOfRailwayAirway_1}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.timesOfRailwayAirway_3}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.timesOfRailwayAirway_6}</td>
-                </tr>
-                <tr class="center">
-                    <td>与特种服务通话次数</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.numbersOfSpecialService_1}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.numbersOfSpecialService_3}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.numbersOfSpecialService_6}</td>
-                </tr>
-                <tr class="center">
-                    <td>与特种服务通话时长（秒）</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.timesOfSpecialService_1}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.timesOfSpecialService_3}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.timesOfSpecialService_6}</td>
-                </tr>
-                <tr class="center">
-                    <td>与快递公司通话次数</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.numbersOfExpress_1}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.numbersOfExpress_3}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.numbersOfExpress_6}</td>
-                </tr>
-                <tr class="center">
-                    <td>与快递公司通话时长（秒）</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.timesOfExpress_1}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.timesOfExpress_3}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.timesOfExpress_6}</td>
-                </tr>
-                <tr class="center">
-                    <td>与保险公司通话次数</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.numbersOfInsFin_1}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.numbersOfInsFin_3}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.numbersOfInsFin_6}</td>
-                </tr>
-                <tr class="center">
-                    <td>与保险公司通话时长（秒）</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.timesOfInsFin_1}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.timesOfInsFin_3}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.timesOfInsFin_6}</td>
-                </tr>
-                <tr class="center">
-                    <td>与汽车公司通话次数</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.numbersOfCarFirm_1}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.numbersOfCarFirm_3}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.numbersOfCarFirm_6}</td>
-                </tr>
-                <tr class="center">
-                    <td>与汽车公司通话时长（秒）</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.timesOfCarFirm_1}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.timesOfCarFirm_3}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.timesOfCarFirm_6}</td>
-                </tr>
-                <tr class="center">
-                    <td>与通信服务机构通话次数</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.numbersOfCarrier_1}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.numbersOfCarrier_3}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.numbersOfCarrier_6}</td>
-                </tr>
-                <tr class="center">
-                    <td>与通信服务机构通话时长（秒）</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.timesOfCarrier_1}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.timesOfCarrier_3}</td>
-                    <td>${reportBasic.friendCircle.callThirdPartDetail.timesOfCarrier_6}</td>
-                </tr>
+                <c:forEach var="item" items="${reportBasic.friendCircle.callServiceAnalysis}" varStatus="status">
+                    <tr class="center">
+                        <td>与${item.analysisDesc}通话次数</td>
+                        <td>${item.analysisPoint.callCnt1Month}</td>
+                        <td>${item.analysisPoint.callCnt3Month}</td>
+                        <td>${item.analysisPoint.callCnt6Month}</td>
+                    </tr>
+                    <tr class="center">
+                        <td>与${item.analysisDesc}通话时长（秒）</td>
+                        <td>${item.analysisPoint.callTime1Month}</td>
+                        <td>${item.analysisPoint.callTime3Month}</td>
+                        <td>${item.analysisPoint.callTime6Month}</td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -1556,6 +1245,7 @@
                 <thead>
                 <tr class="center">
                     <th>服务号码</th>
+                    <th>公司名称</th>
                     <th>月份</th>
                     <th>通话次数</th>
                     <th>通话时长（秒）</th>
@@ -1566,24 +1256,27 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="item" items="${reportBasic.callServiceDetail}" varStatus="status">
-                        <tr class="center">
-                            <td>${item.servicePhone}</td>
-                            <td>${item.months}</td>
-                            <td>${item.totalNum}</td>
-                            <td>${item.totalTime}</td>
-                            <td>${item.dialNum}</td>
-                            <td>${item.dialedNum}</td>
-                            <td>${item.dialTime}</td>
-                            <td>${item.dialedTime}</td>
-                        </tr>
+                    <c:forEach var="item" items="${reportBasic.friendCircle.mainService}" varStatus="status">
+                        <c:forEach var="item1" items="${item.serviceDetails}" varStatus="status">
+                            <tr class="center">
+                                <td>${item.serviceNum}</td>
+                                <td>${item.companyName}</td>
+                                <td>${item1.interactMth}</td>
+                                <td>${item1.interactCnt}</td>
+                                <td>${item1.interactTime}</td>
+                                <td>${item1.dialCnt}</td>
+                                <td>${item1.dialedCnt}</td>
+                                <td>${item1.dialTime}</td>
+                                <td>${item1.dialedTime}</td>
+                            </tr>
+                        </c:forEach>
                     </c:forEach>
                 </tbody>
             </table>
         </div>
     </div>
     <!--table13-->
-    <h3>4.活跃程度</h3>
+    <%--<h3>4.活跃程度</h3>
     <div class="table">
         <h5 class="h5">4.1 通话活跃</h5>
         <div class="tabbox">
@@ -1730,9 +1423,9 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </div>--%>
     <!--table13-->
-    <h3>5.消费情况</h3>
+    <%--<h3>5.消费情况</h3>
     <div class="table">
         <h5 class="h5">5.1 消费统计</h5>
         <div class="tabbox">
@@ -1807,11 +1500,11 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </div>--%>
     <!--table14-->
-    <h3>5.漫游详情统计</h3>
+    <h3>漫游详情统计</h3>
     <div class="table">
-        <h5 class="h5">5.1 漫游详情统计(近6月漫游日期降序)</h5>
+        <h5 class="h5">漫游详情统计(近6月漫游日期降序)</h5>
         <div class="tabbox">
             <table>
                 <tbody>
@@ -1819,12 +1512,41 @@
                     <td>漫游日期</td>
                     <td>漫游城市</td>
                 </tr>
-                <c:forEach var="item" items="${reportBasic.roamDetail}" varStatus="status">
+                <c:forEach var="item" items="${reportBasic.friendCircle.roamDetail}" varStatus="status">
                 <tr>
                     <td class="center">${item.roamDay}</td>
                     <td class="center">${item.roamLocation}</td>
                 </tr>
                 </c:forEach>
+            </table>
+        </div>
+    </div>
+
+    <h3>运营商出行分析</h3>
+    <div class="table">
+        <h5 class="h5">出行数据分析</h5>
+        <div class="tabbox">
+            <table>
+                <thead>
+                <tr class="center hideborder" style="text-align: center">
+                    <td>出发地</td>
+                    <td>目的地</td>
+                    <td>出发时间</td>
+                    <td>结束时间</td>
+                    <td>类型</td>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="item" items="${reportBasic.friendCircle.tripInfo}" varStatus="status">
+                    <tr class="center">
+                        <td>${item.tripLeave}</td>
+                        <td>${item.tripDest}</td>
+                        <td>${item.tripStartTime}</td>
+                        <td>${item.tripEndTime}</td>
+                        <td>${item.tripType}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
             </table>
         </div>
     </div>
