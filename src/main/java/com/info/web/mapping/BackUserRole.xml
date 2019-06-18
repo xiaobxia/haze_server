@@ -94,6 +94,9 @@
         <if test="userMobileLike != null and userMobileLike != ''">
             and a.user_mobile like concat(${userMobileLike},'%')
         </if>
+        <if test="userName != null and userName !=''">
+            and a.user_name = #{userName}
+        </if>
     </select>
     <select id="queryBackUserCount" parameterType="HashMap" resultType="Integer">
         SELECT
@@ -112,6 +115,9 @@
         </if>
         <if test="userMobileLike != null and userMobileLike != ''">
             and a.user_mobile like concat(${userMobileLike},'%')
+        </if>
+        <if test="userName != null and userName !=''">
+            and a.user_name = #{userName}
         </if>
     </select>
 

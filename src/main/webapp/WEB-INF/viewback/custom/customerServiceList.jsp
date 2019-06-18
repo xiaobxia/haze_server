@@ -119,11 +119,11 @@
                 <tr>
                     <td>
                         手机号:
-                        <input type="text" id="userMobileLike" name="userMobileLike" id="userMobileLike" value="${params.userMobileLike}" />
+                        <input type="text" name="userMobileLike" id="userMobileLike" value="${params.userMobileLike}" />
                     </td>
-                    <td>
-                        姓名:
-                        <input type="text"  id ="userNameLike" name="userNameLike" id="userNameLike" value="${params.userNameLike}" />
+                   <td>
+                       真实姓名:
+                        <input type="text" name="userName" id="userName" value="${params.userName}" />
                     </td>
                     <td>
                         <div class="buttonActive">
