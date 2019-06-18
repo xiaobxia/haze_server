@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import com.info.web.pojo.UserBlack;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -174,8 +175,10 @@ public class ReadExecl {
 					}
 				}
 			}
-			//添加客户
-			customerList.add(customer);
+			if(StringUtils.isNotBlank(customer.getUserPhone())){
+				//添加客户
+				customerList.add(customer);
+			}
 		}
 		return customerList;
 	}

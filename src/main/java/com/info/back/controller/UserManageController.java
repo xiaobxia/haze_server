@@ -466,8 +466,9 @@ public class UserManageController extends BaseController{
         if(name==null || ("").equals(name) && size==0) return null;
         //批量导入。参数：文件名，文件。
         boolean b = userBlackService.batchImport(name,file,userType);
+       // SpringUtils.renderDwzResult(response, b, b ? "批量导入成功!" : "批量导入失败!", DwzResult.CALLBACK_RELOADPAGE);
         if(b){
-           return Result.success();
+            return Result.success();
         }else{
           return Result.error("批量导入失败");
         }

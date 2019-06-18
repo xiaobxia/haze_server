@@ -105,6 +105,7 @@ public class UserBlackService implements  IUserBlackService{
             }
         }catch (Exception e){
            log.error("批量导入黑名单失败",e.getMessage());
+           b = false;
         }
 
         return b;
