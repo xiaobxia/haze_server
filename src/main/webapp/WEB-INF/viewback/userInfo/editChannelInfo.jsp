@@ -84,7 +84,7 @@
 						 </dt>
 							<dd>
 								<input name="channelCode" value="${channelInfo.channelCode}"
-									   class="required"	type="text" readonly size="18"/> 此项不可修改
+									   class="required disabled"	type="text" readonly size="18"/> 此项不可修改
 								<label style="color: red;" class="required-label">*</label>
 							</dd>
 					   </dl>

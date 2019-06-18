@@ -24,14 +24,12 @@
 					<td>
 						添加日期:
 						<input name="addStartTime" id="addStartTime" value="${params.addStartTime }" type="text"
-																onfocus="WdatePicker({isShowClear:true,readOnly:false,maxDate:'#F{$dp.$D(\'addStartTime\')||\'%y-%M-%d\'}'})" 
-																title="" size="30" />
+							   class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" size="30" />
 					</td>
 					<td>
 						至:
 						<input name="addEndTiem" id="addEndTiem" value="${params.addEndTiem }" type="text"
-																onfocus="WdatePicker({isShowClear:true,readOnly:false,maxDate:'#F{$dp.$D(\'addEndTiem\')||\'%y-%M-%d\'}'})" 
-																title="" size="30" />
+							   class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" size="30" />
 					</td>
 				</tr>
 				<tr>
