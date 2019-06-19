@@ -67,9 +67,9 @@
         <typeAlias type="com.info.web.pojo.JsStepConfig" alias="JsStepConfig"/>
         <typeAlias type="com.info.web.pojo.JsStepRecord" alias="JsStepRecord"/>
 <!--        渠道推送相关-->
-        <!--<typeAlias type="com.info.ts.pojo.TsOrders" alias="TsOrders"/>
-        <typeAlias type="com.info.ts.pojo.SyBody" alias="SyBody"/>
-        <typeAlias type="com.info.ts.pojo.SyUserVo" alias="SyUserVo"/>-->
+        <!--<typeAlias type="com.info.ts.pojo.TsOrders" alias="TsOrders"/>-->
+        <!--<typeAlias type="com.info.ts.pojo.SyBody" alias="SyBody"/>-->
+        <!--<typeAlias type="com.info.ts.pojo.SyUserVo" alias="SyUserVo"/>-->
         <typeAlias type="com.info.web.pojo.ActiveStatisticsInfo" alias="ActiveStatisticsInfo" />
         <typeAlias type="com.info.back.pojo.BackDistributeRecord" alias="BackDistributeRecord"/>
     </typeAliases>

@@ -48,11 +48,11 @@
 
         <property name ="targetDataSources">
             <map key-type ="java.lang.String">
-                <entry value-ref ="haze_server" key="haze_server"/>
-                <entry value-ref="haze_cs" key="haze_cs"/>
+                <entry value-ref ="haze_server" key="haze_server"></entry >
+                <entry value-ref="haze_cs" key="haze_cs"></entry>
             </map >
         </property >
-        <property name ="defaultTargetDataSource" ref= "haze_server"/>
+        <property name ="defaultTargetDataSource" ref= "haze_server"></property >
     </bean>
     <import resource="spring-overdue.xml"/>
     <!-- 以下是Quartz定时调度配制-->
@@ -72,34 +72,44 @@
                 <!--<ref bean="findJxlReportJobTrigger"/>-->
                 <!--<ref bean="updateAnalysisJobTrigger"/>-->
                 <ref bean="overdueJobTrigger"/>
-                <!--<ref bean="withholdJobTrigger"/>-->
+                <ref bean="withholdJobTrigger"/>
                 <ref bean="reportRepayment12JobTrigger"/>
                 <ref bean="reportRepaymentE2JobTrigger"/>
-                <!--<ref bean="smsRemindJobTrigger"/>-->
-                <!--<ref bean="smsRemind9JobTrigger"/>-->
+                <ref bean="smsRemindJobTrigger"/>
+                <ref bean="smsRemind9JobTrigger"/>
                 <ref bean="channelReportJobTrigger"/>
                 <ref bean="platformReportJobTrigger"/>
                 <!-- <ref bean="assetsDivisionBeanTrigger"/> -->
                 <!--<ref bean="updateRetryJobTrigger"/>-->
                 <ref bean="thirdReportJobTrigger"/>
-                <!--<ref bean="acitveClickStatisticsJobTrigger"/>-->
-                <!--<ref bean="updateFromRiskJobTrigger"/>-->
+                <!--<ref bean="acitveClickStatisticsJobTrigger"/>
+                <ref bean="updateFromRiskJobTrigger"/>-->
                 <!-- <ref bean="CZMassetsDivisionJobTrigger"/> -->
                 <!--魔蝎不用 ，因为收费 	 <ref bean="findMobileReportJobTrigger"/> -->
                 <!--<ref bean="queryOrderResultLianJobTrigger"/>-->
-                <!--<ref bean="updateLoanTermJobTrigger"/>-->
+                <ref bean="updateLoanTermJobTrigger"/>
                 <!--<ref bean="payLoanInterestPaysJobTrigger"/>-->
                 <!--<ref bean="queryPaysStateNotCmbJobTrigger"/>-->
                 <!--<ref bean="queryPaysStateCmbJobTrigger"/>-->
                 <!-- 续期处理中 查询处理-->
+                <!--<ref bean="queryRenewalOrderJobTrigger"/>-->
                 <!--数据统计-->
-                <!--<ref bean="dataAnalyzeJobTrigger" />-->
-                <!--<ref bean="appMarketInitializJobTrigger" />-->
-                <!--<ref bean="appMarketAnalyzeJobTrigger" />-->
+                <ref bean="dataAnalyzeJobTrigger" />
+                <ref bean="riskModelJobTrigger" />
+                <ref bean="riskByChannelJobTrigger" />
                 <ref bean="autoDistributionJobTrigger"/>
+                <ref bean="appMarketInitializJobTrigger" />
+                <ref bean="appMarketAnalyzeJobTrigger" />
+                <ref bean="insertAssignStatisticForSystemSendJobTrigger"/>
+                <ref bean="insertAssignStatisticForArtificialSendJobTrigger"/>
                 <ref bean="autoAssignOrderJobTrigger"/>
                 <ref bean="autoAssignOrderForNigJobTrigger"/>
                 <ref bean="autoAddCustomerClassTrigger"/>
+                <ref bean="userQuotaJobTrigger"/>
+                <ref bean="everyDayUserQuotaJobTrigger"/>
+                <ref bean="aiMessageTrigger"/>
+                <ref bean="overdueNoticeToJobTrigger"/>
+                <ref bean="overdueNoticeTodayJobTrigger"/>
             </list>
         </property>
     </bean>
@@ -147,13 +157,13 @@
     <!-- 拦截器方式配置事务 -->
     <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
         <tx:attributes>
-            <tx:method name="add*"/>
-            <tx:method name="save*"/>
-            <tx:method name="insert*"/>
-            <tx:method name="batch*"/>
-            <tx:method name="modify*"/>
-            <tx:method name="update*"/>
-            <tx:method name="delete*"/>
+            <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="save*" propagation="REQUIRED" />
+            <tx:method name="insert*" propagation="REQUIRED" />
+            <tx:method name="batch*" propagation="REQUIRED" />
+            <tx:method name="modify*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
             <tx:method name="find*" propagation="SUPPORTS" />
             <tx:method name="query*" propagation="SUPPORTS" />
             <tx:method name="search*" propagation="SUPPORTS" />
@@ -162,13 +172,13 @@
     </tx:advice>
     <tx:advice id="transactionAdvice-haze_cs" transaction-manager="transactionManager-haze_cs">
         <tx:attributes>
-            <tx:method name="add*"/>
-            <tx:method name="save*"/>
-            <tx:method name="insert*"/>
-            <tx:method name="batch*"/>
-            <tx:method name="modify*"/>
-            <tx:method name="update*"/>
-            <tx:method name="delete*"/>
+            <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="save*" propagation="REQUIRED" />
+            <tx:method name="insert*" propagation="REQUIRED" />
+            <tx:method name="batch*" propagation="REQUIRED" />
+            <tx:method name="modify*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
             <tx:method name="find*" propagation="SUPPORTS" />
             <tx:method name="query" propagation="SUPPORTS" />
             <tx:method name="search*" propagation="SUPPORTS" />

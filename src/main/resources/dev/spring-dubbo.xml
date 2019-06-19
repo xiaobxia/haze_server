@@ -8,12 +8,12 @@
     http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <dubbo:application name="haze_server"/>
-    <dubbo:registry protocol="zookeeper" address="116.62.28.2:2181" client="zkclient"/>
+    <dubbo:registry protocol="zookeeper" address="47.110.153.34:2181" client="zkclient"/>
 
     <!--服务调用：数据中心-->
     <!--<dubbo:reference interface="com.tan66.datawarehouse.openapi.rpc.api.OperationSystemService" id="operationSystemService" check="false" timeout="8000" version="1.0.0"/>-->
-    <dubbo:reference group="jxmoney" interface="com.vxianjin.gringotts.pay.service.OrderLogService" id="orderLogService" check="false" timeout="8000"/>
-    <dubbo:reference group="jxmoney" interface="com.vxianjin.gringotts.pay.service.OffLinePay" id="offLinePay" check="false" timeout="8000"/>
-    <dubbo:reference group="dwh" interface="com.tan66.datawarehouse.openapi.rpc.api.DataWareHouseService" id="dataWareHouseService" version="1.0.0"/>
+    <dubbo:reference group="haze" interface="com.vxianjin.gringotts.pay.service.OrderLogService" id="orderLogService" check="false" timeout="8000"/>
+    <dubbo:reference group="haze" interface="com.vxianjin.gringotts.pay.service.OffLinePay" id="offLinePay" check="false" timeout="8000"/>
+    <dubbo:reference group="dwh" interface="com.tan66.datawarehouse.openapi.rpc.api.DataWareHouseService" id="dataWareHouseService" version="1.0.0" check="false"/>
 
 </beans>
