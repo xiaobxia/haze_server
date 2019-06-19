@@ -64,6 +64,7 @@
                 contentType: false,
                 data: formData,
                 success : function(data) {
+                    alertMsg.correct('导入成功');
                     $('div[class="dialog"]').hide();
                     $('div[class="shadow"]').hide();
                     $('div[id="dialogBackground"]').hide();
@@ -74,7 +75,8 @@
                             $('#pagerForm-ubl').submit()
                         }
                     }, 100)
-                }
+                },
+                error:DWZ.ajaxError
             });
         }
     });
