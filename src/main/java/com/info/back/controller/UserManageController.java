@@ -294,7 +294,7 @@ public class UserManageController extends BaseController{
 		String reportDataHtml = userService.selectGxbReportDataHtml(Integer.parseInt(user.getId()));
 		String tokenHtml = userService.selectReportDataHtml(Integer.parseInt(user.getId()));
 		String operatorHtml = PropertiesUtil.get("BACK_URLS") +"back/mx/getAllInfo?userId=" + user.getId();
-		model.addAttribute("operatorHtml", reportDataHtml.contains("tenant.51datakey.com") && tokenHtml != null ? operatorHtml : reportDataHtml);//运营商
+		model.addAttribute("operatorHtml", reportDataHtml.contains("tenant.51datakey.com") && StringUtils.isNotBlank(tokenHtml) ? operatorHtml : reportDataHtml);//运营商
 
 		BorrowOrder borrowOrderLastest = borrowOrderService.selectBorrowOrderUseId(Integer.parseInt(params.get("id")));
 		model.addAttribute("borrow", borrowOrderLastest);

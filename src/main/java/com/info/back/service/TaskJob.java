@@ -595,12 +595,12 @@ public class TaskJob implements ITaskJob {
 		Map<String, String> keys = SysCacheUtils.getConfigParams(BackConfigParams.MX);
 		int am = Integer.parseInt(keys.get("WITHHOLD_AM"));
 		int pm = Integer.parseInt(keys.get("WITHHOLD_PM"));
+		log.info("withhold定时任务执行,time:" + time + ",AM:" + am + ",PM:" + pm);
 		if (time == am || time == pm) {
 			log.info("withhold time:{} ",time);
 			withhold2();
 		}
     }
-
 
     private void withhold2() {
         try {
