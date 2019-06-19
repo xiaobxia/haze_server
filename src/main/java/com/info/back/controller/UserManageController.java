@@ -96,7 +96,8 @@ public class UserManageController extends BaseController{
 /*
 			if(!StringUtils.isBlank(userId)|| null!=userId || !StringUtils.isBlank(userPhone) || null!=userPhone || !StringUtils.isBlank(status) || null!=status || !StringUtils.isBlank(realname) || null!=realname || !StringUtils.isBlank(idNumber) || null!=idNumber|| !StringUtils.isBlank(createTime) || null!=createTime || !StringUtils.isBlank(beginTime) || null!=beginTime){
 */
-			List<ChannelInfo> channel = channelInfoService.findAllUserList(params);
+			List<ChannelInfo> channel = channelInfoService.findAllUserList(null);
+			//List<ChannelInfo> searchChannel = channelInfoService.findAllUserList(null);
 			page=this.userService.getUserPage(params);
 			//}
 			model.addAttribute("pm", page);
@@ -108,7 +109,7 @@ public class UserManageController extends BaseController{
 			}
 			model.addAttribute("searchParams", params);//用于搜索框保留值
 			model.addAttribute("channel",channel);//渠道查询下拉框
-
+            //model.addAttribute("searchChannel",searchChannel);
 		} catch (Exception e) {
 			log.error("getUserPage error:{}", e);
 		}
