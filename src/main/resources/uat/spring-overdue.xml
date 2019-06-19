@@ -162,7 +162,7 @@
 	<bean id="updateLoanTermJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="updateLoanTerm"/>
         <!--  每5分钟放款一次-->
-        <property name="cronExpression" value="0 0/5 * * * ?"/>
+        <property name="cronExpression" value="0 0/2 * * * ?"/>
     </bean>
     <bean id="updateLoanTerm" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="jobClass" value="com.info.web.util.JobDetailBean"/>
