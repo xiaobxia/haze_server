@@ -159,4 +159,9 @@ public class BackUserService implements IBackUserService {
 	public int findRoleByUserId(Integer id) {
 		return iBackRoleDao.findRoleByUserId(id);
 	}
+
+	@Override
+	public int findRoleKfM(Integer userId) {
+		return iBackRoleDao.findRoleKfM(userId);
+	}
 }

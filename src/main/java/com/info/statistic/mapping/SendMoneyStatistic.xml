@@ -153,6 +153,17 @@
 			customer_type = 1
 			AND  DATE_FORMAT( created_at, '%Y-%m-%d' ) =  DATE_FORMAT( NOW( ), '%Y-%m-%d' )
 	</select>
+	<select id="reBorrowSuc" resultType="map">
+		SELECT
+			count( id ) AS reBorrowCount,
+			IFNULL(sum(money_amount),0) AS reBorrowMoney
+		FROM
+			asset_borrow_order
+		WHERE
+			customer_type = 1
+			AND  DATE_FORMAT( created_at, '%Y-%m-%d' ) =  DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+			and  status in ('21','30')
+	</select>
     <select id="loanMoneyToday" resultType="map">
 	SELECT
 		IFNULL( sum( repayment_amount ), 0 ) as borrowMoneyToday,

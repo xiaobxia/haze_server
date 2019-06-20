@@ -572,9 +572,13 @@ public class BackStatisticService implements IBackStatisticService {
 		myPageReportInfo.setExtendMoney(optimic(map,"repaymentPrincipal"));
         myPageReportInfo.setExtendCount(map.get("extendCount") == null ?0:(long) map.get("extendCount"));
         //当日复借金额 当日复借订单数
-        map = sendMoneyStatisticDao.reBorrow();
+        /*map = sendMoneyStatisticDao.reBorrow();
         myPageReportInfo.setReBorrowMoney(optimic(map,"reBorrowMoney"));
-        myPageReportInfo.setReBorrowCount(map.get("reBorrowCount") == null?0:(long) map.get("reBorrowCount"));
+        myPageReportInfo.setReBorrowCount(map.get("reBorrowCount") == null?0:(long) map.get("reBorrowCount"));*/
+        //当日复借放款订单数 当日复借放款金额
+		map = sendMoneyStatisticDao.reBorrowSuc();
+		myPageReportInfo.setReBorrowMoney(optimic(map,"reBorrowMoney"));
+		myPageReportInfo.setReBorrowCount(map.get("reBorrowCount") == null?0:(long) map.get("reBorrowCount"));
 	/*	//当日复借率 当日复借成功订单数/当日放款订单数
 		if(pendingCount != 0){
            double reBorrowRate = (double)myPageReportInfo.getReBorrowCount()/(double)pendingCount;

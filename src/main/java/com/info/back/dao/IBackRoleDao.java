@@ -109,5 +109,7 @@ public interface IBackRoleDao {
 
     int findRoleByUserId(@Param("id") Integer id);
 
+    int findRoleKfM(@Param("userId") Integer userId);
+
 
 }

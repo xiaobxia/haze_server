@@ -37,5 +37,6 @@ public interface ISendMoneyStatisticDao {
     Map<String,Object> extendToday();
     Map<String,Object> extendTodayAll();
     Map<String,Object> reBorrow();
+    Map<String,Object> reBorrowSuc();
 	Map<String,Object> findMoneyToday();
 }

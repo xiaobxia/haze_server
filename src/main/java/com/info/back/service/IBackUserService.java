@@ -122,4 +122,7 @@ public interface IBackUserService {
 
 	int findRoleByUserId(Integer id );
 
+	int findRoleKfM(Integer userId);
+
+
 }
