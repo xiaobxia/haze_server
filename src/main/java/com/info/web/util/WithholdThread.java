@@ -76,7 +76,7 @@ public class WithholdThread extends Thread{
                 Map<String, String> card = repaymentService.findCardNo(re.getUserId());
                 String cardNo = card.get("cardNo");
 
-                String api_url = PropertiesUtil.get("APP_HOST_API")+ "/"+PropertiesUtil.get("PAY_CHANNEL")+"/auto-withhold?id=" + re.getId();
+                String api_url = PropertiesUtil.get("APP_HOST_API")+ "/"+PropertiesUtil.get("AUTO_WITHDRAW_CHANNEL")+"/auto-withhold?id=" + re.getId();
                 String resultStr = HttpUtil.getHttpMess(api_url,"","POST","UTF-8");
 
                 JSONObject jsonObject = JSONObject.parseObject(resultStr);
