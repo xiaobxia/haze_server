@@ -93,9 +93,9 @@
 					<th align="center" >
 						服务费
 					</th>
-					<th align="center" >
+					<%--<th align="center" >
 						续期费
-					</th>
+					</th>--%>
 					<th align="center" >
 						续期期限
 					</th>
@@ -135,9 +135,9 @@
 						<td>
 							<fmt:formatNumber pattern='###,###,##0.00' value="${renewal.repaymentInterest / 100.00}"/>
 						</td>
-						<td>
-							<fmt:formatNumber pattern='###,###,##0.00' value="${renewal.renewalFee / 100.00}"/>
-						</td>
+<%--						<td>--%>
+<%--							<fmt:formatNumber pattern='###,###,##0.00' value="${renewal.renewalFee / 100.00}"/>--%>
+<%--						</td>--%>
 						<td>
 							${renewal.renewalDay}
 						</td>
