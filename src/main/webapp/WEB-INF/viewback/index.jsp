@@ -19,6 +19,8 @@
 	<!-- <meta http-equiv="X-UA-Compatible" content="IE=7" /> -->
 	<!-- <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9" /> -->
 	<title>${APP_NAME}-运营管理系统</title>
+	<link href="${basePath }/bootstrapdist/css/bootstrap.min.css" rel="stylesheet"
+		  type="text/css" media="screen" />
 	<link href="${basePath }/themes/default/style.css" rel="stylesheet"
 		  type="text/css" media="screen" />
 	<link href="${basePath }/themes/css/core.css" rel="stylesheet"
@@ -34,11 +36,11 @@
 	<![endif]-->
 	<style type="text/css">
 		#header {
-			height: 80px
+			height: 50px
 		}
 
 		#leftside,#container,#splitBar,#splitBarProxy {
-			top: 80px
+			top: 0
 		}
 	</style>
 	<style>
@@ -47,7 +49,7 @@
 		}
 		.index-page-wrap {
 			position: relative;
-			padding: 1rem 4rem;
+			padding: 1.2rem 4rem;
 		}
 		.index-page-wrap .left-main {
 			display: inline-block;
@@ -285,25 +287,24 @@
 	</style>
 	<style>
 		.logo-wrap {
-			position: absolute;
-			z-index: 10;
-			height: 80px;
-			width: 190px;
-			padding-left: 10px;
-			line-height: 80px;
-			text-align: center;
+			height: 56px;
+			width: 100%;
+			padding-left: 15px;
+			line-height: 56px;
+			box-sizing: border-box;
+			color: #5a5e66;
+            background-color: rgb(48, 65, 86)
 		}
 		.logo-wrap img {
 			display: inline-block;
 			width: auto;
-			height: 60px;
+			height: 50px;
 			vertical-align: middle;
 		}
 		.header-wrap {
-			height: 80px;
+			height: 50px;
 			width: 100%;
 			box-sizing: border-box;
-			padding-left: 205px;
 		}
 		.aways-h {
 			display: none !important;
@@ -311,8 +312,10 @@
 	</style>
 	<script src="${basePath }/js/dwz.ui.js" type="text/javascript"></script>
 	<script src="${basePath }/js/speedup.js" type="text/javascript"></script>
-	<script src="${basePath }/js/jquery-1.7.2.js" type="text/javascript"></script>
-
+	<script src="${basePath }/js/jquery-1.9.1.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		jQuery.browser={};(function(){jQuery.browser.msie=false; jQuery.browser.version=0;if(navigator.userAgent.match(/MSIE ([0-9]+)./)){ jQuery.browser.msie=true;jQuery.browser.version=RegExp.$1;}})();
+	</script>
 	<script src="${basePath }/js/jquery.cookie.js" type="text/javascript"></script>
 	<script src="${basePath }/js/jquery.validate.js" type="text/javascript"></script>
 	<script src="${basePath }/js/jquery.bgiframe.js" type="text/javascript"></script>
@@ -331,7 +334,7 @@
 	<script src="${basePath }/js/user/dwzUtil.js" type="text/javascript"></script>
 	<script type="text/javascript" src="${basePath }/My97DatePicker/WdatePicker.js"></script>
 	<script type="text/javascript" src="${basePath }/js/user/city.js"></script>
-
+	<script type="text/javascript" src="${basePath }/bootstrapdist/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 		$(function(){
 			$(".logo-wrap").click(function () {
@@ -368,7 +371,7 @@
 				function setAdaptive () {
 					var baseFontSize = 20
 					// 和width有关
-					var winWidth = $('.index-page-wrap').innerWidth(true)
+					var winWidth = $('.index-page-wrap').innerWidth()
 					var fontScale = 0.9 * winWidth / 1920
 					document.documentElement.style.fontSize = (baseFontSize * fontScale) + 'px'
 					window.adaptive = {
@@ -376,7 +379,6 @@
 						fontSize: baseFontSize * fontScale
 					}
 				}
-
 				setAdaptive()
 
 				$('.myChart').attr('width', window.adaptive.fontSize * 110 /20)
@@ -645,40 +647,6 @@
 </head>
 <body scroll="no">
 <div id="layout">
-	<div id="header">
-		<div class="logo-wrap">
-			<img src="${basePath }/images/logo.png" alt="">
-		</div>
-		<div class="header-wrap">
-			<div class="headerNav">
-				<ul class="nav">
-					<li id="switchEnvBox"><a href="javascript:"
-					>${BACK_USER.userAccount},您好!
-						欢迎登录后台管理平台</a></li>
-					<c:if test="${BACK_USER.id eq 10000}">
-						<li><a
-								href="updateCache" target="ajaxTodo">刷新系统缓存</a></li>
-					</c:if>
-					<li><a
-							href="user/updateUserPassword?type=toJsp" target="dialog" mask="true"
-							width="600">修改密码</a></li>
-					<li><a href="logout">退出</a></li>
-
-				</ul>
-			</div>
-			<%--<div id="navMenu">
-				<ul>
-					<c:forEach items="${menuModuleList}" var="item" varStatus="count">
-						<li <c:if test="${count.count==1}">  class="selected" </c:if> >
-							<a href="${item.moduleUrl}?myId=${item.id}">
-								<span>${item.moduleName}</span>
-							</a>
-						</li>
-					</c:forEach>
-				</ul>
-			</div>--%>
-		</div>
-	</div>
 	<div id="leftside">
 		<div id="sidebar_s">
 			<div class="collapse">
@@ -689,6 +657,9 @@
 		</div>
 
 		<div id="sidebar">
+			<div class="logo-wrap">
+				<img src="${basePath }/images/logo.png" alt="">
+			</div>
 			<div class="accordion" fillSpace="sideBar">
 				<c:forEach items="${subMenu}" var="item" varStatus="count">
 					<div class="accordionHeader">
@@ -738,6 +709,40 @@
 		</div>
 	</div>
 	<div id="container">
+		<div id="header">
+			<div class="header-wrap">
+				<div class="headerNav">
+					<ul class="nav nav-pills">
+						<li role="presentation" class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								${BACK_USER.userAccount} <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<c:if test="${BACK_USER.id eq 10000}">
+									<li><a
+											href="updateCache" target="ajaxTodo">刷新系统缓存</a></li>
+								</c:if>
+								<li><a
+										href="user/updateUserPassword?type=toJsp" target="dialog" mask="true"
+										width="600">修改密码</a></li>
+								<li><a href="logout">退出</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<%--<div id="navMenu">
+                    <ul>
+                        <c:forEach items="${menuModuleList}" var="item" varStatus="count">
+                            <li <c:if test="${count.count==1}">  class="selected" </c:if> >
+                                <a href="${item.moduleUrl}?myId=${item.id}">
+                                    <span>${item.moduleName}</span>
+                                </a>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>--%>
+			</div>
+		</div>
 		<div id="navTab" class="tabsPage">
 			<div class="tabsPageHeader">
 				<div class="tabsPageHeaderContent">
@@ -756,7 +761,7 @@
 			<ul class="tabsMoreList">
 				<li><a href="javascript:;">我的主页</a></li>
 			</ul>
-			<div style="height: 767px; overflow: scroll" class="navTab-panel tabsPageContent layoutBox">
+			<div style="overflow: scroll" class="navTab-panel tabsPageContent layoutBox">
 				<div style="display: block;" class="page unitBox">
 					<div class="accountInfo" style="height: 35px;">
 						<div class="right">
@@ -1000,10 +1005,6 @@
 		</div>
 	</div>
 
-</div>
-
-<div id="footer" s>
-	Copyright &copy; 2019-2020
 </div>
 <script type="text/javascript">
 

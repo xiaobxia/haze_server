@@ -46,10 +46,10 @@ function initEnv() {
 }
 function initLayout(){
 	var iContentW = $(window).width() - (DWZ.ui.sbar ? $("#sidebar").width() + 10 : 34) - 5;
-	var iContentH = $(window).height() - $("#header").height() - 34;
+	var iContentH = $(window).height() - $("#header").height();
 
 	$("#container").width(iContentW);
-	$("#container .tabsPageContent").height(iContentH - 34).find("[layoutH]").layoutH();
+	$("#container .tabsPageContent").height(iContentH).find("[layoutH]").layoutH();
 	$("#sidebar, #sidebar_s .collapse, #splitBar, #splitBarProxy").height(iContentH - 5);
 	$("#taskbar").css({top: iContentH + $("#header").height() + 5, width:$(window).width()});
 }

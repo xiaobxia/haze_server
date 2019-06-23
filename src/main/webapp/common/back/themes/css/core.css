@@ -8,7 +8,15 @@ del, dfn, em, font, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td { padding:0; margin:0; font-size:12px; line-height:100%; font-family:Arial, sans-serif;}
+table, caption, tbody, tfoot, thead, tr, th, td {
+    padding:0;
+    margin:0;
+    font-size:12px;
+    line-height:100%;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Arial,sans-serif;
+}
 
 /* Remember to define focus styles! */
 :focus { outline: 0;}
@@ -66,7 +74,7 @@ a:hover {text-decoration:underline;}
 .tabsPage .tabsPageHeaderContent { display:block; overflow:hidden; height:36px; margin-right:19px; position:relative;}
 .tabsPage .tabsPageHeaderMargin { margin:0 34px 0 17px;}
 .tabsPage .tabsPageHeader ul { display:block; width:10000px; height:36px; z-index:1; position:absolute;}
-.tabsPage .tabsPageHeader li { float:left; display:block; height:26px; margin-top: 4px; margin-left:15px; background-position:0 -100px; background-repeat:repeat-x; position:relative; cursor:pointer;background-color:#EBF0F5;border-radius: 4px;}
+.tabsPage .tabsPageHeader li { float:left; display:block; height:26px; margin-top: 4px; margin-left:15px; background-position:0 -100px; background-repeat:repeat-x; position:relative; cursor:pointer;background-color:#fff;border-radius: 4px;border: 1px solid #d8dce5;}
 .tabsPage .tabsPageHeader li:first-child {margin-left: 4px;}
 .tabsPage .tabsPageHeader li a { float:left; display:block; overflow:hidden; height:26px; padding-left:5px; padding-right:15px; line-height:26px; background-position:0 0; }
 .tabsPage .tabsPageHeader li a:hover { text-decoration:none;}
@@ -76,7 +84,7 @@ a:hover {text-decoration:underline;}
 .tabsPage .tabsPageHeader li.hover a { background-position:0 -150px;}
 .tabsPage .tabsPageHeader li.hover span { background-position:100% -200px;}
 
-.tabsPage .tabsPageHeader li.selected { background-position:0 -400px; background-repeat:repeat-x; background-color: rgb(77,132,238);}
+.tabsPage .tabsPageHeader li.selected { background-position:0 -400px; background-repeat:repeat-x; background-color: #42b983;}
 .tabsPage .tabsPageHeader li.selected a { font-weight:bold; background-position:0 -300px;}
 .tabsPage .tabsPageHeader li.selected span { background-position:100% -350px; color: #fff;}
 
@@ -88,7 +96,7 @@ a:hover {text-decoration:underline;}
 .tabsPage .tabsPageHeader li.main .home_icon { width:auto; padding:0 0 0 30px; background-position:6px -20px;}
 
 .tabsPage .tabsPageHeader li.selected .home_icon,
-.tabsPage .tabsPageHeader li.main.selected .home_icon { width:auto; padding:0 0 0 30px; background-position:6px 5px;}
+.tabsPage .tabsPageHeader li.main.selected .home_icon { width:auto; padding:0 0 0 25px; background-position:6px 5px;}
 
 .tabsPage .tabsMove { height:25px; position:absolute; top:0; right:0; z-index:2;}
 .tabsPage .tabsLeft, .tabsPage .tabsRight, .tabsPage .tabsMore { display:block; overflow:hidden; width:17px; height:23px; text-indent:-1000px; position:absolute; z-index:2;}
@@ -98,7 +106,7 @@ a:hover {text-decoration:underline;}
 .tabsPage .tabsRight { background-position:0 -150px; top:1px; right:17px; cursor:pointer;}
 .tabsPage .tabsRightHover { background-position:0 -200px;}
 .tabsPage .tabsRightDisabled { background-position:0 -250px; top:1px; right:17px; cursor:default;}
-.tabsPage .tabsMore { background-position:0 -300px; top:1px; right:0; cursor:pointer;}
+.tabsPage .tabsMore { display: none; background-position:0 -300px; top:1px; right:0; cursor:pointer;}
 .tabsPage .tabsMoreHover { background-position:0 -350px;}
 .tabsPage .tabsMoreList { display:none; overflow-x:hidden; overflow-y:auto; width:170px; max-height:380px; padding:2px; border-style:solid; border-width:1px; position:absolute; top:24px; right:0; z-index:3;}
 .tabsPage .tabsMoreList li { display:block; overflow:hidden; height:23px; line-height:21px;}
@@ -242,27 +250,27 @@ a:hover {text-decoration:underline;}
 /* Accordion */
 .accordion { display:block;}
 .accordion .accordionHeader { display:block; overflow:hidden; background-repeat:repeat-x; cursor:pointer;}
-.accordion .accordionHeader h2 { display:block; overflow:hidden; padding:0 25px 0 60px; height:50px; line-height:50px;}
-.accordion .accordionHeader h2 span { float:right; display:block; overflow:hidden; text-indent:-1000px; width:12px; height:12px;margin-top: 17px;}
+.accordion .accordionHeader h2 { display:block; overflow:hidden; padding:0 25px 0 60px; height:56px; line-height:56px;}
+.accordion .accordionHeader h2 span { float:right; display:block; overflow:hidden; text-indent:-1000px; width:12px; height:14px;margin-top: 19px;}
 .accordion .accordionContent { display:block; overflow:hidden;background-color: #4B5777;}
-.accordion .accordionContent .tree li {background-color: #4B5777;}
+.accordion .accordionContent .tree li {background-color: #1f2d3d;}
 .accordion .accordionHeader h2 img {
     display: block;
     width: auto;
-    height: 20px;
-    left: 18px;
-    top: 14px;
+    height: 16px;
+    left: 24px;
+    top: 19px;
     position: absolute;
 }
 
-.accordion .accordionHeader.hover { background-position:0 -25px;}
+.accordion .accordionHeader.hover { background-color: #263445!important}
 .accordion .accordionHeader h2 { background-repeat:no-repeat; background-position:100% -50px;}
 .accordion .accordionHeader.hover h2 { background-position:100% -75px;}
-.accordion .accordionHeader .collapsable { font-size: 17px; background-color: #4B5777;}
+.accordion .accordionHeader .collapsable { font-size: 14px; background-color: rgb(48, 65, 86);}
 .accordion .accordionHeader.hover .collapsable { background-position:100% -125px;}
 .accordion .accordionHeader h2 span { background: url(../default/images/close-icon.png) no-repeat;background-size: contain;}
 
-.accordion .accordionHeader h2.collapsable span { background: url(../default/images/open-icon.png) no-repeat;background-size: contain;}
+.accordion .accordionHeader h2.collapsable span { background: url(../default/images/open-icon.png) no-repeat;background-size: contain;margin-top: 21px;}
 
 .accordion .accordionHeader .collapsable span {}
 
@@ -322,9 +330,9 @@ a:hover {text-decoration:underline;}
 .grid .gridTbody { }
 
 .grid table { border:0; border-collapse:collapse;table-layout:fixed;}
-.grid .gridHeader th { padding:0 3px; vertical-align:top; white-space:nowrap; line-height:21px; cursor:default;text-align: center;font-weight: 600;border-right:1px solid #ededed;}
+.grid .gridHeader th { padding:10px 3px; vertical-align:top; white-space:nowrap; line-height:21px; cursor:default;text-align: center;font-weight: 600;border-right:1px solid #ededed;}
 .grid .gridHeader th.hover, .grid .gridHeader th.thSelected { background-position:0 -50px;}
-.grid .gridTbody td { overflow:hidden; padding:0 3px; border-bottom:solid 1px #ededed; border-right:1px solid #ededed;vertical-align:middle; line-height:30px; font-size: 14px;text-align: center;}
+.grid .gridTbody td { overflow:hidden; padding:10px 3px; border-bottom:solid 1px #ededed; border-right:1px solid #ededed;vertical-align:middle; line-height:30px; font-size: 14px;text-align: center;}
 .grid .gridTbody td div { display:block; overflow:hidden; height:30px; white-space:nowrap; line-height:30px;}
 .grid .gridTbody td div a{line-height:30px;}
 
@@ -463,7 +471,7 @@ label.alt {display:block; overflow:hidden; position:absolute;line-height:20px}
 .buttonDisabled .buttonContent { padding:0 5px 0 0; background-position:100% -450px;}
 
 .button button, .buttonHover button,
-.buttonActive button, .buttonDisabled button { width:auto; height:25px; margin:0; border:0; font-size:12px; font-weight:bold; background:none; cursor:pointer;color: #fff; padding: 0 18px;line-height: 25px;}
+.buttonActive button, .buttonDisabled button { width:auto; height:25px; margin:0; border:0; font-size:12px; font-weight:bold; background:none; cursor:pointer;color: #fff; padding: 0 18px;line-height: 25px;opacity: 1;text-shadow:none;}
 .buttonDisabled button { cursor:default;}
 
 /* ----------------------------------------------------------------- Pages */
@@ -471,25 +479,29 @@ label.alt {display:block; overflow:hidden; position:absolute;line-height:20px}
 #layout { text-align:left;}
 body { overflow:hidden;}
 #layout { display:block; height:100%; position:relative;}
-#header { display:block; overflow:hidden; height:80px; z-index:30}
+#header { position: relative; display:block; height:50px; z-index:30;box-shadow: 0 1px 4px rgba(0,21,41,.08);}
 #leftside { position:absolute; top:55px; left:0; z-index:20;}
-#sidebar { width:200px; position:absolute; top:0; left:0px; z-index:20; overflow-y:auto;}
+#sidebar { width:200px; position:absolute; top:0; left:0px; z-index:20;overflow-y: auto;max-height: 100vh;}
 #sidebar_s { display:none; width:24px; position:absolute; top:0; left:0; z-index:21;}
 #container { position:absolute; top:55px; left:200px;}
 #splitBar { display:none; overflow:hidden; width:5px; cursor:col-resize; position:absolute; top:55px; left:205px; z-index:20;}
 #splitBarProxy { display:none; overflow:hidden; width:3px; border-style:solid; border-width:1px; cursor:col-resize; position:absolute; top:55px; left:205px; z-index:20;}
 #footer {position:absolute; bottom:0; left:0; text-align:center; width:100%; height:21px; padding:0 5px;z-index:-1;color: #fff;}
 
-#header .headerNav { height:80px; background-repeat:no-repeat; background-position:100% -50px;}
+#header .headerNav { height:50px; line-height: 50px; background-repeat:no-repeat; background-position:100% -50px;}
 #header .logo { float:left; width:250px; height:50px; text-indent:-1000px;}
-
-#header .nav { display:block; height:20px; position:absolute; top:30px; right:20px; z-index:31;}
-#header .nav li { float:left; margin-left:-1px; padding:0 10px; line-height:20px; position:relative;}
-#header .nav li a { line-height:20px;}
-#header .nav ul { display:none; width:230px; border:solid 1px #06223e; overflow:hidden; background:#FFF; position:absolute; top:20px; right:0;}
-#header .nav ul li { margin-top:10px; height:21px;}
-#header .nav ul li a { color:#000;}
-#header .nav .selected ul {display:block;}
+#header .headerNav .nav{
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+/*#header .nav { display:block; height:20px; position:absolute; top:10px; right:10px; z-index:31;}*/
+/*#header .nav li { float:left; margin-left:-1px; padding:0 10px; line-height:20px; position:relative;}*/
+/*#header .nav li a { line-height:20px;}*/
+/*#header .nav ul { display:none; width:230px; border:solid 1px #06223e; overflow:hidden; background:#FFF; position:absolute; top:20px; right:0;}*/
+/*#header .nav ul li { margin-top:10px; height:21px;}*/
+/*#header .nav ul li a { color:#000;}*/
+/*#header .nav .selected ul {display:block;}*/
 
 #header .themeList { position:absolute; top:30px; right:10px;}
 #header .themeList li { float:left; padding:0 3px;}
