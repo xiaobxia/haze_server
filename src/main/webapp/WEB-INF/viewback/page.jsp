@@ -8,27 +8,26 @@
 
 <!-- 当前第几页 -->
 <input type="hidden" name="pageNum" value="${page.currentPage }" />
-
 	<div class="bottom-page">
-				<div class="pages">
-					<span>共${page.totalResultSize }条，共${page.totalPageNum }页，每页</span>
-				
-	<select onchange="changeNumPerPage(this.value)" name="numPerPage">
-		<option value="10">10</option>
-		<option value="20">20</option>
-		<option value="50">50</option>
-		<option value="100">100</option>
-		<option value="200">200</option>
-	</select><span>条</span>
-			</div>
-				<div class="pagination" targetType="${targetTypeParam }"
+		<div class="pages">
+			<span>共${page.totalResultSize }条，${page.totalPageNum }页，每页</span>
+			<select onchange="changeNumPerPage(this.value)" name="numPerPage">
+				<option value="10">10</option>
+				<option value="20">20</option>
+				<option value="50">50</option>
+				<option value="100">100</option>
+				<option value="200">200</option>
+			</select>
+			<span>条</span>
+		</div>
+		<div class="pagination" targetType="${targetTypeParam }"
 				<c:if test="${not empty pagedRel}">
 				 rel="${pagedRel }"
 				 </c:if>
-				 
 					totalCount="${page.totalResultSize }" numPerPage="${page.pageSize }"
-					pageNumShown="10" currentPage="${page.currentPage }"></div>
-			</div>
+					pageNumShown="10" currentPage="${page.currentPage }">
+		</div>
+	</div>
 	<script type="text/javascript">
 	var func_pageBreak = navTabPageBreak;
 	<c:if test="${ 'dialog' eq targetTypeParam}">

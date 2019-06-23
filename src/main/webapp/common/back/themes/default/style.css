@@ -131,9 +131,9 @@
 .pagination li.disabled span span,
 .panelBar .line, .pagination li.jumpto, .pagination li.jumpto .goto { background-color: #EBF0F5;}
 
-.panelBar { border-color:#C7D3DD; background-color:#EBF0F5;}
+.panelBar { border-bottom:1px solid #ededed; background-color:#fff;}
 
-.grid .gridHeader { background:#f5f7fa;}
+.grid .gridHeader { background:#fff;}
 .grid { background:#FFF;}
 .grid table { border-color:#d0d0d0;}
 .grid .gridHeader, .grid .gridHeader th { border-color:#d0d0d0;}
@@ -143,19 +143,18 @@
 
 .grid .resizeMarker, .grid .resizeProxy { background:url(./images/grid/resizeCol.png) repeat-y;}
 
-.grid .gridHeader th.hover, .grid .gridHeader th.thSelected { border-color:#aaccf6; }
 .grid .gridTbody .gridRowBg { background:#f7f7f7;}
 .grid .gridTbody .gridRow { border-color:#ededed;}
 .grid .gridTbody .gridRow td.tdLast { border-color:#ededed;}
-.grid .gridTbody .hover { border-color:#dddddd; background:#f5f5f5;}
-.grid .gridTbody .hover .tdSelected { background:#f5f5f5;}
-.grid .gridTbody .selected {background:#ddd;}
-.grid .gridTbody .selected .tdSelected { background:#ddd;}
+.grid .gridTbody .hover { border-color:#dddddd; background:#f5f7fa;}
+.grid .gridTbody .hover .tdSelected { background:#f5f7fa;}
+.grid .gridTbody .selected {background:#e8f4ff;}
+.grid .gridTbody .selected .tdSelected { background:#e8f4ff;}
 .grid .gridTbody .tdSelected { background:#f8f8f8;}
 .grid .error{background:#fb7e81;}
 
 /* ProgressBar */
-.progressBar { background:#FFF url(./images/progressBar/progressBar_m.gif) no-repeat 10px 10px;}
+.progressBar { }
 
 /* ----------------------------------------------------------------- Form */
 /* TextInput */
@@ -177,7 +176,7 @@ input.disabled, textarea.disabled { border-color:#9eabb3 #d5dbdf #d5dbdf #9eabb3
 .buttonActive, .buttonActive span,
 .button .buttonContent, .buttonHover, .buttonHover .buttonContent,
 .buttonActive .buttonContent, .buttonActiveHover, .buttonActiveHover .buttonContent,
-.buttonDisabled .buttonContent {background-color: rgb(77,132,238);border-radius: 4px;}
+.buttonDisabled .buttonContent {background-color: #409eff;border-radius: 4px;}
 
 .button span, .buttonDisabled span, .buttonActive span,
 .button .buttonContent, .buttonHover, .buttonHover .buttonContent,
@@ -289,31 +288,37 @@ body, #splitBar { background:rgb(48, 65, 86);}
 
 .bottom-page {
     background: #fff;
-    padding: 0 20px;
-    line-height: 30px;
-    /*width: 100%;*/
-    /*position: absolute;*/
-    /*bottom: 0;*/
+    padding: 32px 20px;
+    line-height: 32px;
+    margin-top: 30px;
 }
 .bottom-page .pages {
     display: inline-block;
     color: #606266;
-    line-height: 30px;
+    line-height: 32px;
 }
 .bottom-page span {
     font-size: 13px;
 }
 .bottom-page .pagination {
-    float: right;
     padding: 0;
+    margin: 0;
     background: none;
     display: inline-block;
     vertical-align: bottom;
 }
+.bottom-page .pagination li.selected {
+    background-color: #1890ff;
+    color: #fff;
+}
+.bottom-page .pagination li.selected a{
+    color: #fff;
+}
 .bottom-page .pagination li,.bottom-page .pagination li.hover {
     margin-right: 6px;
     float: left;
-    line-height: 30px;
+    height: 32px;
+    line-height: 32px;
 }
 .bottom-page .pagination li.disabled .first span {
     background-color: #fff;
@@ -329,21 +334,30 @@ body, #splitBar { background:rgb(48, 65, 86);}
 .bottom-page .pagination a,.bottom-page .pagination li.hover a,.bottom-page .pagination li span {
     background: none;
     float: none;
-    line-height: 30px;
+    line-height: 32px;
 }
 .bottom-page .pagination li.jumpto {
     padding: 0;
     background: none;
-    line-height: 30px;
+    line-height: 32px;
 }
 .bottom-page .pagination span, .bottom-page .pagination li.hover span {
-    line-height: 30px;
-    height: 30px;
+    line-height: 32px;
+    height: 32px;
 }
 .bottom-page .pagination li.jumpto .textInput {
     float: none;
-    padding: 0;
+    padding: 0 3px;
+    height: 28px;
     text-align: center;
+    color: #606266;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #c0c4cc;
+    width: 50px;
+    font-size: 14px;
+    vertical-align: middle;
 }
 
 .bottom-page .pagination li.jumpto .goto {
@@ -850,7 +864,7 @@ input.disabled {
     display: block;
     overflow: hidden;
     height: 25px;
-    background-color: #7C99D1;
+    background-color: #e6a23c;
     border-radius: 4px;
 }
 

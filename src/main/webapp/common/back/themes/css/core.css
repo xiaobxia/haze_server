@@ -276,17 +276,19 @@ a:hover {text-decoration:underline;}
 
 /* Grid */
 .panel .grid { border-style:solid; border-width:0 1px;}
-.panel .panelBar { border-width:1px;}
+.panel .panelBar { }
 
-.panelBar { display:block; overflow:hidden; height:40px; border-style:solid; border-width:1px 0; line-height: 28px; padding: 5px 0;box-sizing: border-box;}
+.panelBar { display:block; overflow:hidden; height:40px; line-height: 28px; padding: 5px 0;box-sizing: border-box;}
 
 .panelBar ul {}
 .panelBar li { float:left; display:block; overflow:hidden; height:28px;line-height: 28px;}
 .panelBar li.hover { background-position:0 -100px;}
 .panelBar li.hover a { background-position:100% -150px;}
-
-.panelBar .toolBar li, .panelBar .toolBar li.hover { }
-.panelBar .toolBar a, .panelBar .toolBar li.hover a { float:left; display:block; overflow:hidden; padding:4px 10px; min-width: 60px; text-decoration:none; margin: 0 10px 0 5px;border-radius: 4px;text-align: center;background-color: #7C99D1;}
+.close:focus, .close:hover {
+    color: #fff;
+}
+.panelBar .toolBar li, .panelBar .toolBar li.hover {background-color: #fff; }
+.panelBar .toolBar a, .panelBar .toolBar li.hover a { float:left; display:block; overflow:hidden; padding:4px 10px; min-width: 60px; text-decoration:none; margin: 0 10px 0 5px;border-radius: 4px;text-align: center;background-color: #409eff;}
 .panelBar .toolBar span, .panelBar .toolBar li.hover span { display:inline-block; overflow:hidden; line-height:20px; cursor:pointer;background-color: transparent;color: #fff;}
 
 .panelBar .toolBar li.line { display:none; overflow:hidden; width:1px; padding:0; text-indent:-1000px; background-color: #667097;}
@@ -295,9 +297,31 @@ a:hover {text-decoration:underline;}
 .panelBar .pages span { float:left; line-height:21px;}
 .panelBar .pages select { float:left; margin:0 3px; font-size:12px;}
 
-.pagination { float:right; padding-left:7px; background-position:0 -199px;}
-.pagination li, .pagination li.hover { padding:0 0 0 5px; background-position:0 -100px;}
-.pagination a, .pagination li.hover a, .pagination li span { float:left; display:block; padding:0 5px 0 0; text-decoration:none; line-height:23px; background-position:100% -150px;}
+.pagination { padding-left:7px; background-position:0 -199px;}
+.pagination li {
+    padding: 0 4px;
+    vertical-align: top;
+    display: inline-block;
+    font-size: 13px;
+    height: 28px;
+    line-height: 28px;
+    cursor: pointer;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    text-align: center;
+    margin: 0 5px;
+    background-color: #f4f4f5;
+    color: #606266;
+    min-width: 30px;
+    border-radius: 2px;
+}
+.pagination li.hover a{
+    color: #1890ff;
+}
+.bottom-page .pagination .j-num a {
+    font-weight: 600;
+}
+.pagination a, .pagination li.hover a, .pagination li span { float:left; display:block; text-decoration:none; line-height:23px; background-position:100% -150px;}
 .pagination li.selected a{color:red; font-weight:bold;}
 .pagination span, .pagination li.hover span { float:left; display:block; height:23px; line-height:23px; cursor:pointer;}
 
@@ -322,7 +346,7 @@ a:hover {text-decoration:underline;}
 .pagination li.jumpto .textInput { float:left; width:30px; padding:1px; border-color:#acaeaf;}
 .pagination li.jumpto .goto { float:left; display:block; overflow:hidden; width:16px; height:19px; border:0; text-indent:-1000px; background-position:0 -650px; cursor:pointer;}
 
-.grid { display:block; overflow:hidden; width:100%; border-width:0 1px; position:relative;}
+.grid { display:block; overflow:hidden; width:100%;  position:relative;}
 .grid .gridHeader { display:block; overflow:hidden; width:auto;}
 .grid .gridThead { }
 
@@ -330,7 +354,7 @@ a:hover {text-decoration:underline;}
 .grid .gridTbody { }
 
 .grid table { border:0; border-collapse:collapse;table-layout:fixed;}
-.grid .gridHeader th { padding:10px 3px; vertical-align:top; white-space:nowrap; line-height:21px; cursor:default;text-align: center;font-weight: 600;border-right:1px solid #ededed;}
+.grid .gridHeader th { padding:10px 3px; vertical-align:top; white-space:nowrap; line-height:21px; cursor:default;text-align: center;font-weight: 600;border-right:1px solid #ededed;border-bottom:1px solid #ededed;color: #909399;}
 .grid .gridHeader th.hover, .grid .gridHeader th.thSelected { background-position:0 -50px;}
 .grid .gridTbody td { overflow:hidden; padding:10px 3px; border-bottom:solid 1px #ededed; border-right:1px solid #ededed;vertical-align:middle; line-height:30px; font-size: 14px;text-align: center;}
 .grid .gridTbody td div { display:block; overflow:hidden; height:30px; white-space:nowrap; line-height:30px;}
@@ -354,13 +378,13 @@ a:hover {text-decoration:underline;}
 /* CSS Table */
 table.list {border-collapse:collapse;}
 table.list thead tr {background-color:#f5f7fa;}
-table.list th {padding:1px 2px; line-height:36px;  font-weight:bolder; font-size: 16px;}
+table.list th {padding:1px 2px; line-height:36px;  font-weight:bolder; font-size: 16px;text-align: center;}
 table.list td {padding:1px 2px; line-height:36px; font-size: 14px;}
 table.list th.asc, .grid .gridHeader th.asc{background-position: 100% 0; background:url(../default/images/order_up.gif) no-repeat right; cursor:pointer;}
 table.list th.desc, .grid .gridHeader th.desc{background-position: 100% 0; background:url(../default/images/order_down.gif) no-repeat right; cursor:pointer;}
 table.list tbody {background-color:#fff;}
 table.list .right {text-align:right;}
-table.list .trbg {background-color:#F8F8F8;}
+table.list .trbg {background-color:#fff;}
 table.list .hot {background-color:#fff5c0;}
 table.list .hover {background-color:#ddd;}
 table.list .selected {background-color:#ddd; }
@@ -400,7 +424,45 @@ table.nowrap tbody tr {border-bottom:solid 1px #ededed;}
 #taskbar .taskbarRightDisabled { background-position:0 -250px; cursor:default;}
 
 /* ProgressBar */
-.progressBar { display:block; width:148px; height:28px; position:fixed; top:50%; left:50%; margin-left:-74px; margin-top:-14px; padding:10px 10px 10px 50px; text-align:left; line-height:27px; font-weight:bold; position:absolute; z-index:2001;font-size: 15px;}
+.progressBar { display:block; width:300px; height:60px; position:fixed; top:50%; left:50%; padding:10px; text-align:left; line-height:40px; font-weight:bold; z-index:2001;font-size: 15px;}
+.progressBar span {
+    font-size: 15px;
+    vertical-align: middle;
+}
+.progressBar .glyphicon {
+    color: #409EFF;
+    font-size: 40px;
+    margin-right: 20px;
+    -webkit-animation:haha1 .8s linear infinite;
+    animation:haha1 .8s linear infinite;
+}
+@-webkit-keyframes haha1 {
+
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    25% {
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+
+    50% {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+
+    75% {
+        -webkit-transform: rotate(270deg);
+        transform: rotate(270deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
 .background { display:block; width:100%; height:100%; opacity:0.4; filter:alpha(opacity=40); background:#FFF; position:absolute; top:0; left:0; z-index:2000;}
 .alertBackground { display:none; width:100%; height:100%; opacity:0.4; filter:alpha(opacity=40); background:#FFF; position:absolute; top:0; left:0; z-index:1010;}
 .dialogBackground { display:none; width:100%; height:100%; background-color: rgba(0,0,0,0.4); position:absolute; top:0; left:0; z-index:900;}
@@ -453,7 +515,7 @@ label.alt {display:block; overflow:hidden; position:absolute;line-height:20px}
 .button { background-position:0 0;}
 .button .buttonContent { padding:0 5px 0 0; background-position:100% -50px;}
 .button span { padding:0 10px 0 5px; background-position:100% -50px; cursor:pointer;}
-.button:hover { text-decoration:none; background-position:0 -100px;}
+.button:hover { text-decoration:none; background-position:0 -100px;color: #fff!important;}
 .button:hover span { background-position:100% -150px;}
 .buttonHover { padding-left:5px; background-position:0 -100px;}
 .buttonHover .buttonContent { padding:0 5px 0 0; background-position:100% -150px;}
@@ -542,7 +604,7 @@ body { overflow:hidden;}
 
 /* Pages default */
 .page { display:block; overflow:hidden;float:left; width:100%;}
-.pageHeader { display:block; overflow:auto; padding:11px 15px; position:relative;}
+.pageHeader { display:block; overflow:auto; padding:11px 15px; position:relative;border-bottom: 1px solid #ededed;}
 .searchBar {}
 .searchBar ul.searchContent { display:block; overflow:hidden; height:25px;}
 .searchBar ul.searchContent li { float:left; display:block; overflow:hidden; width:300px; height:21px; padding:2px 0;}

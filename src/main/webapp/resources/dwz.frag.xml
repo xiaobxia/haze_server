@@ -91,7 +91,7 @@
 <div id="dialogBackground" class="dialogBackground"></div>
 
 <div id='background' class='background'></div>
-<div id='progressBar' class='progressBar'>数据加载中，请稍等...</div>
+<div id='progressBar' class='progressBar'><span class="glyphicon glyphicon-refresh"></span><span>数据加载中，请稍等...<span/></div>
 ]]></_PAGE_>
 
 <!-- dwz.pagination -->
@@ -114,7 +114,7 @@
 		<a class="last" href="javascript:;"><span>末页</span></a>
 		<span class="last"><span>末页</span></span>
 	</li>
-	<li class="jumpto"><input class="textInput" type="text" size="4" value="#currentPage#" /><input class="goto" type="button" value="确定" /></li>
+	<li class="jumpto">前往<input class="textInput" type="text" size="4" value="#currentPage#" />页<input class="goto" type="button" value="确定" /></li>
 </ul>
 ]]></_PAGE_>
 
