@@ -384,6 +384,7 @@ public class BorrowOrder {
 		borrowStatusMap_shenheFail.put(BorrowOrder.STATUS_CSBH, shenheFail);
 		borrowStatusMap_shenheFail.put(BorrowOrder.STATUS_FSBH, shenheFail);
 		borrowStatusMap_shenheFail.put(BorrowOrder.STATUS_FKBH, shenheFail);
+		borrowStatusMap_shenheFail.put(BorrowOrder.STATUS_YHQXJK, shenheFail);
 //		//已逾期
 //		borrowStatusMap_yiyuqi.put(BorrowOrder.STATUS_YYQ, yiyuqi);
 //		borrowStatusMap_yiyuqi.put(BorrowOrder.STATUS_YHZ, yiyuqi);
