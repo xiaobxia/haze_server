@@ -69,43 +69,87 @@ a:hover {text-decoration:underline;}
 .tabs .tabsFooter { display:block; overflow:hidden; height:5px; background-position:0 -600px;}
 .tabs .tabsFooterContent { display:block; overflow:hidden; height:5px; background-position:100% -650px;}
 
-
-.tabsPage .tabsPageHeader { display:block; height:36px; position:relative;}
-.tabsPage .tabsPageHeaderContent { display:block; overflow:hidden; height:36px; margin-right:19px; position:relative;}
-.tabsPage .tabsPageHeaderMargin { margin:0 34px 0 17px;}
-.tabsPage .tabsPageHeader ul { display:block; width:10000px; height:36px; z-index:1; position:absolute;}
-.tabsPage .tabsPageHeader li { float:left; display:block; height:26px; margin-top: 4px; margin-left:15px; background-position:0 -100px; background-repeat:repeat-x; position:relative; cursor:pointer;background-color:#fff;border-radius: 4px;border: 1px solid #d8dce5;}
-.tabsPage .tabsPageHeader li:first-child {margin-left: 4px;}
-.tabsPage .tabsPageHeader li a { float:left; display:block; overflow:hidden; height:26px; padding-left:5px; padding-right:15px; line-height:26px; background-position:0 0; }
+.tabsPage .tabsPageHeader .glyphicon{
+    font-size: 24px;
+    vertical-align: middle;
+}
+.tabsPage .tabsPageHeader { display:block; height:41px; position:relative;}
+.tabsPage .tabsPageHeaderContent { display:block; overflow:hidden; height:40px; margin-right:19px; position:relative;}
+.tabsPage .tabsPageHeaderMargin { margin:0 40px;}
+.tabsPage .tabsPageHeader ul { display:block; width:10000px; height:40px; z-index:1; position:absolute;}
+.tabsPage .tabsPageHeader li { float:left; display:block; height:40px;position:relative; cursor:pointer;padding: 0 15px;border-right: 1px solid #f6f6f6;}
+.tabsPage .tabsPageHeader li:first-child {}
+.tabsPage .tabsPageHeader li a { display:inline-block; overflow:hidden; height:40px; line-height:40px;}
 .tabsPage .tabsPageHeader li a:hover { text-decoration:none;}
-.tabsPage .tabsPageHeader li span { float:left; display:block; overflow:hidden; width:92px; height:26px; line-height:26px; background-position:100% -50px; cursor:pointer;}
+.tabsPage .tabsPageHeader li span { float:left; display:block; overflow:hidden; height:40px; line-height:40px;cursor:pointer;}
 
 .tabsPage .tabsPageHeader li.hover { background-position:0 -250px; background-repeat:repeat-x;}
 .tabsPage .tabsPageHeader li.hover a { background-position:0 -150px;}
 .tabsPage .tabsPageHeader li.hover span { background-position:100% -200px;}
 
-.tabsPage .tabsPageHeader li.selected { background-position:0 -400px; background-repeat:repeat-x; background-color: #42b983;}
+.tabsPage .tabsPageHeader li.selected { background-color: #f6f6f6;}
 .tabsPage .tabsPageHeader li.selected a { font-weight:bold; background-position:0 -300px;}
-.tabsPage .tabsPageHeader li.selected span { background-position:100% -350px; color: #fff;}
+.tabsPage .tabsPageHeader li.selected span { }
 
-.tabsPage .tabsPageHeader li .close { display:block; overflow:hidden; width:11px; height:11px; padding:0; text-indent:-1000px; position:absolute; top:3px; right:2px;}
+.tabsPage .tabsPageHeader li .close { display:block; overflow:hidden; height:40px; padding:0; opacity: 1;background: none;margin-left: 15px;}
 .tabsPage .tabsPageHeader li .close:hover {}
+.tabsPage .tabsPageHeader li .home_icon .glyphicon {
+    width: auto;
+    font-size: 16px;
+    line-height: 40px;
+}
+.tabsPage .tabsPageHeader li .glyphicon {
+    float: none;
+    color: #bbb;
+    overflow: visible;
+    background: none;
+    text-indent: 0;
+    font-size: 14px;
+}
 
+.tabsPage .tabsPageHeader li:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    border-radius: 0;
+    background-color: #292B34;
+    transition: all .3s;
+    -webkit-transition: all .3s;
+}
+.tabsPage .tabsPageHeader li.hover:after {
+    width: 100%;
+    border: none;
+    height: 2px;
+}
+.tabsPage .tabsPageHeader li.selected:after {
+    width: 100%;
+    border: none;
+    height: 2px;
+}
+.tabsPage .tabsPageHeader li:hover {
+    background-color: #f6f6f6;
+}
 .tabsPage .tabsPageHeader li.main span {}
 .tabsPage .tabsPageHeader li .home_icon,
-.tabsPage .tabsPageHeader li.main .home_icon { width:auto; padding:0 0 0 30px; background-position:6px -20px;}
+.tabsPage .tabsPageHeader li.main .home_icon { width:auto;}
 
 .tabsPage .tabsPageHeader li.selected .home_icon,
-.tabsPage .tabsPageHeader li.main.selected .home_icon { width:auto; padding:0 0 0 25px; background-position:6px 5px;}
+.tabsPage .tabsPageHeader li.main.selected .home_icon { width:auto;}
 
 .tabsPage .tabsMove { height:25px; position:absolute; top:0; right:0; z-index:2;}
-.tabsPage .tabsLeft, .tabsPage .tabsRight, .tabsPage .tabsMore { display:block; overflow:hidden; width:17px; height:23px; text-indent:-1000px; position:absolute; z-index:2;}
-.tabsPage .tabsLeft { background-position:0 0; top:1px; left:0; cursor:pointer;}
+.tabsPage .tabsLeft, .tabsPage .tabsRight, .tabsPage .tabsMore { display:block; overflow:hidden; width:40px; height:40px; line-height: 40px; text-align: center; position:absolute; z-index:2;    transition: all .3s;-webkit-transition: all .3s;color: #666;}
+.tabsPage .tabsLeft:hover, .tabsPage .tabsRight:hover {
+    background-color: #f6f6f6;
+}
+.tabsPage .tabsLeft { top:0; left:0; cursor:pointer;}
 .tabsPage .tabsLeftHover { background-position:0 -50px;}
 .tabsPage .tabsLeftDisabled { background-position:0 -100px; top:1px; left:0; cursor:default;}
 .tabsPage .tabsRight { background-position:0 -150px; top:1px; right:17px; cursor:pointer;}
 .tabsPage .tabsRightHover { background-position:0 -200px;}
-.tabsPage .tabsRightDisabled { background-position:0 -250px; top:1px; right:17px; cursor:default;}
+.tabsPage .tabsRightDisabled { top:0; right:0; cursor:default;}
 .tabsPage .tabsMore { display: none; background-position:0 -300px; top:1px; right:0; cursor:pointer;}
 .tabsPage .tabsMoreHover { background-position:0 -350px;}
 .tabsPage .tabsMoreList { display:none; overflow-x:hidden; overflow-y:auto; width:170px; max-height:380px; padding:2px; border-style:solid; border-width:1px; position:absolute; top:24px; right:0; z-index:3;}
@@ -140,7 +184,7 @@ a:hover {text-decoration:underline;}
 .alert .alertFooter_c { padding:0; background-position:0 -100px; background-repeat:repeat-x;}
 
 /* Dialog */
-.dialog { display:block; text-align:left; position:absolute; z-index:42;border-radius: 4px; overflow: hidden;}
+.dialog { display:block; text-align:left; position:absolute; z-index:42;border-radius: 4px; overflow: hidden;background-color: #fff;}
 .dialog .dialogHeader, .dialog .dialogHeader_r, .dialog .dialogHeader_c { display:block; overflow:hidden; height:40px;}
 .dialog .dialogHeader .close, .dialog .dialogHeader .maximize, .dialog .dialogHeader .restore, .dialog .dialogHeader .minimize { display:block; overflow:hidden; text-indent:-1000px; width:19px; height:19px; position:absolute; top:9px;}
 .dialog .dialogHeader h1 { display:block; overflow:hidden; height:40px; padding:0; line-height:40px;font-size: 18px;}
@@ -278,18 +322,18 @@ a:hover {text-decoration:underline;}
 .panel .grid { border-style:solid; border-width:0 1px;}
 .panel .panelBar { }
 
-.panelBar { display:block; overflow:hidden; height:40px; line-height: 28px; padding: 5px 0;box-sizing: border-box;}
+.panelBar { display:block; overflow:hidden; height:47px; padding: 5px 0;box-sizing: border-box;}
 
 .panelBar ul {}
-.panelBar li { float:left; display:block; overflow:hidden; height:28px;line-height: 28px;}
-.panelBar li.hover { background-position:0 -100px;}
-.panelBar li.hover a { background-position:100% -150px;}
+.panelBar li { float:left; display:block; overflow:hidden; height:36px;line-height: 36px;}
+.panelBar li.hover { }
+.panelBar li.hover a { }
 .close:focus, .close:hover {
     color: #fff;
 }
 .panelBar .toolBar li, .panelBar .toolBar li.hover {background-color: #fff; }
-.panelBar .toolBar a, .panelBar .toolBar li.hover a { float:left; display:block; overflow:hidden; padding:4px 10px; min-width: 60px; text-decoration:none; margin: 0 10px 0 5px;border-radius: 4px;text-align: center;background-color: #409eff;}
-.panelBar .toolBar span, .panelBar .toolBar li.hover span { display:inline-block; overflow:hidden; line-height:20px; cursor:pointer;background-color: transparent;color: #fff;}
+.panelBar .toolBar a, .panelBar .toolBar li.hover a { float:left; display:block; overflow:hidden; padding:0 20px; text-decoration:none; margin: 0 10px 0 5px;border-radius: 4px;text-align: center;background-color: #409eff;height: 36px;}
+.panelBar .toolBar span, .panelBar .toolBar li.hover span { display:inline-block; overflow:hidden; line-height:36px; cursor:pointer;background-color: transparent;color: #fff;}
 
 .panelBar .toolBar li.line { display:none; overflow:hidden; width:1px; padding:0; text-indent:-1000px; background-color: #667097;}
 
@@ -321,17 +365,18 @@ a:hover {text-decoration:underline;}
 .bottom-page .pagination .j-num a {
     font-weight: 600;
 }
+.bottom-page select {
+    height: 32px;
+    width: 70px;
+    margin: 0 5px;
+}
 .pagination a, .pagination li.hover a, .pagination li span { float:left; display:block; text-decoration:none; line-height:23px; background-position:100% -150px;}
 .pagination li.selected a{color:red; font-weight:bold;}
 .pagination span, .pagination li.hover span { float:left; display:block; height:23px; line-height:23px; cursor:pointer;}
 
-.pagination li .first span, .panelBar li .previous span { padding:0 0 0 10px;}
-.pagination li .next span, .panelBar li .last span { padding:0 10px 0 0;}
-.pagination li .first span { background-position:0 -244px;}
-.pagination li .previous span { background-position:0 -294px;}
-.pagination li .next span { background-position:100% -344px;}
-.pagination li .last span { background-position:100% -394px;}
-.pagination li .last { margin-right:5px;}
+.pagination li .first span, .panelBar li .previous span { }
+.pagination li .next span, .panelBar li .last span { }
+.pagination li .last {}
 
 .pagination li.disabled { background:none;}
 .pagination li.disabled span, .grid .pagination li.disabled a { background-position:0 100px; cursor:default;}
@@ -354,7 +399,7 @@ a:hover {text-decoration:underline;}
 .grid .gridTbody { }
 
 .grid table { border:0; border-collapse:collapse;table-layout:fixed;}
-.grid .gridHeader th { padding:10px 3px; vertical-align:top; white-space:nowrap; line-height:21px; cursor:default;text-align: center;font-weight: 600;border-right:1px solid #ededed;border-bottom:1px solid #ededed;color: #909399;}
+.grid .gridHeader th { padding:10px 3px; vertical-align:top; white-space:nowrap; line-height:21px; cursor:default;text-align: center;font-weight: 600;border-top:1px solid #ededed;border-right:1px solid #ededed;border-bottom:1px solid #ededed;color: #909399;}
 .grid .gridHeader th.hover, .grid .gridHeader th.thSelected { background-position:0 -50px;}
 .grid .gridTbody td { overflow:hidden; padding:10px 3px; border-bottom:solid 1px #ededed; border-right:1px solid #ededed;vertical-align:middle; line-height:30px; font-size: 14px;text-align: center;}
 .grid .gridTbody td div { display:block; overflow:hidden; height:30px; white-space:nowrap; line-height:30px;}
@@ -473,7 +518,7 @@ select, .textInput, input.focus, input.required, input.error, input.readonly, in
 textarea.focus, textarea.required, textarea.error, textarea.readonly, textarea.disabled {
     padding:2px;
     margin:0;
-    line-height:20px;
+    line-height:30px;
     font-size:12px;
     background-color: #fff;
     background-image: none;
@@ -506,11 +551,11 @@ span.error { display:block; overflow:hidden; width:auto; height:24px; padding:0 
 label.alt {display:block; overflow:hidden; position:absolute;line-height:20px}
 
 /* Button */
-.button, .buttonActive, .buttonDisabled { float:left; display:block; overflow:hidden; height:25px;}
+.button, .buttonActive, .buttonDisabled { float:left; display:block; overflow:hidden; height:36px;}
 
 .button span, .buttonDisabled span, .buttonActive span,
 .button .buttonContent, .buttonHover, .buttonHover .buttonContent,
-.buttonActive .buttonContent, .buttonDisabled .buttonContent { float:left; display:block; overflow:hidden; height:25px; line-height:25px; font-weight:bold;}
+.buttonActive .buttonContent, .buttonDisabled .buttonContent { float:left; display:block; overflow:hidden; height:36px; line-height:36px; }
 
 .button { background-position:0 0;}
 .button .buttonContent { padding:0 5px 0 0; background-position:100% -50px;}
@@ -520,8 +565,8 @@ label.alt {display:block; overflow:hidden; position:absolute;line-height:20px}
 .buttonHover { padding-left:5px; background-position:0 -100px;}
 .buttonHover .buttonContent { padding:0 5px 0 0; background-position:100% -150px;}
 
-.buttonActive { background-position:0 -200px;}
-.buttonActive .buttonContent { padding:0; background-position:100% -250px;}
+.buttonActive { }
+.buttonActive .buttonContent { }
 .buttonActive span { padding:0 10px 0 5px; background-position:100% -250px; cursor:pointer;}
 .buttonActive:hover { text-decoration:none; background-position:0 -300px;}
 .buttonActive:hover span { background-position:100% -350px;}
@@ -533,7 +578,7 @@ label.alt {display:block; overflow:hidden; position:absolute;line-height:20px}
 .buttonDisabled .buttonContent { padding:0 5px 0 0; background-position:100% -450px;}
 
 .button button, .buttonHover button,
-.buttonActive button, .buttonDisabled button { width:auto; height:25px; margin:0; border:0; font-size:12px; font-weight:bold; background:none; cursor:pointer;color: #fff; padding: 0 18px;line-height: 25px;opacity: 1;text-shadow:none;}
+.buttonActive button, .buttonDisabled button { width:auto; height:36px; margin:0; border:0; font-size:14px; background:none; cursor:pointer;color: #fff; padding: 0 20px;line-height: 36px;opacity: 1;text-shadow:none;}
 .buttonDisabled button { cursor:default;}
 
 /* ----------------------------------------------------------------- Pages */
@@ -617,7 +662,7 @@ body { overflow:hidden;}
 .searchBar .subBar ul { float:right;}
 .searchBar .subBar li { float:left; margin-left:5px;}
 .pageContent { display:block;overflow:auto;position:relative;}
-.searchBar select { width: 150px; height: 25px;}
+.searchBar select { width: 156px; height: 36px;}
 .dateRange input{width:72px;}
 .dateRange .limit {text-align: center; width: 15px; line-height:21px; }
 
@@ -625,11 +670,13 @@ body { overflow:hidden;}
 .pageForm { display:block; overflow:auto;}
 .pageFormContent { display:block; overflow:auto; padding:10px 5px; position:relative;}
 .pageFormContent div.unit {display:block; margin:0; padding:5px 0; position:relative;clear:both;}
-.pageFormContent p { float:left; display:block; width:85%; height:21px; margin:0; padding:5px 0; position:relative;}
+.pageFormContent p { float:left; display:block; width:85%; height:46px; line-height: 36px;margin:0; padding:5px 0; position:relative;}
 .pageFormContent p.nowrap { height:auto;}
 .pageFormContent .radioGroup { float:left; display:block; overflow:hidden;}
-
-.pageFormContent label { float:left; width:120px; padding:3px 5px; line-height:21px;}
+.collapse {
+    display: block;
+}
+.pageFormContent label { float:left; width:120px; padding:0 5px; line-height:36px;}
 .pageFormContent label.radioButton { float:left; width:auto; padding:0 10px 0 0; line-height:21px;}
 .pageFormContent .textInput { float:left;}
 .pageFormContent select { float:left;}
@@ -659,7 +706,7 @@ fieldset legend {
 }
 fieldset legend:hover {background-color: #dddddd;}
 
-.formBar { clear:both; padding:0 5px; height:30px; padding-top:5px;}
+.formBar { clear:both; padding:0 5px; height:36px; }
 .formBar ul { float:right;}
 .formBar li { float:left; margin-left:5px;}
 .divider { clear:both; display:block; overflow:hidden; text-indent:-1000px; width:auto; height:1px; padding:4px 0 0 0; margin-bottom:5px; border-style:dotted; border-width:0 0 1px 0;}

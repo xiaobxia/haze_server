@@ -33,8 +33,8 @@
 .tabsPage .tabsPageHeader li a { color:#183152;}
 .tabsPage .tabsPageHeader li .close,
 .tabsPage .tabsPageHeader li.hover .close,
-.tabsPage .tabsPageHeader li.selected .close { background:url(./images/tabs/tabspage_icon.png) no-repeat;}
-.tabsPage .tabsLeft, .tabsPage .tabsRight, .tabsPage .tabsMore { background:url(./images/tabs/tabscontrol.png) no-repeat;}
+.tabsPage .tabsPageHeader li.selected .close { }
+.tabsPage .tabsLeft, .tabsPage .tabsRight, .tabsPage .tabsMore { }
 .tabsPage .tabsMoreList { border-color:#b8d0d6; background:#FFF;}
 .tabsPage .tabsPageHeader .home_icon { }
 .tabsPage .tabsPageContent { border-color:#b8d0d6; background:#FFF;}
@@ -159,7 +159,7 @@
 /* ----------------------------------------------------------------- Form */
 /* TextInput */
 .textInput, input.focus, input.required, input.error, input.readonly, input.disabled,
-textarea.focus, textarea.required, textarea.error, textarea.readonly, textarea.disabled { background:url(./images/form/input_bg.png) no-repeat scroll;}
+textarea.focus, textarea.required, textarea.error, textarea.readonly, textarea.disabled {}
 
 .textInput, .textArea { border: 1px solid #C7D3DD; background-color:#FFF;}
 input.required, textarea.required { border-color:#a2bac0 #b8d0d6 #b8d0d6 #a2bac0; background-color:#FFF;}
@@ -358,6 +358,7 @@ body, #splitBar { background:rgb(48, 65, 86);}
     width: 50px;
     font-size: 14px;
     vertical-align: middle;
+    margin: 0 5px;
 }
 
 .bottom-page .pagination li.jumpto .goto {
@@ -863,7 +864,7 @@ input.disabled {
     float: left;
     display: block;
     overflow: hidden;
-    height: 25px;
+    height: 36px;
     background-color: #e6a23c;
     border-radius: 4px;
 }
@@ -872,18 +873,16 @@ input.disabled {
     padding: 0;
     display: block;
     overflow: hidden;
-    height: 25px;
-    line-height: 25px;
-    font-weight: bold;
+    height: 36px;
+    line-height: 36px;
 }
 
 .buttonActive-blue .buttonContent-blue a, .buttonActive-blue .buttonContent-blue span{
     color: #fff;
-    font-size: 12px;
-    font-weight: bold;
+    font-size: 14px;
     cursor: pointer;
-    padding: 0 18px;
-    line-height: 25px;
+    padding: 0 20px;
+    line-height: 36px;
     text-decoration: none;
 }
 

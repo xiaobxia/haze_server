@@ -309,6 +309,19 @@
 		.aways-h {
 			display: none !important;
 		}
+        .user-img {
+            position: absolute;
+            right: 140px;
+            height: 40px;
+            width: 40px;
+            overflow: hidden;
+            border-radius: 6px;
+            top: 5px;
+        }
+        .user-img img {
+            width: 100%;
+            height: 100%;
+        }
 	</style>
 	<script src="${basePath }/js/dwz.ui.js" type="text/javascript"></script>
 	<script src="${basePath }/js/speedup.js" type="text/javascript"></script>
@@ -712,6 +725,9 @@
 		<div id="header">
 			<div class="header-wrap">
 				<div class="headerNav">
+					<div class="user-img">
+						<img src="${basePath }/images/f778738c-e4f8-4870-b634-56703b4acafe.gif" alt="">
+					</div>
 					<ul class="nav nav-pills">
 						<li role="presentation" class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -749,17 +765,17 @@
 					<!-- 显示左右控制时添加 class="tabsPageHeaderMargin" -->
 					<ul class="navTab-tab">
 						<li tabid="main" class="main"><a href="javascript:;"><span><span
-								class="home_icon">我的主页</span></span></a></li>
+								class="home_icon"><span class="glyphicon glyphicon-home"></span></span></span></a></li>
 					</ul>
 				</div>
-				<div class="tabsLeft">left</div>
+				<div class="tabsLeft"><span class="glyphicon glyphicon-menu-left"></span></div>
 				<!-- 禁用只需要添加一个样式 class="tabsLeft tabsLeftDisabled" -->
-				<div class="tabsRight">right</div>
+				<div class="tabsRight"><span class="glyphicon glyphicon-menu-right"></span></div>
 				<!-- 禁用只需要添加一个样式 class="tabsRight tabsRightDisabled" -->
 				<div class="tabsMore">more</div>
 			</div>
 			<ul class="tabsMoreList">
-				<li><a href="javascript:;">我的主页</a></li>
+				<li><a href="javascript:;"><span class="glyphicon glyphicon-home"></span></a></li>
 			</ul>
 			<div style="overflow: scroll" class="navTab-panel tabsPageContent layoutBox">
 				<div style="display: block;" class="page unitBox">
