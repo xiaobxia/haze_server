@@ -24,6 +24,7 @@
 		<result column="seven_rate" property="sevenRate" jdbcType="INTEGER" />
 		<result column="ove_rate" property="oveRate" jdbcType="INTEGER" />
 		<result column="update_date" property="updateDate" jdbcType="DATE"/>
+        <result column="extend_product_money" property="extendProductMoney" jdbcType="DECIMAL"/>
 	</resultMap>
 <select id="BackLoanCensusResult" parameterType="hashmap" resultMap="BaseResultMap">
 		SELECT
@@ -35,6 +36,7 @@
 			repay_money,
 			extend_count,
 			extend_money,
+			extend_product_money,
 			amortization_loan_count,
 			amortization_loan_money,
 			ove_repay_count,
@@ -51,9 +53,23 @@
 			update_date
 		FROM
 			back_loan_census
+		where 1=1
+		<if test="startTime != null">
+			and repay_date &gt;= #{startTime}
+		</if>
+		<if test="endTime != null">
+			and repay_date &lt;= #{endTime}
+		</if>
 </select>
 	<select id ="BackLoanCensusCount" resultType="Integer" parameterType="hashmap">
      select count(1) from back_loan_census
+      where 1=1
+     <if test="startTime != null">
+		and repay_date &gt;= #{startTime}
+	</if>
+	<if test="endTime != null">
+		and repay_date &lt;= #{endTime}
+	</if>
 	</select>
 	<select id="findExpireCountAndMoney" resultType="map" parameterType="java.lang.String">
 	SELECT
@@ -81,15 +97,38 @@
 	WHERE
 		DATE_FORMAT( ar.repayment_time, '%Y-%m-%d' ) = #{repayTime}
 		and bo.status = #{status}
+		<if test = "customerType = 0">
+         and  bo.customer_type =0
+        </if>
+        <if test = "customerType != 0 and customerType != null">
+          and bo.customerType >0
+        </if>
 	</select>
 	<select id="findExtendCountAndMoney" resultType="map" parameterType="java.lang.String">
-		SELECT
+	   <!--SELECT
 			count( 1 ) AS count,
-			IFNULL(sum( sum_fee ),0) AS money
+			IFNULL(sum( sum_fee ),0) AS money,
+			IFNULL(sum(money_amount),0) as moenyAmount
 		FROM
 			asset_renewal_record
 		WHERE
-			old_repayment_time = #{repayTime}
+			old_repayment_time = #{repayTime}-->
+        SELECT
+        count( 1 ) AS count,
+        IFNULL( sum( arr.sum_fee ), 0 ) AS money,
+        IFNULL( sum( arr.money_amount ), 0 ) AS moneyAmount
+        FROM
+        asset_renewal_record arr
+        LEFT JOIN asset_repayment ar ON arr.asset_repayment_id = ar.id
+        LEFT JOIN asset_borrow_order bo ON bo.id = ar.asset_order_id
+        WHERE
+        old_repayment_time = #{repayTime}
+        <if test = "customerType = 0">
+            and  bo.customer_type =0
+        </if>
+        <if test = "customerType != 0 and customerType != null">
+            and bo.customerType >0
+        </if>
 	</select>
 	<update id = "updateBackLoanCensus">
 		update back_loan_census
@@ -112,6 +151,9 @@
 		<if test="extendMoney != null">
 			extend_money = #{extendMoney},
 		</if>
+		<if test="extendProductMoney != null">
+            extend_product_money = #{extendProductMoney},
+        </if>
 		<if test="amortizationLoanCount != null">
 			amortization_loan_count = #{amortizationLoanCount},
 		</if>
@@ -169,6 +211,7 @@
 	  repay_money,
 	  extend_count,
 	  extend_money,
+	  extend_product_money,
 	  amortization_loan_count,
 	  amortization_loan_money,
 	  ove_repay_count,
@@ -193,6 +236,7 @@
 	  #{repayMoney},
 	  #{extendCount},
 	  #{extendMoney},
+	  #{extendProductMoney},
 	  #{amortizationLoanCount},
 	  #{amortizationLoanMoney},
 	  #{oveRepayCount},
@@ -219,6 +263,7 @@
 			repay_money,
 			extend_count,
 			extend_money,
+            extend_product_money,
 			amortization_loan_count,
 			amortization_loan_money,
 			ove_repay_count,
