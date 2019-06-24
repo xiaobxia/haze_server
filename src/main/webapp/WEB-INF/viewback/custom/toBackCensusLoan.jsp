@@ -21,7 +21,7 @@
 			<div class="pageFormContent" layoutH="48">
 				<p>
 					<label>统计时间：</label>
-					<input type="text" name="repayTime" id="repayTime" value="${params.beginTime}" class="date textInput readonly" datefmt="yyyy-MM-dd"  readonly="readonly" onfocus="WdatePicker({isShowClear:true,readOnly:false,maxDate:'%y-%M-%d'})"/>
+					<input type="text" name="repayTime" id="repayTime" value="${params.beginTime}" class="date textInput readonly" datefmt="yyyy-MM-dd"  readonly="readonly" />
 				</p>
 				<div class="divider"></div>
 				 

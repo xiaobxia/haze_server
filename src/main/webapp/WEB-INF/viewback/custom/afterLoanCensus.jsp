@@ -47,7 +47,7 @@
 		<table class="table" width="100%" layoutH="200" nowrapTD="false" ifScrollTable="true">
 			<thead>
 				<tr>
-					<th align="center">ID</th>
+					<th align="center">序号</th>
 					<th align="center">还款日期</th>
 					<th align="center">到期笔数</th>
 					<th align="center">到期金额</th>
@@ -75,7 +75,7 @@
 			<tbody>
 				<c:forEach var="loanInfo" items="${pageConfig.items }" varStatus="status" >
 					<tr target="id" rel="${loanInfo.id }">
-						<td align="center">${loanInfo.id }</td>
+						<td align="center">${status.count }</td>
 						<td align="center">${loanInfo.repayDate}</td>
 						<td align="center">${loanInfo.expireCount}</td>
 						<td align="center">${loanInfo.expireMoney}</td>
