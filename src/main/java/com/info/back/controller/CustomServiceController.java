@@ -1213,6 +1213,15 @@ public class CustomServiceController extends BaseController {
        }
        SpringUtils.renderDwzResult(response, bool, bool ? "操作成功!" : "操作失败!", DwzResult.CALLBACK_RELOADPAGE);
    }
+
+    /**
+     * 指向回算时间框jsp
+     * @return
+     */
+    @RequestMapping("toBackCensusLoan")
+    public String toBackCensusLoan(){
+      return "custom/toBackCensusLoan";
+    }
     /**
      * 贷后回算功能
      * @return
