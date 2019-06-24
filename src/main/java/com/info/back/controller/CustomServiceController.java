@@ -1192,6 +1192,7 @@ public class CustomServiceController extends BaseController {
    public String BackLoanCensusResult(HttpServletRequest request, ModelMap model){
        HashMap<String, Object> params = getParametersO(request);
        PageConfig<BackLoanCensus> pageConfig = backLoanCensusService.backLoanCensusResult(params);
+       model.put("params",params);
        model.put("pageConfig",pageConfig);
        return "custom/afterLoanCensus";
    }

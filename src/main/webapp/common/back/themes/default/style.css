@@ -42,11 +42,11 @@
 /* Alert */
 .alert .alertFooter, .alert .alertFooter_r, .alert .alertFooter_c { background:url(./images/alert/alertpanel.png) no-repeat;}
 .alert .alertContent {}
-.alert .warn .alertInner { background-color: #fff}
-.alert .error .alertInner { background-color: #fff}
-.alert .correct .alertInner, .alert .info .alertInner { background-color: #fff}
-.alert .confirm .alertInner { background-color: #fff}
-.alert h1 { border-color:#CCC; background:url(./images/alert/alertpanel_icon.png) no-repeat;}
+.alert .warn .alertInner { }
+.alert .error .alertInner { }
+.alert .correct .alertInner, .alert .info .alertInner { }
+.alert .confirm .alertInner { }
+.alert h1 {}
 
 /* Dialog */
 .dialog .dialogHeader, .dialog .dialogHeader_r, .dialog .dialogHeader_c,
