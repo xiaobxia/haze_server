@@ -29,8 +29,14 @@ public interface IBackLoanCensusDao {
 
      //添加贷后统计
      void insertBackLoanCensus(BackLoanCensus backLoanCensus);
+
      //更新贷后统计
      void updateBackLoanCensus(BackLoanCensus backLoanCensus);
+
      //根据还款日期查找贷后记录
      BackLoanCensus findBackLoanCensusByTime(@Param("repayTime") String  repayTime);
+
+     //查找续期前应还款时间为某天的订单以及金额
+     Map<String,Object> findBeforeExtend(@Param("repayTime") String repayTime);
+
 }

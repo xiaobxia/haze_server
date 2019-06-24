@@ -1189,6 +1189,7 @@ public class CustomServiceController extends BaseController {
      * @return
      */
    @RequestMapping("backLoanCensusResult")
+   @ResponseBody
    public String BackLoanCensusResult(HttpServletRequest request, ModelMap model){
        HashMap<String, Object> params = getParametersO(request);
        PageConfig<BackLoanCensus> pageConfig = backLoanCensusService.backLoanCensusResult(params);
