@@ -244,6 +244,7 @@ public interface IRepaymentService {
 
 	Integer selectAssetBorrowAssign(Integer id);
 
+
 }
 
 

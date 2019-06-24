@@ -74,6 +74,9 @@ public class CustomServiceController extends BaseController {
     @Autowired
     private ILabelCountService labelCountService;
 
+    @Autowired
+    private IBackLoanCensusService backLoanCensusService;
+
 
     @RequestMapping("findJxl/{interval}")
     public String findJxl(HttpServletRequest request, Model model, @PathVariable Integer interval) {
@@ -183,9 +186,22 @@ public class CustomServiceController extends BaseController {
             }
         }
         PageConfig<ShowKeFuMessage> showKeFuMessagePageConfig;
-        params.put("assignType", 1); //默认查询已经一键转派的订单
-        params.put("filterAssign", 1);
-        showKeFuMessagePageConfig = repaymentService.findAssignPage(params);
+        Integer userId=loginAdminUser(request).getId();
+       /* //查询用户是否含有客服主管的角色
+        int count = backUserService.findRoleKfM(userId);
+        if (count >0){
+            //针对于客服主管 则查询所有订单， 对于已经多次派单的则只展示最后一次派单记录
+            params.put("assignType", 0);
+            params.put("filterAssign", 1);
+            showKeFuMessagePageConfig = repaymentService.findAssignPage(params);
+            for(ShowKeFuMessage showKeFuMessage:showKeFuMessagePageConfig.getItems()){
+
+            }
+        }else{*/
+            params.put("assignType", 1); //默认查询已经一键转派的订单 针对于普通客服
+            params.put("filterAssign", 1);
+            showKeFuMessagePageConfig = repaymentService.findAssignPage(params);
+        /*}*/
         if (showKeFuMessagePageConfig != null && showKeFuMessagePageConfig.getItems() != null) {
             if (showKeFuMessagePageConfig.getItems().size() <= 0) {
                 HashMap<String, Object> otherParams = new HashMap<>();
@@ -340,14 +356,12 @@ public class CustomServiceController extends BaseController {
     @RequestMapping(value = "addPhoneCall")
     public String addPhoneCall(HttpServletRequest request,Model model) {
         HashMap<String, Object> params = getParametersO(request);
-
         //电话客服派单id ，在线客服为订单id
         String userPhone = request.getParameter("userPhone");
         String userName = request.getParameter("userName");
         model.addAttribute("phone",userPhone);
         model.addAttribute("name",userName);
         model.addAttribute("params", params);
-
         return "custom/addAiPhoneCall";
     }
     @RequestMapping(value = "savePhoneCall", method = RequestMethod.POST)
@@ -1166,5 +1180,19 @@ public class CustomServiceController extends BaseController {
         }
         model.addAttribute("params", params);// 用于搜索框保留值
         return "custom/orderRemind";
+   }
+
+    /**
+     * 贷后统计查询
+     * @param request
+     * @param model
+     * @return
+     */
+   @RequestMapping("BackLoanCensusResult")
+   public String BackLoanCensusResult(HttpServletRequest request, ModelMap model){
+       HashMap<String, Object> params = getParametersO(request);
+       PageConfig<BackLoanCensus> pageConfig = backLoanCensusService.backLoanCensusResult(params);
+       model.put("pageConfig",pageConfig);
+       return "custom/afterLoanCensus";
    }
 }
