@@ -6,18 +6,39 @@
 	String path = request.getContextPath();
 %>
 
- <form id="pagerForm" onsubmit="return navTabSearch(this);" action="customService/BackLoanCensusResult?myId=${params.myId}" method="post">
+ <form id="pagerForm-alc" onsubmit="return navTabSearch(this);" action="customService/backLoanCensusResult?myId=${params.myId}" method="post">
 	 <input type="hidden" id="jsp" value="1">
 	 <div class="pageHeader">
 		<input type="hidden" name="init" value=0>
 		<div class="searchBar">
 			<table class="searchContent">
+				<tr>
+					<td>开始时间: <input type="text" name="startTime"
+									 class="date textInput readonly" datefmt="yyyy-MM-dd"
+									 value="${params.startTime }" readonly="readonly" />
+					</td>
+					<td>结束时间: <input type="text" name="endTime"
+									 class="date textInput readonly" datefmt="yyyy-MM-dd"
+									 value="${params.endTime }" readonly="readonly" />
+					</td>
+					<td>
+						<div class="buttonActive">
+							<div class="buttonContent">
+								<button type="submit">查询</button>
+							</div>
+						</div>
+					</td>
+				</tr>
 			</table>
 		</div>
 	</div>
 	<div class="pageContent">
 		<div class="panelBar">
 			<ul class="toolBar">
+				<li class="">
+					<a href="customService/toBackCensusLoan?myId=525&parentId=498" class="edit" target="dialog" width="410" height="210" rel="jbsxBox" mask="true">
+						<span>回算统计</span> </a>
+				</li>
 				<li class="">
 					<a id="a-l-c-r-btn"><span>刷新</span> </a>
 				</li>
@@ -85,6 +106,28 @@
 		<%@ include file="../page.jsp"%>
 	</div>
 	<script type="text/javascript">
-		$('#a-l-c-r-btn')
+		$('#a-l-c-r-btn').click(function () {
+			var lastDo = localStorage.getItem('lastDoFreshenLoanCensusResult')
+			if (lastDo) {
+				lastDo = parseInt(lastDo)
+				if (Date.now() - lastDo < 1000 * 60 * 60) {
+					var m = parseInt((1000 * 60 * 60 - Date.now() + lastDo)/(1000 * 60))
+					alertMsg && alertMsg.info('请'+(m || 1)+'分钟后再尝试刷新')
+					return
+				}
+			}
+			$.ajax({
+				type : "post",
+				url : 'customService/freshenLoanCensusResult',
+				success : function(ret) {
+					localStorage.setItem('lastDoFreshenLoanCensusResult', Date.now())
+					alertMsg && alertMsg.correct('操作成功，请一小时后再尝试刷新')
+					setTimeout(function () {
+						$('#pagerForm-alc').submit()
+					}, 100)
+				},
+				error:DWZ.ajaxError
+			})
+		})
 	</script>
 </form>

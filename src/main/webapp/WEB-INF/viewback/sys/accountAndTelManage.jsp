@@ -163,7 +163,6 @@
             $("#submit_btn").removeAttr("disabled");
         },
     });
-
 </script>
 <div class="pageContent">
     <form method="post" action="/back/banner/accountAndTelManage"
@@ -174,7 +173,7 @@
         </c:if>
         <input type="hidden" id="pictureUrl" name="pictureUrl" value="${qrCode}"/>
         <input type="hidden" id="wechatPictureUrl" name="wechatPictureUrl" value="${wechatCode}"/>
-        <div class="pageFormContent no-padding" layoutH="56">
+        <div class="pageFormContent no-padding" layoutH="106">
             <div class="peizhi-pannel f-cb">
                 <div class="title-peizhi">支付宝账号配置</div>
                 <div class="form-wrap">

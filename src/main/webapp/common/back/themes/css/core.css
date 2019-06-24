@@ -193,13 +193,16 @@ a:hover {text-decoration:underline;}
     color: #67c23a;
 }
 .alert .confirm {
-    background-color: #f0f9eb;
-    color: #67c23a;
+    background-color: #fdf6ec;
+    color: #e6a23c;
 }
 
 .alert .toolBar { position: absolute;right: 20px;bottom: 15px;}
 .alert .toolBar ul { float:right;}
-.alert .toolBar li { float:left;}
+.alert .toolBar li { float:left;margin-right: 10px;}
+.alert .toolBar li:last-child {
+    margin: 0;
+}
 
 .alert .error .toolBar .button span{
     background-color: #f56c6c;
@@ -214,7 +217,7 @@ a:hover {text-decoration:underline;}
     background-color: #67c23a;
 }
 .alert .confirm .toolBar .button span{
-    background-color: #67c23a;
+    background-color: #e6a23c;
 }
 
 .alert .alertFooter_c { display:block; overflow:hidden; height:5px;}

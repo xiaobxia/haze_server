@@ -21,7 +21,7 @@
 					<input type="hidden" name="type" value="${params.type }">
 				</c:if>
 				<input type="hidden" name="id" value="${params.id }">
-				<div class="pageFormContent" layoutH="56">
+				<div class="pageFormContent" layoutH="106">
 					<p>
 						<label>菜单名称:</label>
 						<input name="moduleName" class="required" minlength="2" maxlength="10" type="text" alt="请输入菜单名称" 

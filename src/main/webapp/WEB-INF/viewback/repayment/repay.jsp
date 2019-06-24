@@ -20,26 +20,18 @@
 		<input type="hidden" name="parentId" value="${params.parentId}" />
 		<input type="hidden" name="assetRepaymentId" id="id" value="${assetRepaymentId }">
 		<div class="pageFormContent" layoutH="50" style="overflow: auto;">
-			<dl style="width: 100%;">
-				<dt style="width: 80px;">
+			<div class="form-wrap">
+				<div class="form-item">
 					<label>
 						还款金额(元):
 					</label>
-				</dt>
-				<dd style="width:500px;">
-					<input id="trueRepaymentMoney" name="trueRepaymentMoneyBig" class="number required" type="text" alt="请输入还款金额" size="30"/>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input id="trueRepaymentMoney" name="trueRepaymentMoneyBig" class="number required" type="text" alt="请输入还款金额" size="30"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					剩余待还金额￥ ${remainMoney} 元
-				</dd>
-			</dl>
-			<div class="divider"></div>
-			<dl>
-				<dt style="width: 80px;">
+				</div>
+				<div class="form-item">
 					<label>
 						还款类型:
 					</label>
-				</dt>
-				<dd class="selectParenet">
 					<select name="repaymentChannel" id="repaymentChannel" class="select required">
 						<option value="">请选择</option>
 						<c:forEach items="${ALL_REPAY_CHANNEL}" var="type">
@@ -47,16 +39,11 @@
 						</c:forEach>
 					</select>
 					<span class="select-danger">*</span>
-				</dd>
-			</dl>
-			<div class="divider"></div>
-			<dl>
-				<dt style="width:80px;">
+				</div>
+				<div class="form-item">
 					<label>
 						还款渠道:
 					</label>
-				</dt>
-				<dd class="selectParenet">
 					<select name="repaymentType" id="repaymentType" class="select required">
 						<option value="">请选择</option>
 						<c:forEach items="${ALL_REPAY_TYPE}" var="type">
@@ -64,30 +51,20 @@
 						</c:forEach>
 					</select>
 					<span class="select-danger">*</span>
-				</dd>
-			</dl>
-			<div class="divider"></div>
-			<dl>
-				<dt style="width: 80px;">
+				</div>
+				<div class="form-item">
 					<label>
 						实际还款时间:
 					</label>
-				</dt>
-				<dd>
 					<input datefmt="yyyy-MM-dd HH:mm:ss" class="date textInput readonly required" type="text" size="30" readonly="readonly" name="createdAtStr"/>
-				</dd>
-			</dl>
-			<div class="divider"></div>
-			<dl>
-				<dt style="width: 80px;">
+				</div>
+				<div class="form-item">
 					<label>
 						备注:
 					</label>
-				</dt>
-				<dd>
 					<textarea title="备注" class="required" name="remark" id="remark" rows="5" cols="60" maxlength="50"  placeholder="" >${backUser.remark }</textarea>
-				</dd>
-			</dl>
+				</div>
+			</div>
 		</div>
 		<div class="formBar">
 			<ul>
