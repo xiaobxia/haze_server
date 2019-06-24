@@ -1206,10 +1206,6 @@ public class CustomServiceController extends BaseController {
    public void freshenLoanCensusResult(HttpServletResponse response) throws Exception {
        Boolean bool = true;
        try{
-           //调用贷后两小时一次定时任务
-           SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-           Calendar now = Calendar.getInstance();
-           taskJob.afterLoanCensus(dateFormat.format(now.getTime()));
            // 调用贷后一天一次定时任务
            taskJob.BackLoanOveCensus();
        }catch(Exception e){
@@ -1218,6 +1214,15 @@ public class CustomServiceController extends BaseController {
        }
        SpringUtils.renderDwzResult(response, bool, bool ? "操作成功!" : "操作失败!", DwzResult.CALLBACK_RELOADPAGE);
    }
+
+    /**
+     * 指向回算时间框jsp
+     * @return
+     */
+    @RequestMapping("toBackCensusLoan")
+    public String toBackCensusLoan(){
+      return "custom/toBackCensusLoan";
+    }
     /**
      * 贷后回算功能
      * @return
@@ -1228,8 +1233,6 @@ public class CustomServiceController extends BaseController {
         Boolean bool = true;
         try{
             taskJob.afterLoanCensus(repayTime);
-            // 调用贷后一天一次定时任务
-            taskJob.BackLoanOveCensus();
         }catch(Exception e){
             bool = false;
             log.error("贷后统计回算出现错误"+e.getMessage());
