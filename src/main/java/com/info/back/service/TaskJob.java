@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.JedisCluster;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -139,7 +140,7 @@ public class TaskJob implements ITaskJob {
 		// 设置超时时间
 		RequestConfig requestConfig = RequestConfig.custom()
 				.setSocketTimeout(2000).setConnectTimeout(2000).build();
-		HttpPost post = new HttpPost(PropertiesUtil.get("APP_HOST_API") + "/" + StringDateUtils.getDrawWithChannel() + "/gringotts/task/userQuota/syn");
+		HttpPost post = new HttpPost(PropertiesUtil.get("APP_HOST_API") + "/" + getDrawWithChannel() + "/gringotts/task/userQuota/syn");
 		try{
 			post.setConfig(requestConfig);
 			httpClient.execute(post);
@@ -154,7 +155,7 @@ public class TaskJob implements ITaskJob {
 		// 设置超时时间
 		RequestConfig requestConfig = RequestConfig.custom()
 				.setSocketTimeout(2000).setConnectTimeout(2000).build();
-		HttpPost post = new HttpPost(PropertiesUtil.get("APP_HOST_API") + "/" + StringDateUtils.getDrawWithChannel() + "/gringotts/task/everyDayuserQuota/syn");
+		HttpPost post = new HttpPost(PropertiesUtil.get("APP_HOST_API") + "/" + getDrawWithChannel() + "/gringotts/task/everyDayuserQuota/syn");
 		try{
 			post.setConfig(requestConfig);
 			httpClient.execute(post);
@@ -169,7 +170,7 @@ public class TaskJob implements ITaskJob {
 		// 设置超时时间
 		RequestConfig requestConfig = RequestConfig.custom()
 				.setSocketTimeout(2000).setConnectTimeout(2000).build();
-		HttpPost post = new HttpPost(PropertiesUtil.get("APP_HOST_API") + "/" + StringDateUtils.getDrawWithChannel() + "/gringotts/task/mq/syn");
+		HttpPost post = new HttpPost(PropertiesUtil.get("APP_HOST_API") + "/" + getDrawWithChannel() + "/gringotts/task/mq/syn");
 		try{
 			post.setConfig(requestConfig);
 			httpClient.execute(post);
@@ -1111,7 +1112,7 @@ public class TaskJob implements ITaskJob {
 					log.info("userId=" + order.getUserId() + " borrowId=" + order.getId() + " uuid=" + uuid + " sign=" + sign);
 					log.info("order=" + JSON.toJSONString(order));
 
-					String requestUrl = PropertiesUtil.get("APP_HOST_API") + "/" + StringDateUtils.getDrawWithChannel() + "/withdraw/" + order.getUserId().toString() + "/" + order.getId().toString() + "/" + uuid + "/" + sign;
+					String requestUrl = PropertiesUtil.get("APP_HOST_API") + "/" + getDrawWithChannel() + "/withdraw/" + order.getUserId().toString() + "/" + order.getId().toString() + "/" + uuid + "/" + sign;
 					log.info("requestUrl = " + requestUrl);
 					//发送代付请求
 					try {
@@ -1611,5 +1612,22 @@ public class TaskJob implements ITaskJob {
 		}else{
 			log.info("贷后逾期统计每天一次 统计失败结束");
 		}
+	}
+
+	public static String getDrawWithChannel() {
+		Map<String, String> drawwithchannel = SysCacheUtils.getConfigParams("DRAWWITHCHANNEL");
+		log.info("代付渠道列表：{}",drawwithchannel.toString());
+		if (drawwithchannel.size() <= 0) return "chanpay";
+		try {
+			if (Integer.parseInt(drawwithchannel.get("FUIOU_OPEN")) == 0)
+				return "fuiou";
+			if (Integer.parseInt(drawwithchannel.get("CHANPAY_OPEN")) == 0)
+				return "chanpay";
+			if (Integer.parseInt(drawwithchannel.get("BILL99_OPEN")) == 0)
+				return "bill99";
+		} catch (Exception e) {
+			return "chanpay";
+		}
+		return "chanpay";
 	}
 }
