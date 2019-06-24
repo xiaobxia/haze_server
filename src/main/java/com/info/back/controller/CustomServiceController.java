@@ -1188,12 +1188,52 @@ public class CustomServiceController extends BaseController {
      * @param model
      * @return
      */
-   @RequestMapping("BackLoanCensusResult")
+   @RequestMapping("backLoanCensusResult")
    public String BackLoanCensusResult(HttpServletRequest request, ModelMap model){
        HashMap<String, Object> params = getParametersO(request);
        PageConfig<BackLoanCensus> pageConfig = backLoanCensusService.backLoanCensusResult(params);
        model.put("params",params);
        model.put("pageConfig",pageConfig);
        return "custom/afterLoanCensus";
+   }
+
+    /**
+     * 贷后刷新功能
+     * @return
+     */
+   @RequestMapping("freshenLoanCensusResult")
+   @ResponseBody
+   public void freshenLoanCensusResult(HttpServletResponse response) throws Exception {
+       Boolean bool = true;
+       try{
+           //调用贷后两小时一次定时任务
+           SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+           Calendar now = Calendar.getInstance();
+           taskJob.afterLoanCensus(dateFormat.format(now.getTime()));
+           // 调用贷后一天一次定时任务
+           taskJob.BackLoanOveCensus();
+       }catch(Exception e){
+           bool = false;
+           log.error("贷后统计刷新出现错误"+e.getMessage());
+       }
+       SpringUtils.renderDwzResult(response, bool, bool ? "操作成功!" : "操作失败!", DwzResult.CALLBACK_RELOADPAGE);
+   }
+    /**
+     * 贷后回算功能
+     * @return
+     */
+    @RequestMapping("backCensusLoan")
+    @ResponseBody
+   public void backCensusLoan(HttpServletResponse response,String repayTime) throws Exception{
+        Boolean bool = true;
+        try{
+            taskJob.afterLoanCensus(repayTime);
+            // 调用贷后一天一次定时任务
+            taskJob.BackLoanOveCensus();
+        }catch(Exception e){
+            bool = false;
+            log.error("贷后统计回算出现错误"+e.getMessage());
+        }
+        SpringUtils.renderDwzResult(response, bool, bool ? "操作成功!" : "操作失败!", DwzResult.CALLBACK_RELOADPAGE);
    }
 }

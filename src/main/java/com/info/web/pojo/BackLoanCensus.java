@@ -13,6 +13,7 @@ public class BackLoanCensus {
     private BigDecimal repayMoney;  //'还款金额',
     private Integer extendCount; //'展期笔数',
     private BigDecimal extendMoney;  //'展期金额',
+    private BigDecimal extendProductMoney;//展期产品金额
     private Integer amortizationLoanCount; //'部分（分期）还款笔数',
     private BigDecimal amortizationLoanMoney; //'部分（分期）还款金额',
     private Integer oveRepayCount;  //'逾期已还笔数',
@@ -202,5 +203,13 @@ public class BackLoanCensus {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public BigDecimal getExtendProductMoney() {
+        return extendProductMoney;
+    }
+
+    public void setExtendProductMoney(BigDecimal extendProductMoney) {
+        this.extendProductMoney = extendProductMoney;
     }
 }

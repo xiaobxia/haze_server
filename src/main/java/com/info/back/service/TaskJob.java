@@ -28,7 +28,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.JedisCluster;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -1586,13 +1585,15 @@ public class TaskJob implements ITaskJob {
 	}
     //贷后统计 每天两小时统计一次
     @Override
-	public void afterLoanCensus() throws Exception{
+    public void afterLoanCensus(String expectedRepaymentTime) throws Exception{
 		log.info("贷后统计两小时一次 开始");
-       /* String expectedRepaymentTime = null; //预期还款时间
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar now = Calendar.getInstance();
-        expectedRepaymentTime = dateFormat.format(now.getTime());*/
-		Boolean b = backLoanCensusService.afterLoanCensus("2019-06-11");
+        //预期还款时间
+        if (expectedRepaymentTime == null){
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar now = Calendar.getInstance();
+            expectedRepaymentTime = dateFormat.format(now.getTime());
+        }
+		Boolean b = backLoanCensusService.afterLoanCensus(expectedRepaymentTime);
 		if(b = true){
 			log.info("贷后统计两小时一次 统计成功结束");
 		}else{
@@ -1602,7 +1603,6 @@ public class TaskJob implements ITaskJob {
 	}
 
 	@Override
-	@PostConstruct
 	public void BackLoanOveCensus() throws Exception{
 		log.info("贷后逾期统计每天一次 开始");
 		Boolean b = backLoanCensusService.BackLoanOveCensus();

@@ -22,10 +22,10 @@ public interface IBackLoanCensusDao {
      Map<String,Object> findExpireCountAndMoney(@Param("repayTime") String  repayTime,@Param("status") Integer status,@Param("lateDay") Integer lateDay);
 
      //查询某日到期已还订单笔数，金额 (status = 30)，部分还款金额，笔数(status = 23),逾期已还笔数，逾期已还金额（status = 34）
-     Map<String,Object> findRepayCountAndMoney(@Param("repayTime") String  reapyTime, @Param("status") Integer status);
+     Map<String,Object> findRepayCountAndMoney(@Param("repayTime") String  reapyTime, @Param("status") Integer status,@Param("customerType") Integer customerType);
 
      //展期笔数 展期服务费金额
-     Map<String,Object> findExtendCountAndMoney(@Param("repayTime") String  repayTime);
+     Map<String,Object> findExtendCountAndMoney(@Param("repayTime") String  repayTime,@Param("customerType") Integer customerType);
 
      //添加贷后统计
      void insertBackLoanCensus(BackLoanCensus backLoanCensus);
