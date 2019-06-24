@@ -733,7 +733,8 @@
                             <div class="form-item">
                                 <span class="label">审核状态：</span>
                                 <input name="status" value="${STATUS_CSTG }" type="radio"/>初审通过
-                            &nbsp;&nbsp;&nbsp;&nbsp;<input name="status" checked="checked" value="${STATUS_CSBH }" type="radio"/>初审驳回
+                                &nbsp;&nbsp;&nbsp;&nbsp;<input name="status" value="-40" type="radio"/>用户取消借款
+                                &nbsp;&nbsp;&nbsp;&nbsp;<input name="status" checked="checked" value="${STATUS_CSBH }" type="radio"/>初审驳回
                             </div>
                             <div class="form-item">
                                 <span class="label">备注：</span>

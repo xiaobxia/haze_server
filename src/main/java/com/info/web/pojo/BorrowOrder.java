@@ -225,6 +225,8 @@ public class BorrowOrder {
 	/**复审驳回并拉黑
 	 */
 	public static final Integer STATUS_FSBHLH = -50;
+
+	public static final Integer STATUS_YHQXJK = -40;
 	/***复审通过,待放款
 	 */
 	public static final Integer STATUS_FSTG = 20;
@@ -304,6 +306,7 @@ public class BorrowOrder {
 		borrowStatusMap.put(666, "待AI验证");
 		borrowStatusMap.put(667, "AI验证失败");
 		borrowStatusMap.put(-50, "驳回并拉黑");
+		borrowStatusMap.put(-40, "用户取消借款");
 	}
 
  

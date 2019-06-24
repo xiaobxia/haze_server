@@ -652,8 +652,9 @@
 								<span class="label">审核状态：</span>
 								<input name="status" value="${STATUS_FKZ }" type="radio" />放款审核通过(直接放款)
 								<input name="status" value="${STATUS_FSTG }" type="radio" />复审通过
-								<input name="status" checked="checked" value="-50"   type="radio" />复审驳回并拉黑
-								<input name="status" checked="checked" value="${STATUS_FSBH }"   type="radio" />复审驳回
+								<input name="status" checked="checked" value="-50" type="radio" />复审驳回并拉黑
+								<input name="status" checked="checked" value="${STATUS_FSBH }" type="radio" />复审驳回
+								<input name="status" checked="checked" value="-40" type="radio" />用户取消借款
 							</div>
 							<div class="form-item">
 								<span class="label">备注：</span>
