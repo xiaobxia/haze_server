@@ -1220,8 +1220,10 @@ public class CustomServiceController extends BaseController {
      * @return
      */
     @RequestMapping("toBackCensusLoan")
-    public String toBackCensusLoan(){
-      return "custom/toBackCensusLoan";
+    public String toBackCensusLoan(HttpServletRequest request, ModelMap model){
+        HashMap<String, Object> params = getParametersO(request);
+        model.put("params",params);
+        return "custom/toBackCensusLoan";
     }
     /**
      * 贷后回算功能
