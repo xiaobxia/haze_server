@@ -100,13 +100,18 @@
 		from asset_repayment  where DATE_FORMAT( repayment_time, '%Y-%m-%d' ) =  DATE_FORMAT( NOW( ), '%Y-%m-%d' ) and status = 21
 	</select>
     <select id="lateMoney" resultType="java.math.BigDecimal" >
-		select IFNULL(sum(repayment_amount),0) from asset_repayment
-		where 1=1
+		SELECT
+		IFNULL( sum( ar.repayment_amount ), 0 ) AS money
+		FROM
+		asset_repayment ar
+		LEFT JOIN asset_borrow_order bo ON ar.asset_order_id = bo.id
+		WHERE
+		bo.STATUS = - 11
 		<if test="fristNumber != null and fristNumber != ''">
-			and late_day &gt;= #{fristNumber}
+			and ar.late_day &gt;= #{fristNumber}
 		</if>
 		<if test="endNumbers != null and endNumbers != ''">
-            and late_day &lt; #{endNumbers}
+            and ar.late_day &lt; #{endNumbers}
 		</if>
 	</select>
 	<select id="threeMoney" resultType="java.math.BigDecimal">

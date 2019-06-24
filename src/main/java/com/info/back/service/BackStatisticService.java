@@ -602,9 +602,9 @@ public class BackStatisticService implements IBackStatisticService {
 			BigDecimal two=myPageReportInfo.getPendingRepayMoney() == null ?BigDecimal.valueOf(0):myPageReportInfo.getPendingRepayMoney();
 			myPageReportInfo.setThreeExpireMoney(one.add(two));
 		}
-		//当日回款率 当日回款金额（展期+回款）/当日到期金额
+		//当日回款率 当日回款金额（展期+回款）/当日到期金额 （以下皆为当日回款率）
 		//当日所有正常回款金额
-		map = sendMoneyStatisticDao.findMoneyTodayAll();
+		/*map = sendMoneyStatisticDao.findMoneyTodayAll();
         BigDecimal repay = optimic(map,"money");
         Long repayCount = map.get("countNumber") == null ?0:(long) map.get("countNumber");
 		//当日所有展期金额
@@ -618,11 +618,23 @@ public class BackStatisticService implements IBackStatisticService {
 			myPageReportInfo.setRepayPercentage(df.format(repayPercentage));
 		}else{
 			myPageReportInfo.setRepayPercentage("0.00");
+		}*/
+		//当日回款率 当日到期回款金额+当日到期展期金额/当日到期金额
+		BigDecimal repayMoneyToday = myPageReportInfo.getRepyMoney() == null ?BigDecimal.valueOf(0):myPageReportInfo.getRepyMoney();
+		BigDecimal extendMoneyToday = myPageReportInfo.getExtendMoney() == null ?BigDecimal.valueOf(0):myPageReportInfo.getExtendMoney();
+		BigDecimal todayMoney = myPageReportInfo.getPendingRepayMoney() == null?BigDecimal.valueOf(0):myPageReportInfo.getPendingRepayMoney();
+		if(!todayMoney.equals(BigDecimal.ZERO)){
+			BigDecimal repayPercentage = repayMoneyToday.add(extendMoneyToday).divide(todayMoney,4,BigDecimal.ROUND_HALF_UP);
+            myPageReportInfo.setRepayPercentage(df.format(repayPercentage));
+		}else{
+			myPageReportInfo.setRepayPercentage("0.00");
 		}
-		//当日复借率 = 当日复借数/当日回全款数
+
+		//当日复借率 = 当日复借数/当日到期回全款数
 		Long reBorrowCount = myPageReportInfo.getReBorrowCount();
-		if(repayCount != 0){
-			double reBorrowRate = (double) reBorrowCount / (double)repayCount;
+		Long repayTodyCount = myPageReportInfo.getRepyCount();
+		if(repayTodyCount != 0){
+			double reBorrowRate = (double) reBorrowCount / (double)repayTodyCount;
 			myPageReportInfo.setReBorrowReate(df.format(reBorrowRate));
 		}else{
 			myPageReportInfo.setReBorrowReate("0.00");

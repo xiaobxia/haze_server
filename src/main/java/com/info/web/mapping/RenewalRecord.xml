@@ -295,6 +295,7 @@
     <!-- 退款》续期列表 -->
     <select id="renewalList" resultMap="BaseResultMap" parameterType="map">
         select rr.id,
+        u.id as userId,
         u.realname as realname,
         u.user_phone as userPhone,
         u.customer_type as customerType,

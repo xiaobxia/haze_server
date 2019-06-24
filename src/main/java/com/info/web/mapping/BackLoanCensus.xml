@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.web.dao.IBackLoanCensusDao">
+	<resultMap id="BaseResultMap" type="com.info.web.pojo.BackLoanCensus">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="repay_date" property="repayDate" jdbcType="DATE" />
+		<result column="expire_count" property="expireCount" jdbcType="INTEGER" />
+		<result column="expire_money" property="expireMoney" jdbcType="DECIMAL" />
+		<result column="repay_count" property="repayCount" jdbcType="INTEGER" />
+		<result column="repay_money" property="repayMoney" jdbcType="DECIMAL" />
+		<result column="extend_count" property="extendCount" jdbcType="INTEGER" />
+		<result column="extend_money" property="extendMoney" jdbcType="DECIMAL" />
+		<result column="amortization_loan_count" property="amortizationLoanCount" jdbcType="INTEGER" />
+		<result column="amortization_loan_money" property="amortizationLoanMoney" jdbcType="DECIMAL" />
+		<result column="ove_repay_count" property="oveRepayCount" jdbcType="INTEGER" />
+		<result column="ove_repay_money" property="oveRepayMoney" jdbcType="DECIMAL" />
+		<result column="ove_wait_count" property="oveWaitCount" jdbcType="INTEGER" />
+		<result column="ove_wait_money" property="oveWaitMoney" jdbcType="DECIMAL" />
+		<result column="repay_rate" property="repayRate" jdbcType="INTEGER" />
+		<result column="re_repay_rate" property="reRepayRate" jdbcType="INTEGER" />
+		<result column="ove_first_rate" property="oveFirstRate" jdbcType="INTEGER" />
+		<result column="two_rate" property="twoRate" jdbcType="INTEGER" />
+		<result column="three_rate" property="threeRate" jdbcType="INTEGER" />
+		<result column="seven_rate" property="sevenRate" jdbcType="INTEGER" />
+		<result column="ove_rate" property="oveRate" jdbcType="INTEGER" />
+		<result column="update_date" property="updateDate" jdbcType="DATE"/>
+	</resultMap>
+<select id="BackLoanCensusResult" parameterType="hashmap" resultMap="BaseResultMap">
+		SELECT
+			id,
+			repay_date,
+			expire_count,
+			expire_money,
+			repay_count,
+			repay_money,
+			extend_count,
+			extend_money,
+			amortization_loan_count,
+			amortization_loan_money,
+			ove_repay_count,
+			ove_repay_money,
+			ove_wait_count,
+			ove_wait_money,
+			repay_rate,
+			re_repay_rate,
+			ove_first_rate,
+			two_rate,
+			three_rate,
+			seven_rate,
+			ove_rate,
+			update_date
+		FROM
+			back_loan_census
+</select>
+	<select id ="BackLoanCensusCount" resultType="Integer" parameterType="hashmap">
+     select count(1) from back_loan_census
+	</select>
+	<select id="findExpireCountAndMoney" resultType="map" parameterType="java.lang.String">
+	SELECT
+		count( bo.id ) AS count,
+		IFNULL(sum( bo.money_amount ),0) money
+		FROM
+		asset_borrow_order bo
+		LEFT JOIN asset_repayment ar ON bo.id = ar.asset_order_id
+	WHERE
+		DATE_FORMAT( ar.repayment_time, '%Y-%m-%d' ) = #{repayTime}
+		<if test="status != null">
+			and bo.status in (-11,-20)
+		</if>
+		<if test="lateDay != null">
+			and ar.late_day = #{lateDay}
+		</if>
+	</select>
+	<select id="findRepayCountAndMoney" resultType="map">
+	SELECT
+		count( ar.id) AS count,
+		IFNULL(sum( repaymented_amount ),0) money
+	FROM
+		asset_borrow_order bo
+		LEFT JOIN asset_repayment ar ON bo.id = ar.asset_order_id
+	WHERE
+		DATE_FORMAT( ar.repayment_time, '%Y-%m-%d' ) = #{repayTime}
+		and bo.status = #{status}
+	</select>
+	<select id="findExtendCountAndMoney" resultType="map" parameterType="java.lang.String">
+		SELECT
+			count( 1 ) AS count,
+			IFNULL(sum( sum_fee ),0) AS money
+		FROM
+			asset_renewal_record
+		WHERE
+			old_repayment_time = #{repayTime}
+	</select>
+	<update id = "updateBackLoanCensus">
+		update back_loan_census
+		<set>
+		<if test = "expireCount != null">
+			expire_count = #{expireCount},
+		</if>
+		<if test = "expireMoney != null">
+			expire_money = #{expireMoney},
+		</if>
+		<if test="repayCount != null">
+			repay_count = #{repayCount},
+		</if>
+		<if test="repayMoney != null">
+			repay_money = #{repayMoney},
+		</if>
+		<if test="extendCount != null">
+			extend_count = #{extendCount},
+		</if>
+		<if test="extendMoney != null">
+			extend_money = #{extendMoney},
+		</if>
+		<if test="amortizationLoanCount != null">
+			amortization_loan_count = #{amortizationLoanCount},
+		</if>
+		<if test="amortizationLoanMoney != null">
+			amortization_loan_money = #{amortizationLoanMoney},
+		</if>
+		<if test="oveRepayCount != null">
+			ove_repay_count = #{oveRepayCount},
+		</if>
+		<if test="oveRepayMoney != null">
+			ove_repay_money = #{oveRepayMoney},
+		</if>
+		<if test="oveWaitCount != null">
+			ove_wait_count = #{oveWaitCount},
+		</if>
+		<if test="oveWaitMoney != null">
+			ove_wait_money = #{oveWaitMoney},
+		</if>
+		<if test="repayRate != null">
+			repay_rate = #{repayRate},
+		</if>
+		<if test="reRepayRate != null">
+			re_repay_rate = #{reRepayRate},
+		</if>
+		<if test="oveFirstRate != null">
+			ove_first_rate = #{oveFirstRate},
+		</if>
+		<if test="twoRate != null">
+			two_rate = #{twoRate},
+		</if>
+		<if test="threeRate != null">
+			three_rate = #{threeRate},
+		</if>
+		<if test="sevenRate != null">
+			seven_rate = #{sevenRate},
+		</if>
+		<if test="oveRate != null">
+			ove_rate = #{oveRate},
+		</if>
+		<if test="updateDate != null">
+			update_date = #{updateDate},
+		</if>
+		</set>
+		  where
+		  repay_date = #{repayDate}
+	</update>
+	<insert id="insertBackLoanCensus">
+     insert into back_loan_census
+     (
+      id,
+	  repay_date,
+	  expire_count,
+	  expire_money,
+	  repay_count,
+	  repay_money,
+	  extend_count,
+	  extend_money,
+	  amortization_loan_count,
+	  amortization_loan_money,
+	  ove_repay_count,
+	  ove_repay_money,
+	  ove_wait_count,
+	  ove_wait_money,
+	  repay_rate,
+	  re_repay_rate,
+	  ove_first_rate,
+	  two_rate,
+	  three_rate,
+	  seven_rate,
+	  ove_rate,
+	  update_date
+     )
+     values (
+      #{id},
+	  #{repayDate},
+	  #{expireCount},
+	  #{expireMoney},
+	  #{repayCount},
+	  #{repayMoney},
+	  #{extendCount},
+	  #{extendMoney},
+	  #{amortizationLoanCount},
+	  #{amortizationLoanMoney},
+	  #{oveRepayCount},
+	  #{oveRepayMoney},
+	  #{oveWaitCount},
+	  #{oveWaitMoney},
+	  #{repayRate},
+	  #{reRepayRate},
+	  #{oveFirstRate},
+	  #{twoRate},
+	  #{threeRate},
+	  #{sevenRate},
+	  #{oveRate},
+	  #{updateDate}
+     )
+	</insert>
+	<select id ="findBackLoanCensusByTime" resultType="com.info.web.pojo.BackLoanCensus" parameterType="java.lang.String">
+        SELECT
+			id,
+			repay_date,
+			expire_count,
+			expire_money,
+			repay_count,
+			repay_money,
+			extend_count,
+			extend_money,
+			amortization_loan_count,
+			amortization_loan_money,
+			ove_repay_count,
+			ove_repay_money,
+			ove_wait_count,
+			ove_wait_money,
+			repay_rate,
+			re_repay_rate,
+			ove_first_rate,
+			two_rate,
+			three_rate,
+			seven_rate,
+			ove_rate,
+			update_date
+		FROM
+			back_loan_census
+			where 1=1
+			<if test="repayTime != null and repayTime != ''">
+				and repay_date = #{repayTime}
+			</if>
+	</select>
+</mapper>

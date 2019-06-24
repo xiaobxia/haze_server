@@ -85,6 +85,8 @@ public class TaskJob implements ITaskJob {
 	private IOnlineCustomService onlineCustomService;
 	@Autowired
 	private ILabelCountService labelCountService;
+	@Autowired
+	private IBackLoanCensusService backLoanCensusService;
 
 	@Override
 	public void aiMessage() {
@@ -1581,5 +1583,33 @@ public class TaskJob implements ITaskJob {
 	public void customerLabelCount() throws Exception {
 		String countDate = DateUtil.getDateFormat(new Date(), DateUtil.YMD);
 		labelCountService.labelCount(countDate);
+	}
+    //贷后统计 每天两小时统计一次
+    @Override
+	public void afterLoanCensus() throws Exception{
+		log.info("贷后统计两小时一次 开始");
+       /* String expectedRepaymentTime = null; //预期还款时间
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar now = Calendar.getInstance();
+        expectedRepaymentTime = dateFormat.format(now.getTime());*/
+		Boolean b = backLoanCensusService.afterLoanCensus("2019-06-11");
+		if(b = true){
+			log.info("贷后统计两小时一次 统计成功结束");
+		}else{
+			log.info("贷后统计两小时一次 统计失败结束");
+		}
+
+	}
+
+	@Override
+	@PostConstruct
+	public void BackLoanOveCensus() throws Exception{
+		log.info("贷后逾期统计每天一次 开始");
+		Boolean b = backLoanCensusService.BackLoanOveCensus();
+		if(b = true){
+			log.info("贷后逾期统计每天一次 统计成功结束");
+		}else{
+			log.info("贷后逾期统计每天一次 统计失败结束");
+		}
 	}
 }

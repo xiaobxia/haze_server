@@ -192,4 +192,8 @@ public interface ITaskJob {
 	public void customerLabelCount() throws Exception;
 
 	void aiMessage();
+
+	void afterLoanCensus() throws Exception;
+
+	void BackLoanOveCensus() throws Exception;
 }

@@ -888,7 +888,10 @@
 		and <![CDATA[a.zm_score_time > #{startDate} and a.zm_score_time < #{startDateChangeEnd}]]>
 	</select>
 	<select id="contactCount" resultType="java.lang.Integer" parameterType="map">
-		select count(0) from user_info a where a.user_from = #{userFrom} and a.zm_status = '2'
+		<!--select count(0) from user_info a where a.user_from = #{userFrom} and a.zm_status = '2'
+		and <![CDATA[a.realname_time > #{startDate} and a.realname_time < #{startDateChangeEnd}]]>
+		and a.first_contact_phone is not null and a.second_contact_phone is not null-->
+		select count(0) from user_info a where a.user_from = #{userFrom}
 		and <![CDATA[a.realname_time > #{startDate} and a.realname_time < #{startDateChangeEnd}]]>
 		and a.first_contact_phone is not null and a.second_contact_phone is not null
 	</select>

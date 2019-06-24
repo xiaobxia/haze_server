@@ -53,76 +53,77 @@ public class MxController extends BaseController {
 			//String host = "https://api.51datakey.com/carrier/v3/mobiles/18685170194/mxreport?task_id=d1188780-9006-11e9-84fc-00163e10becc";
 
 			InputStream authorization = HttpUtil.MxGet(host, Authorization);
+			if (authorization != null) {
+				String uncompress = GzipUtil.uncompress(authorization);
 
-			String uncompress = GzipUtil.uncompress(authorization);
+				ObjectMapper objectMapper = new ObjectMapper();
 
-			ObjectMapper objectMapper = new ObjectMapper();
-
-			try {
-				MXReport mxReport = objectMapper.readValue(uncompress, MXReport.class);
-
-
-				Map<String, Object> reportBasic = new HashMap();
-				Map<String, String> report = mxReport.getReport().stream().collect(Collectors.toMap(MXBasicInfo::getKey, MXBasicInfo::getValue));
-				Map<String, String> userBasicInfo = mxReport.getUserBasic().stream().collect(Collectors.toMap(MXBasicInfo::getKey, MXBasicInfo::getValue));
-				Map<String, String> cellPhone = mxReport.getCellPhone().stream().collect(Collectors.toMap(MXBasicInfo::getKey, MXBasicInfo::getValue));
-				Map<String, String> basicInfoCheckItemMap = mxReport.getBasicCheckItems().stream().collect(Collectors.toMap(MXBasicCheckItem::getCheckItem, MXBasicCheckItem::getResult));
-				Map<String, Object> friendCircle = mxReport.getFriendCircle().getSummary().stream().collect(Collectors.toMap(MXBasicInfo::getKey, MXBasicInfo::getValue));
-
-				Map<String, List<MXPeerNumTopItem>> peerNumTop = mxReport.getFriendCircle().getPeerNumTopList().stream().collect(Collectors.toMap(MXPeerNumTopList::getKey, MXPeerNumTopList::getTopItem));
-				Map<String, List<MXLocationTopItem>> locationTop = mxReport.getFriendCircle().getLocationTopList().stream().collect(Collectors.toMap(MXLocationTopList::getKey, MXLocationTopList::getTopItem));
+				try {
+					MXReport mxReport = objectMapper.readValue(uncompress, MXReport.class);
 
 
-				Map<String, List<MXDuration>> callDurationDetail = mxReport.getCallDurationDetail().stream().collect(Collectors.toMap(MXCallDurationDetail::getKey, MXCallDurationDetail::getDurationList));
-				Map<String, List<MXRegionItem>> contactRegion = mxReport.getContactRegion().stream().collect(Collectors.toMap(MXContactRegion::getKey, MXContactRegion::getRegionList));
+					Map<String, Object> reportBasic = new HashMap();
+					Map<String, String> report = mxReport.getReport().stream().collect(Collectors.toMap(MXBasicInfo::getKey, MXBasicInfo::getValue));
+					Map<String, String> userBasicInfo = mxReport.getUserBasic().stream().collect(Collectors.toMap(MXBasicInfo::getKey, MXBasicInfo::getValue));
+					Map<String, String> cellPhone = mxReport.getCellPhone().stream().collect(Collectors.toMap(MXBasicInfo::getKey, MXBasicInfo::getValue));
+					Map<String, String> basicInfoCheckItemMap = mxReport.getBasicCheckItems().stream().collect(Collectors.toMap(MXBasicCheckItem::getCheckItem, MXBasicCheckItem::getResult));
+					Map<String, Object> friendCircle = mxReport.getFriendCircle().getSummary().stream().collect(Collectors.toMap(MXBasicInfo::getKey, MXBasicInfo::getValue));
 
-				MXUserInfoCheck mxUserInfoCheck = mxReport.getUserInfoCheck().get(0);
-				List<MXApplicationPoint> activeDegree = mxReport.getActiveDegree();
-				List<MXApplicationPoint> consumptionDetail = mxReport.getConsumptionDetail();
-
-				List<MXCellBehavior> cellBehavior = mxReport.getCellBehavior();
-				List<MXRoamAnalysis> roamAnalysis = mxReport.getRoamAnalysis();
-				List<MXCallContactDetail> callContactDetail = mxReport.getCallContactDetail();
-
-				List<MXApplicationPoint> callTimeDetail = mxReport.getCallTimeDetail();
-				List<MXCallAnalysis> callServiceAnalysis = mxReport.getCallServiceAnalysis();
-				List<MXMainService> mainService = mxReport.getMainService();
-				List<MXRoamDetail> roamDetail = mxReport.getRoamDetail();
-				List<MXTripInfo> tripInfo = mxReport.getTripInfo();
+					Map<String, List<MXPeerNumTopItem>> peerNumTop = mxReport.getFriendCircle().getPeerNumTopList().stream().collect(Collectors.toMap(MXPeerNumTopList::getKey, MXPeerNumTopList::getTopItem));
+					Map<String, List<MXLocationTopItem>> locationTop = mxReport.getFriendCircle().getLocationTopList().stream().collect(Collectors.toMap(MXLocationTopList::getKey, MXLocationTopList::getTopItem));
 
 
-				userBasicInfo.putAll(report);
-				userBasicInfo.putAll(cellPhone);
-				reportBasic.put("userBasicInfo", userBasicInfo);
+					Map<String, List<MXDuration>> callDurationDetail = mxReport.getCallDurationDetail().stream().collect(Collectors.toMap(MXCallDurationDetail::getKey, MXCallDurationDetail::getDurationList));
+					Map<String, List<MXRegionItem>> contactRegion = mxReport.getContactRegion().stream().collect(Collectors.toMap(MXContactRegion::getKey, MXContactRegion::getRegionList));
 
-				friendCircle.putAll(peerNumTop);
-				friendCircle.putAll(locationTop);
-				friendCircle.putAll(callDurationDetail);
-				friendCircle.putAll(contactRegion);
-				friendCircle.put("activeDegree", activeDegree);
-				friendCircle.put("consumptionDetail", consumptionDetail);
-				friendCircle.put("roamAnalysis", roamAnalysis);
-				friendCircle.put("callContactDetail", callContactDetail);
-				friendCircle.put("callTimeDetail", callTimeDetail);
-				friendCircle.put("callServiceAnalysis", callServiceAnalysis);
-				friendCircle.put("mainService", mainService);
-				friendCircle.put("roamDetail", roamDetail);
-				friendCircle.put("tripInfo", tripInfo);
+					MXUserInfoCheck mxUserInfoCheck = mxReport.getUserInfoCheck().get(0);
+					List<MXApplicationPoint> activeDegree = mxReport.getActiveDegree();
+					List<MXApplicationPoint> consumptionDetail = mxReport.getConsumptionDetail();
 
+					List<MXCellBehavior> cellBehavior = mxReport.getCellBehavior();
+					List<MXRoamAnalysis> roamAnalysis = mxReport.getRoamAnalysis();
+					List<MXCallContactDetail> callContactDetail = mxReport.getCallContactDetail();
 
-				reportBasic.put("friendCircle", friendCircle);
-				reportBasic.put("mxUserInfoCheck", mxUserInfoCheck);
-				reportBasic.put("callRiskAnalysis", mxReport.getCallRiskAnalysis());
-				reportBasic.put("callFamilyDetail", mxReport.getCallFamilyDetail());
-				reportBasic.put("cellBehavior", cellBehavior);
+					List<MXApplicationPoint> callTimeDetail = mxReport.getCallTimeDetail();
+					List<MXCallAnalysis> callServiceAnalysis = mxReport.getCallServiceAnalysis();
+					List<MXMainService> mainService = mxReport.getMainService();
+					List<MXRoamDetail> roamDetail = mxReport.getRoamDetail();
+					List<MXTripInfo> tripInfo = mxReport.getTripInfo();
 
 
+					userBasicInfo.putAll(report);
+					userBasicInfo.putAll(cellPhone);
+					reportBasic.put("userBasicInfo", userBasicInfo);
 
-				model.addAttribute("reportBasic", reportBasic);
-				model.addAttribute("basicInfoCheckItemMap", basicInfoCheckItemMap);
-				model.addAttribute("userContactsMap", userContactsMap);
-			} catch (Exception e) {
-				e.printStackTrace();
+					friendCircle.putAll(peerNumTop);
+					friendCircle.putAll(locationTop);
+					friendCircle.putAll(callDurationDetail);
+					friendCircle.putAll(contactRegion);
+					friendCircle.put("activeDegree", activeDegree);
+					friendCircle.put("consumptionDetail", consumptionDetail);
+					friendCircle.put("roamAnalysis", roamAnalysis);
+					friendCircle.put("callContactDetail", callContactDetail);
+					friendCircle.put("callTimeDetail", callTimeDetail);
+					friendCircle.put("callServiceAnalysis", callServiceAnalysis);
+					friendCircle.put("mainService", mainService);
+					friendCircle.put("roamDetail", roamDetail);
+					friendCircle.put("tripInfo", tripInfo);
+
+
+					reportBasic.put("friendCircle", friendCircle);
+					reportBasic.put("mxUserInfoCheck", mxUserInfoCheck);
+					reportBasic.put("callRiskAnalysis", mxReport.getCallRiskAnalysis());
+					reportBasic.put("callFamilyDetail", mxReport.getCallFamilyDetail());
+					reportBasic.put("cellBehavior", cellBehavior);
+
+
+
+					model.addAttribute("reportBasic", reportBasic);
+					model.addAttribute("basicInfoCheckItemMap", basicInfoCheckItemMap);
+					model.addAttribute("userContactsMap", userContactsMap);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 
