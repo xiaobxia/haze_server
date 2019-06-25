@@ -25,7 +25,11 @@ public interface IBackLoanCensusService {
 
     //根据还款日期查找贷后记录
     BackLoanCensus findBackLoanCensusByTime(String repayTime);
+
     //贷后查询
     PageConfig<BackLoanCensus> backLoanCensusResult(HashMap<String,Object> params);
+
+    //计算逾期变化的数据
+    BackLoanCensus backCensusLoan(BackLoanCensus backLoanCensus);
 
 }

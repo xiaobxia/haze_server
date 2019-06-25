@@ -1,12 +1,14 @@
 package com.info.web.util;
 
 import com.info.back.utils.SysCacheUtils;
+import com.info.web.pojo.BackConfigParams;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -74,18 +76,18 @@ public class StringDateUtils {
     }
 
     public static String getDrawWithChannel() {
-        Map<String, String> drawwithchannel = SysCacheUtils.getConfigParams("DRAWWITHCHANNEL");
-        if (drawwithchannel.size() <= 0) return "chanpay";
+        List<BackConfigParams> drawwithchannel1 = SysCacheUtils.getListConfigParams("DRAWWITHCHANNEL");
+        String result = "chanpay";
         try {
-            if (Integer.parseInt(drawwithchannel.get("FUIOU_OPEN")) == 0)
-                return "fuiou";
-            if (Integer.parseInt(drawwithchannel.get("CHANPAY_OPEN")) == 0)
-                return "chanpay";
-            if (Integer.parseInt(drawwithchannel.get("BILL99_OPEN")) == 0)
-                return "bill99";
+            if (drawwithchannel1.size() <= 0) return result;
+            for (BackConfigParams backConfigParams : drawwithchannel1) {
+                if (Integer.parseInt(backConfigParams.getSysValue()) == 0) {
+                    result = backConfigParams.getSysValueBig();
+                }
+            }
         } catch (Exception e) {
-            return "chanpay";
+            return result;
         }
-        return "chanpay";
+        return result;
     }
 }

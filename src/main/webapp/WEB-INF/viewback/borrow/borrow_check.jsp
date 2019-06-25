@@ -77,7 +77,10 @@
 					<legend>审核信息</legend>
 				 <dl class="nowrap">
 								<dt>审核状态:</dt>
-								<dd><input name="status"   id="borrowStatus" value="20" type="radio" />复审通过  &nbsp;&nbsp;&nbsp;&nbsp;<input name="status" id="borrowStatus" checked="checked" value="-4"   type="radio" />复审未通过</dd> 
+								<dd><input name="status"   id="borrowStatus" value="20" type="radio" />复审通过
+								&nbsp;&nbsp;&nbsp;&nbsp;<input name="status" id="borrowStatus" checked="checked" value="-4"   type="radio" />复审未通过
+								&nbsp;&nbsp;&nbsp;&nbsp;<input name="status" id="borrowStatus" value="-40"   type="radio" />用户取消借款
+								</dd>
 							</dl>
 							</fieldset>
 				<fieldset>

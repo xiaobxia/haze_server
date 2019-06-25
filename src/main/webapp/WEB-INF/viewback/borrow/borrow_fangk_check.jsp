@@ -78,9 +78,10 @@
 					<legend>审核信息</legend>
 				 <dl class="nowrap">
 								<dt>审核状态:</dt>
-								<dd><input name="status"   id="borrowStatus" value="${STATUS_FKZ }" type="radio" />放款通过  
+								<dd><input name="status" id="borrowStatus" value="${STATUS_FKZ }" type="radio" />放款通过
 								&nbsp;&nbsp;&nbsp;&nbsp;<input name="status" id="borrowStatus" checked="checked" value="${STATUS_FKBH }"   type="radio" />放款驳回
 								&nbsp;&nbsp;&nbsp;&nbsp;<input name="status" id="borrowStatus" checked="checked" value="${STATUS_FKZ }2"   type="radio" />重新放款
+								&nbsp;&nbsp;&nbsp;&nbsp;<input name="status" id="borrowStatus" value="-40"   type="radio" />用户取消借款
 
 <%-- 								&nbsp;&nbsp;&nbsp;&nbsp;<input name="status" id="borrowStatus" checked="checked" value="${STATUS_FKBH }"   type="radio" />放款失败 --%>
 <%-- 								&nbsp;&nbsp;&nbsp;&nbsp;<input name="status" id="borrowStatus" checked="checked" value="${STATUS_HKZ}"   type="radio" />测试成功放款(请勿随意操作) --%>

@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.JedisCluster;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -1612,4 +1613,5 @@ public class TaskJob implements ITaskJob {
 			log.info("贷后逾期统计每天一次 统计失败结束");
 		}
 	}
+
 }

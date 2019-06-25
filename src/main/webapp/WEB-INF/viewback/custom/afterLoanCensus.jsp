@@ -54,7 +54,8 @@
 					<th align="center">还款笔数</th>
 					<th align="center">还款金额</th>
 					<th align="center">展期笔数</th>
-					<th align="center">展期金额</th>
+					<th align="center">展期服务费</th>
+					<th align="center">展期产品金额</th>
 					<th align="center">部分（分期）还款笔数</th>
 					<th align="center">部分（分期）还款金额</th>
 					<th align="center">逾期已还笔数</th>
@@ -74,7 +75,7 @@
 			<tbody>
 				<c:forEach var="loanInfo" items="${pageConfig.items }" varStatus="status" >
 					<tr target="id" rel="${loanInfo.id }">
-                        <td align="center">${status.count}</td>
+						<td align="center">${status.count }</td>
 						<td align="center">${loanInfo.repayDate}</td>
 						<td align="center">${loanInfo.expireCount}</td>
 						<td align="center">${loanInfo.expireMoney}</td>
@@ -82,6 +83,7 @@
 						<td align="center">${loanInfo.repayMoney}</td>
 						<td align="center">${loanInfo.extendCount}</td>
 						<td align="center">${loanInfo.extendMoney }</td>
+						<td align="center">${loanInfo.extendProductMoney}</td>
 						<td align="center">${loanInfo.amortizationLoanCount}</td>
 						<td align="center">${loanInfo.amortizationLoanMoney}</td>
 						<td align="center">${loanInfo.oveRepayCount}</td>

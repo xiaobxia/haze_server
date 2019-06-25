@@ -526,7 +526,8 @@
 					// 当日到期订单
 					$('#drdqdd').text(formatNumToThree(indexInfo.pendingRepayCount))
 					// 全额还款金额
-					$('#qehkje').text('¥ ' + formatNumToThree(indexInfo.repyMoney))
+					/*$('#qehkje').text('¥ ' + formatNumToThree(indexInfo.repyMoney))*/
+					$('#qehkje').text('¥ ' + formatNumToThree(indexInfo.repayedMoney))
 					// 全额还款订单
 					$('#eqhkdd').text(formatNumToThree(indexInfo.repyCount))
 					// 当日展期金额
@@ -832,14 +833,14 @@
 										<span class="red-tag text-tag">逾期</span>
 									</div>
 									<div class="info-item">
-										<span>逾期3~7天</span>
+										<span>逾期4~7天</span>
 										<span id="uqsdqt-n" class="fix number-text">--</span>
 										<span class="red-tag text-tag">逾期</span>
 									</div>
 								</div>
 								<div class="row">
 									<div class="info-item left">
-										<span>逾期7~15天</span>
+										<span>逾期8~15天</span>
 										<span id="uqqdswt-n" class="fix number-text">--</span>
 										<span class="red-tag text-tag">逾期</span>
 									</div>

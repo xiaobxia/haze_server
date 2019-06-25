@@ -497,17 +497,17 @@ public class BackStatisticService implements IBackStatisticService {
 			myPageReportInfo.setS1Money(money1.divide(new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP));
 		}
         //逾期3-7天金额
-		BigDecimal money2 = sendMoneyStatisticDao.lateMoney(3,7);
+		BigDecimal money2 = sendMoneyStatisticDao.lateMoney(4,7);
 		if(money2 != null){
 			myPageReportInfo.setS2Money(money2.divide(new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP));
 		}
         //逾期7-15天金额
-		BigDecimal money3 = sendMoneyStatisticDao.lateMoney(7,15);
+		BigDecimal money3 = sendMoneyStatisticDao.lateMoney(8,15);
 		if(money3 != null){
 			myPageReportInfo.setS3Money(money3.divide(new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP));
 		}
         //逾期15天以上总金额
-		BigDecimal money4 = sendMoneyStatisticDao.lateMoney(15,9999);
+		BigDecimal money4 = sendMoneyStatisticDao.lateMoney(16,9999);
 		if(money4 != null){
 			myPageReportInfo.setS4Money(money4.divide(new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP));
 		}
@@ -534,7 +534,8 @@ public class BackStatisticService implements IBackStatisticService {
         //当日已还款金额/全额还款金额  //当日已还款订单/当日到期订单
 		map=sendMoneyStatisticDao.findTodayMoneyCount(30);
         myPageReportInfo.setRepyMoney(optimic(map,"money"));
-        myPageReportInfo.setRepyCount(map.get("countNumber") == null ?0:(Long) map.get("countNumber"));
+		myPageReportInfo.setRepayedMoney(optimic(map,"repaymentedAmount"));
+		myPageReportInfo.setRepyCount(map.get("countNumber") == null ?0:(Long) map.get("countNumber"));
         //当日待收金额/当日未还款金额  //当日待收金额/当日未还款金额
 		map=sendMoneyStatisticDao.findMoneyToday();
 		myPageReportInfo.setPendingMoney(optimic(map,"money"));
@@ -542,7 +543,7 @@ public class BackStatisticService implements IBackStatisticService {
 		DecimalFormat df = new DecimalFormat("0.0000");
 		//当日放款率
 		if(todayRegCount != 0){
-			double loanPercentage=(double)myPageReportInfo.getLoanCount()/(double)todayRegCount;
+			BigDecimal loanPercentage=(new BigDecimal(myPageReportInfo.getLoanCount())).divide(new BigDecimal(todayRegCount),4,BigDecimal.ROUND_DOWN);
 			//当日放款笔数/当日注册总数
 			myPageReportInfo.setLoanPercentage(df.format(loanPercentage));
 		}else{
@@ -551,7 +552,7 @@ public class BackStatisticService implements IBackStatisticService {
 		if(applyCountToday != 0){
 			//当日通过率
 			//当日放款笔数/当日申请总笔数
-			double passPercentage=(double)myPageReportInfo.getLoanCount()/(double)applyCountToday;
+			BigDecimal passPercentage=new BigDecimal(myPageReportInfo.getLoanCount()).divide(new BigDecimal(applyCountToday),4,BigDecimal.ROUND_DOWN);
 			myPageReportInfo.setPassPercentage(df.format(passPercentage));
 		}else{
 			myPageReportInfo.setPassPercentage("0.00");
@@ -598,7 +599,7 @@ public class BackStatisticService implements IBackStatisticService {
 		c.add(Calendar.DAY_OF_MONTH, 2);
 		BigDecimal money = sendMoneyStatisticDao.threeMoney(c.getTime());
 		if(money != null){
-			BigDecimal one=money.divide(new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP);
+			BigDecimal one=money.divide(new BigDecimal(100), 4, BigDecimal.ROUND_HALF_UP);
 			BigDecimal two=myPageReportInfo.getPendingRepayMoney() == null ?BigDecimal.valueOf(0):myPageReportInfo.getPendingRepayMoney();
 			myPageReportInfo.setThreeExpireMoney(one.add(two));
 		}
@@ -620,21 +621,20 @@ public class BackStatisticService implements IBackStatisticService {
 			myPageReportInfo.setRepayPercentage("0.00");
 		}*/
 		//当日回款率 当日到期回款金额+当日到期展期金额/当日到期金额
-		BigDecimal repayMoneyToday = myPageReportInfo.getRepyMoney() == null ?BigDecimal.valueOf(0):myPageReportInfo.getRepyMoney();
+		BigDecimal repayedMoneyToday = myPageReportInfo.getRepayedMoney() == null ?BigDecimal.valueOf(0):myPageReportInfo.getRepayedMoney();
 		BigDecimal extendMoneyToday = myPageReportInfo.getExtendMoney() == null ?BigDecimal.valueOf(0):myPageReportInfo.getExtendMoney();
 		BigDecimal todayMoney = myPageReportInfo.getPendingRepayMoney() == null?BigDecimal.valueOf(0):myPageReportInfo.getPendingRepayMoney();
 		if(!todayMoney.equals(BigDecimal.ZERO)){
-			BigDecimal repayPercentage = repayMoneyToday.add(extendMoneyToday).divide(todayMoney,4,BigDecimal.ROUND_HALF_UP);
+			BigDecimal repayPercentage = repayedMoneyToday.add(extendMoneyToday).divide(todayMoney,4,BigDecimal.ROUND_DOWN);
             myPageReportInfo.setRepayPercentage(df.format(repayPercentage));
 		}else{
 			myPageReportInfo.setRepayPercentage("0.00");
 		}
-
 		//当日复借率 = 当日复借数/当日到期回全款数
 		Long reBorrowCount = myPageReportInfo.getReBorrowCount();
 		Long repayTodyCount = myPageReportInfo.getRepyCount();
 		if(repayTodyCount != 0){
-			double reBorrowRate = (double) reBorrowCount / (double)repayTodyCount;
+			BigDecimal  reBorrowRate = new BigDecimal(reBorrowCount).divide (new BigDecimal(repayTodyCount),4,BigDecimal.ROUND_DOWN);
 			myPageReportInfo.setReBorrowReate(df.format(reBorrowRate));
 		}else{
 			myPageReportInfo.setReBorrowReate("0.00");
@@ -649,5 +649,4 @@ public class BackStatisticService implements IBackStatisticService {
 		}
 		return myPageReportInfo;
 	}
-
 }

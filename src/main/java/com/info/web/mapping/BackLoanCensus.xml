@@ -60,6 +60,7 @@
 		<if test="endTime != null">
 			and repay_date &lt;= #{endTime}
 		</if>
+		order by repay_date DESC
 </select>
 	<select id ="BackLoanCensusCount" resultType="Integer" parameterType="hashmap">
      select count(1) from back_loan_census
@@ -70,6 +71,7 @@
 	<if test="endTime != null">
 		and repay_date &lt;= #{endTime}
 	</if>
+		order by repay_date DESC
 	</select>
 	<select id="findExpireCountAndMoney" resultType="map" parameterType="java.lang.String">
 	SELECT
@@ -84,7 +86,7 @@
 			and bo.status in (-11,-20)
 		</if>
 		<if test="lateDay != null">
-			and ar.late_day = #{lateDay}
+			and IFNULL( DATEDIFF( DATE_FORMAT( ar.repayment_real_time, '%Y-%m-%d' ), DATE_FORMAT( ar.repayment_time, '%Y-%m-%d' ) ), 0 ) = #{repayTime}
 		</if>
 	</select>
 	<select id="findRepayCountAndMoney" resultType="map">
@@ -122,7 +124,7 @@
         LEFT JOIN asset_repayment ar ON arr.asset_repayment_id = ar.id
         LEFT JOIN asset_borrow_order bo ON bo.id = ar.asset_order_id
         WHERE
-        old_repayment_time = #{repayTime}
+         DATE_FORMAT( arr.old_repayment_time, '%Y-%m-%d' )  = #{repayTime}
         <if test = "customerType = 0">
             and  bo.customer_type =0
         </if>

@@ -1,8 +1,6 @@
 package com.info.web.service;
 
 
-import com.aliyun.openservices.shade.org.apache.commons.lang3.ObjectUtils;
-import com.info.constant.Constant;
 import com.info.web.dao.IBackLoanCensusDao;
 import com.info.web.dao.IPaginationDao;
 import com.info.web.pojo.BackLoanCensus;
@@ -33,10 +31,6 @@ public class BackLoanCensusService implements IBackLoanCensusService {
         try{
             Map<String,Object> map = new HashMap<String,Object>();
             BackLoanCensus backLoanCensus = new BackLoanCensus();
-            //查询某日到期笔数，到期金额
-            map=backLoanCensusDao.findExpireCountAndMoney(repayTime,null,null);
-            backLoanCensus.setExpireMoney(optimic(map,"money"));
-            backLoanCensus.setExpireCount(map.get("count") == null ?0: Integer.valueOf(map.get("count").toString()));
             //查询某日到期已还订单笔数，金额 (status = 30)，
             map = backLoanCensusDao.findRepayCountAndMoney(repayTime,30, null);
             backLoanCensus.setRepayMoney(optimic(map,"money"));
@@ -50,6 +44,10 @@ public class BackLoanCensusService implements IBackLoanCensusService {
             backLoanCensus.setExtendMoney(optimic(map,"money"));
             backLoanCensus.setExtendProductMoney(optimic(map,"moneyAmount"));
             backLoanCensus.setExtendCount(map.get("count") == null?0: Integer.valueOf(map.get("count").toString()));
+            //查询某日到期笔数，到期金额
+            map=backLoanCensusDao.findExpireCountAndMoney(repayTime,null,null);
+            backLoanCensus.setExpireMoney(optimic(map,"money").add(backLoanCensus.getExtendProductMoney()));
+            backLoanCensus.setExpireCount(map.get("count") == null ?0: Integer.valueOf(map.get("count").toString())+backLoanCensus.getExtendCount());
             if((backLoanCensus.getExpireMoney() != null ? backLoanCensus.getExpireMoney().intValue() : 0) != 0){
                 //首借回款率 正常全额还款+展期金额/到期金额 （新用户）
                 map = backLoanCensusDao.findRepayCountAndMoney(repayTime,30,0);
@@ -112,31 +110,35 @@ public class BackLoanCensusService implements IBackLoanCensusService {
      * @param backLoanCensus
      * @return
      */
+    @Override
     public BackLoanCensus backCensusLoan(BackLoanCensus backLoanCensus){
         Map<String,Object> map = new HashMap<String,Object>();
         if((backLoanCensus.getExpireMoney() != null ? backLoanCensus.getExpireMoney().intValue() : 0) != 0){
+         //逾期总金额
+        map = backLoanCensusDao.findExpireCountAndMoney(backLoanCensus.getRepayDate(),1,null);
+        BigDecimal oveAllMoney = optimic(map,"money");
         //首逾
         map = backLoanCensusDao.findExpireCountAndMoney(backLoanCensus.getRepayDate(),1,1);
         BigDecimal firstMoney = optimic(map,"money");
         //逾期率 = 逾期金额/到期总金额
-        BigDecimal firstRate = (firstMoney.divide(backLoanCensus.getExpireMoney(),4)).multiply(BigDecimal.valueOf(10000));
+        BigDecimal firstRate = (oveAllMoney.subtract(firstMoney)).divide(backLoanCensus.getExpireMoney(),4,BigDecimal.ROUND_DOWN).multiply(BigDecimal.valueOf(10000));
         backLoanCensus.setOveFirstRate(firstRate.intValue());
         //2天 3天 7天
         map = backLoanCensusDao.findExpireCountAndMoney(backLoanCensus.getRepayDate(),1,2);
         BigDecimal twoMoney = optimic(map,"money");
-        BigDecimal twoRate = twoMoney.divide(backLoanCensus.getExpireMoney(),4).multiply(BigDecimal.valueOf(10000));
+        BigDecimal twoRate = (oveAllMoney.subtract(twoMoney)).divide(backLoanCensus.getExpireMoney(),4,BigDecimal.ROUND_DOWN).multiply(BigDecimal.valueOf(10000));
         backLoanCensus.setTwoRate(twoRate.intValue());
         map = backLoanCensusDao.findExpireCountAndMoney(backLoanCensus.getRepayDate(),1,3);
         BigDecimal threeMoney = optimic(map,"money");
-        BigDecimal threeRate = threeMoney.divide(backLoanCensus.getExpireMoney(),4).multiply(BigDecimal.valueOf(10000));
+        BigDecimal threeRate = (oveAllMoney.subtract(threeMoney)).divide(backLoanCensus.getExpireMoney(),4,BigDecimal.ROUND_DOWN).multiply(BigDecimal.valueOf(10000));
         backLoanCensus.setThreeRate(threeRate.intValue());
         map = backLoanCensusDao.findExpireCountAndMoney(backLoanCensus.getRepayDate(),1,7);
         BigDecimal sevenMoney = optimic(map,"money");
-        BigDecimal sevenRate = sevenMoney.divide(backLoanCensus.getExpireMoney(),4).multiply(BigDecimal.valueOf(10000));
+        BigDecimal sevenRate = (oveAllMoney.subtract(sevenMoney)).divide(backLoanCensus.getExpireMoney(),4,BigDecimal.ROUND_DOWN).multiply(BigDecimal.valueOf(10000));
         backLoanCensus.setSevenRate(sevenRate.intValue());
         map = backLoanCensusDao.findExpireCountAndMoney(backLoanCensus.getRepayDate(),1,null);
         BigDecimal money = optimic(map,"money");
-        BigDecimal oveRate = money.divide(backLoanCensus.getExpireMoney(),4).multiply(BigDecimal.valueOf(10000));
+        BigDecimal oveRate = money.divide(backLoanCensus.getExpireMoney(),4,BigDecimal.ROUND_DOWN).multiply(BigDecimal.valueOf(10000));
         backLoanCensus.setOveRate(oveRate.intValue());
         }
         //逾期未处理订单，逾期未处理金额(不包含滞纳金)
