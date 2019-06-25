@@ -468,11 +468,11 @@
 
     <!--  JPJ  -->
     <bean id="afterLoanCensusJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-        <property name="jobDetail" ref="afterLoanCensus"/>
+        <property name="jobDetail" ref="afterLoanCensusBean"/>
         <!--  每5分钟放款一次-->
         <property name="cronExpression" value="0 0/2 * * * ?"/>
     </bean>
-    <bean id="afterLoanCensus" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+    <bean id="afterLoanCensusBean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="jobClass" value="com.info.web.util.JobDetailBean"/>
         <property name="durability" value="true"/>
         <property name="jobDataAsMap">
@@ -485,10 +485,10 @@
 
     <!--  JPJ  -->
     <bean id="BackLoanOveCensusJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-        <property name="jobDetail" ref="BackLoanOveCensus"/>
+        <property name="jobDetail" ref="BackLoanOveCensusBean"/>
         <property name="cronExpression" value="0 0/2 * * * ?"/>
     </bean>
-    <bean id="BackLoanOveCensus" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+    <bean id="BackLoanOveCensusBean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="jobClass" value="com.info.web.util.JobDetailBean"/>
         <property name="durability" value="true"/>
         <property name="jobDataAsMap">
