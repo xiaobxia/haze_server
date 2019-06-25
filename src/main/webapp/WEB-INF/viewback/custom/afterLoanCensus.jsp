@@ -70,7 +70,7 @@
 					<th align="center">3天逾期率</th>
 					<th align="center">7天逾期率</th>
 					<th align="center">逾期占比</th>
-					<th align="center">更新时间</th>
+					<%--<th align="center">更新时间</th>--%>
 				</tr>
 			</thead>
 			<tbody>
@@ -98,8 +98,8 @@
 						<td align="center"><fmt:formatNumber pattern='###,###,##0.00' value="${loanInfo.threeRate / 100.00}"/>%</td>
 						<td align="center"><fmt:formatNumber pattern='###,###,##0.00' value="${loanInfo.sevenRate / 100.00}"/>%</td>
 						<td align="center"><fmt:formatNumber pattern='###,###,##0.00' value="${loanInfo.oveRate / 100.00}"/>%</td>
-						<td align="center"><fmt:formatDate value="${loanInfo.updateDate}"
-														   pattern="yyyy-MM-dd HH:mm:ss"/></td>
+						<%--<td align="center"><fmt:formatDate value="${loanInfo.updateDate}"
+														   pattern="yyyy-MM-dd HH:mm:ss"/></td>--%>
 					</tr>
 				</c:forEach>
 			</tbody>
