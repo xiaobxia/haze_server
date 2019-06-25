@@ -92,19 +92,14 @@
 	<select id="findRepayCountAndMoney" resultType="map">
 	SELECT
 		count( ar.id) AS count,
-		IFNULL(sum( repaymented_amount ),0) money
+		IFNULL(sum( repaymented_amount ),0) AS  money,
+		IFNULL(sum( bo.money_amount ),0) AS  moneyAmount
 	FROM
 		asset_borrow_order bo
 		LEFT JOIN asset_repayment ar ON bo.id = ar.asset_order_id
 	WHERE
 		DATE_FORMAT( ar.repayment_time, '%Y-%m-%d' ) = #{repayTime}
 		and bo.status = #{status}
-		<if test = "productMoney != null ">
-			and bo.money_amount = #{productMoney}
-		</if>
-		<if test = "customerType != null">
-			and bo.money_amount &gt; #{productMoney}
-		</if>
 	</select>
 	<select id="findExtendCountAndMoney" resultType="map" parameterType="java.lang.String">
 	   <!--SELECT
@@ -125,12 +120,6 @@
         LEFT JOIN asset_borrow_order bo ON bo.id = ar.asset_order_id
         WHERE
          DATE_FORMAT( arr.old_repayment_time, '%Y-%m-%d' )  = #{repayTime}
-		<if test = "productMoney != null ">
-			and bo.money_amount = #{productMoney}
-		</if>
-		<if test = "customerType != null">
-			and bo.money_amount &gt; #{productMoney}
-		</if>
 	</select>
 	<update id = "updateBackLoanCensus">
 		update back_loan_census

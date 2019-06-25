@@ -62,8 +62,9 @@
 					<th align="center">逾期已还金额</th>
 					<th align="center">逾期未还笔数</th>
 					<th align="center">逾期未还金额</th>
-					<th align="center">首借回款率</th>
-					<th align="center">复借回款率</th>
+					<%--<th align="center">新用户回款率</th>
+					<th align="center">老用户回款率</th>--%>
+					<th align="center">当日回款率</th>
 					<th align="center">首逾</th>
 					<th align="center">2天逾期率</th>
 					<th align="center">3天逾期率</th>
@@ -91,7 +92,7 @@
 						<td align="center">${loanInfo.oveWaitCount}</td>
 						<td align="center">${loanInfo.oveWaitMoney}</td>
 						<td align="center"><fmt:formatNumber pattern='###,###,##0.00' value="${loanInfo.repayRate / 100.00}"/>%</td>
-						<td align="center"><fmt:formatNumber pattern='###,###,##0.00' value="${loanInfo.reRepayRate / 100.00}"/>%</td>
+						<%--<td align="center"><fmt:formatNumber pattern='###,###,##0.00' value="${loanInfo.reRepayRate / 100.00}"/>%</td>--%>
 						<td align="center"><fmt:formatNumber pattern='###,###,##0.00' value="${loanInfo.oveFirstRate / 100.00}"/>%</td>
 						<td align="center"><fmt:formatNumber pattern='###,###,##0.00' value="${loanInfo.twoRate / 100.00}"/>%</td>
 						<td align="center"><fmt:formatNumber pattern='###,###,##0.00' value="${loanInfo.threeRate / 100.00}"/>%</td>
