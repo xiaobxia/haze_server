@@ -125,12 +125,12 @@
         LEFT JOIN asset_borrow_order bo ON bo.id = ar.asset_order_id
         WHERE
          DATE_FORMAT( arr.old_repayment_time, '%Y-%m-%d' )  = #{repayTime}
-        <if test = "customerType = 0">
-            and  bo.customer_type =0
-        </if>
-        <if test = "customerType != 0 and customerType != null">
-            and bo.customerType >0
-        </if>
+		<if test = "productMoney != null ">
+			and bo.money_amount = #{productMoney}
+		</if>
+		<if test = "customerType != null">
+			and bo.money_amount &gt; #{productMoney}
+		</if>
 	</select>
 	<update id = "updateBackLoanCensus">
 		update back_loan_census
