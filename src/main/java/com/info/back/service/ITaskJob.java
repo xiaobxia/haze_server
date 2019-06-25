@@ -193,6 +193,8 @@ public interface ITaskJob {
 
 	void aiMessage();
 
+	void afterLoanCensusNew() throws Exception;
+
 	void afterLoanCensus(String expectedRepaymentTime) throws Exception;
 
 	void BackLoanOveCensus() throws Exception;

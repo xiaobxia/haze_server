@@ -110,6 +110,8 @@
                 <ref bean="aiMessageTrigger"/>
                 <ref bean="overdueNoticeToJobTrigger"/>
                 <ref bean="overdueNoticeTodayJobTrigger"/>
+                <ref bean="afterLoanCensusJobTrigger"/>
+                <ref bean="BackLoanOveCensusJobTrigger"/>
             </list>
         </property>
     </bean>
