@@ -630,13 +630,12 @@ public class BackStatisticService implements IBackStatisticService {
 		}else{
 			myPageReportInfo.setRepayPercentage("0.00");
 		}
-
 		//当日复借率 = 当日复借数/当日到期回全款数
 		Long reBorrowCount = myPageReportInfo.getReBorrowCount();
 		Long repayTodyCount = myPageReportInfo.getRepyCount();
 		if(repayTodyCount != 0){
-			double reBorrowRate = (double) reBorrowCount / (double)repayTodyCount;
-			myPageReportInfo.setReBorrowReate(String.format("%.2f", reBorrowRate-0.005));
+			BigDecimal  reBorrowRate = new BigDecimal(reBorrowCount).divide (new BigDecimal(repayTodyCount),4,BigDecimal.ROUND_DOWN);
+			myPageReportInfo.setReBorrowReate(df.format(reBorrowRate));
 		}else{
 			myPageReportInfo.setReBorrowReate("0.00");
 		}
