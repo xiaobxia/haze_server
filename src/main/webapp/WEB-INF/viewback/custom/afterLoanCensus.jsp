@@ -56,8 +56,8 @@
 					<th align="center">展期笔数</th>
 					<th align="center">展期服务费</th>
 					<th align="center">展期产品金额</th>
-					<th align="center">部分（分期）还款笔数</th>
-					<th align="center">部分（分期）还款金额</th>
+					<%--<th align="center">部分（分期）还款笔数</th>
+					<th align="center">部分（分期）还款金额</th>--%>
 					<th align="center">逾期已还笔数</th>
 					<th align="center">逾期已还金额</th>
 					<th align="center">逾期未还笔数</th>
@@ -85,8 +85,8 @@
 						<td align="center">${loanInfo.extendCount}</td>
 						<td align="center">${loanInfo.extendMoney }</td>
 						<td align="center">${loanInfo.extendProductMoney}</td>
-						<td align="center">${loanInfo.amortizationLoanCount}</td>
-						<td align="center">${loanInfo.amortizationLoanMoney}</td>
+						<%--<td align="center">${loanInfo.amortizationLoanCount}</td>
+						<td align="center">${loanInfo.amortizationLoanMoney}</td>--%>
 						<td align="center">${loanInfo.oveRepayCount}</td>
 						<td align="center">${loanInfo.oveRepayMoney }</td>
 						<td align="center">${loanInfo.oveWaitCount}</td>
