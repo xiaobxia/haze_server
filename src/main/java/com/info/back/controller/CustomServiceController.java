@@ -1220,9 +1220,9 @@ public class CustomServiceController extends BaseController {
      * @return
      */
     @RequestMapping("toBackCensusLoan")
-    public String toBackCensusLoan(HttpServletRequest request, ModelMap model){
-        HashMap<String, Object> params = getParametersO(request);
-        model.put("params",params);
+    public String toBackCensusLoan(HttpServletRequest request, Model model){
+        Map<String, String> params = this.getParameters(request);
+        model.addAttribute("params", params);
         return "custom/toBackCensusLoan";
     }
     /**
@@ -1231,7 +1231,8 @@ public class CustomServiceController extends BaseController {
      */
     @RequestMapping("backCensusLoan")
     @ResponseBody
-   public void backCensusLoan(HttpServletResponse response,String repayTime) throws Exception{
+   public void backCensusLoan(HttpServletResponse response,String repayTime,HttpServletRequest request) throws Exception{
+        HashMap<String, Object> params = this.getParametersO(request);
         Boolean bool = true;
         try{
             taskJob.afterLoanCensus(repayTime);
@@ -1239,6 +1240,6 @@ public class CustomServiceController extends BaseController {
             bool = false;
             log.error("贷后统计回算出现错误"+e.getMessage());
         }
-        SpringUtils.renderDwzResult(response, bool, bool ? "操作成功!" : "操作失败!", DwzResult.CALLBACK_RELOADPAGE);
+        SpringUtils.renderDwzResult(response, bool, bool ? "操作成功!" : "操作失败!", DwzResult.CALLBACK_CLOSECURRENT, params.get("parentId").toString());
    }
 }

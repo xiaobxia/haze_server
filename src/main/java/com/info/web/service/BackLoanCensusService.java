@@ -32,11 +32,11 @@ public class BackLoanCensusService implements IBackLoanCensusService {
             Map<String,Object> map = new HashMap<String,Object>();
             BackLoanCensus backLoanCensus = new BackLoanCensus();
             //查询某日到期已还订单笔数，金额 (status = 30)，
-            map = backLoanCensusDao.findRepayCountAndMoney(repayTime,30, null);
+            map = backLoanCensusDao.findRepayCountAndMoney(repayTime,30, null,null);
             backLoanCensus.setRepayMoney(optimic(map,"money"));
             backLoanCensus.setRepayCount(map.get("count") == null?0: Integer.valueOf(map.get("count").toString()));
             //部分还款金额，笔数(status = 23),
-            map = backLoanCensusDao.findRepayCountAndMoney(repayTime,23,null);
+            map = backLoanCensusDao.findRepayCountAndMoney(repayTime,23,null,null);
             backLoanCensus.setAmortizationLoanMoney(optimic(map,"money"));
             backLoanCensus.setAmortizationLoanCount(map.get("count") == null ? 0: Integer.valueOf(map.get("count").toString()));
             //展期笔数 展期服务费金额
@@ -48,24 +48,28 @@ public class BackLoanCensusService implements IBackLoanCensusService {
             map=backLoanCensusDao.findExpireCountAndMoney(repayTime,null,null);
             backLoanCensus.setExpireMoney(optimic(map,"money").add(backLoanCensus.getExtendProductMoney()));
             backLoanCensus.setExpireCount(map.get("count") == null ?0: Integer.valueOf(map.get("count").toString())+backLoanCensus.getExtendCount());
+            backLoanCensus.setRepayDate(repayTime);
+            BackLoanCensus loanCensus =  backCensusLoan(backLoanCensus);
+            //查询出默认产品金额
+            map = backLoanCensusDao.findProductMoney();
+            BigDecimal  productMoney = optimic(map,"productMoney").multiply(BigDecimal.valueOf(100));
+            String finallyMoney = productMoney.stripTrailingZeros().toPlainString();
             if((backLoanCensus.getExpireMoney() != null ? backLoanCensus.getExpireMoney().intValue() : 0) != 0){
                 //首借回款率 正常全额还款+展期金额/到期金额 （新用户）
-                map = backLoanCensusDao.findRepayCountAndMoney(repayTime,30,0);
+                map = backLoanCensusDao.findRepayCountAndMoney(repayTime,30,finallyMoney,null);
                 BigDecimal firstRepayMoney = optimic(map,"money");
                 map = backLoanCensusDao.findExtendCountAndMoney(repayTime,0);
                 BigDecimal firstExtendMoney = optimic(map,"moneyAmount");
                 BigDecimal repayRate = (firstRepayMoney.add(firstExtendMoney)).divide(backLoanCensus.getExpireMoney(),4).multiply(BigDecimal.valueOf(10000));
                 backLoanCensus.setRepayRate(repayRate.intValue());
                 //复借回款率 正常全额还款+展期金额/到期金额  （老用户）
-                map = backLoanCensusDao.findRepayCountAndMoney(repayTime,30,1);
+                map = backLoanCensusDao.findRepayCountAndMoney(repayTime,30,finallyMoney,1);
                 BigDecimal twoRepayMoney = optimic(map,"money");
                 map = backLoanCensusDao.findExtendCountAndMoney(repayTime,1);
                 BigDecimal twoExtendMoney = optimic(map,"moneyAmount");
                 BigDecimal reRepayRate = (twoRepayMoney.add(twoExtendMoney)).divide(backLoanCensus.getExpireMoney(),4).multiply(BigDecimal.valueOf(10000));
                 backLoanCensus.setReRepayRate(reRepayRate.intValue());
             }
-            backLoanCensus.setRepayDate(repayTime);
-            BackLoanCensus loanCensus =  backCensusLoan(backLoanCensus);
             //判断某天的贷后数据是要添加 还是更新
             BackLoanCensus back = backLoanCensusDao.findBackLoanCensusByTime(repayTime);
             backLoanCensus.setUpdateDate(new Date());
@@ -146,7 +150,7 @@ public class BackLoanCensusService implements IBackLoanCensusService {
         backLoanCensus.setOveWaitMoney(optimic(map,"money"));
         backLoanCensus.setOveWaitCount(map.get("count") == null?0: Integer.valueOf(map.get("count").toString()));
         //逾期已还笔数，逾期已还金额（status = 34）
-        map = backLoanCensusDao.findRepayCountAndMoney(backLoanCensus.getRepayDate(),34,null);
+        map = backLoanCensusDao.findRepayCountAndMoney(backLoanCensus.getRepayDate(),34,null,null);
         backLoanCensus.setOveRepayMoney(optimic(map,"money"));
         backLoanCensus.setOveRepayCount(map.get("count") == null?0: Integer.valueOf(map.get("count").toString()));
         //展期笔数 展期服务费金额
@@ -155,7 +159,7 @@ public class BackLoanCensusService implements IBackLoanCensusService {
         backLoanCensus.setExtendProductMoney(optimic(map,"moneyAmount"));
         backLoanCensus.setExtendCount(map.get("count") == null?0: Integer.valueOf(map.get("count").toString()));
         //部分还款金额，笔数(status = 23),
-        map = backLoanCensusDao.findRepayCountAndMoney(backLoanCensus.getRepayDate(),23,null);
+        map = backLoanCensusDao.findRepayCountAndMoney(backLoanCensus.getRepayDate(),23,null,null);
         backLoanCensus.setAmortizationLoanMoney(optimic(map,"money"));
         backLoanCensus.setAmortizationLoanCount(map.get("count") == null ? 0: Integer.valueOf(map.get("count").toString()));
         backLoanCensus.setUpdateDate(new Date());
