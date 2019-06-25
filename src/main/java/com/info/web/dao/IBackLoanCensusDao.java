@@ -26,7 +26,7 @@ public interface IBackLoanCensusDao {
      Map<String,Object> findRepayCountAndMoney(@Param("repayTime") String  reapyTime, @Param("status") Integer status,@Param("productMoney") String productMoney,@Param("customerType") Integer customerType);
 
      //展期笔数 展期服务费金额
-     Map<String,Object> findExtendCountAndMoney(@Param("repayTime") String  repayTime,@Param("customerType") Integer customerType);
+     Map<String,Object> findExtendCountAndMoney(@Param("repayTime") String  repayTime,@Param("productMoney") String productMoney,@Param("customerType") Integer customerType);
 
      //添加贷后统计
      void insertBackLoanCensus(BackLoanCensus backLoanCensus);
