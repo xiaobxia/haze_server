@@ -36,7 +36,7 @@
 		<div class="panelBar">
 			<ul class="toolBar">
 				<li class="">
-					<a href="customService/toBackCensusLoan?myId=525&parentId=498" class="edit" target="dialog" width="410" height="210" rel="jbsxBox" mask="true">
+					<a href="customService/toBackCensusLoan?myId=682&parentId=${params.myId}" class="edit" target="dialog" width="410" height="210" rel="jbsxBox" mask="true">
 						<span>回算统计</span> </a>
 				</li>
 				<li class="">
