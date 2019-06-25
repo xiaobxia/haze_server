@@ -13,6 +13,7 @@ import java.util.Map;
 
 import com.info.back.dao.IBackDictionaryDao;
 import com.info.back.utils.PropertiesUtil;
+import com.info.back.utils.SysCacheUtils;
 import com.info.web.dao.*;
 import com.info.web.pojo.*;
 import com.info.web.util.*;
@@ -438,7 +439,8 @@ public class RepaymentService implements IRepaymentService {
             userT.setId(re.getUserId() + "");
 			userT.setLastOverDays(String.valueOf(between));
 			userService.updateByPrimaryKeyUser(userT);
-            if (between > 0) {
+			int overdueDay = Integer.parseInt(SysCacheUtils.getConfigMap("OVERDUE").get("OVERDUE_DAY"));
+			if (between > 0 && between <= overdueDay) {
                 // 滞纳金 = （借款到账金额 + 服务费） * 滞纳金服务费 / 10000 * 滞纳天数
 				Integer lateFee = (int) ((re.getRepaymentPrincipal() + re.getRepaymentInterest()) * re.getLateFeeApr() / 10000 * between);
 				BigDecimal productLateFee = borrowProductConfigDao.queryByOrderId(re.getAssetOrderId());

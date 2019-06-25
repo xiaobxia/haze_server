@@ -123,6 +123,8 @@ public class BorrowOrderController extends BaseController {
     private DataWareHouseService dataWareHouseService;
     @Autowired
     private BorrowProductConfigDao productConfigDao;
+    @Autowired
+    private IUserBlackService userBlackService;
 
     @Autowired
     private IndexDao indexDao;
@@ -1073,7 +1075,20 @@ public class BorrowOrderController extends BaseController {
                                     user.setId(borrow.getUserId() + "");
                                     //2黑名单
                                     user.setStatus("2");
-                                    int count = this.userService.updateByPrimaryKeyUser(user);
+                                    this.userService.updateByPrimaryKeyUser(user);
+
+                                    User u = userService.searchByUserid(borrow.getUserId());
+
+                                    UserBlack ub = userBlackService.findBlackUserByParams(null,0,u.getUserPhone());
+                                    if(ub == null){
+                                        UserBlack userBlack = new UserBlack();
+                                        userBlack.setIdNumber(u.getIdNumber());
+                                        userBlack.setUserName(u.getRealname());
+                                        userBlack.setUserPhone(u.getUserPhone());
+                                        userBlack.setCreateTime(new Date());
+                                        userBlack.setUserType(0);
+                                        userBlackService.addUserBlack(userBlack);
+                                    }
                                 }
 
                                 borrowOrderService.updateRiskCreditUserById(riskCreditUser);
