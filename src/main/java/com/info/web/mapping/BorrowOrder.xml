@@ -1634,6 +1634,10 @@
 		<if test ="customerType != null and customerType != ''">
 			and bo.customer_type=1
 		</if>
+		<if test="status != null">
+			and bo.status = #{status}
+		</if>
+
 		<!--SELECT
 		count( bo.id )
 		FROM
@@ -1680,6 +1684,7 @@
 		LEFT JOIN user_info ui on ar.user_id = ui.id
 		where
 		  ui.user_from = #{channelId}
-		 and ar.status=1 and ar.created_at = #{loanTime}
+		 and ar.status=1
+	     AND DATE_FORMAT( ar.created_at, '%Y%m%d')= DATE_FORMAT(#{loanTime}, '%Y%m%d')
 	</select>
 </mapper>

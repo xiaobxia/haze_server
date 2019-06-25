@@ -81,7 +81,7 @@
 					复借已还数量
 				</th>
 				<th align="center">
-					复借率
+					复借逾期率
 				</th>
 				<th align="center" >
 					展期数量

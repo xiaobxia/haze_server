@@ -2589,8 +2589,8 @@ public class BorrowOrderService implements IBorrowOrderService {
     }
 
     @Override
-    public Integer findOveChannle(Integer channelId, List<Integer> statusList,String loanTime,String customerType) {
-        return borrowOrderDao.findOveChannle(channelId,statusList,loanTime,customerType);
+    public Integer findOveChannle(Integer channelId,String loanTime,Integer status,String customerType) {
+        return borrowOrderDao.findOveChannle(channelId,loanTime,status,customerType);
     }
 
     @Override
