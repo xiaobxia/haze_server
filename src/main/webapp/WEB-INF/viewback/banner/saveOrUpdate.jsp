@@ -37,7 +37,7 @@ img {
 		<c:if test="${params.parentId != null }">
 			<input type="hidden" name="parentId" value="${params.parentId}" />
 		</c:if>
-		<div class="pageFormContent" layoutH="56">
+		<div class="pageFormContent" layoutH="66">
 			<p>
 				<label>渠道：</label> <select name="showType">
 					<option value="0"

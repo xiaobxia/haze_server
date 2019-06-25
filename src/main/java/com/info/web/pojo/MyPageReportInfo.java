@@ -146,6 +146,10 @@ public class MyPageReportInfo {
      * 当日复借率
      * */
     private String reBorrowReate;
+    /**
+     * 当日实际还款金额
+     */
+    private BigDecimal repayedMoney;
 
     public BigDecimal getAllLoanMoney() {
         return allLoanMoney;
@@ -426,6 +430,14 @@ public class MyPageReportInfo {
         this.reBorrowReate = reBorrowReate;
     }
 
+    public BigDecimal getRepayedMoney() {
+        return repayedMoney;
+    }
+
+    public void setRepayedMoney(BigDecimal repayedMoney) {
+        this.repayedMoney = repayedMoney;
+    }
+
     @Override
     public String toString() {
         return "MyPageReportInfo{" +
@@ -464,6 +476,7 @@ public class MyPageReportInfo {
                 ", reBorrowMoney=" + reBorrowMoney +
                 ", reBorrowCount=" + reBorrowCount +
                 ", reBorrowReate='" + reBorrowReate + '\'' +
+                ", repayedMoney=" + repayedMoney +
                 '}';
     }
 }

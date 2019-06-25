@@ -18,7 +18,7 @@
 		<form method="post" action="loanreport/toAgainLoanReport?&parentId=${params.parentId }"
 			onsubmit="return validateCallback(this, dialogAjaxDone);"
 			class="pageForm required-validate">
-			<div class="pageFormContent" layoutH="48">
+			<div class="pageFormContent" layoutH="60">
 				<p>
 					<label>统计时间：</label>
 					<input type="text" name="nowTime" id="nowTime" value="${params.beginTime}" class="date textInput readonly" datefmt="yyyy-MM-dd"  readonly="readonly"/>

@@ -30,7 +30,7 @@
 					<div class="divider"></div>
 					<p><label>新用户放款金额:</label><label style="width: 230px;">${channelReport.newIntoMoney/100}</label></p>
 					<div class="divider"></div>
-					<p><label>新用户放款费用系数:</label><label style="width: 230px;">${channelRate.channelNewloanRate}</label></p>
+					<p><label style="width: 160px;">新用户放款费用系数:</label><label style="width: 230px;">${channelRate.channelNewloanRate}</label></p>
 					<div class="divider"></div>
 					 
 					<p style="width: 480px;">

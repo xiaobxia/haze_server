@@ -21,7 +21,7 @@
 					<input type="hidden" name="type" value="${params.type }">
 				</c:if>
 				<input type="hidden" name="id" value="${params.id }">
-				<div class="pageFormContent" layoutH="56">
+				<div class="pageFormContent" layoutH="106">
 					<p>
 						<label>
 							角色名称:

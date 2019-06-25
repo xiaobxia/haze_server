@@ -19,14 +19,13 @@
 		  class="pageForm required-validate">
 		<input type="hidden" name="parentId" value="${params.parentId}" />
 		<input type="hidden" name="assetRepaymentId" id="id" value="${assetRepaymentId }">
-		<div class="pageFormContent" layoutH="50" style="overflow: auto;">
+		<div class="pageFormContent" layoutH="60" style="overflow: auto;">
 			<div class="form-wrap">
 				<div class="form-item">
 					<label>
 						还款金额(元):
 					</label>
-					<input id="trueRepaymentMoney" name="trueRepaymentMoneyBig" class="number required" type="text" alt="请输入还款金额" size="30"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					剩余待还金额￥ ${remainMoney} 元
+					<input id="trueRepaymentMoney" name="trueRepaymentMoneyBig" class="number required" type="text" size="30"/>剩余待还金额￥ ${remainMoney} 元
 				</div>
 				<div class="form-item">
 					<label>

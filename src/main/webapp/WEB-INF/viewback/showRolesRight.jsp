@@ -18,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					onsubmit="return validateCallback(this, ${params.ajaxType });" class="pageForm required-validate">
 						<input type="hidden" name="parentId" value="${params.parentId}" />
 						<input type="hidden" name="id" value="${params.id}" />
-					<div class="pageFormContent" layoutH="56">
+					<div class="pageFormContent" layoutH="106">
 						${outGroupHtml}
 					</div>
 					<div class="formBar">

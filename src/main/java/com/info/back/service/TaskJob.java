@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.JedisCluster;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -139,7 +140,7 @@ public class TaskJob implements ITaskJob {
 		// 设置超时时间
 		RequestConfig requestConfig = RequestConfig.custom()
 				.setSocketTimeout(2000).setConnectTimeout(2000).build();
-		HttpPost post = new HttpPost(PropertiesUtil.get("APP_HOST_API") + "/" + PropertiesUtil.get("PAY_CHANNEL") + "/gringotts/task/userQuota/syn");
+		HttpPost post = new HttpPost(PropertiesUtil.get("APP_HOST_API") + "/" + StringDateUtils.getDrawWithChannel() + "/gringotts/task/userQuota/syn");
 		try{
 			post.setConfig(requestConfig);
 			httpClient.execute(post);
@@ -154,7 +155,7 @@ public class TaskJob implements ITaskJob {
 		// 设置超时时间
 		RequestConfig requestConfig = RequestConfig.custom()
 				.setSocketTimeout(2000).setConnectTimeout(2000).build();
-		HttpPost post = new HttpPost(PropertiesUtil.get("APP_HOST_API") + "/" + PropertiesUtil.get("PAY_CHANNEL") + "/gringotts/task/everyDayuserQuota/syn");
+		HttpPost post = new HttpPost(PropertiesUtil.get("APP_HOST_API") + "/" + StringDateUtils.getDrawWithChannel() + "/gringotts/task/everyDayuserQuota/syn");
 		try{
 			post.setConfig(requestConfig);
 			httpClient.execute(post);
@@ -169,7 +170,7 @@ public class TaskJob implements ITaskJob {
 		// 设置超时时间
 		RequestConfig requestConfig = RequestConfig.custom()
 				.setSocketTimeout(2000).setConnectTimeout(2000).build();
-		HttpPost post = new HttpPost(PropertiesUtil.get("APP_HOST_API") + "/" + PropertiesUtil.get("PAY_CHANNEL") + "/gringotts/task/mq/syn");
+		HttpPost post = new HttpPost(PropertiesUtil.get("APP_HOST_API") + "/" + StringDateUtils.getDrawWithChannel() + "/gringotts/task/mq/syn");
 		try{
 			post.setConfig(requestConfig);
 			httpClient.execute(post);
@@ -593,7 +594,7 @@ public class TaskJob implements ITaskJob {
     	//获取全局配置参数，AM，PM
 		Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT+08:00"));
 		int time = c.get(Calendar.HOUR_OF_DAY);
-		Map<String, String> keys = SysCacheUtils.getConfigParams(BackConfigParams.MX);
+		Map<String, String> keys = SysCacheUtils.getConfigParams(BackConfigParams.WITHHOLD_TIME);
 		int am = Integer.parseInt(keys.get("WITHHOLD_AM"));
 		int pm = Integer.parseInt(keys.get("WITHHOLD_PM"));
 		log.info("withhold定时任务执行,time:" + time + ",AM:" + am + ",PM:" + pm);
@@ -1111,7 +1112,7 @@ public class TaskJob implements ITaskJob {
 					log.info("userId=" + order.getUserId() + " borrowId=" + order.getId() + " uuid=" + uuid + " sign=" + sign);
 					log.info("order=" + JSON.toJSONString(order));
 
-					String requestUrl = PropertiesUtil.get("APP_HOST_API") + "/"+PropertiesUtil.get("PAY_CHANNEL")+"/withdraw/" + order.getUserId().toString() + "/" + order.getId().toString() + "/" + uuid + "/" + sign;
+					String requestUrl = PropertiesUtil.get("APP_HOST_API") + "/" + StringDateUtils.getDrawWithChannel() + "/withdraw/" + order.getUserId().toString() + "/" + order.getId().toString() + "/" + uuid + "/" + sign;
 					log.info("requestUrl = " + requestUrl);
 					//发送代付请求
 					try {
@@ -1612,4 +1613,5 @@ public class TaskJob implements ITaskJob {
 			log.info("贷后逾期统计每天一次 统计失败结束");
 		}
 	}
+
 }

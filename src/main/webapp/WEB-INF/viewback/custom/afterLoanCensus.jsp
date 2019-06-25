@@ -36,7 +36,7 @@
 		<div class="panelBar">
 			<ul class="toolBar">
 				<li class="">
-					<a href="customService/toBackCensusLoan?myId=682&parentId=${params.myId}" class="edit" target="dialog" width="410" height="210" rel="jbsxBox" mask="true">
+					<a href="customService/toBackCensusLoan?myId=525&parentId=498" class="edit" target="dialog" width="410" height="210" rel="jbsxBox" mask="true">
 						<span>回算统计</span> </a>
 				</li>
 				<li class="">
@@ -47,14 +47,15 @@
 		<table class="table" width="100%" layoutH="200" nowrapTD="false" ifScrollTable="true">
 			<thead>
 				<tr>
-					<th align="center">ID</th>
+					<th align="center">序号</th>
 					<th align="center">还款日期</th>
 					<th align="center">到期笔数</th>
 					<th align="center">到期金额</th>
 					<th align="center">还款笔数</th>
 					<th align="center">还款金额</th>
 					<th align="center">展期笔数</th>
-					<th align="center">展期金额</th>
+					<th align="center">展期服务费</th>
+					<th align="center">展期产品金额</th>
 					<th align="center">部分（分期）还款笔数</th>
 					<th align="center">部分（分期）还款金额</th>
 					<th align="center">逾期已还笔数</th>
@@ -74,7 +75,7 @@
 			<tbody>
 				<c:forEach var="loanInfo" items="${pageConfig.items }" varStatus="status" >
 					<tr target="id" rel="${loanInfo.id }">
-						<td align="center">${loanInfo.id }</td>
+						<td align="center">${status.count }</td>
 						<td align="center">${loanInfo.repayDate}</td>
 						<td align="center">${loanInfo.expireCount}</td>
 						<td align="center">${loanInfo.expireMoney}</td>
@@ -82,6 +83,7 @@
 						<td align="center">${loanInfo.repayMoney}</td>
 						<td align="center">${loanInfo.extendCount}</td>
 						<td align="center">${loanInfo.extendMoney }</td>
+						<td align="center">${loanInfo.extendProductMoney}</td>
 						<td align="center">${loanInfo.amortizationLoanCount}</td>
 						<td align="center">${loanInfo.amortizationLoanMoney}</td>
 						<td align="center">${loanInfo.oveRepayCount}</td>

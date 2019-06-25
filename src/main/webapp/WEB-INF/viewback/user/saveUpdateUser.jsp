@@ -10,6 +10,18 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Insert user</title>
+	<style>
+		.pageFormContent dl {
+			height: 36px;
+			line-height: 36px;
+			padding: 0;
+			margin-bottom: 25px;
+		}
+		.pageFormContent dt, .pageFormContent dd, .pageFormContent select{
+			height: 36px;
+			line-height: 36px;
+		}
+	</style>
 </head>
 <body>
 <div class="pageContent">
@@ -20,7 +32,7 @@
 		<input type="hidden" name="parentId" value="${params.parentId}" />
 		<input type="hidden" name="id" id="id" value="${backUser.id }">
 		<input type="hidden" name="customer" id="customer" value="${params.customer}">
-		<div class="pageFormContent" layoutH="50" style="overflow: auto;">
+		<div class="pageFormContent" layoutH="60" style="overflow: auto;">
 			<dl>
 				<dt style="width: 80px;">
 					<label>
@@ -55,7 +67,6 @@
 					</label>
 				</dd>
 			</dl>
-			<div class="divider"></div>
 			<dl>
 				<dt style="width: 80px;">
 					<label>
@@ -87,7 +98,6 @@
 					</script>
 				</c:if>
 			</dl>
-			<div class="divider"></div>
 			<dl>
 				<dt style="width: 80px;">
 					<label>
@@ -110,7 +120,6 @@
 						   class="phone" alt="请输入电话" size="30" />
 				</dd>
 			</dl>
-			<div class="divider"></div>
 			<dl>
 				<dt style="width: 80px;">
 					<label>
@@ -169,7 +178,6 @@
 					</dd>
 				</dl>
 			</c:if>
-			<div class="divider"></div>
 			<p>
 				<label>备注:</label>
 				<textarea  name="remark" rows="5" cols="60" maxlength="50">${backUser.remark }</textarea>

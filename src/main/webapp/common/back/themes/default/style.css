@@ -851,13 +851,48 @@ input.disabled {
 }
 
 .form-wrap .form-item {
-    height: 30px;
+    height: 36px;
+    line-height: 36px;
+}
+.form-wrap .form-item .select-danger {
+    font-size: 20px;
+    color: red;
+}
+.form-wrap .form-item .textInput {
+    margin-right: 10px;
+}
+.form-wrap .form-item select{
+    height: 36px;
+    width: 218px;
+    margin-right: 10px;
+}
+.form-wrap .form-item label{
+    font-size: 13px;
+    color: #606266;
+}
+.form-item label{
+    font-size: 13px;
+    color: #606266;
+}
+.form-item .label{
+    font-size: 13px;
+    color: #606266;
 }
 .form-item {
     position: relative;
 }
 .form-item span.error {
-    top: 0;
+    display: block;
+    overflow: hidden;
+    width: auto;
+    height: 24px;
+    line-height: 24px;
+    color: red;
+    position: absolute;
+    left: 120px;
+    bottom: -22px;
+    top: auto;
+    background: transparent;
 }
 
 .buttonActive-blue {

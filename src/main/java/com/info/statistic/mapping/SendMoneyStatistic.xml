@@ -111,7 +111,7 @@
 			and ar.late_day &gt;= #{fristNumber}
 		</if>
 		<if test="endNumbers != null and endNumbers != ''">
-            and ar.late_day &lt; #{endNumbers}
+            and ar.late_day &lt;= #{endNumbers}
 		</if>
 	</select>
 	<select id="threeMoney" resultType="java.math.BigDecimal">

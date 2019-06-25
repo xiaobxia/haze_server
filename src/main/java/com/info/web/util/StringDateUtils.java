@@ -1,11 +1,15 @@
 package com.info.web.util;
 
+import com.info.back.utils.SysCacheUtils;
+import com.info.web.pojo.BackConfigParams;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 用String表示Date的工具类
@@ -69,5 +73,21 @@ public class StringDateUtils {
             }
         }
         return sb.toString();
+    }
+
+    public static String getDrawWithChannel() {
+        List<BackConfigParams> drawwithchannel1 = SysCacheUtils.getListConfigParams("DRAWWITHCHANNEL");
+        String result = "chanpay";
+        try {
+            if (drawwithchannel1.size() <= 0) return result;
+            for (BackConfigParams backConfigParams : drawwithchannel1) {
+                if (Integer.parseInt(backConfigParams.getSysValue()) == 0) {
+                    result = backConfigParams.getSysValueBig();
+                }
+            }
+        } catch (Exception e) {
+            return result;
+        }
+        return result;
     }
 }

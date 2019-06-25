@@ -26,7 +26,7 @@
 			onsubmit="return validateCallback(this, navTabAjaxDone);"
 			class="pageForm required-validate">
 			<input type="hidden" name="id" value="${content.id}">
-			<div class="pageFormContent" layoutH="56">
+			<div class="pageFormContent" layoutH="106">
 				<p>
 					<label>客服电话：</label><input name="aboutServiceTel" class="required"
 						type="text" alt="请输入内容标题" size="30" value="${content.aboutServiceTel }" maxlength="50"/>

@@ -20,40 +20,28 @@
 				<input type="hidden" name="parentId" value="${params.parentId}" />
 				<input type="hidden" name="id" id="id" value="${channelSuperInfo.id }">
 				<div class="pageFormContent" layoutH="50" style="overflow: auto;">
-					<dl style="width: 380px;">
-						<dt style="width: 100px;">
+					<div class="form-wrap">
+						<div class="form-item">
 							<label>
 								渠道商名称:
 							</label>
-						</dt>
-						<dd>
 							<input name="channelSuperName" value="${channelSuperInfo.channelSuperName}"
-							 class="required"	type="text" alt="请输入名称" size="30"/>
-						</dd>
-					</dl>
-					<div class="divider"></div>
-					<dl>
-						<dt style="width: 100px;">
+								   class="required"	type="text" alt="请输入名称" size="30"/>
+						</div>
+						<div class="form-item">
 							<label>
 								渠道商编码:
 							</label>
-						</dt>
-						<dd>
 							<input name="channelSuperCode" value="${channelSuperInfo.channelSuperCode}"
-							 class="required"	type="text" alt="请输入编码" size="30"/>
-						</dd>
-					</dl>
-					<div class="divider"></div>
-					<dl>
-						<dt style="width: 100px;">
+								   class="required"	type="text" alt="请输入编码" size="30"/>
+						</div>
+						<div class="form-item">
 							<label>
 								备注:
 							</label>
-						</dt>
-						<dd>
 							<textarea  name="remark" rows="5" cols="60" maxlength="50">${channelSuperInfo.remark }</textarea>
-						</dd>
-					</dl>
+						</div>
+					</div>
 				</div>
 				<div class="formBar">
 					<ul>

@@ -23,14 +23,12 @@
 		<input type="hidden" name="assetRepaymentId" id="id" value="${assetRepaymentId }">
 		<input type="hidden" name="feeLateApr" id="feeLateApr" value="${feeLateApr /100}">
 
-		<div class="pageFormContent" layoutH="50" style="overflow: auto;">
-			<dl>
-				<dt style="width: 80px;">
+		<div class="pageFormContent" layoutH="60" style="overflow: auto;">
+			<div class="form-wrap">
+				<div class="form-item">
 					<label>
 						续期类型:
 					</label>
-				</dt>
-				<dd class="selectParenet">
 					<select name="renewalKind" id="renewalKind" class="select required">
 						<option value="">请选择</option>
 						<c:forEach items="${RENEW_KIND}" var="type">
@@ -38,16 +36,11 @@
 						</c:forEach>
 					</select>
 					<span class="select-danger">*</span>
-				</dd>
-			</dl>
-			<div class="divider"></div>
-			<dl>
-				<dt style="width:80px;">
+				</div>
+				<div class="form-item">
 					<label>
 						还款渠道:
 					</label>
-				</dt>
-				<dd class="selectParenet">
 					<select name="renewalType" id="renewalType" class="select required">
 						<option value="">请选择</option>
 						<c:forEach items="${ALL_REPAY_TYPE}" var="type">
@@ -55,87 +48,53 @@
 						</c:forEach>
 					</select>
 					<span class="select-danger">*</span>
-				</dd>
-			</dl>
-			<div class="divider"></div>
-			<dl style="width: 100%;">
-				<dt style="width: 80px;">
+				</div>
+				<div class="form-item">
 					<label>
 						总服务费:
 					</label>
-				</dt>
-				<dd style="width:500px;">
 					<input id="sumFee" name="sumFeeBig" readonly="readonly" type="text" alt="请输入总服务费" size="30" value="${allCount / 100.00}"/>
-				</dd>
-			</dl>
-			<div class="divider"></div>
-			<dl style="width: 100%;">
-				<dt style="width: 80px;">
+				</div>
+				<div class="form-item">
 					<label>
 						服务费:
 					</label>
-				</dt>
-				<dd style="width:500px;">
 					<input id="repaymentInterest" name="repaymentInterestBig" readonly="readonly" type="text" alt="请输入服务费" size="30" value="${loanApr / 100.00}"/>
-				</dd>
-			</dl>
-			<div class="divider"></div>
-			<dl style="width: 100%;">
-				<dt style="width: 80px;">
+				</div>
+				<div class="form-item">
 					<label>
 						滞纳金:
 					</label>
-				</dt>
-				<dd style="width:500px;">
 					<input id="planLateFee" name="planLateFeeBig" readonly="readonly" type="text" alt="请输入滞纳金" size="30" value="${waitLate / 100.00}"/>
-				</dd>
-			</dl>
-			<div class="divider"></div>
-			<dl style="width: 100%;">
-				<dt style="width: 80px;">
+				</div>
+				<div class="form-item">
 					<label>
 						续期费:
 					</label>
-				</dt>
-				<dd style="width:500px;">
 					<input id="renewalFee" name="renewalFeeBig" readonly="readonly"  type="text" alt="请输入续期费" size="30" value="${renewalFee / 100.00}"/>
-				</dd>
-			</dl>
-			<div class="divider"></div>
-			<dl style="width: 100%;">
-				<dt style="width: 80px;">
+				</div>
+				<div class="form-item">
 					<label>
 						支付宝订单号:
 					</label>
-				</dt>
-				<dd style="width:500px;">
 					<input id="orderId" name="orderId" class="textInput" type="text" alt="请输入支付宝订单号" size="30" value=""/>
-				</dd>
-			</dl>
-			<div class="divider"></div>
-			<dl>
-				<dt style="width: 80px;">
+				</div>
+				<div class="form-item">
 					<label>
 						实际收款时间:
 					</label>
-				</dt>
-				<dd>
 					<input id="realRenewalDate" name="realRenewalDate" class="required" type="text" size="30"  value=""
 						   pattern="yyyy-MM-dd HH:mm:ss" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true,minDate:'%y-%M-{%d-7}',maxDate:'%y-%M-%d'})" onchange="autoCalc()"/>
-
-				</dd>
-			</dl>
-			<div class="divider"></div>
-			<dl>
-				<dt style="width: 80px;">
+				</div>
+				<div class="form-item">
 					<label>
 						备注:
 					</label>
-				</dt>
-				<dd>
 					<textarea title="备注" class="required" id="remark" name="remark" rows="5" cols="60" maxlength="50"></textarea>
-				</dd>
-			</dl>
+				</div>
+				<div class="form-item">
+				</div>
+			</div>
 		</div>
 		<div class="formBar">
 			<ul>
