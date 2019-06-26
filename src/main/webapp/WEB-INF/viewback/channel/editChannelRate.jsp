@@ -22,14 +22,14 @@
 				<div class="pageFormContent" layoutH="60" style="overflow: auto;">
 					<div class="form-wrap">
 						<div class="form-item">
-							<label>
+							<label style="width: 160px;">
 								费率名称:
 							</label>
 							<input name="channelRateName" value="${channelRate.channelRateName}"
 								   class="required"	type="text" alt="请输入名称" size="30"/>
 						</div>
 						<div class="form-item">
-							<label>
+							<label style="width: 160px;">
 								注册人数费用系数:
 							</label>
 							<input name="channelRegisterRate" value="${channelRate.channelRegisterRate}"
@@ -43,7 +43,7 @@
 								   class="required"	type="text" alt="请输入系数" size="30"/>
 						</div>
 						<div class="form-item">
-							<label>费率类型</label>
+							<label style="width: 160px;">费率类型:</label>
 							<select name="channelRateType" class="required">
 								<option value="">--请选择--</option>
 								<option value="2" <c:if test="${channelRate.channelRateType == 2}">selected="selected"</c:if>>UV</option>
@@ -54,11 +54,11 @@
 							</select>
 						</div>
 						<div class="form-item">
-							<label style="width: 120px;">计算公式:</label>
+							<label  style="width: 160px;">计算公式:</label>
 							<label style="width: 300px;">日消耗=日注册量*CPA+日新用户放款总额*CPS</label>
 						</div>
 						<div class="form-item">
-							<label style="width: 100px;">备注:</label>
+							<label  style="width: 160px;">备注:</label>
 							<textarea  name="remark" rows="5" cols="60" maxlength="50">${channelRate.remark}</textarea>
 						</div>
 					</div>

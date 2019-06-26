@@ -5,7 +5,7 @@
 <%
     String path = request.getContextPath();
 %>
-<script type="text/javascript" src="${path}/resources/js/productAmount_choose.js"></script>
+<%--<script type="text/javascript" src="${path}/resources/js/productAmount_choose.js"></script>--%>
 
 <form id="pagerForm-p" onsubmit="return navTabSearch(this);"
       action="product/goProductList?myId=${params.myId}" method="post">

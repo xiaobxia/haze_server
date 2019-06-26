@@ -290,7 +290,7 @@ body, #splitBar { background:rgb(48, 65, 86);}
     background: #fff;
     padding: 32px 20px;
     line-height: 32px;
-    margin-top: 30px;
+    margin-top: 10px;
 }
 .bottom-page .pages {
     display: inline-block;

@@ -27,6 +27,24 @@
 							</c:forEach>
 					</select>
 					</td> -->
+					<td>真实姓名: <input type="text" name="realname"
+									 value="${searchParams.realname }" />
+					</td>
+					<td>手机: <input type="text" name="userPhone"
+								   value="${searchParams.userPhone }" />
+					</td>
+					<td>证件号码: <input type="text" name="idNumber"
+									 value="${searchParams.idNumber }" />
+					</td>
+					<td>是否黑名单:
+						<select name="status">
+							<option value="">不限</option>
+							<option value="1" name="status" <c:if test="${searchParams.status eq 1}">selected</c:if>>否</option>
+							<option value="2" name="status" <c:if test="${searchParams.status eq 2}">selected</c:if>>是</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
 					<td>渠道商：
 						<select name="channelSuperCode">
 							<option value="">不限</option>
@@ -34,27 +52,12 @@
 									<c:if test="${searchParams.channelSuperCode == '-999'}">selected="selected"</c:if> >自然流量</option>
 							<c:forEach items="${channel}" var="channel">
 								<option value="${channel.channelSuperCode}" name="channelSuperCode"
-                                        <c:if test="${channel.channelSuperCode eq searchParams.channelSuperCode}">selected="selected"</c:if> >${channel.channelSuperName}</option>
+										<c:if test="${channel.channelSuperCode eq searchParams.channelSuperCode}">selected="selected"</c:if> >${channel.channelSuperName}</option>
 							</c:forEach>
 						</select>
 					</td>
 					<td>渠道名称：
 						<input type="text" name="channelName" value="${searchParams.channelName}">
-					</td>
-					<td>是否黑名单:
-					<select name="status">
-							<option value="">不限</option>
-							<option value="1" name="status" <c:if test="${searchParams.status eq 1}">selected</c:if>>否</option>
-							<option value="2" name="status" <c:if test="${searchParams.status eq 2}">selected</c:if>>是</option>
-					</select>
-					</td>
-					<td>证件号码: <input type="text" name="idNumber"
-									 value="${searchParams.idNumber }" />
-					</td>
-				</tr>
-				<tr>
-					<td>手机: <input type="text" name="userPhone"
-						value="${searchParams.userPhone }" />
 					</td>
 					<td>开始时间: <input type="text" name="createTime"
 						class="date textInput readonly" datefmt="yyyy-MM-dd"
@@ -63,9 +66,6 @@
 					<td>结束时间: <input type="text" name="beginTime"
 						class="date textInput readonly" datefmt="yyyy-MM-dd"
 						value="${searchParams.beginTime }" readonly="readonly" />
-					</td>
-					<td>真实姓名: <input type="text" name="realname"
-									 value="${searchParams.realname }" />
 					</td>
 					<!-- <td>&nbsp;&nbsp;&nbsp;&nbsp;</td> -->
 					<td>

@@ -311,7 +311,7 @@
 		}
         .user-img {
             position: absolute;
-            right: 140px;
+            right: 150px;
             height: 40px;
             width: 40px;
             overflow: hidden;
