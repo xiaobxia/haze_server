@@ -183,7 +183,7 @@
 
 		}
 		.notice-wrap {
-			border: 0.15rem solid #528DFF;
+			border: 0.1rem solid #528DFF;
 			border-radius: 1rem;
 		}
 		.notice-wrap .title.title-active{
