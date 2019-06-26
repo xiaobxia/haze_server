@@ -11,11 +11,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Insert user</title>
     <style>
+        .form-item .label {
+            float: left;
+        }
     </style>
 </head>
 <body>
-<div class="pageContent new">
+<div class="pageContent">
     <form id="aul" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+        <div class="pageFormContent form-wrap" layoutH="60" style="overflow: auto;">
         <c:if test="${not empty id}">
             <input type="hidden" name="l-id" id="l-id" value="${id}"/>
             <div class="form-item">
@@ -70,6 +74,7 @@
                 <label style="color: red;" class="required-label">*</label>
             </div>
         </c:if>
+        </div>
     </form>
     <div class="formBar">
         <ul>
