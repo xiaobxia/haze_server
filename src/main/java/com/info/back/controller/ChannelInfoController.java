@@ -712,7 +712,7 @@ public class ChannelInfoController extends BaseController {
             /*
              * 是否为渠道商登录
              */
-            int superFlag = channelInfoService.getCountSuperChannelCode(backUser.getUserAddress());
+            /*int superFlag = channelInfoService.getCountSuperChannelCode(backUser.getUserAddress());
             if(superFlag > 0){
                 params.remove("channelCode");
                 params.put("superCode",backUser.getUserAddress());
@@ -734,10 +734,10 @@ public class ChannelInfoController extends BaseController {
                 List<ChannelSuperInfo> channelSuperInfos = channelInfoService.findSuperAll(chMap);
                 model.addAttribute("channelSuperInfos", channelSuperInfos);
                 model.addAttribute("pm", pageConfig);
-            }else{
-                params.put("uv","uv");
-                PageConfig<ChannelReport> pageConfig = channelReportService.findPage(params);
-                //PageConfig<OutChannelLook> pageConfigs = channelReportService.findPageOut(params);
+            }else{*/
+            params.put("uv","uv");
+            PageConfig<ChannelReport> pageConfig = channelReportService.findPage(params);
+            //PageConfig<OutChannelLook> pageConfigs = channelReportService.findPageOut(params);
 //                List<ChannelInfo> channelList = channelInfoService.findAll(chMap);
 //                ChannelInfo ciNatural = new ChannelInfo();
 //                ciNatural.setId(0);
@@ -750,93 +750,93 @@ public class ChannelInfoController extends BaseController {
 //                channelList.set(0, ciNatural);
 
 //                model.addAttribute("channelList", channelList);
-                List<ChannelSuperInfo> channelSuperInfos = channelInfoService.findSuperAll(chMap);
-                List<ChannelReport> list = new ArrayList<>();
-               for(ChannelReport channelReport : pageConfig.getItems() ){
-                   //qq占比
-                    Integer qqCount= channelInfoService.findqqCount(channelReport.getChannelid(),channelReport.getReportDate());
-                    if(qqCount != null && channelReport.getRegisterCount()!=null && channelReport.getRegisterCount()!=0){
-                        Double  qqRate = qqCount*(1.0)/channelReport.getRegisterCount()*(1.0);
+            List<ChannelSuperInfo> channelSuperInfos = channelInfoService.findSuperAll(chMap);
+            List<ChannelReport> list = new ArrayList<>();
+           for(ChannelReport channelReport : pageConfig.getItems() ){
+               //qq占比
+                Integer qqCount= channelInfoService.findqqCount(channelReport.getChannelid(),channelReport.getReportDate());
+                if(qqCount != null && channelReport.getRegisterCount()!=null && channelReport.getRegisterCount()!=0){
+                    Double  qqRate = qqCount*(1.0)/channelReport.getRegisterCount()*(1.0);
+                    DecimalFormat df = new DecimalFormat("0.00");
+                    channelReport.setQqRate(df.format(qqRate));
+                }else{
+                    channelReport.setQqRate("0.00");
+                }
+                //微信占比
+                Integer wechatCount = channelInfoService.findWechatCount(channelReport.getChannelid(),channelReport.getReportDate());
+                if(wechatCount != null && channelReport.getRegisterCount()!=null && channelReport.getRegisterCount()!=0){
+                    Double wechatRate = wechatCount*(1.0)/channelReport.getRegisterCount()*(1.0);
+                    DecimalFormat df = new DecimalFormat("0.00");
+                    channelReport.setWechatRate(df.format(wechatRate));
+                }else{
+                    channelReport.setWechatRate("0.00");
+                }
+               //uv转化
+                if(null !=channelReport.getUvCount() &&channelReport.getUvCount() !=0 ){
+                    if(null != channelReport.getRegisterCount()){
+                        Double uvRate = channelReport.getRegisterCount()*(1.0)/channelReport.getUvCount()*(1.0);
                         DecimalFormat df = new DecimalFormat("0.00");
-                        channelReport.setQqRate(df.format(qqRate));
-                    }else{
-                        channelReport.setQqRate("0.00");
+                        channelReport.setUvRate(df.format(uvRate));
                     }
-                    //微信占比
-                    Integer wechatCount = channelInfoService.findWechatCount(channelReport.getChannelid(),channelReport.getReportDate());
-                    if(wechatCount != null && channelReport.getRegisterCount()!=null && channelReport.getRegisterCount()!=0){
-                        Double wechatRate = wechatCount*(1.0)/channelReport.getRegisterCount()*(1.0);
-                        DecimalFormat df = new DecimalFormat("0.00");
-                        channelReport.setWechatRate(df.format(wechatRate));
-                    }else{
-                        channelReport.setWechatRate("0.00");
+                }else{
+                    channelReport.setUvCount(0);
+                    channelReport.setUvRate("0.00");
+                }
+                /*for(OutChannelLook outChannelLook : pageConfigs.getItems()){
+                    if(outChannelLook.getId() == channelReport.getChannelid()){
+                        channelReport.setBorrowApplyCount(outChannelLook.getBorrowApplyCount());
+                        channelReport.setLoanCount(outChannelLook.getLoanCount());
+                        channelReport.setRepaymentCount(outChannelLook.getRepaymentCount());
+                        channelReport.setRegistRatio(outChannelLook.getRegistRatio());
+                        channelReport.setLoanRatio(outChannelLook.getLoanRatio());
+                        channelReport.setRepayRatio(outChannelLook.getRepayRatio());
                     }
-                   //uv转化
-                    if(null !=channelReport.getUvCount() &&channelReport.getUvCount() !=0 ){
-                        if(null != channelReport.getRegisterCount()){
-                            Double uvRate = channelReport.getRegisterCount()*(1.0)/channelReport.getUvCount()*(1.0);
-                            DecimalFormat df = new DecimalFormat("0.00");
-                            channelReport.setUvRate(df.format(uvRate));
-                        }
-                    }else{
-                        channelReport.setUvCount(0);
-                        channelReport.setUvRate("0.00");
-                    }
-                    /*for(OutChannelLook outChannelLook : pageConfigs.getItems()){
-                        if(outChannelLook.getId() == channelReport.getChannelid()){
-                            channelReport.setBorrowApplyCount(outChannelLook.getBorrowApplyCount());
-                            channelReport.setLoanCount(outChannelLook.getLoanCount());
-                            channelReport.setRepaymentCount(outChannelLook.getRepaymentCount());
-                            channelReport.setRegistRatio(outChannelLook.getRegistRatio());
-                            channelReport.setLoanRatio(outChannelLook.getLoanRatio());
-                            channelReport.setRepayRatio(outChannelLook.getRepayRatio());
-                        }
-                    }*/
-                    //申请笔数 放款笔数 放款率
-                   List<String> idList=channelInfoService.findUserId(channelReport.getChannelid());
-                   if(idList.size()>0) {
-                       DecimalFormat df = new DecimalFormat("0.00");
-                       //放款笔数 当日所有
-                       int loanCount = channelInfoService.findLoanCount(channelReport.getReportDate(), idList);
-                       channelReport.setAllLoanCount(loanCount);
-                       //当日放款用户id
-                      /* List<String> loanUserId = channelInfoService.findLoanUserId(idList,channelReport.getReportDate());*/
-                       //续借放款人数 （当天放款人中 哪些人是续借放款类型 即 当天放款人中哪些是老用户）
-                      int xujieLoanCount = channelInfoService.xujieSucCount(idList,channelReport.getReportDate());
-                       //当日新用户放款笔数（当日所有放款数-续借放款人数）
-                       if(loanCount < xujieLoanCount){
-                           channelReport.setLoanCount(0);
-                       }else{
-                           int dayLoanCount = loanCount-xujieLoanCount;
-                           channelReport.setLoanCount(dayLoanCount);
-                       }
-                       //申请笔数
-                       int applyCount = channelInfoService.findApplyCount(channelReport.getReportDate(), idList);
-                       channelReport.setBorrowApplyCount(applyCount);
-                       //续借人数
-                       int xujieCount = channelInfoService.xujieCount(idList,channelReport.getReportDate());
-                       channelReport.setXujieCount(xujieCount);
-                       //当日回全款数
-                       int allRepayCount = channelInfoService.findAllRepayCount(channelReport.getReportDate(),idList);
-                       channelReport.setAllRepayCount(allRepayCount);
-                       //放款率 放款笔数/当日总注册数
-                       if(channelReport.getRegisterCount() != 0){
-                           double loanRate = channelReport.getLoanCount()*(1.0)/channelReport.getRegisterCount()*(1.0);
-                           channelReport.setLoanRatio(df.format(loanRate));
-                       }else{
-                           channelReport.setLoanRatio("0.00");
-                       }
-                   }else{
+                }*/
+                //申请笔数 放款笔数 放款率
+               List<String> idList=channelInfoService.findUserId(channelReport.getChannelid());
+               if(idList.size()>0) {
+                   DecimalFormat df = new DecimalFormat("0.00");
+                   //放款笔数 当日所有
+                   int loanCount = channelInfoService.findLoanCount(channelReport.getReportDate(), idList);
+                   channelReport.setAllLoanCount(loanCount);
+                   //当日放款用户id
+                  /* List<String> loanUserId = channelInfoService.findLoanUserId(idList,channelReport.getReportDate());*/
+                   //续借放款人数 （当天放款人中 哪些人是续借放款类型 即 当天放款人中哪些是老用户）
+                  int xujieLoanCount = channelInfoService.xujieSucCount(idList,channelReport.getReportDate());
+                   //当日新用户放款笔数（当日所有放款数-续借放款人数）
+                   if(loanCount < xujieLoanCount){
                        channelReport.setLoanCount(0);
-                       channelReport.setBorrowApplyCount(0);
+                   }else{
+                       int dayLoanCount = loanCount-xujieLoanCount;
+                       channelReport.setLoanCount(dayLoanCount);
+                   }
+                   //申请笔数
+                   int applyCount = channelInfoService.findApplyCount(channelReport.getReportDate(), idList);
+                   channelReport.setBorrowApplyCount(applyCount);
+                   //续借人数
+                   int xujieCount = channelInfoService.xujieCount(idList,channelReport.getReportDate());
+                   channelReport.setXujieCount(xujieCount);
+                   //当日回全款数
+                   int allRepayCount = channelInfoService.findAllRepayCount(channelReport.getReportDate(),idList);
+                   channelReport.setAllRepayCount(allRepayCount);
+                   //放款率 放款笔数/当日总注册数
+                   if(channelReport.getRegisterCount() != 0){
+                       double loanRate = channelReport.getLoanCount()*(1.0)/channelReport.getRegisterCount()*(1.0);
+                       channelReport.setLoanRatio(df.format(loanRate));
+                   }else{
                        channelReport.setLoanRatio("0.00");
                    }
-                   list.add(channelReport);
+               }else{
+                   channelReport.setLoanCount(0);
+                   channelReport.setBorrowApplyCount(0);
+                   channelReport.setLoanRatio("0.00");
                }
-                pageConfig.setItems(list);
-                model.addAttribute("channelSuperInfos", channelSuperInfos);
-                model.addAttribute("pm", pageConfig);
-            }
+               list.add(channelReport);
+           }
+            pageConfig.setItems(list);
+            model.addAttribute("channelSuperInfos", channelSuperInfos);
+            model.addAttribute("pm", pageConfig);
+            //}
             if (checkFlag) {
                 params.remove("channelid");
                 params.put("channelName", channelNameNatural);

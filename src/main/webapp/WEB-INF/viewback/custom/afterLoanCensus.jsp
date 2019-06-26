@@ -56,20 +56,21 @@
 					<th align="center">展期笔数</th>
 					<th align="center">展期服务费</th>
 					<th align="center">展期产品金额</th>
-					<th align="center">部分（分期）还款笔数</th>
-					<th align="center">部分（分期）还款金额</th>
+					<%--<th align="center">部分（分期）还款笔数</th>
+					<th align="center">部分（分期）还款金额</th>--%>
 					<th align="center">逾期已还笔数</th>
 					<th align="center">逾期已还金额</th>
 					<th align="center">逾期未还笔数</th>
 					<th align="center">逾期未还金额</th>
-					<th align="center">首借回款率</th>
-					<th align="center">复借回款率</th>
+					<%--<th align="center">新用户回款率</th>
+					<th align="center">老用户回款率</th>--%>
+					<th align="center">当日回款率</th>
 					<th align="center">首逾</th>
 					<th align="center">2天逾期率</th>
 					<th align="center">3天逾期率</th>
 					<th align="center">7天逾期率</th>
 					<th align="center">逾期占比</th>
-					<th align="center">更新时间</th>
+					<%--<th align="center">更新时间</th>--%>
 				</tr>
 			</thead>
 			<tbody>
@@ -84,21 +85,21 @@
 						<td align="center">${loanInfo.extendCount}</td>
 						<td align="center">${loanInfo.extendMoney }</td>
 						<td align="center">${loanInfo.extendProductMoney}</td>
-						<td align="center">${loanInfo.amortizationLoanCount}</td>
-						<td align="center">${loanInfo.amortizationLoanMoney}</td>
+						<%--<td align="center">${loanInfo.amortizationLoanCount}</td>
+						<td align="center">${loanInfo.amortizationLoanMoney}</td>--%>
 						<td align="center">${loanInfo.oveRepayCount}</td>
 						<td align="center">${loanInfo.oveRepayMoney }</td>
 						<td align="center">${loanInfo.oveWaitCount}</td>
 						<td align="center">${loanInfo.oveWaitMoney}</td>
 						<td align="center"><fmt:formatNumber pattern='###,###,##0.00' value="${loanInfo.repayRate / 100.00}"/>%</td>
-						<td align="center"><fmt:formatNumber pattern='###,###,##0.00' value="${loanInfo.reRepayRate / 100.00}"/>%</td>
+						<%--<td align="center"><fmt:formatNumber pattern='###,###,##0.00' value="${loanInfo.reRepayRate / 100.00}"/>%</td>--%>
 						<td align="center"><fmt:formatNumber pattern='###,###,##0.00' value="${loanInfo.oveFirstRate / 100.00}"/>%</td>
 						<td align="center"><fmt:formatNumber pattern='###,###,##0.00' value="${loanInfo.twoRate / 100.00}"/>%</td>
 						<td align="center"><fmt:formatNumber pattern='###,###,##0.00' value="${loanInfo.threeRate / 100.00}"/>%</td>
 						<td align="center"><fmt:formatNumber pattern='###,###,##0.00' value="${loanInfo.sevenRate / 100.00}"/>%</td>
 						<td align="center"><fmt:formatNumber pattern='###,###,##0.00' value="${loanInfo.oveRate / 100.00}"/>%</td>
-						<td align="center"><fmt:formatDate value="${loanInfo.updateDate}"
-														   pattern="yyyy-MM-dd HH:mm:ss"/></td>
+						<%--<td align="center"><fmt:formatDate value="${loanInfo.updateDate}"
+														   pattern="yyyy-MM-dd HH:mm:ss"/></td>--%>
 					</tr>
 				</c:forEach>
 			</tbody>

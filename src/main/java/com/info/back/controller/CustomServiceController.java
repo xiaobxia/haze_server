@@ -1194,6 +1194,7 @@ public class CustomServiceController extends BaseController {
        PageConfig<BackLoanCensus> pageConfig = backLoanCensusService.backLoanCensusResult(params);
        model.put("params",params);
        model.put("pageConfig",pageConfig);
+       model.put("params",params);
        return "custom/afterLoanCensus";
    }
 

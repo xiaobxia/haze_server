@@ -412,7 +412,7 @@ public interface IBorrowOrderService {
 
     List<String> getUserIdWaitList();
 
-    Integer findOveChannle(Integer channelId, List<Integer> statusList,String loanTime,String customerType);
+    Integer findOveChannle(Integer channelId,String loanTime,Integer status,String customerType);
 
     Integer findRepayCount(Integer channelId, List<Integer> statusList,String loanTime,String customerType);
 
