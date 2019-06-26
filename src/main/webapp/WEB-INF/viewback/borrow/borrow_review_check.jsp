@@ -304,6 +304,15 @@
 		}
 
 	</style>
+	<style>
+		.pageFormContent dl {
+			height: 46px;
+		}
+		.pageFormContent dt {
+			height: 36px;
+			line-height: 36px;
+		}
+	</style>
 	<script type="text/javascript">
 		var borrowId =document.getElementById('borrowId').value;
 		console.log(borrowId);
@@ -331,7 +340,7 @@
 </head>
 <body>
 <div class="pageContent">
-	<div class="pageFormContent" layoutH="50" style="overflow: auto;">
+	<div class="pageFormContent" layoutH="60" style="overflow: auto;">
 		<input input="text" style="display:none"  value="${borrow.id}" id="borrowId">
 		<div class="detail-page-main" style="position: relative">
 			<div class="detail-card">

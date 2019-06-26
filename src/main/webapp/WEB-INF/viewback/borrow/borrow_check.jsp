@@ -12,6 +12,15 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=7" />
 		<title>详细信息</title>
+		<style>
+			.pageFormContent dl {
+				height: 46px;
+			}
+			.pageFormContent dt {
+				height: 36px;
+				line-height: 36px;
+			}
+		</style>
 	</head>
 	<body>
 	
@@ -24,7 +33,7 @@
 				class="pageForm required-validate">
 				<input type="hidden" name="id" value="${borrow.id}" />
 				<input type="hidden" name="parentId" value="${params.parentId}" />
-					<div class="pageFormContent" layoutH="50" style="overflow: auto;">
+					<div class="pageFormContent" layoutH="60" style="overflow: auto;">
 				<fieldset>
 						<legend>借款信息333</legend>
 				   <dl>
