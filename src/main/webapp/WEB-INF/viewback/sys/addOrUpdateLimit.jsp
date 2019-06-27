@@ -13,6 +13,7 @@
     <style>
         .form-item .label {
             float: left;
+            width: 120px;
         }
     </style>
 </head>

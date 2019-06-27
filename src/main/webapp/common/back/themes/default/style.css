@@ -617,51 +617,58 @@ body, #splitBar { background:rgb(48, 65, 86);}
 .nullBtn {
     padding: 5px 10px;
     background-color: #A5A7AF;
-    color: #fff;
+    color: #fff!important;
     border-radius: 4px;
+    text-decoration: none!important;
 }
 
 .trueBtn {
     padding: 5px 10px;
-    background-color: #10AA72;
-    color: #fff;
+    background-color: #67c23a;
+    color: #fff!important;
     border-radius: 4px;
+    text-decoration: none!important;
 }
 
 .falseBtn {
     padding: 5px 10px;
     background-color: #313743;
-    color: #fff;
+    color: #fff!important;
     border-radius: 4px;
+    text-decoration: none!important;
 }
 
 .setBtn {
     padding: 5px 20px;
-    background-color: #1E6BFF;
-    color: #fff;
+    background-color: #409EFF;
+    color: #fff!important;
     cursor: pointer;
     border-radius: 4px;
+    text-decoration: none!important;
 }
 
 .setBtn.disabled {
     padding: 5px 20px;
     background-color: #bbb;
-    color: #fff;
+    color: #fff!important;
     cursor: not-allowed;
+    text-decoration: none!important;
 }
 
 .deleteBtn {
     padding: 5px 10px;
-    background-color: #F85252;
-    color: #fff;
+    background-color: #F56C6C;
+    color: #fff!important;
     cursor: pointer;
     border-radius: 4px;
+    text-decoration: none!important;
 }
 .deleteBtn.disabled {
     padding: 5px 10px;
     background-color: #bbb;
-    color: #fff;
+    color: #fff!important;
     cursor: not-allowed;
+    text-decoration: none!important;
 }
 
 .pageContent.new {

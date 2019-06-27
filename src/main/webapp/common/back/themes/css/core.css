@@ -693,6 +693,9 @@ body { overflow:hidden;}
 .page { display:block; overflow:hidden;float:left; width:100%;}
 .pageHeader { display:block; overflow:auto; padding:11px 15px; position:relative;border-bottom: 1px solid #ededed;}
 .searchBar {}
+.searchBar .searchContent input[type=text] {
+    cursor: text;
+}
 .searchBar ul.searchContent { display:block; overflow:hidden; height:25px;}
 .searchBar ul.searchContent li { float:left; display:block; overflow:hidden; width:300px; height:21px; padding:2px 0;}
 .searchBar label { float:left; width:80px; padding:0 5px; line-height:23px;}
