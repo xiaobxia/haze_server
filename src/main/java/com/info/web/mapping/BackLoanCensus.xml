@@ -105,14 +105,6 @@
         </if>
 	</select>
 	<select id="findExtendCountAndMoney" resultType="map" parameterType="java.lang.String">
-	   <!--SELECT
-			count( 1 ) AS count,
-			IFNULL(sum( sum_fee ),0) AS money,
-			IFNULL(sum(money_amount),0) as moenyAmount
-		FROM
-			asset_renewal_record
-		WHERE
-			old_repayment_time = #{repayTime}-->
         SELECT
         count( 1 ) AS count,
         IFNULL( sum( arr.sum_fee ), 0 ) AS money,
@@ -122,7 +114,8 @@
         LEFT JOIN asset_repayment ar ON arr.asset_repayment_id = ar.id
         LEFT JOIN asset_borrow_order bo ON bo.id = ar.asset_order_id
         WHERE
-         DATE_FORMAT( arr.old_repayment_time, '%Y-%m-%d' )  = #{repayTime}
+        DATE_FORMAT( arr.old_repayment_time, '%Y-%m-%d' )  = #{repayTime}
+        and arr.status =1
 	</select>
 	<update id = "updateBackLoanCensus">
 		update back_loan_census

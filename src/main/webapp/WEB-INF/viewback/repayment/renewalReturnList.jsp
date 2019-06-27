@@ -75,7 +75,7 @@
 						服务费
 					</th>
 					<th align="center" >
-						续期前还款时间
+						续期前应还款时间
 					</th>
 					<th align="center" >
 						预期还款时间

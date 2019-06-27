@@ -50,46 +50,46 @@
 			<table class="table" style="width: 100%;" layoutH="160" nowrapTD="false">
 				<thead>
 					<tr >
-						<th align="center"  >
+						<th align="center">
 							序号
 						</th>
-						<th align="left"  >
+						<th align="center">
 							用户Id
 						</th>
-						<th align="center"  >
+						<th align="center">
 							姓名
 						</th>
-						<th align="center" >
+						<th align="center">
 							手机号
 						</th>
-						<th align="center"  >
+						<th align="center">
 							提额后总额度
 						</th>
-							<th align="center"  >
+							<th align="center">
 							本次提升额度
 						</th>
-						<th align="center" >
+						<%--<th align="center">
 							成功还款次数
 						</th>
-						<th align="center"  >
+						<th align="center">
 								正常还款次数
 						</th>
-						<th align="center" >
+						<th align="center">
 								成功还款金额
 						</th>
-						<th align="center" >
+						<th align="center">
 								正常还款金额
-						</th>
-						<th align="center" >
+						</th>--%>
+						<th align="center">
 							上次提额时间
 						</th>
 					 
-						<th align="center" >
+						<th align="center">
 							创建时间
 						</th>
 				 
 						 
-						<th align="center" >
+						<th align="center">
 							更新时间
 						</th>
 						
@@ -97,10 +97,10 @@
 						<th align="center">
 								状态
 						</th>
-						<th align="center"  >
+						<th align="center">
 							操作人
 						</th>
-						<th align="center"  >
+						<th align="center">
  					备注
 						</th>
 					</tr>
@@ -108,26 +108,13 @@
 				<tbody>
 					<c:forEach var="borrow" items="${pm.items }" varStatus="status">
 						<tr  target="sid_support" rel="${borrow.id }"  >
-							<td>
-								${status.count}
-							</td>
-							<td>
-							${borrow.userId }
-							</td>
-							<td>
-							${borrow.realname}
-							</td>
-							<td>
-							${borrow.userPhone }
- 
-							</td>
-							<td>
-								<fmt:formatNumber type="number" value="${borrow.newAmountMax/100}" pattern="0.00" maxFractionDigits="0"/> 
-							</td>
-										<td>
-								<fmt:formatNumber type="number" value="${borrow.addAmount/100}" pattern="0.00" maxFractionDigits="0"/> 
-							</td>
-							<td>
+							<td>${status.count}</td>
+							<td>${borrow.userId }</td>
+							<td>${borrow.realname}</td>
+							<td>${borrow.userPhone }</td>
+							<td><fmt:formatNumber type="number" value="${borrow.newAmountMax/100}" pattern="0.00" maxFractionDigits="0"/></td>
+							<td><fmt:formatNumber type="number" value="${borrow.addAmount/100}" pattern="0.00" maxFractionDigits="0"/></td>
+							<%--<td>
 							${borrow.repaymentSuccCount}
  </td>
 									<td>
@@ -140,31 +127,13 @@
  				<fmt:formatNumber type="number" value="${borrow.repaymentSuccAmount/100}" pattern="0.00" maxFractionDigits="0"/>	</td>
  		<td>
 							<fmt:formatNumber type="number" value="${borrow.repaymentNormAmount/100}" pattern="0.00" maxFractionDigits="0"/>
-							</td>
-									<td>
- 							<fmt:formatDate value="${borrow.lastApplyAt }" pattern="yyyy-MM-dd HH:mm:ss"/>
-							</td>
-						 
-						<td>
-						<fmt:formatDate value="${borrow.createAt }" pattern="yyyy-MM-dd HH:mm:ss"/>
-						 
-						</td>
-				 
-							 
-					<td>
- 							<fmt:formatDate value="${borrow.updatedAt }" pattern="yyyy-MM-dd HH:mm:ss"/>
-							</td>
-						
-						 
-									<td class="loanStatusName">
- 						${borrow.statusName }
-							</td>
-									<td>
- ${borrow.auditUser }	
-							</td>
- <td>
- ${borrow.remark }
- </td>
+							</td>--%>
+						<td><fmt:formatDate value="${borrow.lastApplyAt }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+						<td><fmt:formatDate value="${borrow.createAt }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+						<td><fmt:formatDate value="${borrow.updatedAt }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+						<td class="loanStatusName">${borrow.statusName }</td>
+						<td>${borrow.auditUser }</td>
+                        <td>${borrow.remark }</td>
 						</tr>
 					</c:forEach>
 				</tbody>

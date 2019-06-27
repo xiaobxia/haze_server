@@ -242,7 +242,7 @@
 						</td>
 						<td>
 							<c:if test="${channel.lateDayCount gt 0}">
-								<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.lateDayCount / channel.registerCount}" />
+								<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.lateDayCount / channel.borrowSucCount}" />
 							</c:if>
 							<c:if test="${channel.lateDayCount  eq 0}">
 								0.00

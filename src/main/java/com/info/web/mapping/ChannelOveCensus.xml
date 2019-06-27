@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.web.dao.IChannelOveCensusDao">
+	<resultMap id="BaseResultMap" type="com.info.web.pojo.ChannelOveCensus">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="repay_time" property="repayTime" jdbcType="VARCHAR" />
+		<result column="new_loan_count" property="newLoanCount" jdbcType="INTEGER" />
+		<result column="new_repay_count" property="newRepayCount" jdbcType="INTEGER" />
+		<result column="old_loan_count" property="oldLoanCount" jdbcType="INTEGER" />
+		<result column="old_repay_count" property="oldRepayCount" jdbcType="INTEGER" />
+		<result column="extend_count" property="extendCount" jdbcType="INTEGER" />
+		<result column="new_loan_money" property="newLoanMoney" jdbcType="DECIMAL" />
+		<result column="new_repay_money" property="newRepayMoney" jdbcType="DECIMAL" />
+		<result column="old_loan_money" property="oldLoanMoney" jdbcType="DECIMAL" />
+		<result column="old_repay_money" property="oldRepayMoney" jdbcType="DECIMAL" />
+		<result column="extend_money" property="extendMoney" jdbcType="DECIMAL" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="extend_product_money" property="extendProductMoney" jdbcType="DECIMAL" />
+		<result column="channel_id" property="channelId" jdbcType="INTEGER"/>
+		<result column="new_repay_count" property="allLoanCount" jdbcType="INTEGER" />
+		<result column="old_loan_count" property="allRepayCount" jdbcType="INTEGER" />
+		<result column="old_repay_count" property="allOveRate" jdbcType="INTEGER" />
+		<result column="extend_count" property="newOveRate" jdbcType="INTEGER" />
+		<result column="extend_count" property="oldOveRate" jdbcType="INTEGER" />
+	</resultMap>
+
+    <select id = "findChannelOveCensus" parameterType="hashmap" resultMap="BaseResultMap">
+		SELECT
+		id,
+		repay_time,
+		new_loan_count,
+		new_repay_count,
+		old_loan_count,
+		old_repay_count,
+		extend_count,
+		new_loan_money,
+		new_repay_money,
+		old_loan_money,
+		old_repay_money,
+		extend_money,
+		extend_product_money,
+		update_time
+		FROM
+		channel_ove_census
+		where 1=1
+		<if test="repayTime != null">
+			and DATE_FORMAT( repay_time, '%Y-%m-%d' ) = #{repayTime}
+		</if>
+		<if test="channelId != null">
+            and channel_id = #{channelId}
+		</if>
+	</select>
+	<select id ="findChannelOveCensusCount" parameterType="hashmap" resultType="integer">
+		select count(1) from channel_ove_census
+		where 1=1
+		<if test="repayTime != null">
+			and DATE_FORMAT( repay_time, '%Y-%m-%d' ) = #{repayTime}
+		</if>
+	</select>
+	<select id ="findChannelOveResult" parameterType="hashmap" resultType="hashmap">
+	SELECT
+		    ci.channel_name as channelName,
+			si.channel_super_name as channelSuperName,
+		    si.id as channelSuperId,
+			oc.id as id ,
+			oc.repay_time as repayTime,
+			oc.new_loan_count as newLoanCount,
+			oc.new_repay_count as newRepayCount,
+			oc.old_loan_count as oldLoanCount,
+			oc.old_repay_count as oldRepayCount,
+			oc.extend_count as extendCount,
+			oc.new_loan_money as newLoanMoney,
+			oc.new_repay_money as newRepayMoney,
+			oc.old_loan_money as oldLoanMoney,
+			oc.old_repay_money as oldRepayMoney,
+			oc.extend_money as extendMoney,
+			oc.extend_product_money as extendProductMoney,
+			oc.update_time as updateTime,
+			oc.all_loan_count as allLoanCount,
+			oc.all_repay_count as allRepayCount,
+		    oc.new_ove_rate as newOveRate,
+		    oc.old_ove_rate as oldOveRate,
+		    oc.all_ove_rate as allOveRate
+			FROM
+			channel_ove_census oc
+			left join channel_info ci on oc.channel_id = ci.id
+			left join channel_super_info si on si.id = ci.channel_super_id
+			where 1=1
+			 <!-- and  oc.repay_time  != DATE_FORMAT(now(), '%Y-%m-%d')-->
+			<if test="superChannelId != null">
+              and si.id = #{superChannelId}
+			</if>
+			<if test="channelName != null">
+             and ci.channel_name = #{channelName}
+			</if>
+			<if test="beginTime != null and endTime != null">
+             and   DATE_FORMAT( oc.repay_time, '%Y-%m-%d' ) >= DATE_FORMAT(#{beginTime}, '%Y-%m-%d');
+             and   DATE_FORMAT( oc.repay_time, '%Y-%m-%d' ) >= DATE_FORMAT(#{endTime}, '%Y-%m-%d');
+			</if>
+			order by oc.repay_time DESC
+	</select>
+	<select id ="findChannelOveCountResult" parameterType="hashmap" resultType="integer">
+		select count(oc.id)
+		FROM
+		channel_ove_census oc
+		left join channel_info ci on oc.channel_id = ci.id
+		left join channel_super_info si on si.id = ci.channel_super_id
+		where 1=1
+		<!--and  oc.repay_time  != DATE_FORMAT(now(), '%Y-%m-%d')-->
+		<if test="superChannelId != null">
+			and si.id = #{superChannelId}
+		</if>
+		<if test="channelName != null">
+			and ci.channel_name = #{channelName}
+		</if>
+		<if test="beginTime != null and endTime != null">
+			and   DATE_FORMAT( oc.repay_time, '%Y-%m-%d' ) >= DATE_FORMAT(#{beginTime}, '%Y-%m-%d');
+			and   DATE_FORMAT( oc.repay_time, '%Y-%m-%d' ) >= DATE_FORMAT(#{endTime}, '%Y-%m-%d');
+		</if>
+		order by oc.repay_time DESC
+	</select>
+	<insert id ="addChannelOveCensus">
+       insert into channel_ove_census
+       (
+       id,
+       repay_time,
+       new_loan_count,
+       new_repay_count,
+       old_loan_count,
+       old_repay_count,
+       extend_count,
+       new_loan_money,
+       new_repay_money,
+       old_loan_money,
+       old_repay_money,
+       extend_money,
+       extend_product_money,
+       channel_id,
+       all_loan_count,
+       all_repay_count,
+       all_ove_rate,
+       new_ove_rate,
+       old_ove_rate,
+       update_time
+       )values (
+       #{id},
+       #{repayTime},
+       #{newLoanCount},
+       #{newRepayCount},
+       #{oldLoanCount},
+       #{oldRepayCount},
+       #{extendCount},
+       #{newLoanMoney},
+       #{newRepayMoney},
+       #{oldLoanMoney},
+       #{oldRepayMoney},
+       #{extendMoney},
+       #{extendProductMoney},
+       #{channelId},
+       #{allLoanCount},
+       #{allRepayCount},
+       #{allOveRate},
+       #{newOveRate},
+       #{oldOveRate},
+       #{updateTime}
+       )
+	</insert>
+	<update id = "updateChannelOveCensus">
+     update channel_ove_census
+     <set>
+		 <if test="newLoanCount != null">
+          new_loan_count = #{newLoanCount},
+		 </if>
+		 <if test="newRepayCount != null">
+          new_repay_count = #{newRepayCount},
+		 </if>
+		 <if test="oldLoanCount != null">
+          old_loan_count = #{oldLoanCount},
+		 </if>
+		 <if test="oldRepayCount != null">
+         old_repay_count = #{oldRepayCount},
+		 </if>
+		 <if test="newLoanMoney != null">
+         new_loan_money = #{newLoanMoney},
+		 </if>
+		 <if test="newRepayMoney != null">
+         new_repay_money = #{newRepayMoney},
+		 </if>
+		 <if test="oldLoanMoney != null">
+         old_loan_money = #{oldLoanMoney},
+	     </if>
+		 <if test="oldRepayMoney != null">
+          old_repay_money = #{oldRepayMoney},
+		 </if>
+		 <if test="extendMoney != null">
+         extend_money = #{extendMoney},
+		 </if>
+		 <if test="extendProductMoney != null">
+         extend_product_money = #{extendProductMoney},
+		 </if>
+		 <if test="updateTime != null">
+         update_time = #{updateTime},
+		 </if>
+		 <if test="newOveRate != null">
+           new_ove_rate = #{newOveRate},
+		 </if>
+		 <if test="oldOveRate != null ">
+			 old_ove_rate = #{oldOveRate},
+		 </if>
+		 <if test="allOveRate != null">
+			 all_ove_rate = #{allOveRate},
+		 </if>
+		 <if test="allLoanCount != null">
+			 all_loan_count = #{allLoanCount},
+		 </if>
+		 <if test="allRepayCount != null">
+			 all_repay_count = #{allRepayCount},
+		 </if>
+	 </set>
+	 where 1=1
+	 <if test = "repayTime != null">
+		and  repay_time= #{repayTime}
+	 </if>
+	 <if test = "channelId != null">
+		 and channel_id = #{channelId}
+	 </if>
+	</update>
+    <select id = "findChannelIdList" resultType="java.lang.Integer">
+	SELECT
+		ci.id
+	FROM
+		channel_info ci
+		LEFT JOIN channel_super_info si ON ci.channel_super_id = si.id
+	</select>
+	<select id="loanCountAndMoney" resultType="map">
+		SELECT
+			count(ar.id) AS count,
+			IFNULL(sum(bo.money_amount),0) as money
+		FROM
+			asset_repayment ar
+			LEFT JOIN asset_borrow_order bo ON ar.asset_order_id = bo.id
+			LEFT JOIN user_info ui ON ui.id = ar.user_id
+		WHERE
+			ui.user_from = #{userFrom}
+			AND DATE_FORMAT( ar.repayment_time, '%Y-%m-%d' ) = #{repayTime}
+			<if test=" customerType != null">
+				AND bo.customer_type = #{customerType}
+			</if>
+			<if test = "status != null">
+				and bo.status = #{status}
+			</if>
+	</select>
+	<select id ="extendCountAndMoney" resultType="map">
+		SELECT
+			count(1) as count,
+			IFNULL(sum(sum_fee),0) as sumFee,
+			IFNULL(sum(ar.repayment_principal),0) as moneyAmount
+		FROM
+			asset_renewal_record rr
+			LEFT JOIN asset_repayment ar ON rr.asset_repayment_id = ar.id
+			LEFT JOIN user_info ui ON ui.id = rr.user_id
+		WHERE
+			ui.user_from = #{userFrom}
+			AND  DATE_FORMAT(rr.old_repayment_time, '%Y-%m-%d' )= #{repayTime}
+			AND rr.status = 1
+	</select>
+</mapper>

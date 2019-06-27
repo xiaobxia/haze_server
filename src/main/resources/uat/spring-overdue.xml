@@ -228,7 +228,7 @@
     <bean id="autoAssignOrderForNigJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="autoAssignOrderForNig"/>
 
-        <property name="cronExpression" value="0 0 18 * * ?" />
+        <property name="cronExpression" value="0 0/5 * * * ? " />
     </bean>
 
     <bean id="autoAddCustomerClass" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
@@ -243,7 +243,11 @@
     </bean>
     <bean id="autoAddCustomerClassTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="autoAddCustomerClass"/>
+<!--
         <property name="cronExpression" value="0 0 1 * * ?" />
+-->
+        <property name="cronExpression" value="0 0/3 * * * ?" />
+
     </bean>
     <bean id="insertAssignStatisticForArtificialSendJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="insertAssignStatisticForArtificialSend"/>
@@ -497,4 +501,19 @@
             </map>
         </property>
     </bean>
+    <bean id="channelOveCensusResultJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="channelOveCensusResultBean"/>
+        <property name="cronExpression" value="0 0 2 * * ?"/>
+    </bean>
+    <bean id="channelOveCensusResultBean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.info.web.util.JobDetailBean"/>
+        <property name="durability" value="true"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="targetObject" value="taskJob"/>
+                <entry key="targetMethod" value="channelOveCensusResult"/>
+            </map>
+        </property>
+    </bean>
+
 </beans>

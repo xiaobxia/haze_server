@@ -62,7 +62,9 @@ public interface IChannelReportService {
 	 */
 	int getRegisterRealNow(String channelId);
 
-	public PageConfig<OutChannelLook> findPageOut(HashMap<String, Object> params);
+	 PageConfig<OutChannelLook> findPageOut(HashMap<String, Object> params);
 
-	public PageConfig<OveChannelInfo> findOveChannelId(HashMap<String, Object> params);
+	 PageConfig<OveChannelInfo> findOveChannelId(HashMap<String, Object> params);
+
+
 }
