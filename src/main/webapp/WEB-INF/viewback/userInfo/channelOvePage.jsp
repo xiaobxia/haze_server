@@ -27,11 +27,10 @@
 						<input type="text" name="channelName"
 							   value="${params.channelName}" />
 					</td>
-
-					<%--<td>
-						添加时间：
-						<input type="text" name="beginTime" id="beginTime" value="${params.beginTime}" class="date textInput readonly" datefmt="yyyy-MM-dd"  readonly="readonly"/>
-						到<input type="text" name="endTime" id="endTime" value="${params.endTime}" class="date textInput readonly" datefmt="yyyy-MM-dd"  readonly="readonly"/>
+				<%--	<td>
+						还款日期：
+						<input type="text" name="beginTime" id="beginTime" value="${params.beginTime}" class="date textInput readonly" datefmt="yyyy-MM-dd"  />
+						到<input type="text" name="endTime" id="endTime" value="${params.endTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" />
 					</td>--%>
 					<td>
 						<div class="buttonActive">
@@ -47,15 +46,23 @@
 		</div>
 	</div>
 	<div class="pageContent">
-		<jsp:include page="${BACK_URL}/rightSubList">
-			<jsp:param value="${params.myId}" name="parentId"/>
-		</jsp:include>
+				<div class="panelBar">
+					<ul class="toolBar">
+						<%--<li class="">
+                            <a href="customService/toBackCensusLoan?myId=682&parentId=${params.myId}" class="edit" target="dialog" width="410" height="210" rel="jbsxBox" mask="true">
+                                <span>回算统计</span> </a>
+                        </li>--%>
+						<li class="">
+							<a id="a-l-c-r-btn"><span>刷新</span> </a>
+						</li>
+					</ul>
+				</div>
 		<table class="table" layoutH="160" nowrapTD="false" ifScrollTable="true">
 			<thead>
 			<tr>
-				<th align="center" >
+				<%--<th align="center" >
 					渠道id
-				</th>
+				</th>--%>
 				<th align="center" >
 					渠道商名称
 				</th>
@@ -66,22 +73,22 @@
 					还款日期
 				</th>
 				<th align="center">
-					首放数量
+					新用户放款量
 				</th>
 				<th align="center" >
-					首放已还数量
+					新用户已还数量
 				</th>
 				<th align="center" >
-					首放逾期率
+					新用户逾期率
 				</th>
 				<th align="center" >
-					复借放款数量
+					老用户放款数量
 				</th>
 				<th align="center" >
-					复借已还数量
+					老用户已还数量
 				</th>
 				<th align="center">
-					复借逾期率
+					老用户逾期率
 				</th>
 				<th align="center" >
 					展期数量
@@ -95,35 +102,37 @@
 				<th align="center">
 					总逾期率
 				</th>
-				<%--<th align="center" >
-					渠道状态
-				</th>--%>
 			</tr>
 			</thead>
 			<tbody>
 			<c:forEach var="channel" items="${pm.items }" varStatus="status">
 				<tr target="channelId" rel="${channel.channelId }">
-					<td>${channel.channelId}</td>
+					<%--<td>${channel.channelId}</td>--%>
 					<td>${channel.channelSuperName}</td>
 					<td>${channel.channelName}</td>
-					<td>${channel.loanTime }</td>
-					<td>${channel.firstLoanCount }</td>
-					<td>${channel.firstRepayCount }</td>
-					<td>${channel.firstOveRate }</td>
-					<td>${channel.reLoanCount }</td>
-					<td>${channel.reRepayCount }</td>
+					<td>${channel.repayTime }</td>
+					<td>${channel.newLoanCount }</td>
+					<td>${channel.newRepayCount }</td>
 					<td>
-						${channel.reOveRate}
+						<fmt:formatNumber pattern='###,###,##0.00' value="${channel.newOveRate / 100.00}"/>%
 					</td>
-					<td>${channel.extendCount }</td>
-					<td>${channel.allLoanCount }</td>
-					<td>${channel.allRepayCount }</td>
+					<td>${channel.oldLoanCount }</td>
+					<td>${channel.oldRepayCount }</td>
 					<td>
-						${channel.allOveRate}
+						<fmt:formatNumber pattern='###,###,##0.00' value="${channel.oldOveRate / 100.00}"/>%
 					</td>
-<%--
-					<td>${channel.channelStatus }</td>
---%>
+					<td>
+						${channel.extendCount}
+					</td>
+					<td>
+						${channel.allLoanCount}
+					</td>
+					<td>
+						${channel.allRepayCount}
+					</td>
+					<td>
+						<fmt:formatNumber pattern='###,###,##0.00' value="${channel.allOveRate / 100.00}"/>%
+					</td>
 				</tr>
 			</c:forEach>
 			</tbody>
@@ -133,15 +142,27 @@
 	</div>
 </form>
 <script type="text/javascript">
-
-    function toChannelReportExcel(obj){
-
-        var href=$(obj).attr("href");
-        var a=$("#channelid").val();
-        var beginTime=$("#beginTime").val();
-        var endTime=$("#endTime").val();
-        var toHref=href+"&channelid="+a+"&beginTime="+beginTime+"&endTime="+endTime;
-
-        $(obj).attr("href",toHref);
-    }
+	$('#a-l-c-r-btn').click(function () {
+		var lastDo = localStorage.getItem('lastDoFreshenLoanCensusResult')
+		if (lastDo) {
+			lastDo = parseInt(lastDo)
+			if (Date.now() - lastDo < 1000 * 60 * 60) {
+				var m = parseInt((1000 * 60 * 60 - Date.now() + lastDo)/(1000 * 60))
+				alertMsg && alertMsg.info('请'+(m || 1)+'分钟后再尝试刷新')
+				return
+			}
+		}
+		$.ajax({
+			type : "post",
+			url : 'channel/freshchannelOveResult',
+			success : function(ret) {
+				localStorage.setItem('lastDoFreshenLoanCensusResult', Date.now())
+				alertMsg && alertMsg.correct('操作成功，请一小时后再尝试刷新')
+				setTimeout(function () {
+					$('#pagerForm-alc').submit()
+				}, 100)
+			},
+			error:DWZ.ajaxError
+		})
+	})
 </script>

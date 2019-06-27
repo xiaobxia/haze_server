@@ -28,6 +28,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -75,6 +76,9 @@ public class ChannelInfoController extends BaseController {
 
     @Resource
     private ITaskJob taskJob;
+
+    @Resource
+    private IChannelOveCensusService channelOveCensusService;
 
     /**
      * 推广渠道分页
@@ -1909,27 +1913,31 @@ public class ChannelInfoController extends BaseController {
         HashMap<String, Object> chMap = new HashMap<>();
         BackUser backUser = this.loginAdminUser(request);
         dealParamMap(params, chMap, backUser);
-        boolean checkFlag = false;
-        String channelNameNatural = params.get("channelName") == null ? "" : params.get("channelName").toString();
-        String channelidNatural = params.get("channelid") == null ? "" : params.get("channelid").toString();
-        if (params.get("channelName") != null && "自然流量".contains(params.get("channelName").toString())) {
-            if (params.get("channelid") == null || "0".equals(params.get("channelid"))) {
-                params.remove("channelName");
-                params.put("channelid", "0");
-                checkFlag = true;
-            }
-        }
         List<ChannelSuperInfo> channelSuperInfos = channelInfoService.findSuperAll(chMap);
-        PageConfig<OveChannelInfo> pageConfig = channelReportService.findOveChannelId(params);
+        //PageConfig<OveChannelInfo> pageConfig = channelReportService.findOveChannelId(params);
+        PageConfig<ChannelOveCensus> pageConfig = channelOveCensusService.findChannelOveCensus(params);
         model.addAttribute("channelSuperInfos", channelSuperInfos);
         model.addAttribute("pm",pageConfig);
-        if (checkFlag) {
-            params.remove("channelid");
-            params.put("channelName", channelNameNatural);
-            params.put("channelid", channelidNatural);
-        }
         // 用于搜索框保留值
         model.addAttribute("params", params);
         return "userInfo/channelOvePage";
+    }
+
+    /**
+     * 贷后刷新功能
+     * @return
+     */
+    @RequestMapping("freshchannelOveResult")
+    @ResponseBody
+    public void freshchannelOveResult(HttpServletResponse response) throws Exception {
+        Boolean bool = true;
+        try{
+            // 调用贷后一天一次定时任务
+            taskJob.channelOveCensusResult();
+        }catch(Exception e){
+            bool = false;
+            log.error("渠道贷后统计刷新出现错误"+e.getMessage());
+        }
+        SpringUtils.renderDwzResult(response, bool, bool ? "操作成功!" : "操作失败!", DwzResult.CALLBACK_RELOADPAGE);
     }
 }

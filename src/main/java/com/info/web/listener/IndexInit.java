@@ -92,7 +92,7 @@ public class IndexInit implements ServletContextListener {
 			}
 		}
 		//开启放款任务
-//		I taskJob = (ITaskJob) ctx.getBean("taskJob");
+//		I  = (ITaskJob) ctx.getBean("taskJob");
 //		loanMoneyAbout(taskJob);
 
 	}

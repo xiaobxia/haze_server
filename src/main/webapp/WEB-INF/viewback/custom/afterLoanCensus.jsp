@@ -35,10 +35,10 @@
 	<div class="pageContent">
 		<div class="panelBar">
 			<ul class="toolBar">
-				<li class="">
+				<%--<li class="">
 					<a href="customService/toBackCensusLoan?myId=682&parentId=${params.myId}" class="edit" target="dialog" width="410" height="210" rel="jbsxBox" mask="true">
 						<span>回算统计</span> </a>
-				</li>
+				</li>--%>
 				<li class="">
 					<a id="a-l-c-r-btn"><span>刷新</span> </a>
 				</li>

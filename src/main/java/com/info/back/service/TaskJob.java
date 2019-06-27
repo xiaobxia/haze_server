@@ -85,8 +85,12 @@ public class TaskJob implements ITaskJob {
 	private IOnlineCustomService onlineCustomService;
 	@Autowired
 	private ILabelCountService labelCountService;
+
 	@Autowired
 	private IBackLoanCensusService backLoanCensusService;
+
+	@Autowired
+	private IChannelOveCensusService channelOveCensusService;
 
 	@Override
 	public void aiMessage() {
@@ -1367,7 +1371,7 @@ public class TaskJob implements ITaskJob {
 							index=0;
 						}
 						BackUser backUser =backUserList.get(index);
-						saveAssetBorrowAssign(backUser,repayment,0);
+						saveAssetBorrowAssign(backUser,repayment,1);
 						Integer userTempOrderSize = tempOrderMap.get(backUser.getId())==null?0:Integer.valueOf(tempOrderMap.get(backUser.getId()).toString());
 						userTempOrderSize++;
 						//若此客服分配单量超过限制则不再分配
@@ -1397,7 +1401,7 @@ public class TaskJob implements ITaskJob {
 							index=0;
 						}
 						BackUser backUser =backUserList.get(index);
-						saveAssetBorrowAssign(backUser,repayment,0);
+						saveAssetBorrowAssign(backUser,repayment,1);
 						index++;
 					}
 				}
@@ -1590,20 +1594,27 @@ public class TaskJob implements ITaskJob {
 		afterLoanCensus(null);
 	}
 
-	//贷后统计 每天两小时统计一次
+	//贷后统计 每天1小时统计一次
     @Override
     public void afterLoanCensus(String expectedRepaymentTime) throws Exception{
-		log.info("贷后统计两小时一次 开始");
+		log.info("贷后统计1小时一次 开始");
         //预期还款时间
         if (expectedRepaymentTime == null){
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Calendar now = Calendar.getInstance();
-            expectedRepaymentTime = dateFormat.format(now.getTime());
+            Calendar calendar = Calendar.getInstance();
+            Date nowDate = new Date();
+            int nowHour = nowDate.getHours();
+            if (nowHour == 0 ) {
+                calendar.add(calendar.DATE,-1);//把日期往后增加一天.整数往后推,负数往前移动
+               expectedRepaymentTime = dateFormat.format(calendar.getTime());
+            }else{
+                expectedRepaymentTime = dateFormat.format(calendar.getTime());
+            }
         }
 		if(backLoanCensusService.afterLoanCensus(expectedRepaymentTime))
-			log.info("贷后统计两小时一次 统计成功结束");
+			log.info("贷后统计1小时一次 统计成功结束");
 		else
-			log.info("贷后统计两小时一次 统计失败结束");
+			log.info("贷后统计1小时一次 统计失败结束");
 
 	}
 
@@ -1616,5 +1627,29 @@ public class TaskJob implements ITaskJob {
 			log.info("贷后逾期统计每天一次 统计失败结束");
 		}
 	}
+
+    /**
+     * 渠道每日逾期统计 每两小时分跑一次
+     * @throws Exception
+     */
+    @Override
+	@PostConstruct
+	public void channelOveCensusResult() throws Exception{
+		String  repayTime = null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+		Date nowDate = new Date();
+		int nowHour = nowDate.getHours();
+		if (nowHour == 0 ) {
+			calendar.add(calendar.DATE,-1);//把日期往后增加一天.整数往后推,负数往前移动
+			repayTime = dateFormat.format(calendar.getTime());
+		}else{
+			repayTime = dateFormat.format(calendar.getTime());
+		}
+		if(channelOveCensusService.channelOveCensusResult(repayTime))
+			log.info("当日渠道统计结束,成功");
+		else
+			log.info("当日渠道统计结束,失败");
+    }
 
 }

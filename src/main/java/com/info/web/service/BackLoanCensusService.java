@@ -49,11 +49,11 @@ public class BackLoanCensusService implements IBackLoanCensusService {
             backLoanCensus.setExpireMoney(optimic(map,"money").add(backLoanCensus.getExtendProductMoney()));
             backLoanCensus.setExpireCount(map.get("count") == null ?0: Integer.valueOf(map.get("count").toString())+backLoanCensus.getExtendCount());
             backLoanCensus.setRepayDate(repayTime);
-            BackLoanCensus loanCensus =  backCensusLoan(backLoanCensus);
-            //查询出默认产品金额
+           // BackLoanCensus loanCensus =  backCensusLoan(backLoanCensus);
+         /*   //查询出默认产品金额
             map = backLoanCensusDao.findProductMoney();
             BigDecimal  productMoney = optimic(map,"productMoney").multiply(BigDecimal.valueOf(100));
-            String finallyMoney = productMoney.stripTrailingZeros().toPlainString();
+            String finallyMoney = productMoney.stripTrailingZeros().toPlainString();*/
             if((backLoanCensus.getExpireMoney() != null ? backLoanCensus.getExpireMoney().intValue() : 0) != 0){
                /*//首借回款率 正常全额还款+展期金额/到期金额 （全部新用户）
                 map = backLoanCensusDao.findRepayCountAndMoney(repayTime,30,finallyMoney,null);
@@ -81,10 +81,10 @@ public class BackLoanCensusService implements IBackLoanCensusService {
             BackLoanCensus back = backLoanCensusDao.findBackLoanCensusByTime(repayTime);
             backLoanCensus.setUpdateDate(new Date());
             if(back != null){
-                backLoanCensusDao.updateBackLoanCensus(loanCensus);
+                backLoanCensusDao.updateBackLoanCensus(backLoanCensus);
                 b = true;
             }else{
-                backLoanCensusDao.insertBackLoanCensus(loanCensus);
+                backLoanCensusDao.insertBackLoanCensus(backLoanCensus);
                 b = true;
             }
         }catch(Exception e){
@@ -132,11 +132,11 @@ public class BackLoanCensusService implements IBackLoanCensusService {
         map = backLoanCensusDao.findRepayCountAndMoney(backLoanCensus.getRepayDate(),34,null);
         backLoanCensus.setOveRepayMoney(optimic(map,"money"));
         backLoanCensus.setOveRepayCount(map.get("count") == null?0: Integer.valueOf(map.get("count").toString()));
-        //展期笔数 展期服务费金额
+      /*  //展期笔数 展期服务费金额
         map = backLoanCensusDao.findExtendCountAndMoney(backLoanCensus.getRepayDate());
         backLoanCensus.setExtendMoney(optimic(map,"money"));
         backLoanCensus.setExtendProductMoney(optimic(map,"moneyAmount"));
-        backLoanCensus.setExtendCount(map.get("count") == null?0: Integer.valueOf(map.get("count").toString()));
+        backLoanCensus.setExtendCount(map.get("count") == null?0: Integer.valueOf(map.get("count").toString()));*/
         /*//部分还款金额，笔数(status = 23),
         map = backLoanCensusDao.findRepayCountAndMoney(backLoanCensus.getRepayDate(),23,null);
         backLoanCensus.setAmortizationLoanMoney(optimic(map,"money"));
