@@ -46,9 +46,17 @@
 		</div>
 	</div>
 	<div class="pageContent">
-		<jsp:include page="${BACK_URL}/rightSubList">
-			<jsp:param value="${params.myId}" name="parentId"/>
-		</jsp:include>
+				<div class="panelBar">
+					<ul class="toolBar">
+						<%--<li class="">
+                            <a href="customService/toBackCensusLoan?myId=682&parentId=${params.myId}" class="edit" target="dialog" width="410" height="210" rel="jbsxBox" mask="true">
+                                <span>回算统计</span> </a>
+                        </li>--%>
+						<li class="">
+							<a id="a-l-c-r-btn"><span>刷新</span> </a>
+						</li>
+					</ul>
+				</div>
 		<table class="table" layoutH="160" nowrapTD="false" ifScrollTable="true">
 			<thead>
 			<tr>
@@ -133,3 +141,28 @@
 		<%@ include file="../page.jsp"%>
 	</div>
 </form>
+<script type="text/javascript">
+	$('#a-l-c-r-btn').click(function () {
+		var lastDo = localStorage.getItem('lastDoFreshenLoanCensusResult')
+		if (lastDo) {
+			lastDo = parseInt(lastDo)
+			if (Date.now() - lastDo < 1000 * 60 * 60) {
+				var m = parseInt((1000 * 60 * 60 - Date.now() + lastDo)/(1000 * 60))
+				alertMsg && alertMsg.info('请'+(m || 1)+'分钟后再尝试刷新')
+				return
+			}
+		}
+		$.ajax({
+			type : "post",
+			url : 'channel/freshchannelOveResult',
+			success : function(ret) {
+				localStorage.setItem('lastDoFreshenLoanCensusResult', Date.now())
+				alertMsg && alertMsg.correct('操作成功，请一小时后再尝试刷新')
+				setTimeout(function () {
+					$('#pagerForm-alc').submit()
+				}, 100)
+			},
+			error:DWZ.ajaxError
+		})
+	})
+</script>

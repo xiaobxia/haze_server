@@ -1922,4 +1922,22 @@ public class ChannelInfoController extends BaseController {
         model.addAttribute("params", params);
         return "userInfo/channelOvePage";
     }
+
+    /**
+     * 贷后刷新功能
+     * @return
+     */
+    @RequestMapping("freshchannelOveResult")
+    @ResponseBody
+    public void freshchannelOveResult(HttpServletResponse response) throws Exception {
+        Boolean bool = true;
+        try{
+            // 调用贷后一天一次定时任务
+            taskJob.channelOveCensusResult();
+        }catch(Exception e){
+            bool = false;
+            log.error("渠道贷后统计刷新出现错误"+e.getMessage());
+        }
+        SpringUtils.renderDwzResult(response, bool, bool ? "操作成功!" : "操作失败!", DwzResult.CALLBACK_RELOADPAGE);
+    }
 }
