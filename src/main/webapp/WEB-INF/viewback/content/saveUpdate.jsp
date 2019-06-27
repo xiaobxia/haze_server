@@ -19,6 +19,12 @@
 <script type="text/javascript" src="${backbasePath}/uploadify/scripts/jquery.uploadify.min.js"></script>
 <script type="text/javascript" src="${backbasePath }/uploadify/scripts/jquery.uploadify.v2.1.0.js"></script>
 <title>修改/添加内容</title>
+	<style>
+		p select {
+			height: 36px;
+			width: 368px;
+		}
+	</style>
 </head>
 <body>
 	<div class="pageContent">
@@ -39,19 +45,19 @@
 				<div class="divider"></div>
 				<p>
 					<label>内容标题：</label><input name="contentTitle" class="required"
-						type="text" alt="请输入内容标题" size="30" value="${content.contentTitle }" maxlength="50"/>
+						type="text" alt="请输入内容标题" size="50" value="${content.contentTitle }" maxlength="50"/>
 				</p>
 				<div class="divider"></div>
-				<p style="height: 100px;">
+				<p style="height: auto;">
 					<label>内容摘要：</label>
 					<textarea name="contentSummary" cols="50" rows="5" class="required" maxlength="200">${content.contentSummary }</textarea>
 				</p>
 				<div class="divider"></div>
 				<p>
-					<label>排序：</label> <input name="orderNum" class="required digits " min="0" type="text" value="${content.orderNum}"/>
+					<label>排序：</label> <input name="orderNum" size="50" class="required digits " min="0" type="text" value="${content.orderNum}"/>
 				</p>
 				<p>
-					<label>外部链接：</label> <input name="externalUrl"  maxlength="200" type="text" value="${content.externalUrl}"/>
+					<label>外部链接：</label> <input name="externalUrl" size="50" maxlength="200" type="text" value="${content.externalUrl}"/>
 				</p>
 				<div class="divider"></div>
 				<p style="height: 340px; width: 950px;">

@@ -42,6 +42,12 @@
 		#leftside,#container,#splitBar,#splitBarProxy {
 			top: 0
 		}
+		.headerNav .dropdown-toggle{
+			color: #fff;
+		}
+		.headerNav .dropdown-toggle:hover, .headerNav .open .dropdown-toggle{
+			color: rgb(48, 65, 86);
+		}
 	</style>
 	<style>
 		.index-page-wrap div, .index-page-wrap span{

@@ -5,7 +5,6 @@
 img {
 	width: 700px;
 	height: 320px;
-	margin-right:600px;
 }
 
 /* #preview {

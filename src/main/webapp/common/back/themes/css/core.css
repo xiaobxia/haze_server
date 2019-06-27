@@ -88,7 +88,7 @@ a:hover {text-decoration:underline;}
 .tabsPage .tabsPageHeader li.hover span { background-position:100% -200px;}
 
 .tabsPage .tabsPageHeader li.selected { background-color: #f6f6f6;}
-.tabsPage .tabsPageHeader li.selected a { font-weight:bold; background-position:0 -300px;}
+.tabsPage .tabsPageHeader li.selected a { font-weight:bold;}
 .tabsPage .tabsPageHeader li.selected span { }
 
 .tabsPage .tabsPageHeader li .close { display:block; overflow:hidden; height:40px; padding:0; opacity: 1;background: none;margin-left: 15px;}
