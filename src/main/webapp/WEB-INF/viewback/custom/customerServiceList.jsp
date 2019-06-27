@@ -112,9 +112,6 @@
 <form id="pagerForm" onsubmit="return navTabSearch(this);" action="customService/queryCustomerList?bType=${bType}&myId=${params.myId}" method="post">
     <div class="pageHeader">
         <div class="searchBar">
-            <jsp:include page="${BACK_URL}/rightSubList">
-                <jsp:param value="${params.myId}" name="parentId"/>
-            </jsp:include>
             <table class="searchContent">
                 <tr>
                     <td>
@@ -139,6 +136,9 @@
         </div>
     </div>
     <div class="pageContent">
+        <jsp:include page="${BACK_URL}/rightSubList">
+            <jsp:param value="${params.myId}" name="parentId"/>
+        </jsp:include>
         <table class="table" style="width: 100%;" layoutH="112" nowrapTD="false">
             <thead>
             <tr >

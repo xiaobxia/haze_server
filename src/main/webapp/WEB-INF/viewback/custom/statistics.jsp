@@ -112,9 +112,6 @@
 <form id="pagerForm" onsubmit="return navTabSearch(this);" action="assign/assignStatistics?bType=${bType}&myId=${params.myId}" method="post">
 	<div class="pageHeader">
 		<div class="searchBar">
-			<jsp:include page="${BACK_URL}/rightSubList">
-				<jsp:param value="${params.myId}" name="parentId"/>
-			</jsp:include>
 			<table class="searchContent">
 				<tr>
 					<td>
@@ -143,6 +140,9 @@
 		</div>
 	</div>
 	<div class="pageContent">
+		<jsp:include page="${BACK_URL}/rightSubList">
+			<jsp:param value="${params.myId}" name="parentId"/>
+		</jsp:include>
 		<c:set var="all_assign_count" value="0"></c:set>
 		<c:set var="all_payback_count" value="0"></c:set>
 		<c:set var="all_sys_assign_count" value="0"></c:set>
