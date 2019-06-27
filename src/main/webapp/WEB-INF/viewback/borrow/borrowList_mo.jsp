@@ -412,8 +412,6 @@
         }
     }
     if (renderLoanStatusName) {
-        setTimeout(function () {
-            renderLoanStatusName()
-        }, 200)
+        renderLoanStatusName()
     }
 </script>

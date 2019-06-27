@@ -152,8 +152,6 @@
 		$(obj).attr("href",toHref);
 	}
 	if (renderLoanSuccessCount) {
-		setTimeout(function () {
-			renderLoanSuccessCount()
-		}, 200)
+		renderLoanSuccessCount()
 	}
 </script>

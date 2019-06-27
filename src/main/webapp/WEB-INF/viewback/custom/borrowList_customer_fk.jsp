@@ -228,8 +228,6 @@
         }
     }
 	if (renderLoanSuccessCount) {
-		setTimeout(function () {
-			renderLoanSuccessCount()
-		}, 200)
+		renderLoanSuccessCount()
 	}
 </script>

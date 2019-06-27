@@ -212,13 +212,9 @@
 		return true;
 	}
 	if (renderLoanSuccessCount) {
-		setTimeout(function () {
-			renderLoanSuccessCount()
-		}, 200)
+		renderLoanSuccessCount()
 	}
 	if (renderLoanStatusName) {
-		setTimeout(function () {
-			renderLoanStatusName()
-		}, 200)
+		renderLoanStatusName()
 	}
 </script>
