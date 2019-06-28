@@ -69,11 +69,11 @@
 						 班次
 					 </th>
 					 <th>
-						 客服
+                         ${params.date} 值班
 					 </th>
 				 </tr>
 				<tr>
-					<td>早班</td>
+					<td>值班人员</td>
 					<td>
 						<c:forEach items="${params.list }" var="user" varStatus="varStatus">
 							<span class="input-box"><input type="checkbox" name="morCustomerName" value="${user.id}"/> ${user.userName}</span>
@@ -85,19 +85,19 @@
 						</c:forEach>
 					</td>
 				</tr>
-				<tr>
+				<%--<tr>
 					<td>晚班</td>
 					<td>
 						<c:forEach items="${params.list }" var="user" varStatus="varStatus">
 							<span class="input-box"><input type="checkbox" name="nigCustomerName" value="${user.id}"/> ${user.userName}</span>
-							<%--<c:if test="${not empty user}">--%>
-							<%--<script type="text/javascript">--%>
-							<%--$("input[name='customerName'][value='${user.id}']").attr("checked",true);--%>
-							<%--</script>--%>
-							<%--</c:if>--%>
+							&lt;%&ndash;<c:if test="${not empty user}">&ndash;%&gt;
+							&lt;%&ndash;<script type="text/javascript">&ndash;%&gt;
+							&lt;%&ndash;$("input[name='customerName'][value='${user.id}']").attr("checked",true);&ndash;%&gt;
+							&lt;%&ndash;</script>&ndash;%&gt;
+							&lt;%&ndash;</c:if>&ndash;%&gt;
 						</c:forEach>
 					</td>
-				</tr>
+				</tr>--%>
 
 			</table>
 		</div>
@@ -133,27 +133,29 @@
         $("input[name='morCustomerName']:checked").each(function () {
             morIds = morIds + "," + $(this).val();
         });
-        $("input[name='nigCustomerName']:checked").each(function () {
+       /* $("input[name='nigCustomerName']:checked").each(function () {
             nigIds = nigIds + "," + $(this).val();
-        });
+        });*/
         $("input[name='morCustomerIds']").val(morIds);
+/*
         $("input[name='nigCustomerIds']").val(nigIds);
+*/
 
 
     }
     window.onload = $(function(){
 	    var morIds =${params.morIds};
-	    var nigIds =${params.nigIds};
+	   /* var nigIds =${params.nigIds};*/
 
         $('input[name="morCustomerName"]').each(function(){
             var val = $(this).val();
             $(this).attr('checked', morIds.indexOf(parseInt(val, 10)) !==- 1)
         });
-		$('input[name="nigCustomerName"]').each(function(){
+		/*$('input[name="nigCustomerName"]').each(function(){
             var val = $(this).val();
             $(this).attr('checked', nigIds.indexOf(parseInt(val, 10)) !==- 1)
         })
-
+*/
     })
 
 </script>

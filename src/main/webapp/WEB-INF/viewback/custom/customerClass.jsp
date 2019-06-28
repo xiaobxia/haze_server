@@ -156,11 +156,11 @@
                     日期
                 </th>
                 <th align="center"  >
-                    早班值班人数
+                    值班人数
                 </th>
-                <th align="center" >
+               <%-- <th align="center" >
                     晚班值班人数
-                </th>
+                </th>--%>
                 <th align="center"  >
                     更新时间
                 </th>
@@ -181,9 +181,9 @@
                     <td>
                             ${item.classMorCustomers}
                     </td>
-                    <td>
+                   <%-- <td>
                             ${item.classNigCustomers}
-                    </td>
+                    </td>--%>
                     <td>
                         <fmt:formatDate value="${item.updateTime}" pattern="yyyy-MM-dd HH:mm:ss" />
                     </td>

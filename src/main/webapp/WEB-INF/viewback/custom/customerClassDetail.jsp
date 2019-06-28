@@ -64,11 +64,11 @@
 						 班次
 					 </th>
 					 <th>
-						 客服
+						 ${params.date} 值班
 					 </th>
 				 </tr>
 				<tr>
-					<td>早班</td>
+					<td>值班人员</td>
 					<td>
 						<c:forEach items="${morCustomerList }" var="userName" varStatus="varStatus">
 							<span class="input-box"> ${userName}</span>
@@ -80,19 +80,19 @@
 						</c:forEach>
 					</td>
 				</tr>
-				<tr>
+				<%--<tr>
 					<td>晚班</td>
 					<td>
 						<c:forEach items="${nigCustomerList }" var="userName" varStatus="varStatus">
 							<span class="input-box"> ${userName}</span>
-							<%--<c:if test="${not empty user}">--%>
-							<%--<script type="text/javascript">--%>
-							<%--$("input[name='customerName'][value='${user.id}']").attr("checked",true);--%>
-							<%--</script>--%>
-							<%--</c:if>--%>
+							&lt;%&ndash;<c:if test="${not empty user}">&ndash;%&gt;
+							&lt;%&ndash;<script type="text/javascript">&ndash;%&gt;
+							&lt;%&ndash;$("input[name='customerName'][value='${user.id}']").attr("checked",true);&ndash;%&gt;
+							&lt;%&ndash;</script>&ndash;%&gt;
+							&lt;%&ndash;</c:if>&ndash;%&gt;
 						</c:forEach>
 					</td>
-				</tr>
+				</tr>--%>
 
 			</table>
 		</div>

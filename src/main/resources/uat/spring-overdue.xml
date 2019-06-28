@@ -215,7 +215,7 @@
         <!----></bean>
 
     <!--自动分单 autoAssignOrderForNig-->
-    <bean id="autoAssignOrderForNig" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+    <!--<bean id="autoAssignOrderForNig" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="jobClass" value="com.info.web.util.JobDetailBean" />
         <property name="durability" value="true" />
         <property name="jobDataAsMap">
@@ -229,7 +229,7 @@
         <property name="jobDetail" ref="autoAssignOrderForNig"/>
 
         <property name="cronExpression" value="0 0/5 * * * ? " />
-    </bean>
+    </bean>-->
 
     <bean id="autoAddCustomerClass" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="jobClass" value="com.info.web.util.JobDetailBean" />

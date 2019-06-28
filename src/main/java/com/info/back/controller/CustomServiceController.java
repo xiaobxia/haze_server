@@ -24,6 +24,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.jsoup.helper.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -120,15 +122,34 @@ public class CustomServiceController extends BaseController {
         }
         SpringUtils.renderDwzResult(response, flag, errMsg, DwzResult.CALLBACK_CLOSECURRENTDIALOG, params.get("parentId").toString());
     }
-
     @RequestMapping(value = "orderList")
+    public String getOrders(HttpServletRequest request, Model model) {
+        HashMap<String, Object> params = getParametersO(request);
+        Integer userId=loginAdminUser(request).getId();
+        //查询用户是否含有客服主管的角色
+        int count = backUserService.findRoleKfM(userId);
+        if(count <= 0){
+            //普通客服只能查看分配给自己的订单
+            params.put("kefuId",userId);
+        }
+        PageConfig<CustomerOrder> pageConfig = repaymentService.findOrders(params);
+       // showKeFuMessagePageConfig = repaymentService.findAssignPage(params);
+        model.addAttribute("pm",pageConfig);
+        model.addAttribute("params", params);// 用于搜索框保留值
+        //model.addAttribute("remark",Remark.borrowRemarkMap);
+        List<BackDictionary> backDictionaries = backDictionaryDao.findDictionary(Constant.USER_REMARK);
+        List<BackDictionary> backDictionaries1 = backDictionaryDao.findDictionary(Constant.USER_REMARK_ONLINE);
+        backDictionaries.addAll(backDictionaries1);
+        model.addAttribute("remark", BackDictionary.getDictionaryTranslateMap(backDictionaries));
+        return "custom/orderList";
+    }
+   /* @RequestMapping(value = "orderList")
     public String getOrders(HttpServletRequest request, Model model) {
         String createTime; //预期还款时间
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         //当前时间
         Calendar now = Calendar.getInstance();
         createTime = dateFormat.format(now.getTime());
-
         String status = request.getParameter("status"); //已还与未还的状态
         String jobName = request.getParameter("jobName"); //客服名字
         String labelStatus = request.getParameter("labelStatus");
@@ -187,7 +208,7 @@ public class CustomServiceController extends BaseController {
         }
         PageConfig<ShowKeFuMessage> showKeFuMessagePageConfig;
         Integer userId=loginAdminUser(request).getId();
-       /* //查询用户是否含有客服主管的角色
+       //查询用户是否含有客服主管的角色
         int count = backUserService.findRoleKfM(userId);
         if (count >0){
             //针对于客服主管 则查询所有订单， 对于已经多次派单的则只展示最后一次派单记录
@@ -197,11 +218,11 @@ public class CustomServiceController extends BaseController {
             for(ShowKeFuMessage showKeFuMessage:showKeFuMessagePageConfig.getItems()){
 
             }
-        }else{*/
+        }else{
             params.put("assignType", 1); //默认查询已经一键转派的订单 针对于普通客服
             params.put("filterAssign", 1);
             showKeFuMessagePageConfig = repaymentService.findAssignPage(params);
-        /*}*/
+        }
         if (showKeFuMessagePageConfig != null && showKeFuMessagePageConfig.getItems() != null) {
             if (showKeFuMessagePageConfig.getItems().size() <= 0) {
                 HashMap<String, Object> otherParams = new HashMap<>();
@@ -233,10 +254,10 @@ public class CustomServiceController extends BaseController {
         backDictionaries.addAll(backDictionaries1);
         model.addAttribute("remark", BackDictionary.getDictionaryTranslateMap(backDictionaries));
         return "custom/orderList";
-    }
+    }*/
 
 
-    @RequestMapping("sendToOrder")
+    /*@RequestMapping("sendToOrder")
     public String sendToOrder(HttpServletRequest request, HttpServletResponse response, Model model) {
         HashMap<String, Object> params = getParametersO(request);
         JsonResult json = new JsonResult("0", "转派成功!");
@@ -296,8 +317,77 @@ public class CustomServiceController extends BaseController {
             log.error("sendToOrder error:{}", e);
         }
         return null;
-    }
+    }*/
+    @RequestMapping("sendToOrder")
+    public String sendToOrder(HttpServletRequest request, HttpServletResponse response, Model model) {
+        HashMap<String, Object> params = getParametersO(request);
+        JsonResult json = new JsonResult("0", "转派成功!");
+        try {
+            String userId = request.getParameter("userId");
+            if (StringUtils.isEmpty(userId)) {
+                json.setCode("-1");
+                json.setMsg("请选择转派的客服");
+            } else {
+                //查询backUser中的信息
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("id", userId);
+                List<BackUser> backUserList = backUserService.findAll(map);
+                if (backUserList.size() > 0) {
+                    BackUser backUser = backUserList.get(0);
+                    String uId = request.getParameter("uids"); //asset_borrow_assign
+                    //进行更新,根据userId 查询
+                    if (!StringUtils.isEmpty(uId)) {
+                        String[] list = uId.split(",");
+                        for (String assignId : list) {
+                            if (StringUtils.isEmpty(assignId)) {
+                                continue;
+                            }
+                            map.clear();
+                            map.put("id", assignId);
+                            List<AssetBorrowAssign> exists = repaymentService.findAssetBorrowAssignByCreateTime(map);
+                            if (CollectionUtils.isEmpty(exists)) {
+                                continue;
+                            }
+                            BorrowOrder order = borrowOrderService.findOneBorrow(exists.get(0).getBorrowOrderId());
+                            if (order == null) {
+                                continue;
+                            }
+                            Integer status = order.getStatus();
+                            if (status.equals(BorrowOrder.STATUS_YHK) || status.equals(BorrowOrder.STATUS_BFHK) || status.equals(BorrowOrder.STATUS_YQYHK)) {
+                                continue;
+                            }
+                            //根据订单Id查询
+//							HashMap<String, Object> assignMap = new HashMap<>();
+                            //将原来订单 状态改为删除不展示
+                            AssetBorrowAssign assetBorrowAssign = new AssetBorrowAssign();
+                            assetBorrowAssign.setId(Integer.parseInt(assignId));
+                            assetBorrowAssign.setDelFlag(1);
+                            repaymentService.updateAssetBorrowAssignById(assetBorrowAssign);
+                            //添加一条新的人工派单记录
+                            AssetBorrowAssign borrowAssign = new AssetBorrowAssign();
+                            borrowAssign.setJobId(backUser.getId());
+                            borrowAssign.setJobName(backUser.getUserName());
+                            borrowAssign.setDelFlag(0);
+                            borrowAssign.setBorrowOrderId(order.getId());
+                            borrowAssign.setCreateTime(new Date());
+                            borrowAssign.setAssignType(1);
+                            repaymentService.insertAssetBorrowAssign(borrowAssign);
+                        }
+                    } else {
+                        json.setCode("-1");
+                        json.setMsg("请选择要转派的订单");
+                    }
+                }
+            }
+            SpringUtils.renderDwzResult(response, "0".equals(json.getCode()),
+                    json.getMsg(), DwzResult.CALLBACK_CLOSECURRENT,
+                    params.get("parentId").toString());
 
+        } catch (Exception e) {
+            log.error("sendToOrder error:{}", e);
+        }
+        return null;
+    }
     @RequestMapping("zhuanpaiJsp")
     public String zhuanpaiJsp(HttpServletRequest request, Model model) {
         HashMap<String, Object> params = getParametersO(request);
@@ -321,13 +411,30 @@ public class CustomServiceController extends BaseController {
         taskJob.autoAssignOrder();
     }
 
-    @RequestMapping("testKefuJobForNig")
+    /*@RequestMapping("testKefuJobForNig")
     public void testKefuJobForNig() {
         taskJob.autoAssignOrderForNig();
+    }*/
+    @RequestMapping(value = "addRemark")
+    public String addRemark(HttpServletRequest request, Model model) {
+        HashMap<String, Object> params = getParametersO(request);
+        Map<String, List<BackDictionary>> remarkData;
+        Map<String, List<BackDictionary>> finalMap = new LinkedHashMap<>();
+        //电话客服派单id ，在线客服为订单id
+        String id = request.getParameter("id");
+        List<BackDictionary> backDictionaries = backDictionaryDao.findAllLabelType();
+        remarkData = backDictionaries.stream().collect(Collectors.groupingBy(BackDictionary::getDictName));
+        remarkData.remove("催收客服备注");
+        remarkData.remove("在线客服备注标签");
+        remarkData.remove("外呼异常");
+        remarkData.entrySet().stream().sorted(Comparator.comparing(e -> e.getValue().size())).forEach(e -> finalMap.put(e.getKey(), e.getValue()));
+        model.addAttribute("remark", finalMap);
+        model.addAttribute("id", id);
+        model.addAttribute("params", params);
+        return "custom/addRemark";
     }
 
-
-    @RequestMapping(value = "addRemark")
+  /*  @RequestMapping(value = "addRemark")
     public String addRemark(HttpServletRequest request, Model model) {
         HashMap<String, Object> params = getParametersO(request);
         Map<String, List<BackDictionary>> remarkData;
@@ -352,7 +459,7 @@ public class CustomServiceController extends BaseController {
         model.addAttribute("id", id);
         model.addAttribute("params", params);
         return "custom/addRemark";
-    }
+    }*/
     @RequestMapping(value = "addPhoneCall")
     public String addPhoneCall(HttpServletRequest request,Model model) {
         HashMap<String, Object> params = getParametersO(request);
@@ -400,8 +507,64 @@ public class CustomServiceController extends BaseController {
             return Result.success(backDictionaries);
         }
     }
-
     @RequestMapping(value = "saveBorrowRemark", method = RequestMethod.POST)
+    public String saveBorrowRemark(HttpServletRequest request, HttpServletResponse response) {
+        JsonResult json = new JsonResult("0", "备注成功!");
+        HashMap<String, Object> params = getParametersO(request);
+        String id = request.getParameter("id");
+        //获取标签
+        String remarkFlag = request.getParameter("remarkFlag");
+        Boolean flagRemark = true;
+        if (id == null || "".equals(id)) {
+            json.setCode("-1");
+            json.setMsg("请选择订单");
+            flagRemark = false;
+        } else if (remarkFlag == null || "".equals(remarkFlag)) {
+            json.setCode("-1");
+            json.setMsg("请选择备注标签");
+            flagRemark = false;
+        }
+        try {
+            if (flagRemark) {
+               String borrowOrderId = repaymentService.selectBorrowOrderIdByAssignId(Integer.valueOf(id));
+                if (borrowOrderId != null && !"".equals(borrowOrderId)) {
+                    //获取备注
+                    String remarkContent = request.getParameter("remarkContent");
+                    Remark remark = new Remark();
+                    remark.setAssignId(Integer.parseInt(borrowOrderId));
+                    remark.setRemarkFlag(Integer.parseInt(remarkFlag));
+                    Date now = new Date();
+                    remark.setCreateTime(now);
+                    remark.setUpdateTime(now);
+                    remark.setRemarkContent(remarkContent);
+                    BackUser backUser = this.getSessionUser(request);
+                    if (backUser != null) {
+                        remark.setJobName(backUser.getUserName());
+                        remark.setJobPhone(backUser.getUserMobile());
+                    }
+                    List<String> ids = repaymentService.getRemarkIdByOrderId(id);
+                    //更新之前最新备注记录为历史记录
+                    if (ids != null && !ids.isEmpty()) {
+                        repaymentService.updateRemarkStatus(ids);
+                    }
+                    int flag = repaymentService.insertIntoRemak(remark);
+                    if (flag != 1) {
+                        json.setCode("-1");
+                        json.setMsg("信息备注失败");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            log.error("save borrow remark error:{}", e);
+            json.setCode("-1");
+            json.setMsg("信息备注失败");
+        }
+        SpringUtils.renderDwzResult(response, "0".equals(json.getCode()),
+                json.getMsg(), DwzResult.CALLBACK_CLOSECURRENT,
+                params.get("parentId").toString());
+        return null;
+    }
+   /* @RequestMapping(value = "saveBorrowRemark", method = RequestMethod.POST)
     public String saveBorrowRemark(HttpServletRequest request, HttpServletResponse response) {
         JsonResult json = new JsonResult("0", "备注成功!");
         HashMap<String, Object> params = getParametersO(request);
@@ -473,7 +636,7 @@ public class CustomServiceController extends BaseController {
                 json.getMsg(), DwzResult.CALLBACK_CLOSECURRENT,
                 params.get("parentId").toString());
         return null;
-    }
+    }*/
 
     @RequestMapping(value = "showRemark")
     public String showRemark(HttpServletRequest request, HttpServletResponse response, Model model) {
@@ -696,9 +859,9 @@ public class CustomServiceController extends BaseController {
                         String[] morCollections = StringUtils.tokenizeToStringArray(mor, ",");
                         map.put("classMorCustomers", morCollections.length);
 
-                        String nig = String.valueOf(map.get("classNigCustomers"));
+                        /*String nig = String.valueOf(map.get("classNigCustomers"));
                         String[] nigCollections = StringUtils.tokenizeToStringArray(nig, ",");
-                        map.put("classNigCustomers", nigCollections.length);
+                        map.put("classNigCustomers", nigCollections.length);*/
                     }
                 pageConfig.setItems(list);
                 model.addAttribute("pm", pageConfig);
@@ -713,8 +876,75 @@ public class CustomServiceController extends BaseController {
         }
 
     }
-
     @RequestMapping("addOrUpdateCustomerClass")
+    public String addCustomerClass(HttpServletRequest request, HttpServletResponse response, Model model) {
+        try {
+            HashMap<String, Object> params = getParametersO(request);
+            String url = null;
+            if ("toJsp".equals(String.valueOf(params.get("type")))) {
+                //早班已排集合
+                List<String> morList = new ArrayList<>();
+                url = "custom/saveUpdateCustomerClass";
+                if (params.get("id") != null) {//修改操作页面渲染
+                    CustomerClassArrange customerClassArrange = onlineCustomService.getCustomerClassById(String.valueOf(params.get("id")));
+
+                    String[] morCustomerIds = StringUtils.tokenizeToStringArray(customerClassArrange.getClassMorCustomers(), ",");
+                    morList = Arrays.asList(morCustomerIds);
+                    params.put("date", customerClassArrange.getClassDate());
+                } else {
+                    //新增排班
+                    //默认明天排班
+                    DateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+                    // 取最近一次排班日期+1
+                    String lastClassDate = onlineCustomService.getLastClassDate();
+                    Calendar calendar = Calendar.getInstance();
+                    //if (!lastClassDate.equals("null")) {
+                    if (org.apache.commons.lang3.StringUtils.isNotBlank(lastClassDate)) {
+                        calendar.setTime(sf.parse(lastClassDate));
+                    }
+                    calendar.add(Calendar.DATE, +1);
+                    params.put("date", sf.format(calendar.getTime()));
+                }
+                //排班人员
+                params.put("morIds", morList);
+                //客服列表
+                List<BackUser> list = onlineCustomService.getCustomerList();
+                /*
+                 * 客服列表
+                 */
+                params.put("list", list);
+            } else {
+                String date = String.valueOf(params.get("date"));
+                if (!"".equals(date)) {
+                    CustomerClassArrange customerClassArrange = onlineCustomService.getCustomerClassByDate(date);
+                    //更新班次
+                    if (customerClassArrange != null) {
+                        CustomerClassArrange classArrange = new CustomerClassArrange();
+                        classArrange.setClassDate(date);
+                        classArrange.setClassMorCustomers(params.get("morCustomerIds") == null ? "" : String.valueOf(params.get("morCustomerIds")));
+                        classArrange.setClassNigCustomers(params.get("nigCustomerIds") == null ? "" : String.valueOf(params.get("nigCustomerIds")));
+                        onlineCustomService.updateCustomerClassArrange(classArrange);
+                    } else {
+                        //新增
+                        CustomerClassArrange classArrange = new CustomerClassArrange();
+                        classArrange.setClassDate(date);
+                        classArrange.setClassMorCustomers(params.get("morCustomerIds") == null ? "" : String.valueOf(params.get("morCustomerIds")));
+                        classArrange.setClassNigCustomers(params.get("nigCustomerIds") == null ? "" : String.valueOf(params.get("nigCustomerIds")));
+                        onlineCustomService.saveCustomerClassArrange(classArrange);
+                    }
+                }
+                SpringUtils.renderDwzResult(response, true, "操作成功", DwzResult.CALLBACK_CLOSECURRENT, params.get("parentId").toString());
+            }
+            model.addAttribute("params", params);
+            return url;
+        } catch (Exception e) {
+            log.error("addCustomerClass error:{}", e);
+            model.addAttribute("msg", "系统异常");
+            return "error";
+        }
+
+    }
+   /* @RequestMapping("addOrUpdateCustomerClass")
     public String addCustomerClass(HttpServletRequest request, HttpServletResponse response, Model model) {
         try {
             HashMap<String, Object> params = getParametersO(request);
@@ -752,9 +982,9 @@ public class CustomServiceController extends BaseController {
                 params.put("nigIds", nigList);
                 //客服列表
                 List<BackUser> list = onlineCustomService.getCustomerList();
-                /*
+                *//*
                  * 客服列表
-                 */
+                 *//*
                 params.put("list", list);
 
             } else {
@@ -787,7 +1017,7 @@ public class CustomServiceController extends BaseController {
             return "error";
         }
 
-    }
+    }*/
 
     @RequestMapping("getCustomerClassDetail")
     public String getCustomerClassDetail(HttpServletRequest request, Model model) {
@@ -797,19 +1027,19 @@ public class CustomServiceController extends BaseController {
                 CustomerClassArrange customerClassArrange = onlineCustomService.getCustomerClassById(String.valueOf(params.get("id")));
 
                 String[] morCustomerIds = StringUtils.tokenizeToStringArray(customerClassArrange.getClassMorCustomers(), ",");
-                String[] nigCustomerIds = StringUtils.tokenizeToStringArray(customerClassArrange.getClassNigCustomers(), ",");
+               // String[] nigCustomerIds = StringUtils.tokenizeToStringArray(customerClassArrange.getClassNigCustomers(), ",");
                 List<String> morCustomerList = new ArrayList<>();
-                List<String> nigCustomerList = new ArrayList<>();
+                //List<String> nigCustomerList = new ArrayList<>();
                 if (morCustomerIds != null && morCustomerIds.length > 0) {
                     morCustomerList = backUserService.selectBackUserNameByIds(morCustomerIds);
                 }
-                if (nigCustomerIds != null && nigCustomerIds.length > 0) {
+               /* if (nigCustomerIds != null && nigCustomerIds.length > 0) {
                     nigCustomerList = backUserService.selectBackUserNameByIds(nigCustomerIds);
-                }
+                }*/
                 params.put("date", customerClassArrange.getClassDate());
                 model.addAttribute("params", params);
                 model.addAttribute("morCustomerList", morCustomerList);
-                model.addAttribute("nigCustomerList", nigCustomerList);
+               // model.addAttribute("nigCustomerList", nigCustomerList);
             }
             return "custom/customerClassDetail";
         } catch (Exception e) {

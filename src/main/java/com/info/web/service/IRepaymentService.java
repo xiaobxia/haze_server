@@ -244,7 +244,10 @@ public interface IRepaymentService {
 
 	Integer selectAssetBorrowAssign(Integer id);
 
+   //客服管理中订单列表
+	PageConfig<CustomerOrder> findOrders(HashMap<String,Object> hashMap);
 
+	Integer findAssignType(Integer id );
 }
 
 

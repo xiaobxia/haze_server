@@ -172,7 +172,9 @@
             and borrow_order_id = #{borrowOrderId,jdbcType=INTEGER}
         </if>
     </select>
-
+    <select id ="findAssignType" resultType="integer" parameterType="integer">
+       select assign_type from asset_borrow_assign where id = #{id}
+    </select>
     <insert id="insertAssetBorrowAssign" parameterType="com.info.web.pojo.AssetBorrowAssign" >
     insert into asset_borrow_assign(id,borrow_order_id,job_id,job_name,create_time,update_time,del_flg,remark_id,asset_id,assign_type)
     values (#{id,jdbcType=INTEGER}, #{borrowOrderId,jdbcType=INTEGER}, #{jobId,jdbcType=INTEGER},
@@ -279,7 +281,10 @@
             borrow_order_id = #{borrowOrderId},
         </if>
         <if test="assignType != null and assignType != ''">
-            assign_Type = #{assignType}
+            assign_Type = #{assignType},
+        </if>
+        <if test="delFlag != null and delFlag != ''">
+           del_flg = #{delFlag}
         </if>
     </set>
     where id = #{id}
@@ -1235,5 +1240,79 @@ remark
 
     <select id="selectAssetBorrowAssign" parameterType="java.lang.Integer" resultType="java.lang.Integer">
         select borrow_order_id from asset_borrow_assign where id = #{id}
+    </select>
+    <select id="findOrders" resultType="hashmap" parameterType="hashmap">
+        SELECT
+        ui.id AS userId,
+        bo.id as borrowId,
+        ar.id as repaymentId,
+        bu.id as kefuId,
+        ba.id as borrowAssignId,
+        ui.realname AS realName,
+        ui.user_phone AS userPhone,
+        ui.user_sex AS userSex,
+        ui.customer_type AS customerType,
+        ar.repayment_amount AS repaymentAmount,
+        bo.money_amount AS moneyAmount,
+        ar.credit_repayment_time AS loanTime,
+        ar.repayment_time AS repaymentTime,
+        ar.renewal_count AS renewalCount,
+        bo.STATUS AS status,
+        ar.late_day AS lateDay,
+        bu.user_name AS kefuName,
+        ba.create_time AS createTime
+        FROM
+        asset_borrow_assign ba
+        LEFT JOIN asset_borrow_order bo  ON ba.borrow_order_id = bo.id
+        LEFT JOIN asset_repayment ar on ar.asset_order_id = bo.id
+        LEFT JOIN user_info ui ON ui.id = ar.user_id
+        LEFT JOIN back_user bu ON bu.id = ba.job_id
+        WHERE 1=1 and ba.del_flg = 0
+        <if test="beginTime != null and endTime != null">
+            and ba.create_time &gt;= beginTime
+            and ba.create_time &lt;= endTime
+        </if>
+        <if test="kefuName != NULL">
+            AND bu.user_name = #{kefuName}
+        </if>
+        <if test="status != null">
+            AND bo.STATUS = #{status}
+        </if>
+        <if test="customerType != null">
+            AND ui.customer_type = #{customerType}
+        </if>
+        <if test="kefuId != null">
+            and ba.job_id = #{kefuId}
+        </if>
+        <if test="moneyAmount != null">
+            and bo.money_amount = #{moneyAmount}
+        </if>
+        <if test="userPhone != null">
+            and ui.user_phone = #{userPhone}
+        </if>
+        order by ba.create_time DESC ,bo.status ASC
+    </select>
+    <select id ="findOrdersCount" resultType="integer" parameterType="hashmap">
+      select count( ba.id) as count
+        FROM
+        asset_borrow_assign ba
+        LEFT JOIN asset_borrow_order bo  ON ba.borrow_order_id = bo.id
+        LEFT JOIN asset_repayment ar on ar.asset_order_id = bo.id
+        LEFT JOIN user_info ui ON ui.id = ar.user_id
+        LEFT JOIN back_user bu ON bu.id = ba.job_id
+        WHERE 1=1 and ba.del_flg = 0
+        <if test="paiDanTime != null">
+            and ba.create_time = #{paiDanTime}
+        </if>
+        <if test="kefuName != NULL">
+            AND bu.user_name = #{kefuName}
+        </if>
+        <if test="status != null">
+            AND bo.STATUS = #{status}
+        </if>
+        <if test="customerType != null">
+            AND ui.customer_type = #{customerType}
+        </if>
+        order by ba.create_time DESC ,bo.status ASC
     </select>
 </mapper>

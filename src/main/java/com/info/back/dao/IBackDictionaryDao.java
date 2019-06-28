@@ -27,6 +27,8 @@ import java.util.Map;
 public interface IBackDictionaryDao {
     List<BackDictionary> findDictionary(String dictionary);
 
+    List<BackDictionary> findAllLabelType();
+
     List<BackDictionary> findDictionarys(HashMap<String, Object> params);
 
     List<BackDictionary> findLabelType(String dictionary);

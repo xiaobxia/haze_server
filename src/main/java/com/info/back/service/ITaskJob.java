@@ -167,7 +167,7 @@ public interface ITaskJob {
 //	void pushZzcBlacklist();
 
 	void autoAssignOrder();
-	void autoAssignOrderForNig();
+	//void autoAssignOrderForNig();
 
 	void insertAssignStatisticForArtificialSend();
 

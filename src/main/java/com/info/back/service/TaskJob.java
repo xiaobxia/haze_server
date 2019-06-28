@@ -1351,17 +1351,16 @@ public class TaskJob implements ITaskJob {
 			//status 30:已还款
 			Map<String, Object> params = new HashMap<>();
 			params.put("expectedRepaymentTime", expectedRepaymentTime);
-			params.put("noPayStatus",1);
+			//params.put("noPayStatus",1);
+            //只分配当日到期未还订单
+            params.put("status",21);
 			List<Repayment> repaymentList = repaymentService.findByRepaymentReport(params);
-
 			List<BackUser> backUserList;
 			//如果有排班，则按照排班进行派单
 			CustomerClassArrange customerClassArrange = onlineCustomService.getCustomerClassByDate(expectedRepaymentTime);
 			if(customerClassArrange!=null){
-
 				String[] morCustomerIds = org.springframework.util.StringUtils.tokenizeToStringArray(customerClassArrange.getClassMorCustomers(),",");
 				backUserList = backUserService.selectBackUserByIds(morCustomerIds);
-
 				if(repaymentList!=null && !repaymentList.isEmpty()){
 					int index=0;
 					Map<Integer,Object> tempOrderMap = new HashMap<>();
@@ -1371,7 +1370,7 @@ public class TaskJob implements ITaskJob {
 							index=0;
 						}
 						BackUser backUser =backUserList.get(index);
-						saveAssetBorrowAssign(backUser,repayment,1);
+						saveAssetBorrowAssign(backUser,repayment,0);
 						Integer userTempOrderSize = tempOrderMap.get(backUser.getId())==null?0:Integer.valueOf(tempOrderMap.get(backUser.getId()).toString());
 						userTempOrderSize++;
 						//若此客服分配单量超过限制则不再分配
@@ -1381,7 +1380,6 @@ public class TaskJob implements ITaskJob {
 						}else{
 							tempOrderMap.put(backUser.getId(),userTempOrderSize);
 						}
-
 						index++;
 					}
 				}
@@ -1401,11 +1399,10 @@ public class TaskJob implements ITaskJob {
 							index=0;
 						}
 						BackUser backUser =backUserList.get(index);
-						saveAssetBorrowAssign(backUser,repayment,1);
+						saveAssetBorrowAssign(backUser,repayment,0);
 						index++;
 					}
 				}
-
 			}
 		}catch (Exception e){
 			log.error("autoAssignOrder error:{}",e);
@@ -1417,7 +1414,7 @@ public class TaskJob implements ITaskJob {
 
 	/**
 	 * 自动分派订单给所有客服(晚班)
-	 */
+	 *//*
 	@Override
 	public void autoAssignOrderForNig(){
 		log.info("start autoAssignOrderForNig job");
@@ -1431,17 +1428,16 @@ public class TaskJob implements ITaskJob {
 			//status 30:已还款
 			Map<String, Object> params = new HashMap<>();
 			params.put("expectedRepaymentTime", expectedRepaymentTime);
-			params.put("noPayStatus",1);
+			//params.put("noPayStatus",1);
+            //只分配当日未还订单
+            params.put("status",21);
 			List<Repayment> repaymentList = repaymentService.findByRepaymentReport(params);
-
 			List<BackUser> backUserList;
 			//如果有排班，则按照排班进行派单
 			CustomerClassArrange customerClassArrange = onlineCustomService.getCustomerClassByDate(expectedRepaymentTime);
 			if(customerClassArrange!=null){
-
 				String[] nigCustomerIds = org.springframework.util.StringUtils.tokenizeToStringArray(customerClassArrange.getClassNigCustomers(),",");
 				backUserList = backUserService.selectBackUserByIds(nigCustomerIds);
-
 				if(repaymentList!=null && !repaymentList.isEmpty()){
 					int index=0;
 					Map<Integer,Object> tempOrderMap = new HashMap<>();
@@ -1489,7 +1485,7 @@ public class TaskJob implements ITaskJob {
 		}
 		log.info("end autoAssignOrderForNig job");
 
-	}
+	}*/
 
 
 	private void saveAssetBorrowAssign(BackUser backUser,Repayment repayment,Integer assignType){
@@ -1524,7 +1520,6 @@ public class TaskJob implements ITaskJob {
 		}
 		log.info("客服统计人工分派数据生成结束");
 	}
-
 	@Override
 	public void insertAssignStatisticForSystemSend(){
 		log.info("客服统计系统分派数据生成");
@@ -1564,7 +1559,6 @@ public class TaskJob implements ITaskJob {
 		appMarketStaticsService.inserAppMarketTypeEveryDay();
 		log.info("应用市场自然流量初始化结束");
 	}
-
 	/**
 	 * 应用市场自然流量分析
 	 * @Author ：tgy

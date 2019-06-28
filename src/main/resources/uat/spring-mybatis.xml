@@ -103,7 +103,7 @@
                 <ref bean="insertAssignStatisticForSystemSendJobTrigger"/>
                 <ref bean="insertAssignStatisticForArtificialSendJobTrigger"/>
                 <ref bean="autoAssignOrderJobTrigger"/>
-                <ref bean="autoAssignOrderForNigJobTrigger"/>
+               <!-- <ref bean="autoAssignOrderForNigJobTrigger"/>-->
                 <ref bean="autoAddCustomerClassTrigger"/>
                 <ref bean="userQuotaJobTrigger"/>
                 <ref bean="everyDayUserQuotaJobTrigger"/>
