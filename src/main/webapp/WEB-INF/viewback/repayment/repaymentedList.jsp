@@ -14,43 +14,27 @@
 			<table class="searchContent">
 				<tr>
 					<td>
+						用户手机:
+						<input type="text" name="userMobileLike" id="userMobileLike"
+							   value="${params.userMobileLike }" />
+					</td>
+					<td>
 						用户名称:    <%--175 29--%>
 						<input type="text" name="userAccountLike" id="userAccountLike"
 							   value="${params.userAccountLike }" />
 					</td>
-
 					<td>
 						还款时间:
 						<input type="text" name="repaymentedTimeStart" id="repaymentedTimeStart"
 							   class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly"
 							   value="${params.repaymentedTimeStart }" />
-					</td>
-					<td>
 						至
 						<input type="text" name="repaymentedTimeEnd" id="repaymentedTimeEnd"
 							   class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly"
 							   value="${params.repaymentedTimeEnd }" />
 					</td>
-					<td>
-						应还时间:
-						<input type="text" name="repaymentTimeStart" id="repaymentTimeStart"
-							   class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly"
-							   value="${params.repaymentTimeStart }" />
-					</td>
-					<td>
-						至
-						<input type="text" name="repaymentTimeEnd" id="repaymentTimeEnd"
-							   class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly"
-							   value="${params.repaymentTimeEnd }" />
-					</td>
-
 				</tr>
 				<tr>
-					<td>
-						用户手机:
-						<input type="text" name="userMobileLike" id="userMobileLike"
-							   value="${params.userMobileLike }" />
-					</td>
 					<td>
 						订单状态:
 						<select id="statuses" name="statuses">
@@ -65,13 +49,21 @@
 							</c:if>
 						</select>
 					</td>
-
 					<td>
 						借款金额:
 						<select id = "productAmount" name = "productAmount"></select>
 						<input type="hidden" value="${params.productAmount}" id="product_amount_choosed"/>
 					</td>
-
+					<td>
+						应还时间:
+						<input type="text" name="repaymentTimeStart" id="repaymentTimeStart"
+							   class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly"
+							   value="${params.repaymentTimeStart }" />
+						至
+						<input type="text" name="repaymentTimeEnd" id="repaymentTimeEnd"
+							   class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly"
+							   value="${params.repaymentTimeEnd }" />
+					</td>
 					<td>
 						<div class="buttonActive">
 							<div class="buttonContent">

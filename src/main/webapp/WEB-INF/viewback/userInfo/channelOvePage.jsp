@@ -53,7 +53,7 @@
                                 <span>回算统计</span> </a>
                         </li>--%>
 						<li class="">
-							<a id="a-l-c-r-btn"><span>刷新</span> </a>
+							<a id="c-o-p-r-btn"><span>刷新</span> </a>
 						</li>
 					</ul>
 				</div>
@@ -142,8 +142,8 @@
 	</div>
 </form>
 <script type="text/javascript">
-	$('#a-l-c-r-btn').click(function () {
-		var lastDo = localStorage.getItem('lastDoFreshenLoanCensusResult')
+	$('#c-o-p-r-btn').click(function () {
+		var lastDo = localStorage.getItem('lastDoFChannelOverPage')
 		if (lastDo) {
 			lastDo = parseInt(lastDo)
 			if (Date.now() - lastDo < 1000 * 60 * 60) {
@@ -154,9 +154,9 @@
 		}
 		$.ajax({
 			type : "post",
-			url : 'channel/freshchannelOveResult',
+			url : 'channel/getOveChannelCount',
 			success : function(ret) {
-				localStorage.setItem('lastDoFreshenLoanCensusResult', Date.now())
+				localStorage.setItem('lastDoFChannelOverPage', Date.now())
 				alertMsg && alertMsg.correct('操作成功，请一小时后再尝试刷新')
 				setTimeout(function () {
 					$('#pagerForm-alc').submit()
