@@ -182,7 +182,7 @@
                 <th align="center">
                     服务费率
                 </th>
-                <th align="center" width="52px">
+                <th align="center">
                     服务费
                 </th>
                 <th align="center">

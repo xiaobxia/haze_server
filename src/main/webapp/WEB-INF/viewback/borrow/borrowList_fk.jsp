@@ -120,7 +120,7 @@
 					<th align="center">借款金额</th>
 					<th align="center">天数</th>
 					<th align="center">服务费率</th>
-					<th align="center" width="52px">手续费</th>
+					<th align="center">手续费</th>
 					<th align="center">到账金额</th>
 					<th align="center">下单时间</th>
 
