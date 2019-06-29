@@ -112,7 +112,7 @@
                 <ref bean="overdueNoticeTodayJobTrigger"/>
                 <ref bean="afterLoanCensusJobTrigger"/>
                 <ref bean="BackLoanOveCensusJobTrigger"/>
-                <ref bean="channelOveCensusResultJobTrigger"></ref>
+                <ref bean="channelOveCensusResultJobTrigger"/>
             </list>
         </property>
     </bean>
