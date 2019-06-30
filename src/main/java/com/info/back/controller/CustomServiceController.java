@@ -40,6 +40,7 @@ import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -1447,6 +1448,25 @@ public class CustomServiceController extends BaseController {
    }
 
     /**
+     * 刷新客服统计
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping("freshKefuCensus")
+    @ResponseBody
+    public void freshKefuCensus(HttpServletResponse response) throws Exception{
+     Boolean bool = true;
+     try{
+         //调用客服统计定时任务
+         taskJob.kefuCensus();
+     }catch(Exception e){
+        bool = false;
+        log.error("客服派单统计定时任务出现错误"+e.getMessage());
+     }
+        SpringUtils.renderDwzResult(response, bool, bool ? "操作成功!" : "操作失败!", DwzResult.CALLBACK_RELOADPAGE);
+    }
+
+    /**
      * 指向回算时间框jsp
      * @return
      */
@@ -1473,4 +1493,20 @@ public class CustomServiceController extends BaseController {
         }
         SpringUtils.renderDwzResult(response, bool, bool ? "操作成功!" : "操作失败!", DwzResult.CALLBACK_CLOSECURRENT, params.get("parentId").toString());
    }
+
+   @RequestMapping("kefuCensus")
+   public String kefuCensus(HttpServletRequest request, Model model){
+         HashMap<String, Object> params = this.getParametersO(request);
+         String begintTime = (String) params.get("beginTime");
+         String endTime = (String) params.get("endTime");
+         String userName = (String) params.get("userName");
+         PageConfig<KefuCensus> pageConfig = borrowOrderService.kefuCensusList(params);
+         model.addAttribute("pm", pageConfig);
+         model.addAttribute("params", params);
+         model.addAttribute("beginTime",begintTime);
+         model.addAttribute("endTime",endTime);
+         model.addAttribute("userName",userName);
+         return "custom/kefuCensus";
+   }
+
 }

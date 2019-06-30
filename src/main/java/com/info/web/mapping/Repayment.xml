@@ -495,6 +495,9 @@ remark
         <if test="noPayStatus == 1">
             and re.status != '30' and re.status != '34'
         </if>
+        <if test="waitStatus == 1">
+            and re.status in (21,23)
+        </if>
         <if test="status != null and status != ''">
             and re.status = #{status}
         </if>
@@ -1290,7 +1293,7 @@ remark
         <if test="userPhone != null">
             and ui.user_phone = #{userPhone}
         </if>
-        order by ba.create_time DESC ,bo.status ASC
+        order by ar.repayment_time DESC ,bo.STATUS ASC
     </select>
     <select id ="findOrdersCount" resultType="integer" parameterType="hashmap">
       select count( ba.id) as count
@@ -1313,6 +1316,6 @@ remark
         <if test="customerType != null">
             AND ui.customer_type = #{customerType}
         </if>
-        order by ba.create_time DESC ,bo.status ASC
+        order by ar.repayment_time DESC ,bo.STATUS ASC
     </select>
 </mapper>

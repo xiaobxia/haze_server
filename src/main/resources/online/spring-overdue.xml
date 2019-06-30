@@ -496,4 +496,33 @@
             </map>
         </property>
     </bean>
+
+    <bean id="channelOveCensusResultJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="channelOveCensusResultBean"/>
+        <property name="cronExpression" value="0 0 0/2 * * ?"/>
+    </bean>
+    <bean id="channelOveCensusResultBean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.info.web.util.JobDetailBean"/>
+        <property name="durability" value="true"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="targetObject" value="taskJob"/>
+                <entry key="targetMethod" value="channelOveCensusResult"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="kefuCensusJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="kefuCensusBean"/>
+        <property name="cronExpression" value="0 0 0/2 * * ?"/>
+    </bean>
+    <bean id="kefuCensusBean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.info.web.util.JobDetailBean"/>
+        <property name="durability" value="true"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="targetObject" value="taskJob"/>
+                <entry key="targetMethod" value="kefuCensus"/>
+            </map>
+        </property>
+    </bean>
 </beans>

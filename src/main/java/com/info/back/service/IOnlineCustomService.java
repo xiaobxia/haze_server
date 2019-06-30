@@ -44,4 +44,5 @@ public interface IOnlineCustomService {
     List<Map<String,Object>> getCustomerClassForExcel(String [] idArray);
 
     String getLastClassDate();
+
 }

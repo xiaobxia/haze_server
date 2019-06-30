@@ -200,4 +200,6 @@ public interface ITaskJob {
 	void BackLoanOveCensus() throws Exception;
 
 	void channelOveCensusResult() throws Exception;
+
+	public void kefuCensus();
 }

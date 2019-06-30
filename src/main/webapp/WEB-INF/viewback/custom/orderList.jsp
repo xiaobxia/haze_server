@@ -132,12 +132,12 @@
 								</c:if>>全部
 							</option>
 							<option value="0"
-								<c:if test="${params.get('customerType') != null and params.get('customerType') != null}">
+								<c:if test="${params.get('customerType') != null and params.get('customerType') == 0}">
 									selected="selected"
 								</c:if>>新用户
 							</option>
 							<option value="1"
-							<c:if test="${params.get('customerType') != null and params.get('customerType') != null}">
+							<c:if test="${params.get('customerType') != null and params.get('customerType') == 1}">
 								selected="selected"
 							</c:if>>老用户
 						</option>
@@ -156,23 +156,38 @@
 									<c:if test="${params.get('status') != null and params.get('status') != null}">
 										selected="selected"
 									</c:if>
-							>全部</option>
+							>全部
+							</option>
 							</option>
 							<option value="21"
 									<c:if test="${params.get('status') != null and params.get('status') == 21}">
 										selected="selected"
 									</c:if>
-							>当日待还</option>
-							<option value="30"
-									<c:if test="${params.get('status') != null and params.get('status') == 30}">
+							>待还
+							</option>
+							<option value="-11"
+									<c:if test="${params.get('status') != null and params.get('status') == -11}">
 										selected="selected"
 									</c:if>
-							>已逾期</option>
+							>已逾期
+							</option>
 							<option value="34"
 									<c:if test="${params.get('status') != null and params.get('status') == 34}">
 										selected="selected"
 									</c:if>
 							>逾期还款</option>
+							<option value="30"
+									<c:if test="${params.get('status') != null and params.get('status') == 30}">
+										selected="selected"
+									</c:if>
+							>已还
+							</option>
+							<option value="23"
+									<c:if test="${params.get('status') != null and params.get('status') == 23}">
+										selected="selected"
+									</c:if>
+							>部分还款
+							</option>
 						</select>
 					</td>
 					<%--<td>
@@ -301,7 +316,7 @@
 				<tr target="sid_support" rel="${in.borrowAssignId}">
 					<td>
 						<c:choose>
-							<c:when test="${in.status == 34 || in.status == 23}">
+							<c:when test="${in.status == 34 || in.status == 30}">
 
 							</c:when>
 							<c:otherwise>
@@ -357,6 +372,12 @@
 						</c:if>
 						<c:if test="${in.status == 34}">
 							逾期还款
+						</c:if>
+						<c:if test="${in.status == 30}">
+							 已还款
+						</c:if>
+						<c:if test="${in.status == 23}">
+							部分还款
 						</c:if>
 						<%--<c:choose>
 							<c:when test="${in.status == 30}">

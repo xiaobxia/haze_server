@@ -86,6 +86,9 @@ public class RepaymentService implements IRepaymentService {
     @Autowired
     private OrderLogService orderLogService;
 
+    @Autowired
+    private IAssetKefuCensusDao assetKefuCensusDao;
+
     @Override
     public List<Repayment> findAll(HashMap<String, Object> params) {
         return null;
@@ -950,5 +953,10 @@ public class RepaymentService implements IRepaymentService {
 	@Override
 	public Integer findAssignType(Integer id) {
 		return repaymentDao.findAssignType(id);
+	}
+
+	@Override
+	public Integer findAssignExits(Integer repaymentId) {
+		return assetKefuCensusDao.findAssignExits(repaymentId);
 	}
 }
