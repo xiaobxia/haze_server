@@ -507,6 +507,10 @@ remark
                 ${item}
             </foreach>
         </if>
+        <if test="onlyAssign != null">
+            and bo.status in (-11,-20,23)
+            and DATE_FORMAT(re.repayment_time,'%Y-%m-%d') &lt;= DATE_FORMAT(now(),'%Y-%m-%d')
+        </if>
     </select>
     <select id="findUserPhoneName" resultType="map" parameterType="Integer" >
     select user_phone as userPhone,realname from user_info where id = #{userId}

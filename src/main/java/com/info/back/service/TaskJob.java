@@ -1335,12 +1335,40 @@ public class TaskJob implements ITaskJob {
 
 	}
 
-
+   @PostConstruct
+   public void assignOrderOnly(){
+	   log.info("派单开始仅此一次");
+		try{
+			Map<String, Object> params = new HashMap<>();
+			params.put("onlyAssign",1);
+			List<Repayment> repaymentList = repaymentService.findByRepaymentReport(params);
+			//查询客服
+			HashMap<String, Object> paramsRole = new HashMap<>();
+			paramsRole.put("roleName", "普通客服");
+			paramsRole.put("status",1);
+			List<BackUser> backUserList = backUserService.findKeFuList(paramsRole);
+			//然后将自动分单信息插入到 asset_borrow_assign
+			Integer len=backUserList.size();
+			int index=0;
+			if(repaymentList!=null && !repaymentList.isEmpty()){
+				for (Repayment repayment:repaymentList) {
+					if(index>=len){
+						index=0;
+					}
+					BackUser backUser =backUserList.get(index);
+					saveAssetBorrowAssign(backUser,repayment,0);
+					index++;
+				}
+			}
+			log.info("派单结束");
+		}catch(Exception e){
+		log.error("派单异常结束");
+	}
+   }
 	/**
 	 * 自动分派订单给所有客服
 	 */
 	@Override
-	@PostConstruct
 	public void autoAssignOrder(){
 		log.info("start autoAssignOrder job");
 		try{

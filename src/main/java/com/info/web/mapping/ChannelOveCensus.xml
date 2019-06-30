@@ -86,7 +86,7 @@
 			left join channel_info ci on oc.channel_id = ci.id
 			left join channel_super_info si on si.id = ci.channel_super_id
 			where 1=1
-			 <!-- and  oc.repay_time  != DATE_FORMAT(now(), '%Y-%m-%d')-->
+			 and  oc.repay_time  != DATE_FORMAT(now(), '%Y-%m-%d')
 			<if test="superChannelId != null">
               and si.id = #{superChannelId}
 			</if>
@@ -106,7 +106,7 @@
 		left join channel_info ci on oc.channel_id = ci.id
 		left join channel_super_info si on si.id = ci.channel_super_id
 		where 1=1
-		<!--and  oc.repay_time  != DATE_FORMAT(now(), '%Y-%m-%d')-->
+		and  oc.repay_time  != DATE_FORMAT(now(), '%Y-%m-%d')
 		<if test="superChannelId != null">
 			and si.id = #{superChannelId}
 		</if>
