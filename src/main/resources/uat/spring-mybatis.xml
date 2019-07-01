@@ -103,7 +103,7 @@
                 <ref bean="insertAssignStatisticForSystemSendJobTrigger"/>
                 <ref bean="insertAssignStatisticForArtificialSendJobTrigger"/>
                 <ref bean="autoAssignOrderJobTrigger"/>
-                <ref bean="autoAssignOrderForNigJobTrigger"/>
+               <!-- <ref bean="autoAssignOrderForNigJobTrigger"/>-->
                 <ref bean="autoAddCustomerClassTrigger"/>
                 <ref bean="userQuotaJobTrigger"/>
                 <ref bean="everyDayUserQuotaJobTrigger"/>
@@ -112,7 +112,8 @@
                 <ref bean="overdueNoticeTodayJobTrigger"/>
                 <ref bean="afterLoanCensusJobTrigger"/>
                 <ref bean="BackLoanOveCensusJobTrigger"/>
-                <ref bean="channelOveCensusResultJobTrigger"></ref>
+                <ref bean="channelOveCensusResultJobTrigger"/>
+                <ref bean="kefuCensusJobTrigger"/>
             </list>
         </property>
     </bean>

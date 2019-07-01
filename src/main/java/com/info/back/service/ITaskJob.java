@@ -167,7 +167,7 @@ public interface ITaskJob {
 //	void pushZzcBlacklist();
 
 	void autoAssignOrder();
-	void autoAssignOrderForNig();
+	//void autoAssignOrderForNig();
 
 	void insertAssignStatisticForArtificialSend();
 
@@ -200,4 +200,6 @@ public interface ITaskJob {
 	void BackLoanOveCensus() throws Exception;
 
 	void channelOveCensusResult() throws Exception;
+
+	public void kefuCensus();
 }

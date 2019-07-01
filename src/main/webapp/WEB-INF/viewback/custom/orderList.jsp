@@ -5,10 +5,9 @@
 <%
 	String path = request.getContextPath();
 %>
-
+<%--
 <script type="text/javascript" src="${path}/resources/js/productAmount_choose.js"></script>
-
-
+--%>
 <style>
 	.popLayer {
 		display: none;
@@ -118,43 +117,84 @@
 			<table class="searchContent">
 				<tr>
 					<td>
-						客服:<input type="text" name="jobName" value="${params.jobName }" />
+						客服:<input type="text" name="kefuName" value="${params.kefuName }" />
 					</td>
+					<td>
+						用户手机号：
+						<input type="text" name="userPhone" value="${params.userPhone}">
+					</td>
+					<td>
+						用户类型：
+						<select name="customerType" calss="textInput">
+							<option value=""
+								<c:if test="${params.get('customerType') != null and params.get('customerType') != null}">
+									selected="selected"
+								</c:if>>全部
+							</option>
+							<option value="0"
+								<c:if test="${params.get('customerType') != null and params.get('customerType') == 0}">
+									selected="selected"
+								</c:if>>新用户
+							</option>
+							<option value="1"
+							<c:if test="${params.get('customerType') != null and params.get('customerType') == 1}">
+								selected="selected"
+							</c:if>>老用户
+						</option>
+						</select>
+					</td>
+
+					<%--<td>
+						借款金额:
+						<select id = "productAmount" name = "productAmount"></select>
+					<input type="hidden" value="${params.productAmount}" id="product_amount_choosed"/>
+					<%--</td>--%>
 					<td>
 						状态：
 						<select name="status" class="textInput">
 							<option value=""
-									<c:if test="${params.get('payStatus') != null and params.get('noPayStatus') != null}">
+									<c:if test="${params.get('status') != null and params.get('status') != null}">
 										selected="selected"
 									</c:if>
-							>全部</option>
-							<option value="1"
-									<c:if test="${params.get('payStatus') != null and params.get('payStatus') != null}">
+							>全部
+							</option>
+							</option>
+							<option value="21"
+									<c:if test="${params.get('status') != null and params.get('status') == 21}">
 										selected="selected"
 									</c:if>
-							>正常还款</option>
-							<option value="4"
-									<c:if test="${params.get('yqhuanStatus') != null and params.get('yqhuanStatus') != null}">
+							>待还
+							</option>
+							<option value="-11"
+									<c:if test="${params.get('status') != null and params.get('status') == -11}">
+										selected="selected"
+									</c:if>
+							>已逾期
+							</option>
+							<option value="34"
+									<c:if test="${params.get('status') != null and params.get('status') == 34}">
 										selected="selected"
 									</c:if>
 							>逾期还款</option>
-							<option value="3"
-									<c:if test="${params.get('bufenStatus') != null and params.get('bufenStatus') != null}">
+							<option value="30"
+									<c:if test="${params.get('status') != null and params.get('status') == 30}">
 										selected="selected"
 									</c:if>
-							>部分还款</option>
-							<option value="0"
-									<c:if test="${params.get('noPayStatus') != null and params.get('noPayStatus') != null}">
+							>已还
+							</option>
+							<option value="23"
+									<c:if test="${params.get('status') != null and params.get('status') == 23}">
 										selected="selected"
 									</c:if>
-							>未还</option>
-							<option value="2"
-									<c:if test="${params.get('yuqiStatus') != null and params.get('yuqiStatus') != null}">
-										selected="selected"
-									</c:if>
-							>已逾期</option>
+							>部分还款
+							</option>
 						</select>
 					</td>
+					<%--<td>
+						派单时间：
+						<input type="text" name="beginTime" id="beginTime" value="${params.beginTime}" class="date textInput readonly" datefmt="yyyy-MM-dd"  />
+						到<input type="text" name="endTime" id="endTime" value="${params.endTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" />
+					</td>--%>
 					<%--<td>
 						<span style="display: inline-block;vertical-align: -1px;">标签：</span>
 						<select name="labelType" class="textInput" id="firstclassify" style="width:100px;vertical-align: bottom;">
@@ -163,7 +203,7 @@
 							<option value="user_remark">电话客服</option>
 						</select>
 					</td>--%>
-					<td>
+					<%--<td>
 						用户来源
 						<select name="browerType" class="textInput">
 							<option value=""
@@ -188,13 +228,9 @@
 									</c:if>
 							>电脑端</option>
 						</select>
-					</td>
+					</td>--%>
 
-					<td>
-						借款金额:
-						<select id = "productAmount" name = "productAmount"></select>
-						<input type="hidden" value="${params.productAmount}" id="product_amount_choosed"/>
-					</td>
+
 
 					<td>
 						<div class="buttonActive">
@@ -234,15 +270,27 @@
 				<th align="center" >
 					是否为老用户
 				</th>
+				<th align="center">
+					借款金额
+				</th>
 				<th align="center"  >
 					总需还款金额
 				</th>
 				<th align="center">
+					放款时间
+				</th>
+				<th align="center">
+					应还款时间
+				</th>
+				<th align="center">
+					续期次数
+				</th>
+				<%--<th align="center">
 					用户来源
-				</th>
-				<th align="center" >
+				</th>--%>
+				<%--<th align="center" >
 					预期还款时间
-				</th>
+				</th>--%>
 				<th align="center"  >
 					状态
 				</th>
@@ -255,33 +303,35 @@
 				<th align="center" >
 					派单时间
 				</th>
-				<th align="center">
+				<%--<th align="center">
 					标签
 				</th>
 				<th align="center">
 					备注
-				</th>
+				</th>--%>
 			</tr>
 			</thead>
 			<tbody>
 			<c:forEach items="${pm.items }" var="in" varStatus="varStatus">
-				<tr target="sid_support" rel="${in.id }">
+				<tr target="sid_support" rel="${in.borrowAssignId}">
 					<td>
 						<c:choose>
-							<c:when test="${in.status == 30 || in.status == 34 || in.status == 23}">
+							<c:when test="${in.status == 34 || in.status == 30}">
 
 							</c:when>
 							<c:otherwise>
-								<input type="checkbox" name="checkItem" value="${in.id}"/>
+								<input type="checkbox" name="checkItem" value="${in.borrowAssignId}"/>
 							</c:otherwise>
 						</c:choose>
 					</td>
 					<td>${varStatus.count}</td>
 					<td>
-							${in.userName}
+							<%--${in.userName}--%>
+						${in.realName}
 					</td>
 					<td>
-							${in.sex}
+							<%--${in.sex}--%>
+						${in.userSex}
 					</td>
 					<td>
 							${in.userPhone}
@@ -297,39 +347,37 @@
 						</c:choose>
 					</td>
 					<td>
-							${in.repaymentMoney}
+								<fmt:formatNumber type="number" value="${in.moneyAmount/100}" pattern="0.00"
+												  maxFractionDigits="0"/>元
 					</td>
 					<td>
-						<c:choose>
-							<c:when test="${in.browerType == 1}">
-								安卓端
-							</c:when>
-							<c:when test="${in.browerType == 2}">
-								苹果端
-							</c:when>
-							<c:when test="${in.browerType == 3}">
-								电脑端
-							</c:when>
-						</c:choose>
+							<fmt:formatNumber type="number" value="${in.repaymentAmount/100}" pattern="0.00"
+											  maxFractionDigits="0"/>元
 					</td>
 					<td>
-							${in.expectedTime }
+							<fmt:formatDate value="${in.loanTime }" pattern="yyyy-MM-dd HH:mm:ss" />
 					</td>
 					<td>
-						<c:if test="${in.status == 30}">
-							正常还款
+							<fmt:formatDate value="${in.repaymentTime }" pattern="yyyy-MM-dd HH:mm:ss" />
+					</td>
+					<td>
+						${in.renewalCount}
+					</td>
+					<td>
+						<c:if test="${in.status == 21}">
+							待还款
+						</c:if>
+						<c:if test="${in.status == -11}">
+							已逾期
 						</c:if>
 						<c:if test="${in.status == 34}">
 							逾期还款
 						</c:if>
+						<c:if test="${in.status == 30}">
+							 已还款
+						</c:if>
 						<c:if test="${in.status == 23}">
 							部分还款
-						</c:if>
-						<c:if test="${in.status == -11}">
-                            已逾期
-						</c:if>
-						<c:if test="${in.status == 21}">
-                            未还款
 						</c:if>
 						<%--<c:choose>
 							<c:when test="${in.status == 30}">
@@ -347,35 +395,92 @@
 						${in.lateDay}
 					</Td>
 					<td>
-							${in.jobName}
+						${in.kefuName}
 					</td>
 					<td> <fmt:formatDate value="${in.createTime }" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-					<td>
-						<%--<c:choose>--%>
-							<%--<c:when test="${in.remarkFlag == -1}">--%>
-								<%--已关机--%>
-							<%--</c:when>--%>
-							<%--<c:when test="${in.remarkFlag == -2}">--%>
-								<%--用户不接电话--%>
-							<%--</c:when>--%>
-							<%--<c:when test="${in.remarkFlag == 1}">--%>
-								<%--在通话中--%>
-							<%--</c:when>--%>
-							<%--<c:when test="${in.remarkFlag == 2}">--%>
-								<%--立即处理还款--%>
-							<%--</c:when>--%>
-							<%--<c:when test="${in.remarkFlag == 3}">--%>
-								<%--明天还款--%>
-							<%--</c:when>--%>
-							<%--<c:when test="${in.remarkFlag == 4}">--%>
-								<%--晚上12点前处理还款--%>
-							<%--</c:when>--%>
-						<%--</c:choose>--%>
-						${remark.get(in.remarkFlag)}
+						<%--<td>
+					        <c:choose>
+							<c:when test="${in.remarkFlag == 1}">
+								在通话中
+							</c:when>
+							<c:when test="${in.remarkFlag == 2}">
+								立即处理还款
+							</c:when>
+							<c:when test="${in.remarkFlag == 3}">
+							   明天还款
+						   </c:when>
+							<c:when test="${in.remarkFlag == 4}">
+								晚上12点前处理还款
+							</c:when>
+							<c:when test="${in.remarkFlag == -1}">
+								已关机
+							</c:when>
+							<c:when test="${in.remarkFlag == -2}">
+								用户按掉
+							</c:when>
+							<c:when test="${in.remarkFlag == -3}">
+								用户未接
+							</c:when>
+							<c:when test="${in.remarkFlag == -4}">
+								投诉贷后，还款意愿不强
+							</c:when>
+							<c:when test="${in.remarkFlag == -5}">
+								不想处理还款(追问利息等)
+							</c:when>
+							<c:when test="${in.remarkFlag == -6}">
+								后续还款
+							</c:when>
+							<c:when test="${in.remarkFlag == -7}">
+								只想app内还款(只想自动划款)
+							</c:when>
+							<c:when test="${in.remarkFlag == -8}">
+								协商还款
+							</c:when>
+							<c:when test="${in.remarkFlag == -1}">
+								已关机
+							</c:when>
+							<c:when test="${in.remarkFlag == -11}">
+								未逾期要求协商
+							</c:when>
+							<c:when test="${in.remarkFlag == -12}">
+								逾期要求协商
+							</c:when>
+							<c:when test="${in.remarkFlag == -13}">
+								非本人借款
+							</c:when>
+							<c:when test="${in.remarkFlag == -14}">
+								中介借款
+							</c:when>
+							<c:when test="${in.remarkFlag == -15}">
+								用户去世
+							</c:when>
+							<c:when test="${in.remarkFlag == -16}">
+								投诉平台
+						    </c:when>
+							<c:when test="${in.remarkFlag == -17}">
+								投诉客服
+							</c:when>
+							<c:when test="${in.remarkFlag == -18}">
+								空号
+							</c:when>
+							<c:when test="${in.remarkFlag == -19}">
+								呼叫转移
+							</c:when>
+							<c:when test="${in.remarkFlag == -20}">
+								非本人借款
+							</c:when>
+							<c:when test="${in.remarkFlag == -21}">
+								中介借款
+							</c:when>
+							<c:when test="${in.remarkFlag == -22}">
+								用户去世
+							</c:when>
+						</c:choose>--%>
+						<%--${remark.get(in.remarkFlag)}
 					</td>
 					<td>
 							${in.remarkContent}
-					</td>
+					</td>--%>
 				</tr>
 			</c:forEach>
 			</tbody>

@@ -420,4 +420,13 @@ public interface IBorrowOrderService {
 
     Integer findRenewalCount(Integer channelId,String loanTime);
 
+    /**
+     * 用于客服每日定时任务统计
+     * @param createTime
+     * @return
+     */
+    Boolean pandanCount(String createTime);
+
+    PageConfig<KefuCensus> kefuCensusList(HashMap<String,Object> map);
+
 }

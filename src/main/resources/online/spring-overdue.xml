@@ -46,7 +46,7 @@
         <property name="jobDetail" ref="withholdBean"/>
         <!-- 代扣设置为可配置，暂时先在这里设置为每小时一次，在方法内判断全局参数-->
         <!--<property name="cronExpression" value="0 0 13,18 * * ?"/>-->
-        <property name="cronExpression" value="0 0 0/1 * * ? "/>
+        <property name="cronExpression" value="0 0 0/1 * * ?"/>
  </bean>
 
  <bean id="reportRepayment12Bean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
@@ -493,6 +493,35 @@
             <map>
                 <entry key="targetObject" value="taskJob"/>
                 <entry key="targetMethod" value="BackLoanOveCensus"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="channelOveCensusResultJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="channelOveCensusResultBean"/>
+        <property name="cronExpression" value="0 0 0/2 * * ?"/>
+    </bean>
+    <bean id="channelOveCensusResultBean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.info.web.util.JobDetailBean"/>
+        <property name="durability" value="true"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="targetObject" value="taskJob"/>
+                <entry key="targetMethod" value="channelOveCensusResult"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="kefuCensusJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="kefuCensusBean"/>
+        <property name="cronExpression" value="0 0 0/2 * * ?"/>
+    </bean>
+    <bean id="kefuCensusBean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.info.web.util.JobDetailBean"/>
+        <property name="durability" value="true"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="targetObject" value="taskJob"/>
+                <entry key="targetMethod" value="kefuCensus"/>
             </map>
         </property>
     </bean>

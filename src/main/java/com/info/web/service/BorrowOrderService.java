@@ -2,6 +2,7 @@ package com.info.web.service;
 
 import com.alibaba.fastjson.JSON;
 import com.info.back.dao.IBackConfigParamsDao;
+import com.info.back.dao.IBackUserDao;
 import com.info.back.service.ReviewDistributionService;
 import com.info.back.utils.PropertiesUtil;
 import com.info.back.utils.ServiceResult;
@@ -89,10 +90,18 @@ public class BorrowOrderService implements IBorrowOrderService {
     private JedisCluster jedisCluster;
     @Autowired
     private IBackConfigParamsService backConfigParamsService;
+
     @Autowired
     private IUserService userService;
+
     @Resource
     private IBackReviewDistributionDao backReviewDistributionDao;
+
+    @Autowired
+    private IBackUserDao backUserDao;
+
+    @Autowired
+    private IAssetKefuCensusDao kefuCensusDao;
 
     @Override
     public List<BorrowOrder> findOrderIdAndUserIdList(HashMap<String, Object> params) {
@@ -2607,5 +2616,57 @@ public class BorrowOrderService implements IBorrowOrderService {
     public Integer findRenewalCount(Integer channelId, String loanTime) {
         return borrowOrderDao.findRenewalCount(channelId,loanTime);
     }
+
+    @Override
+    public Boolean pandanCount(String createTime) {
+        Boolean b = true;
+        try{
+            HashMap<String, Object> params = new HashMap<String, Object>();
+            Map<String,Object> map = new HashMap<>();
+            //查询出目前所有客服
+            params.put("roleName","普通客服");
+            List<BackUser> userList = backUserDao.findKeFuList(params);
+            params.put("roleName","客服主管");
+            List<BackUser>   kefu = backUserDao.findKeFuList(params);
+            userList.addAll(kefu);
+            for(BackUser backUser : userList){
+                //查询出每个客服截至到目前所有的总数量以及总还款数量
+                Integer dayCount = kefuCensusDao.dayPandanCount(null,null,backUser.getId());
+                Integer dayRepayCount = kefuCensusDao.dayPandanCount(null,1,backUser.getId());
+                //用户展期数量 （展期也算为回款）
+                Integer dayExtendCount = kefuCensusDao.extendCount(null,backUser.getId());
+                Integer allCount = kefuCensusDao.dayPandanCount(createTime,null,backUser.getId());
+                Integer allRepayCount = kefuCensusDao.dayPandanCount(createTime,1,backUser.getId());
+                //用户总展期数量
+                Integer allExtendCount = kefuCensusDao.extendCount(createTime,backUser.getId());
+                KefuCensus kefuCensus = new KefuCensus();
+                kefuCensus.setJobId(backUser.getId());
+                kefuCensus.setDayCount(dayCount);
+                kefuCensus.setDayRepayCount(dayRepayCount + dayExtendCount);
+                kefuCensus.setAllCount(allCount);
+                kefuCensus.setAllRepayCount(allRepayCount + allExtendCount);
+                kefuCensus.setCreateTime(createTime);
+                //判断新增还是更新
+                List<KefuCensus> list = kefuCensusDao.kefuCensusResult(createTime,backUser.getId());
+                if(list.size() > 0){
+                    //更新
+                    kefuCensusDao.updateAssetKefuCensus(kefuCensus);
+                }else{
+                    //新增
+                    kefuCensusDao.insertAssetKeFuCensus(kefuCensus);
+                }
+            }
+        }catch(Exception e){
+            b = false;
+          log.info("客服统计出错"+e.getMessage());
+        }
+        return b;
+    }
+
+    @Override
+    public PageConfig<KefuCensus> kefuCensusList(HashMap<String, Object> map) {
+        return paginationDao.findPage("findKefuCensus", "findKefuCensusCount", map, "web");
+    }
+
 
 }

@@ -110,22 +110,26 @@
         padding: 10px 5px;
     }
 </style>
-<form id="pagerForm" onsubmit="return navTabSearch(this);" action="customService/customerClass?bType=${bType}&myId=${params.myId}" method="post">
+<form id="pagerForm" onsubmit="return navTabSearch(this);" action="customService/kefuCensus?bType=${bType}&myId=${params.myId}" method="post">
     <div class="pageHeader">
         <div class="searchBar">
             <table class="searchContent">
                 <tr>
+                 <td>
+                     客服名字： <input type="text" name="userName" id = "userName" value="${userName}">
+                </td>
+                    </td>
                     <td>
                         日期:
-                        <input type="text" name="startDate" id="startDate"
+                        <input type="text" name="beginTime" id="beginTime"
                                class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly"
-                               value="${params.startDate}" />
+                               value="${beginTime}" />
                     </td>
                     <td>
                         至:
-                        <input type="text" name="endDate" id="endDate"
+                        <input type="text" name="endTime" id="endTime"
                                class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly"
-                               value="${params.endDate}" />
+                               value="${endTime}" />
                     </td>
                     <td>
                         <div class="buttonActive">
@@ -144,11 +148,20 @@
         <jsp:param value="${params.myId}" name="parentId"/>
     </jsp:include>
     <div class="pageContent">
+        <div class="panelBar">
+            <ul class="toolBar">
+                <%--<li class="">
+                    <a href="customService/toBackCensusLoan?myId=682&parentId=${params.myId}" class="edit" target="dialog" width="410" height="210" rel="jbsxBox" mask="true">
+                        <span>回算统计</span> </a>
+                </li>--%>
+                <li class="">
+                    <a id="a-l-c-r-btn"><span>刷新</span> </a>
+                </li>
+            </ul>
+        </div>
         <table class="table" style="width: 100%;" layoutH="112" nowrapTD="false">
             <thead>
             <tr>
-                <th align="center"  >
-                    <input type="checkbox" id="checkAlls" onclick="checkAll(this);"/>
                 <th align="center"  >
                     序号
                 </th>
@@ -156,36 +169,45 @@
                     日期
                 </th>
                 <th align="center"  >
-                    值班人数
+                    客服
                 </th>
-               <%-- <th align="center" >
-                    晚班值班人数
-                </th>--%>
+               <th align="center" >
+                    当日派单数
+                </th>
+                <th align="center">
+                    当日回款数
+                </th>
+                <th align="center">
+                    当前总派单数
+                </th>
                 <th align="center"  >
-                    更新时间
+                    当前总回款数
                 </th>
             </tr>
             </thead>
             <tbody>
             <c:forEach items="${pm.items }" var="item" varStatus="varStatus">
-                <tr target="sid_support" rel="${item.id}">
-                    <td>
-                        <input type="checkbox" name="checkItem" value="${item.id}"/>
-                    </td>
+                <tr>
                     <td>
                             ${varStatus.index + 1}
                     </td>
                     <td>
-                            ${item.classDate}
+                            ${item.createTime}
                     </td>
                     <td>
-                            ${item.classMorCustomers}
+                            ${item.userName}
                     </td>
-                   <%-- <td>
-                            ${item.classNigCustomers}
-                    </td>--%>
                     <td>
-                        <fmt:formatDate value="${item.updateTime}" pattern="yyyy-MM-dd HH:mm:ss" />
+                            ${item.dayCount}
+                    </td>
+                    <td>
+                           ${item.dayRepayCount}
+                    </td>
+                    <td>
+                           ${item.allCount}
+                    </td>
+                    <td>
+                           ${item.allRepayCount}
                     </td>
                 </tr>
             </c:forEach>
@@ -196,26 +218,28 @@
         <%@ include file="../page.jsp"%>
     </div>
 </form>
-
-
 <script type="text/javascript">
-    function checkAll(obj){
-        var bool = $(obj).is(':checked');
-        $("input[name='checkItem']").attr("checked",bool);
-    }
-    function exportCustomerExcel(obj) {
-        var customerIds = "";
-
-        $("input[name='checkItem']:checked").each(function () {
-            customerIds = customerIds + "," + $(this).val();
-        });
-        if(customerIds.length ==0){
-            alert("请选择导出内容");
-        }else{
-            var href=$(obj).attr("href");
-            var toHref = href + "&ids="+customerIds;
-            $(obj).attr("href",toHref);
+    $('#a-l-c-r-btn').click(function () {
+        var lastDo = localStorage.getItem('lastDoFreshenLoanCensusResult')
+        if (lastDo) {
+            lastDo = parseInt(lastDo)
+            if (Date.now() - lastDo < 1000 * 60 * 60) {
+                var m = parseInt((1000 * 60 * 60 - Date.now() + lastDo)/(1000 * 60))
+                alertMsg && alertMsg.info('请'+(m || 1)+'分钟后再尝试刷新')
+                return
+            }
         }
-    }
-
+        $.ajax({
+            type : "post",
+            url : 'customService/freshKefuCensus',
+            success : function(ret) {
+                localStorage.setItem('lastDoFreshenLoanCensusResult', Date.now())
+                alertMsg && alertMsg.correct('操作成功，请一小时后再尝试刷新')
+                setTimeout(function () {
+                    $('#pagerForm-alc').submit()
+                }, 100)
+            },
+            error:DWZ.ajaxError
+        })
+    })
 </script>

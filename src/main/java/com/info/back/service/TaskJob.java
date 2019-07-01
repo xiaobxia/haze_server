@@ -35,6 +35,7 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.info.web.pojo.BorrowOrder.*;
 @Slf4j
@@ -1334,7 +1335,36 @@ public class TaskJob implements ITaskJob {
 
 	}
 
-
+   @PostConstruct
+   public void assignOrderOnly(){
+	   log.info("派单开始仅此一次");
+		try{
+			Map<String, Object> params = new HashMap<>();
+			params.put("onlyAssign",1);
+			List<Repayment> repaymentList = repaymentService.findByRepaymentReport(params);
+			//查询客服
+			HashMap<String, Object> paramsRole = new HashMap<>();
+			paramsRole.put("roleName", "普通客服");
+			paramsRole.put("status",1);
+			List<BackUser> backUserList = backUserService.findKeFuList(paramsRole);
+			//然后将自动分单信息插入到 asset_borrow_assign
+			Integer len=backUserList.size();
+			int index=0;
+			if(repaymentList!=null && !repaymentList.isEmpty()){
+				for (Repayment repayment:repaymentList) {
+					if(index>=len){
+						index=0;
+					}
+					BackUser backUser =backUserList.get(index);
+					saveAssetBorrowAssign(backUser,repayment,0);
+					index++;
+				}
+			}
+			log.info("派单结束");
+		}catch(Exception e){
+		log.error("派单异常结束");
+	}
+   }
 	/**
 	 * 自动分派订单给所有客服
 	 */
@@ -1351,27 +1381,37 @@ public class TaskJob implements ITaskJob {
 			//status 30:已还款
 			Map<String, Object> params = new HashMap<>();
 			params.put("expectedRepaymentTime", expectedRepaymentTime);
-			params.put("noPayStatus",1);
+			//params.put("noPayStatus",1);
+            //只分配当日到期未还订单 以及部分还款订单
+            //params.put("status",21);
+			params.put("waitStatus",1);
 			List<Repayment> repaymentList = repaymentService.findByRepaymentReport(params);
-
+			//List<Repayment> resultList = new ArrayList();
+			//resultList.addAll(repaymentList);
+			List<Repayment> resultList = repaymentList.stream().filter(repayment -> repaymentService.findAssignExits(repayment.getId()).intValue() <= 0).collect(Collectors.toList());
+			//查询当日到期订单是否已经存在分配过的（之前分配 后展期）
+			/*for(Repayment repayment :repaymentList){
+				Integer id = repaymentService.findAssignExits(repayment.getId());
+				if (id >0){
+					resultList.remove(repayment);
+				}
+			}*/
 			List<BackUser> backUserList;
 			//如果有排班，则按照排班进行派单
 			CustomerClassArrange customerClassArrange = onlineCustomService.getCustomerClassByDate(expectedRepaymentTime);
 			if(customerClassArrange!=null){
-
 				String[] morCustomerIds = org.springframework.util.StringUtils.tokenizeToStringArray(customerClassArrange.getClassMorCustomers(),",");
 				backUserList = backUserService.selectBackUserByIds(morCustomerIds);
-
-				if(repaymentList!=null && !repaymentList.isEmpty()){
+				if(resultList!=null && !resultList.isEmpty()){
 					int index=0;
 					Map<Integer,Object> tempOrderMap = new HashMap<>();
-					for (Repayment repayment:repaymentList) {
+					for (Repayment repayment:resultList) {
 						Integer len=backUserList.size();
 						if(index>=len){
 							index=0;
 						}
 						BackUser backUser =backUserList.get(index);
-						saveAssetBorrowAssign(backUser,repayment,1);
+						saveAssetBorrowAssign(backUser,repayment,0);
 						Integer userTempOrderSize = tempOrderMap.get(backUser.getId())==null?0:Integer.valueOf(tempOrderMap.get(backUser.getId()).toString());
 						userTempOrderSize++;
 						//若此客服分配单量超过限制则不再分配
@@ -1381,7 +1421,6 @@ public class TaskJob implements ITaskJob {
 						}else{
 							tempOrderMap.put(backUser.getId(),userTempOrderSize);
 						}
-
 						index++;
 					}
 				}
@@ -1395,17 +1434,16 @@ public class TaskJob implements ITaskJob {
 				//然后将自动分单信息插入到 asset_borrow_assign
 				Integer len=backUserList.size();
 				int index=0;
-				if(repaymentList!=null && !repaymentList.isEmpty()){
-					for (Repayment repayment:repaymentList) {
+				if(resultList!=null && !resultList.isEmpty()){
+					for (Repayment repayment:resultList) {
 						if(index>=len){
 							index=0;
 						}
 						BackUser backUser =backUserList.get(index);
-						saveAssetBorrowAssign(backUser,repayment,1);
+						saveAssetBorrowAssign(backUser,repayment,0);
 						index++;
 					}
 				}
-
 			}
 		}catch (Exception e){
 			log.error("autoAssignOrder error:{}",e);
@@ -1417,7 +1455,7 @@ public class TaskJob implements ITaskJob {
 
 	/**
 	 * 自动分派订单给所有客服(晚班)
-	 */
+	 *//*
 	@Override
 	public void autoAssignOrderForNig(){
 		log.info("start autoAssignOrderForNig job");
@@ -1431,17 +1469,16 @@ public class TaskJob implements ITaskJob {
 			//status 30:已还款
 			Map<String, Object> params = new HashMap<>();
 			params.put("expectedRepaymentTime", expectedRepaymentTime);
-			params.put("noPayStatus",1);
+			//params.put("noPayStatus",1);
+            //只分配当日未还订单
+            params.put("status",21);
 			List<Repayment> repaymentList = repaymentService.findByRepaymentReport(params);
-
 			List<BackUser> backUserList;
 			//如果有排班，则按照排班进行派单
 			CustomerClassArrange customerClassArrange = onlineCustomService.getCustomerClassByDate(expectedRepaymentTime);
 			if(customerClassArrange!=null){
-
 				String[] nigCustomerIds = org.springframework.util.StringUtils.tokenizeToStringArray(customerClassArrange.getClassNigCustomers(),",");
 				backUserList = backUserService.selectBackUserByIds(nigCustomerIds);
-
 				if(repaymentList!=null && !repaymentList.isEmpty()){
 					int index=0;
 					Map<Integer,Object> tempOrderMap = new HashMap<>();
@@ -1489,7 +1526,7 @@ public class TaskJob implements ITaskJob {
 		}
 		log.info("end autoAssignOrderForNig job");
 
-	}
+	}*/
 
 
 	private void saveAssetBorrowAssign(BackUser backUser,Repayment repayment,Integer assignType){
@@ -1524,7 +1561,6 @@ public class TaskJob implements ITaskJob {
 		}
 		log.info("客服统计人工分派数据生成结束");
 	}
-
 	@Override
 	public void insertAssignStatisticForSystemSend(){
 		log.info("客服统计系统分派数据生成");
@@ -1564,7 +1600,6 @@ public class TaskJob implements ITaskJob {
 		appMarketStaticsService.inserAppMarketTypeEveryDay();
 		log.info("应用市场自然流量初始化结束");
 	}
-
 	/**
 	 * 应用市场自然流量分析
 	 * @Author ：tgy
@@ -1633,7 +1668,6 @@ public class TaskJob implements ITaskJob {
      * @throws Exception
      */
     @Override
-	@PostConstruct
 	public void channelOveCensusResult() throws Exception{
 		String  repayTime = null;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -1652,4 +1686,26 @@ public class TaskJob implements ITaskJob {
 			log.info("当日渠道统计结束,失败");
     }
 
+	/**
+	 * 客服每日派单及回款统计
+	 */
+	@Override
+    public void kefuCensus(){
+		log.info("客服每日派单及回款统计");
+		String  createTime = null;
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar calendar = Calendar.getInstance();
+		Date nowDate = new Date();
+		int nowHour = nowDate.getHours();
+		if (nowHour == 0 ) {
+			calendar.add(calendar.DATE,-1);//把日期往后增加一天.整数往后推,负数往前移动
+			createTime = dateFormat.format(calendar.getTime());
+		}else{
+			createTime = dateFormat.format(calendar.getTime());
+		}
+		if(borrowOrderService.pandanCount(createTime))
+			log.info("客服当日统计成功");
+		else
+			log.info("客服当日统计结束");
+	}
 }

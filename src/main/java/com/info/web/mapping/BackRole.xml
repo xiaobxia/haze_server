@@ -137,6 +137,18 @@
 	<select id ="findRoleByUserId" resultType="integer" parameterType="integer">
 		SELECT count(id) FROM  back_user_role where user_id = #{id}
 	</select>
+	<!--查询该用户是否含有客服主管角色-->
+    <select id ="findRoleKfM" resultType="integer" parameterType="integer">
+		SELECT
+			count( u.id )
+		FROM
+			back_user u
+			LEFT JOIN back_user_role ur ON ur.user_id = u.id
+			LEFT JOIN back_role r ON r.id = ur.role_id
+		WHERE
+			r.role_name = '客服主管'
+			AND u.id = #{userId}
+	</select>
 	<!--&lt;!&ndash; 客服与普通客服不应该显示主页数据查询 1 / 0 &ndash;&gt;-->
 	<!--<select id="catchCustomerManager" parameterType="long" resultType="Integer">-->
 		<!--SELECT-->

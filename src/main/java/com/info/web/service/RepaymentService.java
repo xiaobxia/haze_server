@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.aliyun.openservices.shade.io.netty.handler.codec.haproxy.HAProxyCommand;
 import com.info.back.dao.IBackDictionaryDao;
 import com.info.back.utils.PropertiesUtil;
 import com.info.back.utils.SysCacheUtils;
@@ -84,6 +85,9 @@ public class RepaymentService implements IRepaymentService {
 
     @Autowired
     private OrderLogService orderLogService;
+
+    @Autowired
+    private IAssetKefuCensusDao assetKefuCensusDao;
 
     @Override
     public List<Repayment> findAll(HashMap<String, Object> params) {
@@ -934,5 +938,25 @@ public class RepaymentService implements IRepaymentService {
 	@Override
 	public Integer selectAssetBorrowAssign(Integer id) {
 		return repaymentDao.selectAssetBorrowAssign(id);
+	}
+
+	/**
+	 * 客服管理中的订单列表 查询当日待还以及逾期未还 和逾期已还列表
+	 * @return
+	 */
+	@Override
+	public PageConfig<CustomerOrder> findOrders(HashMap<String,Object> params) {
+		params.put(Constant.NAME_SPACE,"Repayment");
+		return paginationDao.findPage("findOrders", "findOrdersCount",(HashMap)params , "web");
+	}
+
+	@Override
+	public Integer findAssignType(Integer id) {
+		return repaymentDao.findAssignType(id);
+	}
+
+	@Override
+	public Integer findAssignExits(Integer repaymentId) {
+		return assetKefuCensusDao.findAssignExits(repaymentId);
 	}
 }

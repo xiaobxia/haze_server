@@ -11,7 +11,9 @@
     <select id="findDictionary" resultMap="dictionary" parameterType="java.lang.String">
         select data_value,data_name,dict_name from back_dictionary where dict_value = #{dictionary} and is_used = 1
     </select>
-    
+    <select id="findAllLabelType" resultMap="dictionary" >
+         select data_value,data_name,dict_name from back_dictionary where dict_value in ('user_remark','user_remark_online') and is_used = 1
+    </select>
     <select id="findLabelType" resultMap="dictionary" parameterType="java.lang.String">
       select distinct(dict_name) from back_dictionary where dict_value = #{dictionary} and is_used = 1
     </select>

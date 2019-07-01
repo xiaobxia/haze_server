@@ -2,6 +2,7 @@ package com.info.web.service;
 
 import com.info.web.pojo.*;
 import com.info.web.util.PageConfig;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.HashMap;
 import java.util.List;
@@ -244,7 +245,13 @@ public interface IRepaymentService {
 
 	Integer selectAssetBorrowAssign(Integer id);
 
+   //客服管理中订单列表
+	PageConfig<CustomerOrder> findOrders(HashMap<String,Object> hashMap);
 
+	Integer findAssignType(Integer id );
+
+	//查询是否存在已经派过的单子
+	Integer findAssignExits(Integer repaymentId);
 }
 
 

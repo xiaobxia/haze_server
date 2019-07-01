@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.web.dao.IAssetKefuCensusDao">
+	<resultMap id="BaseResultMap" type="com.info.web.pojo.KefuCensus">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="job_id" property="jobId" jdbcType="INTEGER" />
+		<result column="day_count" property="dayCount" jdbcType="INTEGER" />
+		<result column="day_repay_count" property="dayRepayCount" jdbcType="INTEGER" />
+		<result column="all_count" property="allCount" jdbcType="INTEGER" />
+		<result column="all_repay_count" property="allRepayCount" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id = "kefuCensusResult" resultMap="BaseResultMap" >
+     select
+      id as id ,
+      job_id as jobId,
+      day_count as dayCount,
+      day_repay_count as dayRepayCount,
+      all_count as allCount,
+      all_repay_count as allRepayCount,
+      create_time as createTime
+      from asset_kefu_census
+      where 1=1
+      <if test="createTime != null">
+       and DATE_FORMAT(create_time, '%Y%m%d') &gt;= DATE_FORMAT(#{createTime}, '%Y%m%d')
+	  </if>
+	  <if test="jobId != null">
+	   and job_id = #{jobId}
+	  </if>
+	</select>
+	<update id = "updateAssetKefuCensus">
+		update asset_kefu_census
+		<set>
+		<if test = "jobId != null">
+			job_id = #{jobId},
+		</if>
+		<if test = "dayCount != null">
+		    day_count = #{dayCount},
+		</if>
+		<if test="dayRepayCount != null">
+			day_repay_count = #{dayRepayCount},
+		</if>
+		<if test="allCount != null">
+			all_count = #{allCount},
+		</if>
+		<if test="allRepayCount != null">
+			all_repay_count = #{allRepayCount},
+		</if>
+		<if test="createTime != null">
+			create_time = #{createTime},
+		</if>
+		</set>
+		where
+		create_time = #{createTime}
+		and job_id = #{jobId}
+	</update>
+	<insert id="insertAssetKeFuCensus">
+     insert into asset_kefu_census
+     (
+      job_id,
+	  day_count,
+	  day_repay_count,
+	  all_count,
+	  all_repay_count,
+	  create_time
+     ) values (
+      #{jobId},
+      #{dayCount},
+      #{dayRepayCount},
+      #{allCount},
+      #{allRepayCount},
+      #{createTime}
+     )
+	</insert>
+	<select id ="findKefuCensus" resultType="hashmap" parameterType="hashmap">
+     select
+		kc.id as id,
+		kc.job_id as jobId,
+		bu.user_name as userName,
+		kc.all_count as allCount,
+		kc.all_repay_count as allRepayCount,
+		kc.day_count as dayCount,
+		kc.day_repay_count as dayRepayCount,
+		kc.create_time as createTime
+     from  asset_kefu_census kc
+     left join back_user bu on bu.id = kc.job_id
+     where 1=1
+     <if test="beginTime !=null and endTime != null">
+		 and  DATE_FORMAT(kc.create_time, '%Y%m%d') &gt;= DATE_FORMAT(#{beginTime}, '%Y%m%d')
+		 and  DATE_FORMAT(kc.create_time, '%Y%m%d') &lt;= DATE_FORMAT(#{endTime}, '%Y%m%d')
+	 </if>
+	 <if test="userName != null">
+		 and bu.user_name = #{userName}
+	 </if>
+	</select>
+	<select id="findKefuCensusCount" resultType = "integer" parameterType="hashmap">
+		SELECT
+		count( kc.id ) AS count
+		FROM
+		asset_kefu_census kc
+		LEFT JOIN back_user bu ON bu.id = kc.job_id
+		WHERE
+		1 =1
+		<if test="beginTime !=null and endTime != null">
+			and  DATE_FORMAT(kc.create_time, '%Y%m%d') &gt;= DATE_FORMAT(#{beginTime}, '%Y%m%d')
+			and  DATE_FORMAT(kc.create_time, '%Y%m%d') &lt;= DATE_FORMAT(#{endTime}, '%Y%m%d')
+		</if>
+		<if test="userName != null">
+			and bu.user_name = #{userName}
+		</if>
+	</select>
+	<select id ="dayPandanCount" resultType="integer">
+	SELECT
+	count( DISTINCT ( ba.borrow_order_id ) ) AS dayCount
+	FROM
+	asset_borrow_assign ba
+	LEFT JOIN asset_borrow_order bo ON bo.id = ba.borrow_order_id
+	WHERE ba.del_flg= 0
+	<if test="createTime != null">
+		and  DATE_FORMAT( ba.create_time, '%Y%m%d') &lt;= DATE_FORMAT(now(), '%Y%m%d')
+	</if>
+	<if test="createTime == null">
+		and  DATE_FORMAT( ba.create_time, '%Y%m%d') = DATE_FORMAT(now(), '%Y%m%d')
+	</if>
+	<if test=" status != null">
+		AND bo.STATUS in (30,34)
+	</if>
+	<if test="jobId != null">
+		AND ba.job_id = #{jobId}
+	</if>
+	</select>
+	<select id ="extendCount" resultType="integer">
+		SELECT
+			count( DISTINCT ( ba.borrow_order_id ) ) AS dayCount
+		FROM
+			asset_borrow_assign ba
+			LEFT JOIN asset_borrow_order bo ON bo.id = ba.borrow_order_id
+			LEFT JOIN asset_repayment ar ON bo.id = ar.asset_order_id
+			LEFT JOIN asset_renewal_record rr ON rr.asset_repayment_id = ar.id
+		WHERE
+			ba.del_flg = 0
+			and ar.status = 1
+		<if test="jobId != null">
+			AND ba.job_id = #{jobId}
+		</if>
+		<if test="createTime != null">
+			and  DATE_FORMAT( ba.create_time, '%Y%m%d') &lt;= DATE_FORMAT(now(), '%Y%m%d') and ar.old_repayment_time &lt;= now();
+		</if>
+		<if test="createTime == null">
+			and  DATE_FORMAT( ba.create_time, '%Y%m%d') = DATE_FORMAT(now(), '%Y%m%d') and ar.old_repayment_time = now();
+		</if>
+
+	</select>
+
+	<select id ="findAssignExits" resultType="integer">
+		SELECT
+			ifNULL(count(ba.id),0)
+		FROM
+			asset_borrow_assign ba
+			LEFT JOIN asset_borrow_order bo ON ba.borrow_order_id = bo.id
+			LEFT JOIN asset_repayment ar ON ar.asset_order_id = bo.id
+		WHERE
+			ba.del_flg = 0
+			AND ar.id = #{repaymentId}
+	</select>
+</mapper>

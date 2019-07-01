@@ -79,6 +79,11 @@ public interface IRepaymentDao {
 	List<AssetBorrowAssign> findAssetBorrowAssignByCreateTime(Map<String, Object> hashMap);
 
 	/**
+	 * 查找
+	 * @return
+	 */
+    Integer findAssignType(Integer id );
+	/**
 	 * 插入AssetBorrowAssign
 	 * @param assetBorrowAssign
 	 * @return
