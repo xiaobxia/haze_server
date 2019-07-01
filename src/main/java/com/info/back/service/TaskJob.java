@@ -1335,7 +1335,7 @@ public class TaskJob implements ITaskJob {
 
 	}
 
-   @PostConstruct
+  /* @PostConstruct
    public void assignOrderOnly(){
 	   log.info("派单开始仅此一次");
 		try{
@@ -1364,7 +1364,7 @@ public class TaskJob implements ITaskJob {
 		}catch(Exception e){
 		log.error("派单异常结束");
 	}
-   }
+   }*/
 	/**
 	 * 自动分派订单给所有客服
 	 */
