@@ -57,9 +57,6 @@
 					序列
 				</th>
 				<th align="center" >
-					渠道商
-				</th>
-				<th align="center" >
 					渠道名称
 				</th>
 				<th align="center"  >
@@ -169,16 +166,6 @@
 				<tr target="id" rel="${channel.id }">
 					<td>
 							${status.index+1}
-					</td>
-					<td>
-						<c:choose>
-							<c:when test="${channel.channelSuperName != null}">
-								${channel.channelSuperName}
-							</c:when>
-							<c:otherwise>
-								自然流量
-							</c:otherwise>
-						</c:choose>
 					</td>
 					<td>
 						<c:choose>
@@ -392,22 +379,6 @@
 								</c:if>
 							</c:otherwise>
 						</c:choose>
-					</td>
-					<td>
-						<!--续借率=当日复借数/当日回全款数-->
-						<%--<c:if test="${channel.xujieCount gt 0 and channel.allRepayCount gt 0}">
-							<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.xujieCount / channel.allRepayCount}" />
-						</c:if>
-						<c:if test="${channel.xujieCount  eq 0 or channel.allRepayCount eq 0}">
-							0.00%
-						</c:if>--%>
-						<!--续借率=当日复借放款数/当日回全款数  当日复借放款数 = 当日放款数-当日新用户放款数-->
-						<c:if test="${channel.borrowSucCount  gt 0 and channel.allRepayCount gt 0}">
-							<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${(channel.borrowSucCount - channel.loanCount) / channel.allRepayCount}" />
-						</c:if>
-						<c:if test="${channel.borrowSucCount  eq 0 or channel.allRepayCount eq 0}">
-							0.00%
-						</c:if>
 					</td>
 					<td>
 						<c:choose>
