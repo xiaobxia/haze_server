@@ -93,7 +93,6 @@
 				<th align="center" >
 					申请成功率/总
 				</th>
-				<th align="center">续借率</th>
 				<th align="center">放款笔数/总</th>
 				<th align="center">放款率/总</th>
 				<%--<th align="center" >--%>
