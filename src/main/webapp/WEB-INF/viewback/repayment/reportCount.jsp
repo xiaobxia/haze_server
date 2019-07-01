@@ -41,7 +41,7 @@
 		<jsp:include page="${BACK_URL}/rightSubList">
 			<jsp:param value="${params.myId}" name="parentId"/>
 		</jsp:include>
-		<table class="table" layoutH="160" nowrapTD="false" ifScrollTable="true">
+		<table class="table" layoutH="160" nowrapTD="false">
 			<thead>
 			<tr>
 				<th align="center"  >
@@ -52,9 +52,6 @@
 				</th>
 				<th align="center" >
 					还款率
-				</th>
-				<th align="center"  >
-					7天期限逾期率
 				</th>
 				<th align="center" style="display: none">
 					14天期限逾期率
@@ -84,9 +81,6 @@
 					</td>
 					<td>
 						<fmt:formatNumber pattern='###,###,##0.00' value="${report.repayRate / 100.00}"/>%
-					</td>
-					<td>
-						<fmt:formatNumber pattern='###,###,##0.00' value="${report.overdueRateSeven / 100.00}"/>%
 					</td>
 					<td style="display: none">
 						<fmt:formatNumber pattern='###,###,##0.00' value="${report.overdueRateFourteen / 100.00}"/>%

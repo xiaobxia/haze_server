@@ -51,7 +51,7 @@
 		<jsp:include page="${BACK_URL}/rightSubList">
 			<jsp:param value="${params.myId}" name="parentId"/>
 		</jsp:include>
-		<table class="table" layoutH="160" nowrapTD="false" ifScrollTable="true">
+		<table class="table" layoutH="160" nowrapTD="false">
 			<thead>
 				<tr>
 					<th align="center"  >
@@ -86,21 +86,6 @@
 					</th>
 					<th align="center" >
 						运营商认证率
-					</th>
-					<th align="center" >
-						淘宝认证人数
-					</th>
-					<th align="center" >
-						淘宝认证率
-					</th>
-					<%--<th align="center" >--%>
-						<%--工作信息--%>
-					<%--</th>--%>
-					<th align="center" >
-						黑名单人数
-					</th>
-					<th align="center" >
-						黑名单率
 					</th>
 					<th align="center" >
 						申请借款人数
@@ -184,31 +169,6 @@
 								<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.jxlCount / channel.registerCount}" />
 							</c:if>
 							<c:if test="${channel.jxlCount  eq 0}">
-								0.00
-							</c:if>
-						</td>
-						<td>
-							${channel.zhimaCount}
-						</td>
-						<td>
-							<c:if test="${channel.zhimaCount gt 0}">
-								<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.zhimaCount / channel.registerCount}" />
-							</c:if>
-							<c:if test="${channel.zhimaCount  eq 0}">
-								0.00
-							</c:if>
-						</td>
-						<%--<td>--%>
-							<%--${channel.companyCount}--%>
-						<%--</td>--%>
-						<td>
-							${channel.blackUserCount}
-						</td>
-						<td>
-							<c:if test="${channel.blackUserCount gt 0}">
-								<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.blackUserCount / channel.registerCount}" />
-							</c:if>
-							<c:if test="${channel.blackUserCount  eq 0}">
 								0.00
 							</c:if>
 						</td>

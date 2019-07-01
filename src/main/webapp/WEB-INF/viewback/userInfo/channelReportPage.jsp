@@ -50,7 +50,7 @@
 		<jsp:include page="${BACK_URL}/rightSubList">
 			<jsp:param value="${params.myId}" name="parentId"/>
 		</jsp:include>
-		<table class="table" layoutH="160" nowrapTD="false" ifScrollTable="true">
+		<table class="table" layoutH="160" nowrapTD="false">
 			<thead>
 			<tr>
 				<th align="center"  >
@@ -65,10 +65,6 @@
 				<th align="center"  >
 					日期
 				</th>
-				<th align="center">
-					注册量
-				</th>
-
 				<th align="center" >
 					实名率/总
 				</th>
@@ -134,6 +130,9 @@
 				<th>
 					qq/微信占比
 				</th>
+				<th align="center">
+					注册量
+				</th>
 				<%--<th>
 					微信占比
 				</th>--%>
@@ -193,9 +192,6 @@
 					</td>
 					<td>
 						<fmt:formatDate value="${channel.reportDate}" pattern="yyyy-MM-dd"/>
-					</td>
-					<td>
-							${channel.registerCount}【android:${channel.androidCount}，ios:${channel.iosCount}】
 					</td>
 					<td>
 						<c:choose>
@@ -517,6 +513,9 @@
 					</td>--%>
 					<td>
 						${channel.qqRate} / ${channel.wechatRate}
+					</td>
+					<td>
+							${channel.registerCount}【android:${channel.androidCount}，ios:${channel.iosCount}】
 					</td>
 					<%--<td>
 						${channel.wechatRate}
