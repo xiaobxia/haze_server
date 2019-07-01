@@ -5,6 +5,7 @@ import com.info.back.utils.PropertiesUtil;
 import com.info.web.pojo.*;
 import com.info.web.service.*;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
 import redis.clients.jedis.JedisCluster;
@@ -74,11 +75,20 @@ public class WithholdThread extends Thread{
             if(dateFormat.format(re.getRepaymentTime()).equals(repaymentTime) && re.getStatus().equals(BorrowOrder.STATUS_HKZ)) {
                 User user = userService.searchByUserid(re.getUserId());
                 Map<String, String> card = repaymentService.findCardNo(re.getUserId());
+                if (card == null) {
+                    logger.info("自动代扣绑定卡问题 =:{}",repaymentId);
+                    return;
+                }
                 String cardNo = card.get("cardNo");
 
                 String api_url = PropertiesUtil.get("APP_HOST_API")+ "/"+PropertiesUtil.get("AUTO_WITHDRAW_CHANNEL")+"/auto-withhold?id=" + re.getId();
+                logger.info("自动扣款URL ==:{} ", api_url);
                 String resultStr = HttpUtil.getHttpMess(api_url,"","POST","UTF-8");
 
+                if (StringUtils.isBlank(resultStr)) {
+                    logger.info("自动扣款结果为空 =:{}", repaymentId);
+                    return;
+                }
                 JSONObject jsonObject = JSONObject.parseObject(resultStr);
 
 //                ServiceResult result = repaymentService.withhold(re, user, Repayment.TASK_WITHHOLD);
