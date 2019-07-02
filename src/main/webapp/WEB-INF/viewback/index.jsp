@@ -316,6 +316,7 @@
 			display: none !important;
 		}
         .user-img {
+			display: none;
             position: absolute;
             right: 150px;
             height: 40px;
