@@ -22,7 +22,7 @@ body {
 	margin: 0;
 	padding: 0;
 	font-size: 12px;
-	background:#070f29 url(<%=path %>/common/back/images/bg.jpg) top center no-repeat;
+	background:#070f29 url(<%=path %>/common/back/images/bg.png) top center no-repeat;
 	color:#fff;
 	background-size: cover;
 }
