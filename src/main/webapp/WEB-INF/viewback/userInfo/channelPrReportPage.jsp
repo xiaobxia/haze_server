@@ -51,7 +51,7 @@
 		<jsp:include page="${BACK_URL}/rightSubList">
 			<jsp:param value="${params.myId}" name="parentId"/>
 		</jsp:include>
-		<table class="table" layoutH="160" nowrapTD="false" ifScrollTable="true">
+		<table class="table" layoutH="160" nowrapTD="false">
 			<thead>
 				<tr>
 					<th align="center"  >
@@ -82,15 +82,6 @@
 						运营商认证
 					</th>
 					<th align="center" >
-						支付宝认证人数
-					</th>
-					<th align="center" >
-						芝麻认证人数
-					</th>
-					<th align="center" >
-						工作信息
-					</th>
-					<th align="center" >
 						申请借款人数
 					</th>
 					<th align="center" >
@@ -101,9 +92,6 @@
 					</th>
 					<th align="center" >
 						放款金额
-					</th>
-					<th align="center" >
-						黑名单人数
 					</th>
 					<th align="center" >
 						逾期人数
@@ -146,15 +134,6 @@
 							${channel.jxlCount}
 						</td>
 						<td>
-							${channel.alipayCount}
-						</td>
-						<td>
-							${channel.zhimaCount}
-						</td>
-						<td>
-							${channel.companyCount}
-						</td>
-						<td>
 							${channel.borrowApplyCount}
 						</td>
 						<td>
@@ -172,9 +151,6 @@
 						</td>
 						<td>
 							${channel.intoMoney/100}
-						</td>
-						<td>
-							${channel.blackUserCount}
 						</td>
 						<td>
 							${channel.lateDayCount}

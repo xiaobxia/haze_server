@@ -46,26 +46,9 @@
 		</div>
 	</div>
 	<div class="pageContent">
-				<div class="panelBar">
-					<ul class="toolBar">
-						<%--<li class="">
-                            <a href="customService/toBackCensusLoan?myId=682&parentId=${params.myId}" class="edit" target="dialog" width="410" height="210" rel="jbsxBox" mask="true">
-                                <span>回算统计</span> </a>
-                        </li>--%>
-						<li class="">
-							<a id="c-o-p-r-btn"><span>刷新</span> </a>
-						</li>
-					</ul>
-				</div>
-		<table class="table" layoutH="160" nowrapTD="false" ifScrollTable="true">
+		<table class="table" layoutH="160" nowrapTD="false">
 			<thead>
 			<tr>
-				<%--<th align="center" >
-					渠道id
-				</th>--%>
-				<th align="center" >
-					渠道商名称
-				</th>
 				<th align="center" >
 					渠道名称
 				</th>
@@ -107,8 +90,6 @@
 			<tbody>
 			<c:forEach var="channel" items="${pm.items }" varStatus="status">
 				<tr target="channelId" rel="${channel.channelId }">
-					<%--<td>${channel.channelId}</td>--%>
-					<td>${channel.channelSuperName}</td>
 					<td>${channel.channelName}</td>
 					<td>${channel.repayTime }</td>
 					<td>${channel.newLoanCount }</td>
