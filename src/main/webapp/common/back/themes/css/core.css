@@ -177,29 +177,29 @@ a:hover {text-decoration:underline;}
 .alert .confirm h1 { }
 .alert p {}
 .alert .error {
-    background-color: #fef0f0;
+    background-color: #fcfafa;
     color: #f56c6c;
     border: 1px solid #f56c6c;
 }
 .alert .info {
-    background-color: #f4f4f5;
-    color: #909399;
-    border: 1px solid #909399;
+    background-color: #fbfafa;
+    color: #b7b7b7;
+    border: 1px solid #b7b7b7;
 }
 .alert .warn {
-    background-color: #fdf6ec;
-    color: #e6a23c;
-    border: 1px solid #e6a23c;
+    background-color: #f8f9fc;
+    color: #409eff;
+    border: 1px solid #409eff;
 }
 .alert .correct {
-    background-color: #f0f9eb;
-    color: #67c23a;
-    border: 1px solid #67c23a;
+    background-color: #fafbf8;
+    color: #70c23a;
+    border: 1px solid #70c23a;
 }
 .alert .confirm {
-    background-color: #fdf6ec;
-    color: #e6a23c;
-    border: 1px solid #e6a23c;
+    background-color: #f8f9fc;
+    color: #409eff;
+    border: 1px solid #409eff;
 }
 
 .alert .toolBar { position: absolute;right: 20px;bottom: 15px;}

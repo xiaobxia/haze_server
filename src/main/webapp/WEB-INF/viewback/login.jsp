@@ -48,7 +48,7 @@
 			box-sizing: border-box;
 			width:400px;
 			height:50px;
-			border:1px solid rgba(0,210,255,1);
+			border:1px solid rgba(0,75,119,0.3);
 			border-radius:6px;
 			line-height: 50px;
 			font-size: 18px;
@@ -63,6 +63,7 @@
 		}
 		.input:focus {
 			outline: none;
+			border:1px solid rgba(0,210,255,0.6);
 		}
 		.u-title {
 			font-size: 30px;
