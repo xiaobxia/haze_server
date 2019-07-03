@@ -11,6 +11,11 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Insert saveUpdateUser.jspr</title>
 	</head>
+	<style>
+		.form-item span.error {
+			left: 160px;
+		}
+	</style>
 	<body>
 		<div class="pageContent">
 			<form id="frm" method="post" enctype="multipart/form-data"
@@ -27,6 +32,7 @@
 							</label>
 							<input name="channelRateName" value="${channelRate.channelRateName}"
 								   class="required"	type="text" alt="请输入名称" size="30"/>
+							<label style="color: red;" class="required-label">*</label>
 						</div>
 						<div class="form-item">
 							<label style="width: 160px;">
@@ -34,6 +40,7 @@
 							</label>
 							<input name="channelRegisterRate" value="${channelRate.channelRegisterRate}"
 								   class="required"	type="text" alt="请输入系数" size="30"/>
+							<label style="color: red;" class="required-label">*</label>
 						</div>
 						<div class="form-item">
 							<label style="width: 160px;">
@@ -41,6 +48,7 @@
 							</label>
 							<input name="channelNewloanRate" value="${channelRate.channelNewloanRate}"
 								   class="required"	type="text" alt="请输入系数" size="30"/>
+							<label style="color: red;" class="required-label">*</label>
 						</div>
 						<div class="form-item">
 							<label style="width: 160px;">费率类型:</label>
@@ -52,6 +60,7 @@
 								<option value="1" <c:if test="${channelRate.channelRateType == 1}">selected="selected"</c:if>>CPS</option>
 								<option value="4" <c:if test="${channelRate.channelRateType == 4}">selected="selected"</c:if>>CPL</option>
 							</select>
+							<label style="color: red;" class="required-label">*</label>
 						</div>
 						<div class="form-item">
 							<label  style="width: 160px;">计算公式:</label>

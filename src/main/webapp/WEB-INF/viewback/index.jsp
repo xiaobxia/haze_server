@@ -772,8 +772,7 @@
 				<div class="tabsPageHeaderContent">
 					<!-- 显示左右控制时添加 class="tabsPageHeaderMargin" -->
 					<ul class="navTab-tab">
-						<li tabid="main" class="main"><a href="javascript:;"><span><span
-								class="home_icon"><span class="glyphicon glyphicon-home"></span></span></span></a></li>
+						<li tabid="main" class="main"><a href="javascript:;"><img src="${basePath }/images/homeIcon.png" alt="" style="height: 36px;"></a></li>
 					</ul>
 				</div>
 				<div class="tabsLeft"><span class="glyphicon glyphicon-menu-left"></span></div>

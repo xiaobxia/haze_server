@@ -19,7 +19,7 @@
 				class="pageForm required-validate">
 				<input type="hidden" name="parentId" value="${params.parentId}" />
 				<input type="hidden" name="id" id="id" value="${channelSuperInfo.id }">
-				<div class="pageFormContent" layoutH="50" style="overflow: auto;">
+				<div class="pageFormContent" layoutH="60" style="overflow: auto;">
 					<div class="form-wrap">
 						<div class="form-item">
 							<label>
@@ -27,6 +27,7 @@
 							</label>
 							<input name="channelSuperName" value="${channelSuperInfo.channelSuperName}"
 								   class="required"	type="text" alt="请输入名称" size="30"/>
+							<label style="color: red;" class="required-label">*</label>
 						</div>
 						<div class="form-item">
 							<label>
@@ -34,6 +35,7 @@
 							</label>
 							<input name="channelSuperCode" value="${channelSuperInfo.channelSuperCode}"
 								   class="required"	type="text" alt="请输入编码" size="30"/>
+							<label style="color: red;" class="required-label">*</label>
 						</div>
 						<div class="form-item">
 							<label>

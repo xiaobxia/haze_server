@@ -78,7 +78,7 @@ a:hover {text-decoration:underline;}
 .tabsPage .tabsPageHeaderMargin { margin:0 40px;}
 .tabsPage .tabsPageHeader ul { display:block; width:10000px; height:40px; z-index:1; position:absolute;}
 .tabsPage .tabsPageHeader li { float:left; display:block; height:40px;position:relative; cursor:pointer;padding: 0 15px;border-right: 1px solid #f6f6f6;}
-.tabsPage .tabsPageHeader li:first-child {}
+.tabsPage .tabsPageHeader li:first-child { padding: 0 25px; }
 .tabsPage .tabsPageHeader li a { display:inline-block; overflow:hidden; height:40px; line-height:40px;}
 .tabsPage .tabsPageHeader li a:hover { text-decoration:none;}
 .tabsPage .tabsPageHeader li span { float:left; display:block; overflow:hidden; height:40px; line-height:40px;cursor:pointer;}
@@ -161,7 +161,7 @@ a:hover {text-decoration:underline;}
 
 /* Alert */
 /*.alert { overflow:hidden; position:absolute; z-index:101; width:300px; top:0}*/
-.alert { overflow:hidden; z-index:1011; display:block; width:400px; margin-left:-200px; position:absolute; top:0; left:50%;padding: 0;margin-bottom: 0;}
+.alert { overflow:hidden; z-index:1011; display:block; width:500px; margin-left:-250px; position:absolute; top:0; left:50%;padding: 0;margin-bottom: 0;}
 .alert .alertContent { position: relative; display:block; overflow:hidden;}
 .alert .alertInner { display:block; padding:15px 16px; text-align:left;}
 .alert .alertInner .msg { margin: 10px 0; line-height: 1.3em}
