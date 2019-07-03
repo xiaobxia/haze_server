@@ -467,6 +467,10 @@ public class BorrowOrderController extends BaseController {
                 newUser.setAmountAvailable(String.valueOf(i<=0?0:i));
                 userService.updateAmountAvailableByUserId(newUser);
 
+                InfoIndexInfo infoIndexInfo = new InfoIndexInfo();
+                infoIndexInfo.setUserId(Integer.parseInt(user.getId()));
+                infoIndexInfo.setBorrowStatus("1");
+                indexDao.updateIndexInfoByUserId(infoIndexInfo);
 
                 //添加order_change_log表
                 OrderLogModel orderLogModel = new OrderLogModel();
