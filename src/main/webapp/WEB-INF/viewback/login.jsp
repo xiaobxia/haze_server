@@ -31,7 +31,9 @@
 			position: absolute;
 			width: 500px;
 			height: 500px;
-			top: 200px;
+			top: 0;
+			bottom: 0;
+			margin: auto;
 			left: 60%;
 			background:rgba(255,255,255,0.05);
 			padding: 0 50px;
