@@ -62,18 +62,21 @@
 				<th align="center"  >
 					日期
 				</th>
-				<th align="center" >
-					实名率/总
+				<th align="center">
+					注册量
 				</th>
+				<%--<th align="center" >
+					实名率/总
+				</th>--%>
 				<%--<th align="center" >--%>
 					<%--绑卡人数--%>
 				<%--</th>--%>
-				<th align="center" >
+				<%--<th align="center" >
 					通讯录认证率/总
-				</th>
-				<th align="center" >
+				</th>--%>
+				<%--<th align="center" >
 					运营商认证率/总
-				</th>
+				</th>--%>
 				<%--<th align="center" >
 					淘宝认证人数率
 				</th>--%>
@@ -86,15 +89,15 @@
 				<%--<th align="center" >--%>
 					<%--黑名单人数--%>
 				<%--</th>--%>
-				<th align="center">申请笔数/总</th>
+				<th align="center">申请笔数(首单)</th>
 				<th align="center" >
-					申请借款率/总
+					申请借款率
 				</th>
 				<th align="center" >
-					申请成功率/总
+					申请成功率
 				</th>
-				<th align="center">放款笔数/总</th>
-				<th align="center">放款率/总</th>
+				<th align="center">放款笔数(首单)</th>
+				<th align="center">放款率</th>
 				<%--<th align="center" >--%>
 					<%--借款率%--%>
 				<%--</th>--%>
@@ -118,17 +121,21 @@
 				<%--</th>--%>
 
 				<th>
-					uv数量/转化率
+					uv数量
+				</th>
+				<th>
+					uv转化率
 				</th>
 				<%--<th>
 					uv转化率
 				</th>--%>
 				<th>
-					qq/微信占比
+					qq占比
 				</th>
-				<th align="center">
-					注册量
+				<th>
+					微信占比
 				</th>
+
 				<%--<th>
 					微信占比
 				</th>--%>
@@ -180,6 +187,9 @@
 						<fmt:formatDate value="${channel.reportDate}" pattern="yyyy-MM-dd"/>
 					</td>
 					<td>
+							${channel.registerCount}【android:${channel.androidCount}，ios:${channel.iosCount}】
+					</td>
+					<%--<td>
 						<c:choose>
 							<c:when test="${channel.channelName != null}">
 								<!--实名率=当日注册用户中实名人数/当日注册数-->
@@ -208,14 +218,14 @@
 								</c:if>
 							</c:otherwise>
 						</c:choose>
-					</td>
+					</td>--%>
 					<%--<td>--%>
 							<%--${channel.attestationBankCount}--%>
 					<%--</td>--%>
 					<%--<td>--%>
 							<%--${channel.contactCount}--%>
 					<%--</td>--%>
-					<td>
+					<%--<td>
 						<c:choose>
 							<c:when test="${channel.channelName != null}">
 								<!--通讯录认证率=当日注册用户中通讯录认证数/当日注册数-->
@@ -245,11 +255,11 @@
 							</c:otherwise>
 						</c:choose>
 
-					</td>
+					</td>--%>
 					<%--<td>--%>
 							<%--${channel.jxlCount}--%>
 					<%--</td>--%>
-					<td>
+					<%--<td>
 						<c:choose>
 							<c:when test="${channel.channelName != null}">
 								<!--运营商认证率=当日注册用户中运营商认证数/当日注册数-->
@@ -278,7 +288,7 @@
 								</c:if>
 							</c:otherwise>
 						</c:choose>
-					</td>
+					</td>--%>
 					<%--<td>
 						<c:if test="${channel.zhimaCount gt 0 and channel.registerCount gt 0}">
 							<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.zhimaCount / channel.registerCount}" />
@@ -303,7 +313,7 @@
 							<%--${channel.borrowApplyCount}--%>
 					<%--</td>--%>
 					<td>
-							<c:choose>
+							<%--<c:choose>
                                 <c:when test="${channel.channelName != null}">
                                             <!--申请借款数=当日总申请借款数-续借人数 -->
                                             ${channel.borrowApplyCount-channel.xujieCount}
@@ -313,11 +323,12 @@
                                 <c:otherwise>
                                     ${channel.borrowApplyCount}
                                 </c:otherwise>
-                            </c:choose>
-
+                            </c:choose>--%>
+						<!--当日借款人数-->
+									${channel.borrowApplyCount-channel.xujieCount}
 					</td>
 					<td>
-						<c:choose>
+						<%--<c:choose>
 							<c:when test="${channel.channelName != null}">
 								<!--当日借款率=当日新用户申请数/当日注册数-->
 								<c:if test="${(channel.borrowApplyCount -channel.xujieCount)  gt 0 and channel.registerCount gt 0}">
@@ -345,13 +356,20 @@
 								</c:if>
 							</c:otherwise>
 						</c:choose>
-
+--%>
+							<!--当日借款率=当日新用户申请数/当日注册数-->
+							<c:if test="${(channel.borrowApplyCount -channel.xujieCount)  gt 0 and channel.registerCount gt 0}">
+								<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${(channel.borrowApplyCount - channel.xujieCount) / channel.registerCount}" />
+							</c:if>
+							<c:if test="${(channel.borrowApplyCount -channel.xujieCount) eq 0 or channel.registerCount eq 0 }">
+								0.00%
+							</c:if>
 					</td>
 					<%--<td>
 							${channel.borrowSucCount}
 					</td>--%>
 					<td>
-						<c:choose>
+						<%--<c:choose>
 							<c:when test="${channel.channelName != null}">
 								<!--申请成功率=当日新用户放款数/当日申请数-->
 								<c:if test="${channel.loanCount gt 0 and channel.borrowApplyCount gt 0}">
@@ -377,10 +395,17 @@
 									0.00%
 								</c:if>
 							</c:otherwise>
-						</c:choose>
+						</c:choose>--%>
+							<!--申请成功率=当日新用户放款数/当日新用户申请数-->
+							<c:if test="${channel.loanCount gt 0 and (channel.borrowApplyCount -channel.xujieCount) gt 0}">
+								<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.loanCount / (channel.borrowApplyCount -channel.xujieCount)}" />
+							</c:if>
+							<c:if test="${channel.loanCount eq 0 or (channel.borrowApplyCount -channel.xujieCount) eq 0}">
+								0.00%
+							</c:if>
 					</td>
 					<td>
-						<c:choose>
+						<%--<c:choose>
 							<c:when test="${channel.channelName != null}">
 								<!--新用户放款笔数/总-->
 								<c:choose>
@@ -411,11 +436,19 @@
 									</c:otherwise>
 								</c:choose>
 							</c:otherwise>
-						</c:choose>
-
+						</c:choose>--%>
+							<!--新用户放款笔数/总-->
+							<c:choose>
+							<c:when test="${channel.loanCount gt 0}">
+								${channel.loanCount}
+							</c:when>
+							<c:otherwise>
+								0
+							</c:otherwise>
+							</c:choose>
 					</td>
 					<td>
-						<c:choose>
+						<%--<c:choose>
 							<c:when test="${channel.channelName != null}">
 								<!--放款率=新用户放款数/当日注册数-->
 								<c:if test = "${channel.loanCount  gt 0 and channel.registerCount gt 0}">
@@ -442,8 +475,14 @@
 									0.00%
 								</c:if>
 							</c:otherwise>
-						</c:choose>
-
+						</c:choose>--%>
+							<!--放款率=新用户放款数/当日注册数-->
+							<c:if test = "${channel.loanCount  gt 0 and channel.registerCount gt 0}">
+								<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.loanCount / channel.registerCount}" />
+							</c:if>
+							<c:if test = "${channel.loanCount eq 0 or channel.registerCount eq 0}">
+								0.00%
+							</c:if>
 					</td>
 					<%--	<c:if test = "${channel.loanCount gt 0}"> 续借率
                         <c:if test = "${channel.loanCount - channel.dayBorrowSucCount >0 and }">
@@ -451,7 +490,6 @@
 						</c:if>
 						</c:if>--%>
 						<%--	${channel.loanRatio}--%>
-					</td>
 					<%--<td>--%>
 							<%--${channel.borrowRate}--%>
 					<%--</td>--%>
@@ -476,16 +514,19 @@
 					<%--</td>--%>
 
 					<td>
-								${channel.uvCount} / ${channel.uvRate}
+								${channel.uvCount}
+					</td>
+					<td>
+						<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.uvRate}" />
 					</td>
 					<%--<td>
 						${channel.uvRate}
 					</td>--%>
 					<td>
-						${channel.qqRate} / ${channel.wechatRate}
+						<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.qqRate}" />
 					</td>
-					<td>
-							${channel.registerCount}【android:${channel.androidCount}，ios:${channel.iosCount}】
+                    <td>
+						<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.wechatRate}" />
 					</td>
 					<%--<td>
 						${channel.wechatRate}

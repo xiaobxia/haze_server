@@ -98,5 +98,10 @@ public class ReportRepaymentService implements IReportRepaymentService {
 		return reportRepaymentDao.findOverdueRateSByReport(params);
 	}
 
+	@Override
+	public Map<String, Object> findRepayReport(String reportTime) {
+		return reportRepaymentDao.findRepayReport(reportTime);
+	}
+
 
 }

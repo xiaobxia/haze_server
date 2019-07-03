@@ -42,7 +42,13 @@ public class ChannelReport implements Serializable {
 
     private BigDecimal intoMoney;
     private BigDecimal newIntoMoney;
+    //新增字段 新用户放款数量
+    private Integer newIntoCount = 0;
+
     private BigDecimal oldIntoMoney;
+    //新增字段 老用户放款数量
+    private Integer oldIntoCount = 0;
+
     private Integer approveErrorCount = 0;
     private Integer channelid;
     private String channelName;
@@ -633,5 +639,21 @@ public class ChannelReport implements Serializable {
 
     public void setAllLoanCount(Integer allLoanCount) {
         this.allLoanCount = allLoanCount;
+    }
+
+    public Integer getNewIntoCount() {
+        return newIntoCount;
+    }
+
+    public void setNewIntoCount(Integer newIntoCount) {
+        this.newIntoCount = newIntoCount;
+    }
+
+    public Integer getOldIntoCount() {
+        return oldIntoCount;
+    }
+
+    public void setOldIntoCount(Integer oldIntoCount) {
+        this.oldIntoCount = oldIntoCount;
     }
 }

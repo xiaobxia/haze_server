@@ -76,8 +76,10 @@ public interface IChannelReportDao {
 	public List<Map<String, Object>> findBorrowApplyCount(Map<String, Object> param);
 	public List<Map<String, Object>> findBorrowSucCount(Map<String, Object> param);
 	public List<Map<String, Object>> findIntoMoney(Map<String, Object> param);
+	       List<Map<String, Object>> findNewIntoCount(Map<String, Object> param);
 	public List<Map<String, Object>> findNewIntoMoney(Map<String, Object> param);
 	public List<Map<String, Object>> findOldIntoMoney(Map<String, Object> param);
+	        List<Map<String, Object>> findOldIntoCount(Map<String, Object> param);
 	public List<Map<String, Object>> findBlackUserCount(Map<String, Object> param);
 	public List<Map<String, Object>> findlateDayCount(Map<String, Object> param);
 
@@ -102,7 +104,9 @@ public interface IChannelReportDao {
 	Integer borrowSucCount(Map<String, Object> map);
 	Integer intoMoney(Map<String, Object> map);
 	Integer newIntoMoney(Map<String, Object> map);
+	Integer newIntoCount(Map<String, Object> map);
 	Integer oldIntoMoney(Map<String, Object> map);
+	Integer oldIntoCount(Map<String, Object> map);
 	Integer blackUserCount(Map<String, Object> map);
 	Integer lateDayCount(Map<String, Object> map);
 

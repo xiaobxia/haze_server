@@ -38,4 +38,6 @@ public interface IReportRepaymentDao {
     Map<String, Object> findAllRenewalByReport(String reportTime);
 
     List<Map<String, Object>> findOverdueRateSByReport(Map<String, Object> params);
+
+    Map<String,Object> findRepayReport(String reportTime);
 }

@@ -10,10 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -46,7 +44,8 @@ public class ChannelOveCensusService implements IChannelOveCensusService{
         HashMap<String,Object> params = new HashMap<>();
         Boolean b = true;
         try{
-            log.info("当日渠道逾期统计开始");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar calendar = Calendar.getInstance();
             //查询出所有渠道
             List<Integer> channelIdList = channelOveCensusDao.findChannelIdList();
             if(channelIdList.size() > 0){
@@ -54,45 +53,65 @@ public class ChannelOveCensusService implements IChannelOveCensusService{
                 for(int i= 0 ; i<channelIdList.size();i++){
                     channelOveCensus.setChannelId(channelIdList.get(i));
                     channelOveCensus.setRepayTime(repayTime);
-                    //查询渠道新用户 还款金额 数量 待收数量 数量
+                    //查询渠道新用户 展期数量
+                    map = channelOveCensusDao.extendCountAndMoney(channelIdList.get(i),repayTime,0);
+                    Integer  newExtendCount = Integer.valueOf(map.get("count").toString());
+                    BigDecimal newExtendProductMoney = optimic(map,"moneyAmount") == null? BigDecimal.ZERO:optimic(map,"moneyAmount");
+                    //查询渠道新用户 还款金额 数量
                     map = channelOveCensusDao.loanCountAndMoney(channelIdList.get(i),repayTime,0,30);
                     BigDecimal newRepayMoney = optimic(map,"money") == null? BigDecimal.ZERO:optimic(map,"money");
                     Integer newRepayCount = Integer.valueOf(map.get("count").toString());
-                    channelOveCensus.setNewRepayCount(newRepayCount);
-                    channelOveCensus.setNewRepayMoney(newRepayMoney);
-                    //查询渠道新用户 待收数量 数量
-                    map = channelOveCensusDao.loanCountAndMoney(channelIdList.get(i),repayTime,0,21);
+                    channelOveCensus.setNewRepayCount(newRepayCount + newExtendCount);
+                    channelOveCensus.setNewRepayMoney(newRepayMoney.add(newExtendProductMoney));
+                    //查询渠道新用户 逾期数量 金额
+                    map = channelOveCensusDao.loanCountAndMoney(channelIdList.get(i),repayTime,0,-11);
                     BigDecimal newWaitMoney = optimic(map,"money") == null? BigDecimal.ZERO:optimic(map,"money");
                     Integer newWaitCount = Integer.valueOf(map.get("count").toString());
                     //新用户 放款数量 放款金额
                     channelOveCensus.setNewLoanCount(channelOveCensus.getNewRepayCount()+newWaitCount);
-                    channelOveCensus.setNewLoanMoney(channelOveCensus.getNewRepayMoney().add(newWaitMoney) == null? BigDecimal.ZERO:channelOveCensus.getNewRepayMoney().add(newWaitMoney));
+                    channelOveCensus.setNewLoanMoney(channelOveCensus.getNewRepayMoney().add(newWaitMoney).add(newExtendProductMoney) == null? BigDecimal.ZERO:channelOveCensus.getNewRepayMoney().add(newWaitMoney).add(newExtendProductMoney));
                     //计算新用户逾期率
                     if(channelOveCensus.getNewLoanCount() >0){
                         Integer newOveRate = (newWaitCount * 10000)/channelOveCensus.getNewLoanCount();
                         channelOveCensus.setNewOveRate(newOveRate == null ? 0 :newOveRate);
+                    }else{
+                        channelOveCensus.setNewOveRate(0);
+                    }
+                    //老用户展期数量
+                    //查询用户展期数量 展期服务费 展期产品金额
+                    Integer oldExtendCount = 0;
+                    BigDecimal oldExtendProductMoney = BigDecimal.ZERO;
+                    map = channelOveCensusDao.extendCountAndMoney(channelIdList.get(i),repayTime,2);
+                    if(map != null){
+                        oldExtendCount = Integer.valueOf(map.get("count").toString());
+                        oldExtendProductMoney = optimic(map,"moneyAmount") == null? BigDecimal.ZERO:optimic(map,"moneyAmount");
                     }
                     //查询渠道老用户 还款金额 数量 待收 数量
-                    map = channelOveCensusDao.loanCountAndMoney(channelIdList.get(i),repayTime,1,30);
-                    BigDecimal oldRepayMoney = optimic(map,"money") == null? BigDecimal.ZERO:optimic(map,"money");
-                    Integer oldRepayCount = Integer.valueOf(map.get("count").toString());
-                    channelOveCensus.setOldRepayCount(oldRepayCount);
-                    channelOveCensus.setOldRepayMoney(oldRepayMoney);
-                    map = channelOveCensusDao.loanCountAndMoney(channelIdList.get(i),repayTime,1,21);
+                    map = channelOveCensusDao.loanCountAndMoney(channelIdList.get(i),repayTime,2,30);
+                    if(map != null){
+                        BigDecimal oldRepayMoney = optimic(map,"money") == null? BigDecimal.ZERO:optimic(map,"money");
+                        Integer oldRepayCount = Integer.valueOf(map.get("count").toString());
+                        channelOveCensus.setOldRepayCount(oldRepayCount + oldExtendCount);
+                        channelOveCensus.setOldRepayMoney(oldRepayMoney.add(oldExtendProductMoney));
+                    }else{
+                        channelOveCensus.setOldRepayCount(0);
+                        channelOveCensus.setOldRepayMoney(BigDecimal.ZERO);
+                    }
+                    map = channelOveCensusDao.loanCountAndMoney(channelIdList.get(i),repayTime,1,-11);
                     BigDecimal oldWaitMoney = optimic(map,"money") == null? BigDecimal.ZERO:optimic(map,"money");
                     Integer oldWaitCount = Integer.valueOf(map.get("count").toString());
-                    channelOveCensus.setOldRepayCount(oldRepayCount);
-                    channelOveCensus.setOldRepayMoney(oldRepayMoney);
                     //老用户放款数量 放款金额
                     channelOveCensus.setOldLoanCount(channelOveCensus.getOldRepayCount()+oldWaitCount);
-                    channelOveCensus.setOldLoanMoney(channelOveCensus.getOldRepayMoney().add(oldWaitMoney) == null? BigDecimal.ZERO:channelOveCensus.getNewRepayMoney().add(newWaitMoney));
+                    channelOveCensus.setOldLoanMoney(channelOveCensus.getOldRepayMoney().add(oldWaitMoney).add(oldExtendProductMoney) == null? BigDecimal.ZERO:channelOveCensus.getNewRepayMoney().add(newWaitMoney).add(oldExtendProductMoney));
                     //计算老用户逾期率
                     if(channelOveCensus.getOldLoanCount() >0 ){
                         Integer oldRate = (oldWaitCount *10000)/channelOveCensus.getOldLoanCount();
                         channelOveCensus.setOldOveRate(oldRate == null ?0:oldRate);
+                    }else{
+                        channelOveCensus.setOldOveRate(0);
                     }
                     //查询用户展期数量 展期服务费 展期产品金额
-                    map = channelOveCensusDao.extendCountAndMoney(channelIdList.get(i),repayTime);
+                    map = channelOveCensusDao.extendCountAndMoney(channelIdList.get(i),repayTime,3);
                     BigDecimal extendMoney = optimic(map,"sumFee")== null? BigDecimal.ZERO:optimic(map,"sumFee");
                     Integer extendCount = Integer.valueOf(map.get("count").toString());
                     BigDecimal extendProductMoney = optimic(map,"moneyAmount") == null? BigDecimal.ZERO:optimic(map,"moneyAmount");
@@ -100,11 +119,13 @@ public class ChannelOveCensusService implements IChannelOveCensusService{
                     channelOveCensus.setExtendMoney(extendMoney);
                     channelOveCensus.setExtendProductMoney(extendProductMoney);
                     //计算总放量 总还量 总逾期率
-                    Integer allLoanCount = newRepayCount+newWaitCount+oldRepayCount+oldWaitCount+extendCount;
-                    Integer allRepayCount = newRepayCount+oldRepayCount;
+                    Integer allLoanCount = channelOveCensus.getNewLoanCount()+channelOveCensus.getOldLoanCount();
+                    Integer allRepayCount = channelOveCensus.getNewRepayCount()+channelOveCensus.getOldRepayCount();
                     if(allLoanCount != 0){
                         Integer allOveRate = ((allLoanCount-allRepayCount) * 10000 )/allLoanCount ;
                         channelOveCensus.setAllOveRate(allOveRate);
+                    }else{
+                        channelOveCensus.setAllOveRate(0);
                     }
                     channelOveCensus.setAllLoanCount(allLoanCount);
                     channelOveCensus.setAllRepayCount(allRepayCount);

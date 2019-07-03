@@ -1485,7 +1485,17 @@ public class ChannelInfoController extends BaseController {
                 }
                 url = "channel/editChannelSuperInfo";
             } else {
-
+                ChannelSuperInfo codeChannelInfo;
+                HashMap<String, Object> queryMap = new HashMap<>();
+                queryMap.put("channelSuperCode", channelSuperInfo.getChannelSuperCode());
+                codeChannelInfo = channelInfoService.findOneChannelSuperInfo(queryMap);
+                if (codeChannelInfo != null) {
+                    SpringUtils.renderDwzResult(response, false,
+                            "渠道编码已存在",
+                            DwzResult.CALLBACK_CLOSECURRENT, params
+                                    .get("parentId").toString());
+                    return null;
+                }
                 // 更新或者添加操作
                 if (channelSuperInfo.getId() != null) {
 //					AESUtil aesEncrypt = new AESUtil();
@@ -1494,18 +1504,7 @@ public class ChannelInfoController extends BaseController {
 //					channelSuperInfo.setChannelPassword(passWord);
                     channelInfoService.updateChannelSuperById(channelSuperInfo);
                 } else {
-                    ChannelSuperInfo codeChannelInfo;
-                    HashMap<String, Object> queryMap = new HashMap<>();
-                    queryMap.put("channelSuperCode", channelSuperInfo.getChannelSuperCode());
-                    codeChannelInfo = channelInfoService.findOneChannelSuperInfo(queryMap);
 
-                    if (codeChannelInfo != null) {
-                        SpringUtils.renderDwzResult(response, false,
-                                "渠道编码已存在",
-                                DwzResult.CALLBACK_CLOSECURRENT, params
-                                        .get("parentId").toString());
-                        return null;
-                    }
 //					AESUtil aesEncrypt = new AESUtil();
 //					String passWord = MD5coding.MD5(aesEncrypt.encrypt(channelInfo.getChannelPassword(),""));// 加密
 
@@ -1575,7 +1574,18 @@ public class ChannelInfoController extends BaseController {
                 }
                 url = "channel/editChannelRate";
             } else {
+                ChannelRate codeChannelRate;
+                HashMap<String, Object> queryMap = new HashMap<>();
+                queryMap.put("channelRateName", channelRate.getChannelRateName());
+                codeChannelRate = channelInfoService.findOneChannelRateInfo(queryMap);
 
+                if (codeChannelRate != null) {
+                    SpringUtils.renderDwzResult(response, false,
+                            "渠道费率名称已存在",
+                            DwzResult.CALLBACK_CLOSECURRENT, params
+                                    .get("parentId").toString());
+                    return null;
+                }
                 // 更新或者添加操作
                 if (channelRate.getId() != null) {
 //					AESUtil aesEncrypt = new AESUtil();
@@ -1584,19 +1594,6 @@ public class ChannelInfoController extends BaseController {
 //					channelSuperInfo.setChannelPassword(passWord);
                     channelInfoService.updateChannelRateById(channelRate);
                 } else {
-                    ChannelRate codeChannelRate;
-                    HashMap<String, Object> queryMap = new HashMap<>();
-                    queryMap.put("channelRateName", channelRate.getChannelRateName());
-                    codeChannelRate = channelInfoService.findOneChannelRateInfo(queryMap);
-
-                    if (codeChannelRate != null) {
-                        SpringUtils.renderDwzResult(response, false,
-                                "渠道费率名称已存在",
-                                DwzResult.CALLBACK_CLOSECURRENT, params
-                                        .get("parentId").toString());
-                        return null;
-                    }
-
                     channelInfoService.insertChannelRate(channelRate);
                 }
                 SpringUtils.renderDwzResult(response, true, "操作成功",
@@ -1910,6 +1907,8 @@ public class ChannelInfoController extends BaseController {
     public String oveChannelCount(HttpServletRequest request,
                                   Model model){
         HashMap<String, Object> params = getParametersO(request);
+        String beginTime = (String) params.get("beginTime");
+        String endTime = (String) params.get("endTime");
         HashMap<String, Object> chMap = new HashMap<>();
         BackUser backUser = this.loginAdminUser(request);
         dealParamMap(params, chMap, backUser);
@@ -1918,6 +1917,8 @@ public class ChannelInfoController extends BaseController {
         PageConfig<ChannelOveCensus> pageConfig = channelOveCensusService.findChannelOveCensus(params);
         model.addAttribute("channelSuperInfos", channelSuperInfos);
         model.addAttribute("pm",pageConfig);
+        model.addAttribute("beginTime",beginTime);
+        model.addAttribute("endTime",endTime);
         // 用于搜索框保留值
         model.addAttribute("params", params);
         return "userInfo/channelOvePage";

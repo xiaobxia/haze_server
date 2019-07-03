@@ -27,6 +27,7 @@ public class ChannelOveCensus {
     private String channelSuperName;//渠道商名称
     private String channelName;//渠道名称
 
+
     public Integer getId() {
         return id;
     }
@@ -202,4 +203,5 @@ public class ChannelOveCensus {
     public void setChannelName(String channelName) {
         this.channelName = channelName;
     }
+
 }

@@ -50,7 +50,7 @@
             and channel_id = #{channelId}
 		</if>
 	</select>
-	<select id ="findChannelOveCensusCount" parameterType="hashmap" resultType="integer">
+	<select id ="findChannelOveCensusCount" parameterType="hashmap" resultType="java.lang.Integer">
 		select count(1) from channel_ove_census
 		where 1=1
 		<if test="repayTime != null">
@@ -86,7 +86,8 @@
 			left join channel_info ci on oc.channel_id = ci.id
 			left join channel_super_info si on si.id = ci.channel_super_id
 			where 1=1
-			 and  oc.repay_time  != DATE_FORMAT(now(), '%Y-%m-%d')
+			and  oc.repay_time  != DATE_FORMAT(now(), '%Y-%m-%d')
+			and oc.all_loan_count != 0
 			<if test="superChannelId != null">
               and si.id = #{superChannelId}
 			</if>
@@ -94,12 +95,12 @@
              and ci.channel_name = #{channelName}
 			</if>
 			<if test="beginTime != null and endTime != null">
-             and   DATE_FORMAT( oc.repay_time, '%Y-%m-%d' ) >= DATE_FORMAT(#{beginTime}, '%Y-%m-%d');
-             and   DATE_FORMAT( oc.repay_time, '%Y-%m-%d' ) >= DATE_FORMAT(#{endTime}, '%Y-%m-%d');
+             and   DATE_FORMAT( oc.repay_time, '%Y-%m-%d' ) &gt;= DATE_FORMAT(#{beginTime}, '%Y-%m-%d')
+             and   DATE_FORMAT( oc.repay_time, '%Y-%m-%d' ) &lt;= DATE_FORMAT(#{endTime}, '%Y-%m-%d')
 			</if>
 			order by oc.repay_time DESC
 	</select>
-	<select id ="findChannelOveCountResult" parameterType="hashmap" resultType="integer">
+	<select id ="findChannelOveCountResult" parameterType="hashmap" resultType="java.lang.Integer">
 		select count(oc.id)
 		FROM
 		channel_ove_census oc
@@ -107,6 +108,7 @@
 		left join channel_super_info si on si.id = ci.channel_super_id
 		where 1=1
 		and  oc.repay_time  != DATE_FORMAT(now(), '%Y-%m-%d')
+		and oc.all_loan_count != 0
 		<if test="superChannelId != null">
 			and si.id = #{superChannelId}
 		</if>
@@ -114,8 +116,8 @@
 			and ci.channel_name = #{channelName}
 		</if>
 		<if test="beginTime != null and endTime != null">
-			and   DATE_FORMAT( oc.repay_time, '%Y-%m-%d' ) >= DATE_FORMAT(#{beginTime}, '%Y-%m-%d');
-			and   DATE_FORMAT( oc.repay_time, '%Y-%m-%d' ) >= DATE_FORMAT(#{endTime}, '%Y-%m-%d');
+			and   DATE_FORMAT( oc.repay_time, '%Y-%m-%d' ) &gt;= DATE_FORMAT(#{beginTime}, '%Y-%m-%d')
+			and   DATE_FORMAT( oc.repay_time, '%Y-%m-%d' ) &lt;= DATE_FORMAT(#{endTime}, '%Y-%m-%d')
 		</if>
 		order by oc.repay_time DESC
 	</select>
@@ -198,6 +200,9 @@
 		 <if test="extendProductMoney != null">
          extend_product_money = #{extendProductMoney},
 		 </if>
+		 <if test="extendCount != null">
+			 extend_count = #{extendCount},
+		 </if>
 		 <if test="updateTime != null">
          update_time = #{updateTime},
 		 </if>
@@ -243,11 +248,15 @@
 		WHERE
 			ui.user_from = #{userFrom}
 			AND DATE_FORMAT( ar.repayment_time, '%Y-%m-%d' ) = #{repayTime}
-			<if test=" customerType != null">
-				AND bo.customer_type = #{customerType}
-			</if>
 			<if test = "status != null">
 				and bo.status = #{status}
+			</if>
+			<if test=" customerType == 0 or customerType == 1">
+				and bo.customer_type = #{customerType}
+			</if>
+			<if test="customerType == 2">
+				group by bo.user_id
+				HAVING count(bo.user_id) > 1
 			</if>
 	</select>
 	<select id ="extendCountAndMoney" resultType="map">
@@ -258,10 +267,41 @@
 		FROM
 			asset_renewal_record rr
 			LEFT JOIN asset_repayment ar ON rr.asset_repayment_id = ar.id
+		    LEFT JOIN asset_borrow_order bo ON ar.asset_order_id = bo.id
 			LEFT JOIN user_info ui ON ui.id = rr.user_id
 		WHERE
-			ui.user_from = #{userFrom}
+			 ui.user_from = #{userFrom}
 			AND  DATE_FORMAT(rr.old_repayment_time, '%Y-%m-%d' )= #{repayTime}
 			AND rr.status = 1
+		<if test=" customerType == 0 or customerType == 1">
+			and bo.customer_type = #{customerType}
+		</if>
+		<if test="customerType == 2">
+			group by bo.user_id
+			HAVING count(bo.user_id) > 1
+		</if>
+	</select>
+	<select id ="findWait" resultType="java.util.HashMap">
+	SELECT
+		bo.user_id AS userId,
+		bo.customer_type as customerType
+	FROM
+		asset_borrow_order bo
+		LEFT JOIN asset_repayment ar ON bo.id = ar.asset_order_id
+	WHERE
+		bo.STATUS = #{status}
+		AND DATE_FORMAT(ar.repayment_time, '%Y-%m-%d' ) = DATE_FORMAT(now(), '%Y-%m-%d' )
+	</select>
+	<select id="findExtend" resultType="java.util.HashMap">
+	SELECT
+		ar.user_id AS userId,
+		bo.customer_type
+	FROM
+		asset_renewal_record arr
+		LEFT JOIN asset_repayment ar ON ar.id = arr.asset_repayment_id
+		left join asset_borrow_order bo on bo.id = ar.asset_order_id
+	WHERE
+		arr.STATUS = 1
+		AND DATE_FORMAT(arr.old_repayment_time, '%Y-%m-%d' ) = DATE_FORMAT(now(), '%Y-%m-%d' )
 	</select>
 </mapper>

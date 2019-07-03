@@ -499,7 +499,7 @@
 
     <bean id="channelOveCensusResultJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="channelOveCensusResultBean"/>
-        <property name="cronExpression" value="0 0 0/2 * * ?"/>
+        <property name="cronExpression" value="0 10 0 * * ?"/>
     </bean>
     <bean id="channelOveCensusResultBean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="jobClass" value="com.info.web.util.JobDetailBean"/>

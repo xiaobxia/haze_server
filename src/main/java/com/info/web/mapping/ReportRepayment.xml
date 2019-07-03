@@ -162,6 +162,12 @@
   <select id="findAllRenewalByReport" resultType="map" parameterType="java.lang.String" >
     <![CDATA[  select count(1) as countAll,IFNULL(sum(rr.money_amount),0) as amountAll from asset_renewal_record rr where DATE_FORMAT(rr.old_repayment_time,'%Y-%m-%d') <= #{reportTime} and rr.`status` = 1  ]]>
   </select>
+  <select id="findRepayReport" resultType="map" parameterType="java.lang.String">
+     <![CDATA[
+      select count(1) as countAll ,IFNULL(repaymented_amount,0) as amountAll from asset_repayment where
+			DATE_FORMAT(repayment_time,'%Y-%m-%d') <= DATE_FORMAT( #{reportTime}, '%Y-%m-%d' )  and `status` in (30,34)
+     ]]>
+  </select>
   <select id="findOverdueRateSByReport" resultType="map" parameterType="map" >
     <![CDATA[
     select datediff(#{reportTime},DATE_FORMAT(ar.late_fee_start_time,'%Y-%m-%d')) + 1 as lateDay,

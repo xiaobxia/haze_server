@@ -57,6 +57,11 @@ public interface IChannelOveCensusDao {
      * @param repayTime
      * @return
      */
-    Map<String,Object> extendCountAndMoney(@Param("userFrom") Integer userFrom,@Param("repayTime") String repayTime);
+    Map<String,Object> extendCountAndMoney(@Param("userFrom") Integer userFrom,@Param("repayTime") String repayTime,@Param("customerType") Integer customerType);
 
+    //查询出今日待收/已收所有userId,order_id 以及userFrom
+    List<Map<String,Object>> findWait(@Param("repayTime") String repayTime,@Param("status") Integer status);
+
+    //查询出今日展期所有userId,order_id以及userFrom
+    List<Map<String,Object>> findExtend(@Param("repayTime") String repayTime,@Param("status") Integer status);
 }

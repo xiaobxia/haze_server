@@ -658,11 +658,9 @@ public class ChannelReportService implements IChannelReportService {
                         jedisCluster.set("channelReport_" + channelReporta.getChannelid(), FastJsonUtils.toJson(channelReporta).toString());
                     }
                 }
-
                 // 新用户放款金额放款金额
                 param.put("newcustomerType", "0");
                 List<Map<String, Object>> newintoMoneyMap = channelReportDao.findNewIntoMoney(param);
-
                 for (Map<String, Object> map : newintoMoneyMap) {
                     Object val = map.get("userFrom");
                     ChannelReport channelReporta = (ChannelReport) JSONObject.toBean(JSONObject.fromObject(jedisCluster.get("channelReport_" + val)), ChannelReport.class);
@@ -672,15 +670,37 @@ public class ChannelReportService implements IChannelReportService {
                     }
                 }
 
+                //新用户放款数量
+                param.put("newcustomerType", "0");
+                List<Map<String, Object>> newintoCountMap = channelReportDao.findNewIntoCount(param);
+                for (Map<String, Object> map : newintoCountMap) {
+                    Object val = map.get("userFrom");
+                    ChannelReport channelReporta = (ChannelReport) JSONObject.toBean(JSONObject.fromObject(jedisCluster.get("channelReport_" + val)), ChannelReport.class);
+                    if (channelReporta != null) {
+                        channelReporta.setNewIntoCount( Integer.valueOf(map.get("newCount").toString()));
+                        jedisCluster.set("channelReport_" + channelReporta.getChannelid(), FastJsonUtils.toJson(channelReporta).toString());
+                    }
+                }
+
                 // 老用户放款金额放款金额
                 param.put("oldcustomerType", "1");
                 List<Map<String, Object>> oldintoMoneyMap = channelReportDao.findOldIntoMoney(param);
-
                 for (Map<String, Object> map : oldintoMoneyMap) {
                     Object val = map.get("userFrom");
                     ChannelReport channelReporta = (ChannelReport) JSONObject.toBean(JSONObject.fromObject(jedisCluster.get("channelReport_" + val)), ChannelReport.class);
                     if (channelReporta != null) {
                         channelReporta.setOldIntoMoney(new BigDecimal(map.get("moneyAmount") == null ? "0" : map.get("moneyAmount").toString()));
+                        jedisCluster.set("channelReport_" + channelReporta.getChannelid(), FastJsonUtils.toJson(channelReporta).toString());
+                    }
+                }
+                //老用户放款数量
+                param.put("oldcustomerType", "1");
+                List<Map<String, Object>> oldintoCountMap = channelReportDao.findOldIntoCount(param);
+                for (Map<String, Object> map : oldintoCountMap) {
+                    Object val = map.get("userFrom");
+                    ChannelReport channelReporta = (ChannelReport) JSONObject.toBean(JSONObject.fromObject(jedisCluster.get("channelReport_" + val)), ChannelReport.class);
+                    if (channelReporta != null) {
+                        channelReporta.setOldIntoCount(Integer.valueOf(map.get("oldCount").toString()));
                         jedisCluster.set("channelReport_" + channelReporta.getChannelid(), FastJsonUtils.toJson(channelReporta).toString());
                     }
                 }
@@ -788,8 +808,12 @@ public class ChannelReportService implements IChannelReportService {
             channelReportNatural.setIntoMoney(intoMoney == null ? BigDecimal.ZERO : new BigDecimal(intoMoney));
             Integer newIntoMoney = channelReportDao.newIntoMoney(naturalMap);
             channelReportNatural.setNewIntoMoney(newIntoMoney == null ? BigDecimal.ZERO : new BigDecimal(newIntoMoney));
+            Integer newIntoCount = channelReportDao.newIntoCount(naturalMap);
+            channelReportNatural.setNewIntoCount(newIntoCount);
             Integer oldIntoMoney = channelReportDao.oldIntoMoney(naturalMap);
             channelReportNatural.setOldIntoMoney(oldIntoMoney == null ? BigDecimal.ZERO : new BigDecimal(oldIntoMoney));
+            Integer oldIntoCount = channelReportDao.oldIntoCount(naturalMap);
+            channelReportNatural.setOldIntoCount(oldIntoCount);
             channelReportNatural.setBlackUserCount(channelReportDao.blackUserCount(naturalMap));
             channelReportNatural.setLateDayCount(channelReportDao.lateDayCount(naturalMap));
             channelReportDao.insert(channelReportNatural);

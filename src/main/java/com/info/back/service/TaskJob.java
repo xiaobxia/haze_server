@@ -866,22 +866,31 @@ public class TaskJob implements ITaskJob {
 		allAmount += ((BigDecimal) map.get("amountAll")).longValue();
 
 		// 当前借款数量、金额
-		map = reportRepaymentService.findAllBorrowByReport(firstRepaymentTime);
+		/*map = reportRepaymentService.findAllBorrowByReport(firstRepaymentTime);
 		allBorrowCount += (Long) map.get("countAll");
 		allBorrowAmount += ((BigDecimal) map.get("amountAll")).longValue();
 		map = reportRepaymentService.findAllRenewalBorrowByReport(firstRepaymentTime);
 		allBorrowCount += (Long) map.get("countAll");
-		allBorrowAmount += ((BigDecimal) map.get("amountAll")).longValue();
+		allBorrowAmount += ((BigDecimal) map.get("amountAll")).longValue();*/
+		//截至到目前放款总量
+         map = reportRepaymentService.findAllByReport(firstRepaymentTime);
+         allBorrowCount += (Long) map.get("countAll");
+         allBorrowAmount += ((BigDecimal) map.get("amountAll")).longValue();
 
-		// 当前还款数量、金额
+      /*  // 当前还款数量、金额
 		map = reportRepaymentService.findAllRepayByReport(firstRepaymentTime);
 		allRepayCount += (Long) map.get("countAll");
 		allRepayAmount += ((BigDecimal) map.get("amountAll")).longValue();
 		map = reportRepaymentService.findAllRenewalRepayByReport(firstRepaymentTime);
 		allRepayCount += (Long) map.get("countAll");
-		allRepayAmount += ((BigDecimal) map.get("amountAll")).longValue();
+		allRepayAmount += ((BigDecimal) map.get("amountAll")).longValue();*/
+        //截至到目前 还款数量，金额
+        map = reportRepaymentService.findRepayReport(firstRepaymentTime);
+        allRepayCount += (Long) map.get("countAll");
+        allRepayAmount += ((BigDecimal) map.get("amountAll")).longValue();
 
-		// 当前逾期数量、金额
+
+        // 当前逾期数量、金额
 		map = reportRepaymentService.findAllOverdueByReport(firstRepaymentTime);
 		allOverdueCount += (Long) map.get("countAll");
 		allOverdueAmount += ((BigDecimal) map.get("amountAll")).longValue();
@@ -1664,7 +1673,7 @@ public class TaskJob implements ITaskJob {
 	}
 
     /**
-     * 渠道每日逾期统计 每两小时分跑一次
+     * 渠道每日逾期统计 每天12点十分跑一次
      * @throws Exception
      */
     @Override
@@ -1673,20 +1682,15 @@ public class TaskJob implements ITaskJob {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar calendar = Calendar.getInstance();
 		Date nowDate = new Date();
-		int nowHour = nowDate.getHours();
-		if (nowHour == 0 ) {
-			calendar.add(calendar.DATE,-1);//把日期往后增加一天.整数往后推,负数往前移动
-			repayTime = dateFormat.format(calendar.getTime());
-		}else{
-			repayTime = dateFormat.format(calendar.getTime());
-		}
+		calendar.add(calendar.DATE,-1);//把日期往后增加一天.整数往后推,负数往前移动
+		repayTime = dateFormat.format(calendar.getTime());
 		if(channelOveCensusService.channelOveCensusResult(repayTime))
 			log.info("当日渠道统计结束,成功");
 		else
 			log.info("当日渠道统计结束,失败");
     }
 
-	/**
+	/**\
 	 * 客服每日派单及回款统计
 	 */
 	@Override

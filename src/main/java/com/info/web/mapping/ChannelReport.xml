@@ -47,6 +47,8 @@
 		<result column="pass_rate_out" property="passRateOut"/>
 		<result column="borrow_rate_out" property="borrowRateOut"/>
 		<result column="uv_count" property="uvCount" jdbcType="INTEGER"/>
+		<result column="new_into_count" property="newIntoCount" jdbcType="INTEGER"/>
+		<result column="old_into_count" property="oldIntoCount" jdbcType="INTEGER"/>
 	</resultMap>
 	<resultMap id="Base_Channel_Ove" type="com.info.web.pojo.OveChannelInfo">
       <result column="channelId" property="channelId"/>
@@ -100,8 +102,9 @@
                 and a.report_date = #{countDate}
             </if>
           <if test="uv != null and uv != ''">
-				and (a.uv_count &gt; 0 or a.attestation_realname_count  &gt; 0 or a.register_count &gt; 0
-				or a.contact_count &gt; 0 or a.jxl_count &gt; 0 or a.borrow_apply_count &gt; 0 or a.borrow_suc_count &gt; 0)
+				<!--and (a.uv_count &gt; 0 or a.attestation_realname_count  &gt; 0 or a.register_count &gt; 0
+				or a.contact_count &gt; 0 or a.jxl_count &gt; 0 or a.borrow_apply_count &gt; 0 or a.borrow_suc_count &gt; 0)-->
+				and a.uv_count != 0
 			</if>
 		</where>
 	</sql>
@@ -130,6 +133,9 @@
 		LEFT JOIN channel_super_info c ON b.channel_super_id = c.id
 		<include refid="Sql" />
 		ORDER BY a.report_date DESC
+		<if test="uv != null">
+			,a.borrow_apply_count DESC
+		</if>
 	</select>
 	<sql id="SumList">
 		b.channel_name AS channelName,b.channel_province ,
@@ -681,10 +687,52 @@
 		and e.customer_type = #{newcustomerType}
 		GROUP BY a.user_from
 	</select>
+	<select id ="findNewIntoCount" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT a.user_from as userFrom,count(e.id) as newCount
+		FROM
+		user_info a
+		INNER JOIN asset_borrow_order e ON e.user_id
+		= a.id
+		WHERE a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and <![CDATA[e.loan_time > #{startDate} and e.loan_time < #{startDateChangeEnd}]]>
+		and e.status in
+		<foreach item="item" index="index" collection="inStatus" open="("
+				 separator="," close=")">
+			#{item}
+		</foreach>
+		and e.customer_type = #{newcustomerType}
+		GROUP BY a.user_from
+	</select>
 	<select id="findOldIntoMoney" resultType="java.util.LinkedHashMap"
 			parameterType="HashMap">
 		SELECT a.user_from as userFrom,IFNULL(SUM(e.money_amount),0) AS
 		moneyAmount
+		FROM
+		user_info a
+		INNER JOIN asset_borrow_order e ON e.user_id
+		= a.id
+		WHERE a.user_from in
+		<foreach item="item" index="index" collection="channelids"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and <![CDATA[e.loan_time > #{startDate} and e.loan_time < #{startDateChangeEnd}]]>
+		and e.status in
+		<foreach item="item" index="index" collection="inStatus" open="("
+				 separator="," close=")">
+			#{item}
+		</foreach>
+		and e.customer_type = #{oldcustomerType}
+		GROUP BY a.user_from
+	</select>
+	<select id="findOldIntoCount" resultType="java.util.LinkedHashMap"
+			parameterType="HashMap">
+		SELECT a.user_from as userFrom,count(e.id) as oldCount
 		FROM
 		user_info a
 		INNER JOIN asset_borrow_order e ON e.user_id
@@ -792,7 +840,9 @@
 		borrow_suc_out_count,
 		pass_rate_out,
 		borrow_rate_out,
-		uv_count)
+		uv_count,
+		new_into_count,
+		old_into_count)
 		VALUES (
 		#{reportDate},
 		#{registerCount},
@@ -836,7 +886,9 @@
 		#{borrowSucOutCount},
 		#{passRateOut},
 		#{borrowRateOut},
-		#{uvCount}
+		#{uvCount},
+		#{newIntoCount},
+		#{oldIntoCount}
 		);
 	</insert>
 	<delete id="deleteByChannelReport" parameterType="com.info.web.pojo.ChannelReport">
@@ -925,9 +977,22 @@
 		and a.user_from = #{userFrom}
 		and <![CDATA[d.loan_time > #{startDate} and d.loan_time < #{startDateChangeEnd}]]>
 	</select>
+
 	<select id="newIntoMoney" resultType="java.lang.Integer" parameterType="map">
 		select sum(d.money_amount) from user_info a,asset_borrow_order d
 		where a.id = d.user_id and d.status in (21,23,30,34,11,-20) and d.customer_type = 0
+		and a.user_from = #{userFrom}
+		and <![CDATA[d.loan_time > #{startDate} and d.loan_time < #{startDateChangeEnd}]]>
+	</select>
+	<select id="newIntoCount" resultType="java.lang.Integer" parameterType="map">
+		select count(d.id) from user_info a,asset_borrow_order d
+		where a.id = d.user_id and d.status in (21,23,30,34,11,-20) and d.customer_type = 0
+		and a.user_from = #{userFrom}
+		and <![CDATA[d.loan_time > #{startDate} and d.loan_time < #{startDateChangeEnd}]]>
+	</select>
+	<select id="oldIntoCount" resultType="java.lang.Integer" parameterType="map">
+		select count(d.id) from user_info a,asset_borrow_order d
+		where a.id = d.user_id and d.status in (21,23,30,34,11,-20) and d.customer_type = 1
 		and a.user_from = #{userFrom}
 		and <![CDATA[d.loan_time > #{startDate} and d.loan_time < #{startDateChangeEnd}]]>
 	</select>
@@ -951,8 +1016,9 @@
 	</select>
 
 	<select id="dayOverdueCount" resultType="java.util.HashMap" parameterType="map">
-		SELECT b.user_from as userFrom, count(1) as count
-		FROM `asset_repayment` ar, user_info b where ar.`user_id` = b.`id` and ar.`status` = -11 and b.`customer_type` = 0 and
+		SELECT b.user_from as userFrom, count(bo.id) as count
+		FROM `asset_repayment` ar, user_info b,asset_borrow_order bo where ar.`user_id` = b.`id` and bo.user_id = ar.user_id
+		and bo.`status` = -11 and b.`customer_type` = 0 and
 	 	date_add(date(ar.`first_repayment_time`),INTERVAL 1 day) = #{startDate}
 		and ar.renewal_count = 0 GROUP BY b.user_from
 	</select>

@@ -27,11 +27,11 @@
 						<input type="text" name="channelName"
 							   value="${params.channelName}" />
 					</td>
-				<%--	<td>
-						还款日期：
-						<input type="text" name="beginTime" id="beginTime" value="${params.beginTime}" class="date textInput readonly" datefmt="yyyy-MM-dd"  />
-						到<input type="text" name="endTime" id="endTime" value="${params.endTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" />
-					</td>--%>
+					<td>
+						还款时间：
+						<input type="text" name="beginTime" id="beginTime" value="${beginTime}" class="date textInput readonly" datefmt="yyyy-MM-dd"  readonly="readonly"/>
+						到<input type="text" name="endTime" id="endTime" value="${endTime}" class="date textInput readonly" datefmt="yyyy-MM-dd"  readonly="readonly"/>
+					</td>
 					<td>
 						<div class="buttonActive">
 							<div class="buttonContent">
