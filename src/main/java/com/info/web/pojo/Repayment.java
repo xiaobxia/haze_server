@@ -79,6 +79,8 @@ public class Repayment implements Serializable {
     //用户成功放款次数
     private String loanCount;
 
+    private String channelName;
+
 //    private String customerType;
 
 
@@ -377,6 +379,14 @@ public class Repayment implements Serializable {
 
     public void setLoanCount(String loanCount) {
         this.loanCount = loanCount;
+    }
+
+    public String getChannelName() {
+        return channelName;
+    }
+
+    public void setChannelName(String channelName) {
+        this.channelName = channelName;
     }
 
     @Override

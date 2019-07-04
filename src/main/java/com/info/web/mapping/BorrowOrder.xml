@@ -214,6 +214,12 @@
 			<if test="endApplyTime !=null and endApplyTime!=''">
 				<![CDATA[ and DATE_FORMAT(abo.created_at,'%Y-%m-%d') <= #{endApplyTime}]]>
 			</if>
+			 <if test="startLoanTime != null and startLoanTime !=''">
+				 <![CDATA[ and DATE_FORMAT(abo.loan_time,'%Y-%m-%d') >= #{startLoanTime} ]]>
+			 </if>
+			 <if test="endLoanTime != null and endLoanTime != ''">
+				 <![CDATA[ and DATE_FORMAT(abo.loan_time,'%Y-%m-%d') <= #{endLoanTime}]]>
+			 </if>
 			<if test="borrowStatus!=null and borrowStatus!=''">
 				and abo.status=#{borrowStatus}
 			</if>

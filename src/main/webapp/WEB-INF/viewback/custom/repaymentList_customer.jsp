@@ -22,6 +22,11 @@
 							   value="${params.userMobileLike }" />
 					</td>
 					<td>
+						渠道名称：
+						<input type="text" name="channelName" id="channelName"
+						value = "${params.channelName}">
+					</td>
+					<td>
 						<div class="buttonActive">
 							<div class="buttonContent">
 								<button type="submit">
@@ -43,6 +48,9 @@
 				<tr>
 					<th align="center"  >
 						序号
+					</th>
+					<th align="center">
+						渠道名称
 					</th>
 					<th align="center"  >
 						姓名
@@ -75,9 +83,9 @@
 					<th align="center" >
 						预期还款时间
 					</th>
-					<th align="center" >
+					<%--<th align="center" >
 						逾期天数
-					</th>
+					</th>--%>
 					<th align="center"  >
 						状态
 					</th>
@@ -88,6 +96,9 @@
 					<tr target="repaymentId" rel="${repayment.id }">
 						<td>
 							${status.count}
+						</td>
+						<td>
+							${repayment.channelName}
 						</td>
 						<td>
 							${repayment.realname}
@@ -120,9 +131,9 @@
 						<td>
 							<fmt:formatDate value="${repayment.repaymentTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
 						</td>
-						<td>
+						<%--<td>
 							${repayment.lateDay }
-						</td>
+						</td>--%>
 						<td>
 							${BORROW_STATUS_ALL[repayment.status]}
 						</td>

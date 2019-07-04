@@ -33,6 +33,11 @@
 							   class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly"
 							   value="${params.repaymentedTimeEnd }" />
 					</td>
+					<td>
+						渠道名称：
+						<input type="text" name="channelName" id="channelName"
+							   value = "${params.channelName}">
+					</td>
 				</tr>
 				<tr>
 					<td>
@@ -87,6 +92,9 @@
 					<th align="center"  >
 						序号
 					</th>
+					<th align="center">
+						渠道名称
+					</th>
 					<th align="center"  >
 						姓名
 					</th>
@@ -130,6 +138,9 @@
 					<tr target="repaymentId" rel="${repayment.id }">
 						<td>
 							${status.count}
+						</td>
+						<td>
+							${repayment.channelName}
 						</td>
 						<td>
 							${repayment.realname}

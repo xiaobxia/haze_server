@@ -27,6 +27,7 @@
         <result column="collection" property="collection" jdbcType="INTEGER" />
         <result column="repayment_no" property="repaymentNo" jdbcType="VARCHAR" />
         <result column="first_repayment_time" property="firstRepaymentTime" jdbcType="TIMESTAMP" />
+        <result column="channelName" property="channelName" jdbcType="VARCHAR"/>
     </resultMap>
     <resultMap id="ResultMapWithBLOBs" type="com.info.web.pojo.Repayment" extends="BaseResultMap" >
         <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
@@ -306,6 +307,7 @@ remark
 <sql id="selectSql">
     from asset_repayment a LEFT JOIN user_info u on u.id = a.user_id
     left join asset_borrow_order abo on a.asset_order_id = abo.id
+    left join channel_info ci on ci.id = u.user_from
     where 1 = 1
     <if test="statuses != null and statuses != '' and statuses.length > 0">
         and abo.status in
@@ -342,6 +344,9 @@ remark
     </if>
     <if test="productAmount != null and productAmount != ''">
       and abo.money_amount = #{productAmount}
+    </if>
+    <if test="channelName != null and channelName != ''">
+        and ci.channel_name = #{channelName}
     </if>
 </sql>
 
@@ -423,7 +428,8 @@ remark
     <select id="findParams" resultMap="BaseResultMap"
             parameterType="map">
         select
-        a.*,u.realname as realname,u.user_phone as userPhone,u.customer_type as customerType
+        a.*,u.realname as realname,u.user_phone as userPhone,u.customer_type as customerType,
+        ci.channel_name as channelName
         <include refid="selectSql"/>
         order by id desc
     </select>
