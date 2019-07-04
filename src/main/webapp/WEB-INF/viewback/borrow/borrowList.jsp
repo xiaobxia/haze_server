@@ -119,11 +119,13 @@
                             <option value="">全部</option>
                         </select>
                     </td>
-                    <td>
-                        放款时间：
-                        <input type="text" name="startLoanTime" id="startLoanTime" value="${params.startLoanTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
-                        到<input type="text" name="endLoanTime" id="endLoanTime" value="${params.endLoanTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
-                    </td>
+                    <c:if test="${!(bType=='fengk_Trial'||bType=='fengk_Review')}">
+                        <td>
+                            放款时间：
+                            <input type="text" name="startLoanTime" id="startLoanTime" value="${params.startLoanTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
+                            到<input type="text" name="endLoanTime" id="endLoanTime" value="${params.endLoanTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
+                        </td>
+                    </c:if>
                     <%--<td>--%>
                         <%--评分卡编号:--%>
                         <%--<select name="scoreCard" id="scoreCard" class="textInput" onchange="">--%>
@@ -193,10 +195,11 @@
                 <th align="center">
                     申请时间
                 </th>
-                <th align="center">
-                    放款时间
-                </th>
-
+                <c:if test="${!(bType=='fengk_Trial'||bType=='fengk_Review')}">
+                    <th align="center">
+                        放款时间
+                    </th>
+                </c:if>
                 <th align="center">更新时间</th>
                 <th align="center" class="loanStatusTitle">
                     状态
@@ -258,10 +261,11 @@
                         <fmt:formatDate value="${borrow.orderTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
                     </td>
 
-
-                    <td>
-                        <fmt:formatDate value="${borrow.loanTime }" pattern="yyyy-MM-dd"/>
-                    </td>
+                    <c:if test="${!(bType=='fengk_Trial'||bType=='fengk_Review')}">
+                        <td>
+                            <fmt:formatDate value="${borrow.loanTime }" pattern="yyyy-MM-dd"/>
+                        </td>
+                    </c:if>
                     <td><fmt:formatDate value="${borrow.updatedAt }"
                                         pattern="yyyy-MM-dd HH:mm:ss"/></td>
                     <td class="loanStatusName">
