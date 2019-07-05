@@ -630,8 +630,8 @@
 		asset_borrow_order bo
 		left join user_info ui on bo.user_id = ui.id
 		WHERE
-		ui.customer_type = 1 and bo.`status` in (21,30,34)
-		AND DATE_FORMAT( updated_at, '%Y-%m-%d' ) = DATE_FORMAT(#{loanTime},'%Y-%m-%d')
+		bo.customer_type = 1
+		AND DATE_FORMAT( bo.loan_time, '%Y-%m-%d' ) = DATE_FORMAT(#{loanTime},'%Y-%m-%d')
 		AND user_id IN
 		<foreach collection="userId" item="userId" separator="," open="(" close=")">
 			#{userId}
