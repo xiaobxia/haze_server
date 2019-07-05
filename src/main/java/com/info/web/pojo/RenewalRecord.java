@@ -75,6 +75,8 @@ public class RenewalRecord {
     private String realRenewalDate;
     //成功还款次数
     private String loanCount;
+    //渠道名称
+    private String channelName;
     public static final Map<Integer, String> RENEWAL_STATUS = new HashMap<Integer, String>();
 
     /**
@@ -407,5 +409,13 @@ public class RenewalRecord {
 
     public void setLoanCount(String loanCount) {
         this.loanCount = loanCount;
+    }
+
+    public String getChannelName() {
+        return channelName;
+    }
+
+    public void setChannelName(String channelName) {
+        this.channelName = channelName;
     }
 }

@@ -308,6 +308,7 @@ remark
     from asset_repayment a LEFT JOIN user_info u on u.id = a.user_id
     left join asset_borrow_order abo on a.asset_order_id = abo.id
     left join channel_info ci on ci.id = u.user_from
+    left join channel_super_info si on si.id = ci.channel_super_id
     where 1 = 1
     <if test="statuses != null and statuses != '' and statuses.length > 0">
         and abo.status in
@@ -347,6 +348,12 @@ remark
     </if>
     <if test="channelName != null and channelName != ''">
         and ci.channel_name = #{channelName}
+    </if>
+    <if test="channelid != null and channelid != ''">
+        and u.user_from = #{channelid}
+    </if>
+    <if test="superChannelId != null and superChannelId !=''">
+        and si.id = #{superChannelId}
     </if>
 </sql>
 
@@ -429,7 +436,7 @@ remark
             parameterType="map">
         select
         a.*,u.realname as realname,u.user_phone as userPhone,u.customer_type as customerType,
-        ci.channel_name as channelName
+       ifNULL(ci.channel_name,"自然流量")  as channelName
         <include refid="selectSql"/>
         order by id desc
     </select>

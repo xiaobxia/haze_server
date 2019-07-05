@@ -69,6 +69,7 @@ public  class RenewalRecordService implements IRenewalRecordService {
 	public PageConfig<RenewalRecord> renewalList(HashMap<String, Object> params) {
 		params.put(Constant.NAME_SPACE, "RenewalRecord");
 		DateUtil.sqlOptimization4DateFormat(params,"orderTime","orderTimeEnd");
+		//DateUtil.sqlOptimization4DateFormat(params,"startLoanTime","endLoanTime");
 		return paginationDao.findPage("renewalList", "renewalCount", params, "web");
 	}
 	@SuppressWarnings("unchecked")

@@ -539,6 +539,7 @@ public class BorrowOrderController extends BaseController {
                         borrowOrd.setPaystatus(borrowOrdSrc.getPayStatus());
                         borrowOrd.setAutoLoanFlag(Integer.valueOf(borrowOrdSrc.getAutoLoanFlag()));
                         borrowOrd.setProjectNameVal(PropertiesUtil.get(borrowOrd.getProjectName()));
+                        borrowOrd.setLateDay(borrowOrdSrc.getLateDay());
                         userBorrows.add(borrowOrd);
                     }
                 }

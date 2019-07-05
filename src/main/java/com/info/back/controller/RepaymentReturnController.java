@@ -10,7 +10,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.info.web.service.IRepaymentService;
+import com.info.web.pojo.*;
+import com.info.web.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,13 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.info.back.utils.DwzResult;
 import com.info.back.utils.SpringUtils;
 import com.info.web.controller.BaseController;
-import com.info.web.pojo.BackUser;
-import com.info.web.pojo.RenewalRecord;
-import com.info.web.pojo.RepaymentDetail;
-import com.info.web.pojo.RepaymentReturn;
-import com.info.web.service.IRenewalRecordService;
-import com.info.web.service.IRepaymentDetailService;
-import com.info.web.service.IRepaymentReturnService;
 import com.info.web.util.DateUtil;
 import com.info.web.util.PageConfig;
 
@@ -50,6 +44,9 @@ public class RepaymentReturnController extends BaseController {
 
 	@Autowired
 	private IRepaymentService repaymentService;
+
+	@Autowired
+	private IChannelInfoService channelInfoService;
 
 	@RequestMapping("getRepaymentReturnPage")
 	public String getRepaymentPage(HttpServletRequest request, Integer[] statuses, Model model) {
@@ -99,11 +96,27 @@ public class RepaymentReturnController extends BaseController {
 	public String getRenewalReturnPage(HttpServletRequest request, Model model) {
 		HashMap<String, Object> params = getParametersO(request);
 		try {
-			if(null == params.get("orderTime")){
+			boolean checkFlag = false;
+			String channelNameNatural = params.get("channelName") == null ? "" : params.get("channelName").toString();
+			String channelidNatural = params.get("channelid") == null ? "" : params.get("channelid").toString();
+			if (params.get("channelName") != null && "自然流量".contains(params.get("channelName").toString())) {
+				if (params.get("channelid") == null || "0".equals(params.get("channelid"))) {
+					params.remove("channelName");
+					params.put("channelid", "0");
+					checkFlag = true;
+				}
+			}
+			String channelSuperId = request.getParameter("superChannelId");
+			if(channelSuperId != null && channelSuperId.equals("-999")){
+				params.put("channelid", "0");
+				params.remove("superChannelId");
+			}
+			List<ChannelSuperInfo> channelSuperInfos = channelInfoService.findSuperAll(params);
+			/*if(null == params.get("orderTime")){
 				 params.put("orderTime", DateUtil.getDateFormat("yyyy-MM-dd"));
 				 params.put("orderTimeEnd", DateUtil.getDateFormat("yyyy-MM-dd"));
 				
-			}
+			}*/
 			PageConfig<RenewalRecord> pageConfig = renewalRecordService.renewalList(params);
 			List<RenewalRecord> list= new ArrayList<RenewalRecord>();
 			for(RenewalRecord renewalRecord : pageConfig.getItems()){
@@ -125,6 +138,14 @@ public class RepaymentReturnController extends BaseController {
 			}
 			pageConfig.setItems(list);
 			model.addAttribute("pm", pageConfig);
+			model.addAttribute("searchParams",channelSuperId);
+			model.addAttribute("channelSuperInfos", channelSuperInfos);
+			if (checkFlag) {
+				params.remove("channelid");
+				params.put("channelName", channelNameNatural);
+				params.put("channelid", channelidNatural);
+			}
+			// 用于搜索框保留值
 			model.addAttribute("params", params);
 
 		} catch (Exception e) {
