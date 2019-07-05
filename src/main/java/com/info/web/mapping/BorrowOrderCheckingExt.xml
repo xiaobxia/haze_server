@@ -52,7 +52,7 @@
     id, user_id, asset_order_id, order_type, money_amount, apr, loan_interests, into_money, 
     loan_method, loan_term, operator_name, out_no, created_at, updated_at, order_time, 
     loan_time, loan_end_time, late_fee_apr, affiliation_ukey, capital_type, reason_remark, 
-    is_hit_risk_rule, auto_risk_check_status, customer_type, yurref, user_phone, realname, 
+    is_hit_risk_rule, auto_risk_check_status, customer_type, yurref, user_phone, realname,
     id_number, card_no, bankSequence, bank_number, bank_iscmb, packet_id, status, sign_status, 
     many_assetpack, one_assetpack_money, one_assetpack_signtime, one_push_status, two_assetpack_money, 
     two_assetpack_signtime, two_push_status
@@ -136,7 +136,7 @@
       created_at, updated_at, order_time, 
       loan_time, loan_end_time, late_fee_apr, 
       affiliation_ukey, capital_type, reason_remark, 
-      is_hit_risk_rule, auto_risk_check_status, customer_type, 
+      is_hit_risk_rule, auto_risk_check_status, customer_type,
       yurref, user_phone, realname, 
       id_number, card_no, bankSequence, 
       bank_number, bank_iscmb, packet_id, 

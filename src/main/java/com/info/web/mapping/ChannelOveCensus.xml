@@ -252,7 +252,7 @@
 				and bo.status = #{status}
 			</if>
 			<if test=" customerType == 0 or customerType == 1">
-				and bo.customer_type = #{customerType}
+				and ui.customer_type = #{customerType}
 			</if>
 			<if test="customerType == 2">
 				group by bo.user_id
@@ -274,7 +274,7 @@
 			AND  DATE_FORMAT(rr.old_repayment_time, '%Y-%m-%d' )= #{repayTime}
 			AND rr.status = 1
 		<if test=" customerType == 0 or customerType == 1">
-			and bo.customer_type = #{customerType}
+			and ui.customer_type = #{customerType}
 		</if>
 		<if test="customerType == 2">
 			group by bo.user_id

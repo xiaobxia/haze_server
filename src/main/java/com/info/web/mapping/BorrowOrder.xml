@@ -1638,7 +1638,7 @@
 		ui.user_from = #{channelId}
 		AND DATE_FORMAT( bo.loan_end_time, '%Y%m%d' )= DATE_FORMAT( #{loanTime}, '%Y%m%d' )
 		<if test ="customerType != null and customerType != ''">
-			and bo.customer_type=1
+			and ui.customer_type=1
 		</if>
 		<if test="status != null">
 			and bo.status = #{status}
@@ -1682,7 +1682,7 @@
 			#{status}
 		</foreach>
 		<if test ="customerType != null and customerType != ''">
-			and bo.customer_type=1
+			and ui.customer_type=1
 		</if>
 	</select>
 	<select id="findExtendChannel" resultType="java.lang.Integer">
