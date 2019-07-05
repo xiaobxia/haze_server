@@ -336,7 +336,7 @@
             and rr.renewal_type = #{renewalType}
         </if>
         <if test="startLoanTime != null and endLoanTime != null">
-            <![CDATA[  and rr.old_repayment_time >= #{startLoanTime} and rr.old_repayment_time <= #{endLoanTime} ]]>
+            <![CDATA[  and DATE_FORMAT( rr.old_repayment_time, '%Y-%m-%d' )  >= #{startLoanTime} and DATE_FORMAT( rr.old_repayment_time, '%Y-%m-%d' )  <= #{endLoanTime} ]]>
         </if>
         <if test="channelName != null">
               and ci.channel_name = #{channelName}
@@ -375,7 +375,7 @@
             and rr.renewal_kind = #{renewalKind}
         </if>
         <if test="startLoanTime != null and endLoanTime != null">
-            <![CDATA[  and rr.old_repayment_time >= #{startLoanTime} and rr.old_repayment_time <= #{endLoanTime} ]]>
+            <![CDATA[  and DATE_FORMAT( rr.old_repayment_time, '%Y-%m-%d' )  >= #{startLoanTime} and DATE_FORMAT( rr.old_repayment_time, '%Y-%m-%d' )  <= #{endLoanTime} ]]>
         </if>
         <if test="channelName != null">
             and ci.channel_name = #{channelName}
