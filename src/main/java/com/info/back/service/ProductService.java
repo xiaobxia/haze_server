@@ -11,7 +11,6 @@ import com.info.web.util.PageConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -159,5 +158,10 @@ public class ProductService implements  IProductService {
             log.error("修改为默认产品出错"+e.getMessage());
             throw new Exception("修改为默认产品出错");
         }
+    }
+
+    @Override
+    public List<BorrowProductConfig> queryAllBorrowProductConfig() {
+        return borrowProductConfigDao.queryAllBorrowProductConfig();
     }
 }

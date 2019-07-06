@@ -1,5 +1,6 @@
 package com.info.web.dao;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -117,4 +118,10 @@ public interface IUserDao {
 	String selectReportDataHtml(Integer userId);
 
 	Integer selectUserIdByPhone(String userPhone);
+
+	int updateUserQuota(@Param("userId") int userId, @Param("productId") int productId, @Param("borrowDay") int borrowDay, @Param("nowLimit") BigDecimal nowLimit);
+
+	int addUserQuota(@Param("userId") int userId, @Param("productId") int productId, @Param("nowLimit") BigDecimal nowLimit, @Param("borrowDay") int borrowDay);
+
+	int queryCountByUserId(@Param("userId") int userId);
 }

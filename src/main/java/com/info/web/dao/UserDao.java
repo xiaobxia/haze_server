@@ -1,5 +1,6 @@
 package com.info.web.dao;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -184,5 +185,30 @@ public class UserDao extends BaseDao implements IUserDao {
 	@Override
 	public Integer selectUserIdByPhone(String userPhone) {
 		return this.getSqlSessionTemplate().selectOne("selectUserIdByPhone", userPhone);
+	}
+
+	@Override
+	public int updateUserQuota(int userId, int productId, int borrowDay, BigDecimal nowLimit) {
+		Map<String, Object> params = new HashMap();
+		params.put("userId", userId);
+		params.put("productId", productId);
+		params.put("borrowDay", borrowDay);
+		params.put("nowLimit", nowLimit);
+		return this.getSqlSessionTemplate().update("updateUserQuota", params);
+	}
+
+	@Override
+	public int addUserQuota(int userId, int productId, BigDecimal nowLimit, int borrowDay) {
+		Map<String, Object> params = new HashMap();
+		params.put("userId", userId);
+		params.put("productId", productId);
+		params.put("borrowDay", borrowDay);
+		params.put("nowLimit", nowLimit);
+		return this.getSqlSessionTemplate().insert("addUserQuota", params);
+	}
+
+	@Override
+	public int queryCountByUserId(int userId) {
+		return this.getSqlSessionTemplate().selectOne("queryCountByUserId", userId);
 	}
 }

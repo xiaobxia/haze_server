@@ -1008,4 +1008,24 @@
 	<select id="selectUserIdByPhone" parameterType="java.lang.String" resultType="java.lang.Integer">
 		select id from user_info where user_phone = #{userPhone}
 	</select>
+
+	<update id="updateUserQuota">
+		update user_borrowquota_snapshot
+		set borrow_product_id = #{productId} ,
+			update_time = now(),
+			user_amount_limit = #{nowLimit},
+			borrow_day = #{borrowDay}
+		where user_id = #{userId}
+	</update>
+
+	<insert id="addUserQuota">
+		insert into user_borrowquota_snapshot (user_id,borrow_product_id,create_time,update_time,user_amount_limit,borrow_day)
+			value (#{userId},#{productId},now(),now(),#{nowLimit},#{borrowDay})
+	</insert>
+
+	<select id="queryCountByUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select COUNT(1)
+		from user_borrowquota_snapshot
+		where user_id = #{userId} and deal_flag = 'n'
+	</select>
 </mapper>

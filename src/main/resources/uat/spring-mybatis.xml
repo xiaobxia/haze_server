@@ -71,7 +71,7 @@
                 <!--<ref bean="updateEdJobTrigger"/>-->
                 <!--<ref bean="findJxlReportJobTrigger"/>-->
                 <!--<ref bean="updateAnalysisJobTrigger"/>-->
-                <ref bean="overdueJobTrigger"/>
+                <!--<ref bean="overdueJobTrigger"/>
                 <ref bean="withholdJobTrigger"/>
                 <ref bean="reportRepayment12JobTrigger"/>
                 <ref bean="reportRepaymentE2JobTrigger"/>
@@ -79,21 +79,21 @@
                 <ref bean="smsRemind9JobTrigger"/>
                 <ref bean="channelReportJobTrigger"/>
                 <ref bean="platformReportJobTrigger"/>
-                <!-- <ref bean="assetsDivisionBeanTrigger"/> -->
-                <!--<ref bean="updateRetryJobTrigger"/>-->
+                &lt;!&ndash; <ref bean="assetsDivisionBeanTrigger"/> &ndash;&gt;
+                &lt;!&ndash;<ref bean="updateRetryJobTrigger"/>&ndash;&gt;
                 <ref bean="thirdReportJobTrigger"/>
-                <!--<ref bean="acitveClickStatisticsJobTrigger"/>
-                <ref bean="updateFromRiskJobTrigger"/>-->
-                <!-- <ref bean="CZMassetsDivisionJobTrigger"/> -->
-                <!--魔蝎不用 ，因为收费 	 <ref bean="findMobileReportJobTrigger"/> -->
-                <!--<ref bean="queryOrderResultLianJobTrigger"/>-->
+                &lt;!&ndash;<ref bean="acitveClickStatisticsJobTrigger"/>
+                <ref bean="updateFromRiskJobTrigger"/>&ndash;&gt;
+                &lt;!&ndash; <ref bean="CZMassetsDivisionJobTrigger"/> &ndash;&gt;
+                &lt;!&ndash;魔蝎不用 ，因为收费 	 <ref bean="findMobileReportJobTrigger"/> &ndash;&gt;
+                &lt;!&ndash;<ref bean="queryOrderResultLianJobTrigger"/>&ndash;&gt;
                 <ref bean="updateLoanTermJobTrigger"/>
-                <!--<ref bean="payLoanInterestPaysJobTrigger"/>-->
-                <!--<ref bean="queryPaysStateNotCmbJobTrigger"/>-->
-                <!--<ref bean="queryPaysStateCmbJobTrigger"/>-->
-                <!-- 续期处理中 查询处理-->
-                <!--<ref bean="queryRenewalOrderJobTrigger"/>-->
-                <!--数据统计-->
+                &lt;!&ndash;<ref bean="payLoanInterestPaysJobTrigger"/>&ndash;&gt;
+                &lt;!&ndash;<ref bean="queryPaysStateNotCmbJobTrigger"/>&ndash;&gt;
+                &lt;!&ndash;<ref bean="queryPaysStateCmbJobTrigger"/>&ndash;&gt;
+                &lt;!&ndash; 续期处理中 查询处理&ndash;&gt;
+                &lt;!&ndash;<ref bean="queryRenewalOrderJobTrigger"/>&ndash;&gt;
+                &lt;!&ndash;数据统计&ndash;&gt;
                 <ref bean="dataAnalyzeJobTrigger" />
                 <ref bean="riskModelJobTrigger" />
                 <ref bean="riskByChannelJobTrigger" />
@@ -103,7 +103,7 @@
                 <ref bean="insertAssignStatisticForSystemSendJobTrigger"/>
                 <ref bean="insertAssignStatisticForArtificialSendJobTrigger"/>
                 <ref bean="autoAssignOrderJobTrigger"/>
-               <!-- <ref bean="autoAssignOrderForNigJobTrigger"/>-->
+               &lt;!&ndash; <ref bean="autoAssignOrderForNigJobTrigger"/>&ndash;&gt;
                 <ref bean="autoAddCustomerClassTrigger"/>
                 <ref bean="userQuotaJobTrigger"/>
                 <ref bean="everyDayUserQuotaJobTrigger"/>
@@ -113,7 +113,7 @@
                 <ref bean="afterLoanCensusJobTrigger"/>
                 <ref bean="BackLoanOveCensusJobTrigger"/>
                 <ref bean="channelOveCensusResultJobTrigger"/>
-                <ref bean="kefuCensusJobTrigger"/>
+                <ref bean="kefuCensusJobTrigger"/>-->
             </list>
         </property>
     </bean>
