@@ -579,8 +579,9 @@
 		from channel_info
 	</select>
 	<select id="findLoanCount" resultType="java.lang.Integer" >
-		select count(id) as loanCount from asset_repayment where status in('21','23','30')
-		and DATE_FORMAT(credit_repayment_time,'%Y-%m-%d') =DATE_FORMAT(#{loanTime},'%Y-%m-%d')
+		select count(id) as loanCount from asset_repayment
+		 where
+		 DATE_FORMAT(credit_repayment_time,'%Y-%m-%d') =DATE_FORMAT(#{loanTime},'%Y-%m-%d')
 		and user_id in
 		<foreach collection="userId" item="userId" separator="," open="(" close=")">
 			#{userId}
@@ -631,7 +632,7 @@
 		asset_borrow_order bo
 		left join user_info ui on bo.user_id = ui.id
 		WHERE
-		bo.customer_type = 1 and bo.status in (21,30)
+		bo.customer_type = 1
 		AND DATE_FORMAT( bo.loan_time, '%Y-%m-%d' ) = DATE_FORMAT(#{loanTime},'%Y-%m-%d')
 		AND user_id IN
 		<foreach collection="userId" item="userId" separator="," open="(" close=")">

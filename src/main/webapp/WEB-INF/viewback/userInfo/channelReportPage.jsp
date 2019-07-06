@@ -517,7 +517,12 @@
 								${channel.uvCount}
 					</td>
 					<td>
-						<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.uvRate}" />
+						<c:if test = "${channel.uvCount  gt 0 and channel.registerCount gt 0}">
+							<fmt:formatNumber type="percent" maxFractionDigits="2"  pattern="0.00%" value="${channel.registerCount/channel.uvCount}" />
+						</c:if>
+						<c:if test = "${channel.uvCount eq 0 or channel.registerCount eq 0}">
+							0.00%
+						</c:if>
 					</td>
 					<%--<td>
 						${channel.uvRate}
