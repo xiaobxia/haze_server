@@ -229,29 +229,29 @@ public class UserManageController extends BaseController{
 							BorrowOrder.STATUS_FKZ, BorrowOrder.STATUS_FSBHLH));
 					put("userId", id);
 				}});
-				String result = "该用户存在未完成的订单，无法执行该操作!";
+				String result = "操作失败";
 
 				int productId = userDao.queryUserQuotaProductId(userId);
-				if (productId == Integer.parseInt(productConfigId)) {
-					result = "修改的产品与用户当前可借产品一致，无需重复修改!";
+				if (count > 0) {
+					result = "该用户存在未完成的订单，无法执行该操作!";
+				} else if (productId == Integer.parseInt(productConfigId)) {
+					result = "修改的产品与用户当前可借产品一致，无需重复操作!";
 				} else {
-					if (count <= 0) {
-						bool = true;
+					bool = true;
 
-						HashMap<String, Object> map = new HashMap<>();
-						map.put("userId", id);
-						map.put("newAmountMax", productDetail.getBorrowAmount().intValue());
-						borrowOrderService.changeUserLimit(map);
+					HashMap<String, Object> map = new HashMap<>();
+					map.put("userId", id);
+					map.put("newAmountMax", productDetail.getBorrowAmount().intValue());
+					borrowOrderService.changeUserLimit(map);
 
-						int i = userDao.queryCountByUserId(userId);
-						log.info("修改用户可借产品线，用户产品数量：{}", i);
-						if (i > 0) {
-							log.info("userManageProduct updateUserQuota userId:{}, productId", userId, productDetail.getProductId());
-							userDao.updateUserQuota(userId, productDetail.getProductId(), productDetail.getBorrowDay(), productDetail.getBorrowAmount());
-						} else {
-							log.info("userManageProduct addUserQuota userId:{}, productId", userId, productDetail.getProductId());
-							userDao.addUserQuota(userId, productDetail.getProductId(), productDetail.getBorrowAmount(), productDetail.getBorrowDay());
-						}
+					int i = userDao.queryCountByUserId(userId);
+					log.info("修改用户可借产品线，用户产品数量：{}", i);
+					if (i > 0) {
+						log.info("userManageProduct updateUserQuota userId:{}, productId", userId, productDetail.getProductId());
+						userDao.updateUserQuota(userId, productDetail.getProductId(), productDetail.getBorrowDay(), productDetail.getBorrowAmount());
+					} else {
+						log.info("userManageProduct addUserQuota userId:{}, productId", userId, productDetail.getProductId());
+						userDao.addUserQuota(userId, productDetail.getProductId(), productDetail.getBorrowAmount(), productDetail.getBorrowDay());
 					}
 				}
 				SpringUtils.renderDwzResult(response, bool, bool ? "操作成功!" : result, DwzResult.CALLBACK_RELOADPAGE);
