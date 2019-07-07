@@ -286,8 +286,9 @@ public class UserManageController extends BaseController{
 	public String userManageProduct (HttpServletRequest request,Model model){
 		Map<String, String> params =this.getParameters(request);
 		User user=this.userService.searchByUserid(Integer.parseInt(params.get("id")));
-		model.addAttribute("id",user.getId());
-		model.addAttribute("productConfigList",productService.queryAllBorrowProductConfig());
+		model.addAttribute("id", user.getId());
+		model.addAttribute("productConfigList", productService.queryAllBorrowProductConfig());
+		model.addAttribute("productId", userDao.queryUserQuotaProductId(Integer.parseInt(user.getId())));
 		return "userInfo/userManageUpdateProduct";
 	}
 	

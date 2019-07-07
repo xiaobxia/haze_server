@@ -28,7 +28,7 @@
 						<select name="productConfigId" class="required">
 							<option value="">--请选择--</option>
 							<c:forEach var="productConfig" items="${productConfigList}">
-								<option value="${productConfig.id}">${productConfig.productName}</option>
+								<option value="${productConfig.id}" <c:if test="${productConfig.id eq productId}">selected="selected"</c:if> >${productConfig.productName}</option>
 							</c:forEach>
 						</select>
 						<label style="color: red;" class="required-label">*</label>
