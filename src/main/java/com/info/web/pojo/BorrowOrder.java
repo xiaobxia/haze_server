@@ -957,6 +957,16 @@ public class BorrowOrder {
 		this.channelName = channelName;
 	}
 
+	private Integer productId;
+
+	public Integer getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
+
 	@Override
 	public String toString() {
 		return "BorrowOrder [apr=" + apr + ", autoRiskCheckStatus="

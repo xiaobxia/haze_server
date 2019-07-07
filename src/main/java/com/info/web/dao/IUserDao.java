@@ -124,4 +124,6 @@ public interface IUserDao {
 	int addUserQuota(@Param("userId") int userId, @Param("productId") int productId, @Param("nowLimit") BigDecimal nowLimit, @Param("borrowDay") int borrowDay);
 
 	int queryCountByUserId(@Param("userId") int userId);
+
+	int queryUserQuotaProductId(@Param("userId") int userId);
 }

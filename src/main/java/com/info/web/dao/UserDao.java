@@ -211,4 +211,9 @@ public class UserDao extends BaseDao implements IUserDao {
 	public int queryCountByUserId(int userId) {
 		return this.getSqlSessionTemplate().selectOne("queryCountByUserId", userId);
 	}
+
+	@Override
+	public int queryUserQuotaProductId(int userId) {
+		return this.getSqlSessionTemplate().selectOne("queryUserQuotaProductId", userId);
+	}
 }

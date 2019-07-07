@@ -1028,4 +1028,10 @@
 		from user_borrowquota_snapshot
 		where user_id = #{userId} and deal_flag = 'n'
 	</select>
+
+	<select id="queryUserQuotaProductId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select borrow_product_id
+		from user_borrowquota_snapshot
+		where user_id = #{userId} and deal_flag = 'n'
+	</select>
 </mapper>

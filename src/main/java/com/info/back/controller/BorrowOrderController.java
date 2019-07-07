@@ -26,9 +26,7 @@ import com.info.risk.service.IAutoRiskService;
 import com.info.risk.service.IRiskModelOrderService;
 import com.info.risk.utils.autorisk.RiskCreditReasonUtil;
 import com.info.web.controller.BaseController;
-import com.info.web.dao.BorrowProductConfigDao;
-import com.info.web.dao.IUserContactsDao;
-import com.info.web.dao.IndexDao;
+import com.info.web.dao.*;
 import com.info.web.pojo.*;
 import com.info.web.service.*;
 import com.info.web.util.*;
@@ -128,6 +126,9 @@ public class BorrowOrderController extends BaseController {
 
     @Autowired
     private IndexDao indexDao;
+
+    @Resource
+    private IUserDao userDao;
 
 
     @RequestMapping("/addUserLimit")
@@ -439,13 +440,17 @@ public class BorrowOrderController extends BaseController {
     public String insistlending(String type,String borrowId){
         try{
             if(StringUtils.isNotBlank(type) && "0".equals(type)){
-                BorrowOrder  borrow = borrowOrderService.findOneBorrow(Integer.valueOf(borrowId));
+                BorrowOrder borrow = borrowOrderService.findOneBorrow(Integer.valueOf(borrowId));
                 if (BorrowOrder.borrowStatusMap_kefangkuan.contains(borrow.getStatus())) {
                     return "此状态不可操作放款";
                 }
                 User user = userService.searchByUserid(borrow.getUserId());
                 if (user.getStatus().equals(User.USER_STATUS_THREE)) {
                     return "此用户已经被注销，不可操作放款";
+                }
+                int productId = userDao.queryUserQuotaProductId(Integer.parseInt(user.getId()));
+                if(borrow.getProductId() != productId) {
+                    return "用户可借产品已经更改，不可操作放款";
                 }
 
                 //坚持放款 修改asset_borrow_order数据表中的状态为 待放款
