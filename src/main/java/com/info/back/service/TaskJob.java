@@ -1677,6 +1677,7 @@ public class TaskJob implements ITaskJob {
      * @throws Exception
      */
     @Override
+	@PostConstruct
 	public void channelOveCensusResult() throws Exception{
 		String  repayTime = null;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
