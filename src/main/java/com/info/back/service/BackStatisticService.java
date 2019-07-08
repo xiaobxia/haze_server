@@ -624,7 +624,7 @@ public class BackStatisticService implements IBackStatisticService {
 		BigDecimal repayedMoneyToday = myPageReportInfo.getRepayedMoney() == null ?BigDecimal.valueOf(0):myPageReportInfo.getRepayedMoney();
 		BigDecimal extendMoneyToday = myPageReportInfo.getExtendMoney() == null ?BigDecimal.valueOf(0):myPageReportInfo.getExtendMoney();
 		BigDecimal todayMoney = myPageReportInfo.getPendingRepayMoney() == null?BigDecimal.valueOf(0):myPageReportInfo.getPendingRepayMoney();
-		if(!todayMoney.equals(BigDecimal.ZERO)){
+		if(todayMoney.intValue() != 0){
 			BigDecimal repayPercentage = repayedMoneyToday.add(extendMoneyToday).divide(todayMoney,4,BigDecimal.ROUND_DOWN);
             myPageReportInfo.setRepayPercentage(df.format(repayPercentage));
 		}else{

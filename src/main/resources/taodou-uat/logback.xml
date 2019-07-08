@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="PATTERN" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level [%thread] %c [%L] -| %msg%n" />
+
+    <property name="LOG_HOME" value="../logs"/>
+    <property name="LOG_FILENAME" value="server"/>
+
+
+    <logger name="com.info.web.dao" level="DEBUG"/>
+    <logger name="com.info.back.dao" level="DEBUG"/>
+    <logger name="org.apache.catalina.startup.DigesterFactory" level="ERROR"/>
+    <logger name="org.apache.catalina.util.LifecycleBase" level="ERROR"/>
+    <logger name="org.apache.coyote.http11.Http11NioProtocol" level="WARN"/>
+    <logger name="org.apache.sshd.common.util.SecurityUtils" level="WARN"/>
+    <logger name="org.apache.tomcat.util.net.NioSelectorPool" level="WARN"/>
+    <logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="ERROR"/>
+    <logger name="org.hibernate.validator.internal.util.Version" level="WARN"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="TIME_ROLLING_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <encoder>
+            <pattern>${PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+        <file>${LOG_HOME}/${LOG_FILENAME}.info</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/${LOG_FILENAME}.%d{yyyy-MM-dd}.info</FileNamePattern>
+            <!--<maxHistory>15</maxHistory>-->
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <appender name="TIME_ROLLING_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <encoder>
+            <pattern>${PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+        <File>${LOG_HOME}/${LOG_FILENAME}.error</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/${LOG_FILENAME}.%d{yyyy-MM-dd}.error</FileNamePattern>
+            <!--<maxHistory>15</maxHistory>-->
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+
+    <logger name="cs.info" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="TIME_ROLLING_INFO"/>
+    </logger>
+
+    <logger name="cs.error" level="ERROR" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="TIME_ROLLING_ERROR"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="TIME_ROLLING_INFO" />
+    </root>
+</configuration>
