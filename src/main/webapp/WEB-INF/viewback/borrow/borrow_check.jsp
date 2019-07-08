@@ -77,10 +77,6 @@
 					    	<input type="text"  readonly="readonly" size="30"  value="<fmt:formatDate value="${borrow.orderTime}" pattern="yyyy-MM-dd HH:mm:ss"/>" />
 						</dd>
 					</dl>
-					
-					 
-				 
-				
 				</fieldset>
 					<fieldset>
 					<legend>审核信息</legend>

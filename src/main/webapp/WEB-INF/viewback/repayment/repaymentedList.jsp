@@ -82,7 +82,7 @@
 			</table>
 		</div>
 	</div>
-	<div class="pageContent">
+	<div class="pageContent" id="r-b-t-c">
 		<jsp:include page="${BACK_URL}/rightSubList">
 			<jsp:param value="${params.myId}" name="parentId"/>
 		</jsp:include>
@@ -142,10 +142,10 @@
 						<td>
 							${repayment.channelName}
 						</td>
-						<td>
+						<td class="userName">
 							${repayment.realname}
 						</td>
-						<td>
+						<td class="userPhone">
 							${repayment.userPhone }
 						</td>
 						<%--<td>
@@ -170,7 +170,7 @@
 						<td>
 							<fmt:formatDate value="${repayment.creditRepaymentTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
 						</td>
-						<td>
+						<td class="time">
 							<fmt:formatDate value="${repayment.repaymentRealTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
 						</td>
 						<td>
@@ -189,6 +189,7 @@
 </form>
 
 <script type="text/javascript">
+	DWZ.renderB()
 	function changeYHExcel(obj){
 		var statuses = "";
 		<c:forEach items="${params.statuses}" var="status">

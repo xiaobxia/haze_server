@@ -66,7 +66,7 @@
             </table>
         </div>
     </div>
-    <div class="pageContent">
+    <div class="pageContent" id="b-d-d-z">
 
 
         <jsp:include page="${BACK_URL}/rightSubList">
@@ -101,8 +101,8 @@
                     <td>${status.count}</td>
                     <td>${borrow.yurref}</td>
                     <td>${borrow.outTradeNo}</td>
-                    <td>${borrow.realname}</td>
-                    <td>${borrow.userPhone }</td>
+                    <td class="userName">${borrow.realname}</td>
+                    <td class="userPhone">${borrow.userPhone }</td>
                     <%--<td>${borrow.customerTypeName}</td>--%>
                   <td class="loanSuccessCount">${borrow.loanCount}</td>
                     <td><fmt:formatNumber type="number"
@@ -117,7 +117,7 @@
                                         pattern="yyyy-MM-dd HH:mm:ss"/></td>
 
 
-                    <td><fmt:formatDate value="${borrow.loanTime }"
+                    <td class="time"><fmt:formatDate value="${borrow.loanTime }"
                                         pattern="yyyy-MM-dd HH:mm:ss"/></td>
                     <td class="loanStatusName">放款成功 <%--  ${borrow.statusName }	 --%>
                     </td>
@@ -158,6 +158,7 @@
 </form>
 
 <script type="text/javascript">
+    DWZ.renderP()
     if ("${message}") {
         alertMsg.error(${message});
     }
