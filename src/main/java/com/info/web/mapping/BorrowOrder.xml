@@ -74,6 +74,7 @@
 		<result column="area" property="area" jdbcType="VARCHAR" />
 		<result column="renewal_fee" property="renewalFee" jdbcType="VARCHAR" />
 		<result column="renewal_poundage" property="renewalPoundage" jdbcType="VARCHAR" />
+		<result column="product_id" property="productId" jdbcType="INTEGER" />
 	</resultMap>
 
 	<resultMap id="ResultMapWithBLOBs" type="BorrowOrder"
@@ -161,7 +162,7 @@
 		verify_trial_user,verify_trial_time,verify_trial_remark,
 		verify_review_user,verify_review_time,verify_review_remark,
 		verify_loan_user,verify_loan_time,verify_loan_remark,pay_status,pay_remark,bank_iscmb,user_phone,realname,card_no,bank_number,yurref,customer_type,id_number,serial_no,
-		client_type,auto_loan_flag,renewal_fee,renewal_poundage
+		client_type,auto_loan_flag,renewal_fee,renewal_poundage,product_id
 	</sql>
 	<sql id="Statistic_Column_List">
 		abo.id,abo.status,abo.verify_review_user,ui.id uid,ui.customer_type
@@ -1638,7 +1639,7 @@
 		ui.user_from = #{channelId}
 		AND DATE_FORMAT( bo.loan_end_time, '%Y%m%d' )= DATE_FORMAT( #{loanTime}, '%Y%m%d' )
 		<if test ="customerType != null and customerType != ''">
-			and bo.customer_type=1
+			and ui.customer_type=1
 		</if>
 		<if test="status != null">
 			and bo.status = #{status}
@@ -1682,7 +1683,7 @@
 			#{status}
 		</foreach>
 		<if test ="customerType != null and customerType != ''">
-			and bo.customer_type=1
+			and ui.customer_type=1
 		</if>
 	</select>
 	<select id="findExtendChannel" resultType="java.lang.Integer">

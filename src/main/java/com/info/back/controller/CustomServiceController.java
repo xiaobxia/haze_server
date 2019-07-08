@@ -1217,8 +1217,23 @@ public class CustomServiceController extends BaseController {
     public String getRepaymentPage(HttpServletRequest request, Model model) {
         HashMap<String, Object> params = getParametersO(request);
         try {
+            boolean checkFlag = false;
+            String channelNameNatural = params.get("channelName") == null ? "" : params.get("channelName").toString();
+            String channelidNatural = params.get("channelid") == null ? "" : params.get("channelid").toString();
+            if (params.get("channelName") != null && "自然流量".contains(params.get("channelName").toString())) {
+                if (params.get("channelid") == null || "0".equals(params.get("channelid"))) {
+                    params.remove("channelName");
+                    params.put("channelid", "0");
+                    checkFlag = true;
+                }
+            }
+            String channelSuperId = request.getParameter("superChannelId");
+            if(channelSuperId != null && channelSuperId.equals("-999")){
+                params.put("channelid", "0");
+                params.remove("superChannelId");
+            }
+            List<ChannelSuperInfo> channelSuperInfos = channelInfoService.findSuperAll(params);
             Integer[] statuses = new Integer[]{STATUS_HKZ, STATUS_BFHK, STATUS_YYQ, STATUS_YHZ};
-
             //客服模块默认查询还款时间为今天数据
             SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
             Calendar calendar = Calendar.getInstance();
@@ -1249,7 +1264,16 @@ public class CustomServiceController extends BaseController {
                 list.add(repayment);
             }
             pageConfig.setItems(list);
+            model.addAttribute("channelSuperInfos", channelSuperInfos);
             model.addAttribute("pm", pageConfig);
+            model.addAttribute("searchParams",channelSuperId);
+            if (checkFlag) {
+                params.remove("channelid");
+                params.put("channelName", channelNameNatural);
+                params.put("channelid", channelidNatural);
+            }
+            // 用于搜索框保留值
+            model.addAttribute("params", params);
         } catch (Exception e) {
             log.error("getRepaymentPage error:{}", e);
         }

@@ -20,6 +20,7 @@
         <result column="order_id" property="orderId" jdbcType="VARCHAR" />
         <result column="renewal_type" property="renewalType" jdbcType="INTEGER" />
         <result column="renewal_kind" property="renewalKind" jdbcType="INTEGER" />
+        <result column="channelName" property="channelName" jdbcType="VARCHAR"/>
     </resultMap>
     <resultMap id="ResultMapWithBLOBs" type="com.info.web.pojo.RenewalRecord" extends="BaseResultMap" >
         <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
@@ -313,12 +314,14 @@
         rr.order_time as orderTime,
         r.renewal_count as renewalCount,
         r.status as repayStatus,
-        rr.renewal_day
-        from asset_renewal_record rr ,
-        user_info u,
-        asset_repayment r
-        where rr.user_id = u.id
-        and rr.asset_repayment_id = r.id and rr.status in (1) and rr.return_money = 0
+        rr.renewal_day,
+        ifNULL(ci.channel_name,"自然流量") as channelName
+        from asset_renewal_record rr
+        left join user_info u on rr.user_id = u.id
+        left join asset_repayment r on rr.asset_repayment_id = r.id
+        left join channel_info ci on ci.id = u.user_from
+        left join channel_super_info si on ci.channel_super_id = si.id
+        where  rr.status in (1) and rr.return_money = 0
         <!-- and rr.asset_repayment_id = r.id and rr.status in (1,5) and rr.return_money = 0 -->
         <if test="phone != null and phone != ''">
             and u.user_phone = #{phone}
@@ -332,14 +335,29 @@
         <if test="renewalType != null">
             and rr.renewal_type = #{renewalType}
         </if>
+        <if test="startLoanTime != null and endLoanTime != null">
+            <![CDATA[  and DATE_FORMAT( rr.old_repayment_time, '%Y-%m-%d' )  >= #{startLoanTime} and DATE_FORMAT( rr.old_repayment_time, '%Y-%m-%d' )  <= #{endLoanTime} ]]>
+        </if>
+        <if test="channelName != null">
+              and ci.channel_name = #{channelName}
+        </if>
+        <if test="channelid != null">
+              and u.user_from = #{channelid}
+        </if>
+        <if test="superChannelId != null">
+             and si.id = #{superChannelId}
+        </if>
     </select>
     <select id="renewalCount" resultType="java.lang.Integer" parameterType="map">
-        select count(1)
-        from asset_renewal_record rr ,
-        user_info u,
-        asset_repayment r
-        where rr.user_id = u.id
-        and rr.asset_repayment_id = r.id and rr.status in (1)
+        SELECT
+        count( 1 )
+        FROM
+        asset_renewal_record rr
+        left join user_info u on rr.user_id = u.id
+        left join asset_repayment r on rr.asset_repayment_id = r.id
+        left join channel_info ci on ci.id = u.user_from
+        left join channel_super_info si on ci.channel_super_id = si.id
+        WHERE rr.status in (1)
         <!--  and rr.asset_repayment_id = r.id and rr.status in (1,5) and rr.return_money = 0-->
           <if test="phone != null and phone != ''">
             and u.user_phone = #{phone}
@@ -355,6 +373,18 @@
         </if>
         <if test="renewalKind != null">
             and rr.renewal_kind = #{renewalKind}
+        </if>
+        <if test="startLoanTime != null and endLoanTime != null">
+            <![CDATA[  and DATE_FORMAT( rr.old_repayment_time, '%Y-%m-%d' )  >= #{startLoanTime} and DATE_FORMAT( rr.old_repayment_time, '%Y-%m-%d' )  <= #{endLoanTime} ]]>
+        </if>
+        <if test="channelName != null">
+            and ci.channel_name = #{channelName}
+        </if>
+        <if test="channelid != null">
+            and u.user_from = #{channelid}
+        </if>
+        <if test="superChannelId != null">
+            and si.id = #{superChannelId}
         </if>
     </select>
     <!-- 续期管理》续期列表 -->

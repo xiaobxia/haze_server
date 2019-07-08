@@ -251,12 +251,17 @@
 			<if test = "status != null">
 				and bo.status = #{status}
 			</if>
-			<if test=" customerType == 0 or customerType == 1">
-				and bo.customer_type = #{customerType}
+			<if test=" customerType == 0">
+				and ui.customer_type =1 and bo.customer_type != 1
+			</if>
+			<if test="customerType == 1">
+				and bo.customer_type = 1
 			</if>
 			<if test="customerType == 2">
-				group by bo.user_id
-				HAVING count(bo.user_id) > 1
+				 and ui.customer_type =0
+			</if>
+			<if test="customerType == 3">
+				and bo.customer_type = 1
 			</if>
 	</select>
 	<select id ="extendCountAndMoney" resultType="map">
@@ -273,12 +278,11 @@
 			 ui.user_from = #{userFrom}
 			AND  DATE_FORMAT(rr.old_repayment_time, '%Y-%m-%d' )= #{repayTime}
 			AND rr.status = 1
-		<if test=" customerType == 0 or customerType == 1">
-			and bo.customer_type = #{customerType}
+		<if test=" customerType == 0">
+			and ui.customer_type =0 and bo.customer_type != 1
 		</if>
-		<if test="customerType == 2">
-			group by bo.user_id
-			HAVING count(bo.user_id) > 1
+		<if test="customerType == 1">
+			and bo.customer_type = 1
 		</if>
 	</select>
 	<select id ="findWait" resultType="java.util.HashMap">

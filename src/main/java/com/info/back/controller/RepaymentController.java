@@ -66,6 +66,8 @@ public class RepaymentController extends BaseController {
     private JedisCluster jedisCluster;
     @Autowired
     private OffLinePay offLinePay;
+    @Autowired
+    private IChannelInfoService channelInfoService;
 
     @RequestMapping("getRepaymentPage")
     public String getRepaymentPage(HttpServletRequest request, Integer[] statuses, Model model, String overdueStatus) {
@@ -185,6 +187,22 @@ public class RepaymentController extends BaseController {
     public String getRepaymentedPage(HttpServletRequest request, Model model, Integer statuses[]) {
         HashMap<String, Object> params = getParametersO(request);
         try {
+            boolean checkFlag = false;
+            String channelNameNatural = params.get("channelName") == null ? "" : params.get("channelName").toString();
+            String channelidNatural = params.get("channelid") == null ? "" : params.get("channelid").toString();
+            if (params.get("channelName") != null && "自然流量".contains(params.get("channelName").toString())) {
+                if (params.get("channelid") == null || "0".equals(params.get("channelid"))) {
+                    params.remove("channelName");
+                    params.put("channelid", "0");
+                    checkFlag = true;
+                }
+            }
+            String channelSuperId = request.getParameter("superChannelId");
+            if(channelSuperId != null && channelSuperId.equals("-999")){
+                params.put("channelid", "0");
+                params.remove("superChannelId");
+            }
+            List<ChannelSuperInfo> channelSuperInfos = channelInfoService.findSuperAll(params);
             if (null == statuses || statuses.length == 0 || null == statuses[0]) {
                 statuses = new Integer[]{STATUS_YHK, STATUS_YQYHK};
                 model.addAttribute("statusesType", "ALL");
@@ -212,7 +230,15 @@ public class RepaymentController extends BaseController {
             }
             pageConfig.setItems(list);
             model.addAttribute("pm", pageConfig);
-
+            model.addAttribute("searchParams",channelSuperId);
+            model.addAttribute("channelSuperInfos", channelSuperInfos);
+            if (checkFlag) {
+                params.remove("channelid");
+                params.put("channelName", channelNameNatural);
+                params.put("channelid", channelidNatural);
+            }
+            // 用于搜索框保留值
+            model.addAttribute("params", params);
         } catch (Exception e) {
             log.error("getRepaymentedPage error:{}", e);
         }

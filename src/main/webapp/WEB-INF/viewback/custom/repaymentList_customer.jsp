@@ -12,6 +12,21 @@
 			<table class="searchContent">
 				<tr>
 					<td>
+						渠道商：
+						<select name="superChannelId" id="superChannelId">
+							<option value="">全部</option>
+							<option value="-999" <c:if test="${searchParams == '-999'}">selected="selected"</c:if> >自然流量</option>
+							<c:forEach var="channelSuperInfo" items="${channelSuperInfos}">
+								<option value="${channelSuperInfo.id}" <c:if test="${channelSuperInfo.id eq params.superChannelId}">selected="selected"</c:if>>${channelSuperInfo.channelSuperName}</option>
+							</c:forEach>
+						</select>
+					</td>
+					<td>
+						渠道名称：
+						<input type="text" name="channelName" id="channelName"
+						value = "${params.channelName}">
+					</td>
+					<td>
 						用户名称:
 						<input type="text" name="userAccountLike" id="userAccountLike"
 							   value="${params.userAccountLike }" />
@@ -20,11 +35,6 @@
 						手机:
 						<input type="text" name="userMobileLike" id="userMobileLike"
 							   value="${params.userMobileLike }" />
-					</td>
-					<td>
-						渠道名称：
-						<input type="text" name="channelName" id="channelName"
-						value = "${params.channelName}">
 					</td>
 					<td>
 						<div class="buttonActive">

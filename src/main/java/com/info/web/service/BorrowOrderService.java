@@ -720,7 +720,7 @@ public class BorrowOrderService implements IBorrowOrderService {
                     record.setOldAmountMax(Integer.parseInt(user.getAmountMax()));
                     record.setAuditUser("风控");
                     record.setNewAmountMax(Integer.parseInt(user.getAmountMax()) + addAmount);
-                    record.setRemark("风控运行,系统自动提额" + addAmount / 100 + "元");
+                    record.setRemark("人工提额" + addAmount / 100 + "元");
                     record.setRealname(user.getRealname());
                     record.setUserPhone(user.getUserPhone());
 
@@ -730,7 +730,8 @@ public class BorrowOrderService implements IBorrowOrderService {
                     User newUser = new User();
                     newUser.setId(user.getId());
                     newUser.setAmountMax(String.valueOf(record.getNewAmountMax()));
-                    newUser.setAmountAvailable(String.valueOf(Integer.valueOf(user.getAmountAvailable()) + addAmount));
+                    //newUser.setAmountAvailable(String.valueOf(Integer.valueOf(user.getAmountAvailable()) + addAmount));
+                    newUser.setAmountAvailable(String.valueOf(record.getNewAmountMax()));
                     newUser.setAmountAddsum(String.valueOf(Integer.valueOf(user.getAmountAddsum()) + addAmount));
                     newUser.setUpdateTime(nowDate);
                     //操作表user_info  用户申请借款成功后修改用户可借额度
@@ -741,7 +742,7 @@ public class BorrowOrderService implements IBorrowOrderService {
                     map.put("userId", user.getId());
                     //更新用户额度
                     infoIndexService.changeUserAmount(map);
-                    final String userPhone = user.getUserPhone();
+                    /*final String userPhone = user.getUserPhone();
                     final Integer amountMax = Integer.parseInt(newUser.getAmountMax()) / 100;
                     if (amountMax > 0) {
                         ThreadPool.getInstance().run(() -> {
@@ -752,12 +753,8 @@ public class BorrowOrderService implements IBorrowOrderService {
                             }catch (Exception e){
                                 log.error("send sms error:{}",e);
                             }
-                            // System.out.println("恭喜您已经正常还款累计" + normAmount
-                            // /
-                            // 100+
-                            // "元，获得提额："+addAmount/100+"元，请继续保持良好的还款习惯！");
                         });
-                    }
+                    }*/
                 }
 
             } else {

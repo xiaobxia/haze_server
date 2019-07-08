@@ -92,6 +92,7 @@
 	 <if test="userName != null">
 		 and bu.user_name = #{userName}
 	 </if>
+	 order by kc.create_time DESC
 	</select>
 	<select id="findKefuCensusCount" resultType = "integer" parameterType="hashmap">
 		SELECT

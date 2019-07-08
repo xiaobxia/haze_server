@@ -866,28 +866,28 @@ public class TaskJob implements ITaskJob {
 		allAmount += ((BigDecimal) map.get("amountAll")).longValue();
 
 		// 当前借款数量、金额
-		/*map = reportRepaymentService.findAllBorrowByReport(firstRepaymentTime);
+		map = reportRepaymentService.findAllBorrowByReport(firstRepaymentTime);
 		allBorrowCount += (Long) map.get("countAll");
 		allBorrowAmount += ((BigDecimal) map.get("amountAll")).longValue();
 		map = reportRepaymentService.findAllRenewalBorrowByReport(firstRepaymentTime);
 		allBorrowCount += (Long) map.get("countAll");
-		allBorrowAmount += ((BigDecimal) map.get("amountAll")).longValue();*/
-		//截至到目前放款总量
+		allBorrowAmount += ((BigDecimal) map.get("amountAll")).longValue();
+		/*//截至到目前放款总量
          map = reportRepaymentService.findAllByReport(firstRepaymentTime);
          allBorrowCount += (Long) map.get("countAll");
-         allBorrowAmount += ((BigDecimal) map.get("amountAll")).longValue();
+         allBorrowAmount += ((BigDecimal) map.get("amountAll")).longValue();*/
 
-      /*  // 当前还款数量、金额
+       // 当前还款数量、金额
 		map = reportRepaymentService.findAllRepayByReport(firstRepaymentTime);
 		allRepayCount += (Long) map.get("countAll");
 		allRepayAmount += ((BigDecimal) map.get("amountAll")).longValue();
 		map = reportRepaymentService.findAllRenewalRepayByReport(firstRepaymentTime);
 		allRepayCount += (Long) map.get("countAll");
-		allRepayAmount += ((BigDecimal) map.get("amountAll")).longValue();*/
-        //截至到目前 还款数量，金额
+		allRepayAmount += ((BigDecimal) map.get("amountAll")).longValue();
+       /* //截至到目前 还款数量，金额
         map = reportRepaymentService.findRepayReport(firstRepaymentTime);
         allRepayCount += (Long) map.get("countAll");
-        allRepayAmount += ((BigDecimal) map.get("amountAll")).longValue();
+        allRepayAmount += ((BigDecimal) map.get("amountAll")).longValue();*/
 
 
         // 当前逾期数量、金额
@@ -1677,6 +1677,7 @@ public class TaskJob implements ITaskJob {
      * @throws Exception
      */
     @Override
+	@PostConstruct
 	public void channelOveCensusResult() throws Exception{
 		String  repayTime = null;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

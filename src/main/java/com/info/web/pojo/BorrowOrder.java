@@ -80,6 +80,7 @@ public class BorrowOrder {
 	private String projectNameVal;
 	//用户放款次数
     private String loanCount;
+    private Integer lateDay;
 
 	//用户借款设备类型
 	private String clientType;//1、android 2、ios 3、wap
@@ -956,6 +957,16 @@ public class BorrowOrder {
 		this.channelName = channelName;
 	}
 
+	private Integer productId;
+
+	public Integer getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
+
 	@Override
 	public String toString() {
 		return "BorrowOrder [apr=" + apr + ", autoRiskCheckStatus="
@@ -1118,6 +1129,14 @@ public class BorrowOrder {
 
 	public void setLoanCount(String loanCount) {
 		this.loanCount = loanCount;
+	}
+
+	public Integer getLateDay() {
+		return lateDay;
+	}
+
+	public void setLateDay(Integer lateDay) {
+		this.lateDay = lateDay;
 	}
 }
 

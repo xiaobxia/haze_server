@@ -1,16 +1,16 @@
 package com.info.back.controller;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.info.back.service.ProductService;
 import com.info.back.utils.PropertiesUtil;
 import com.info.back.utils.Result;
+import com.info.web.dao.IUserDao;
 import com.info.web.pojo.*;
 import com.info.web.service.*;
 import lombok.extern.slf4j.Slf4j;
@@ -52,6 +52,8 @@ public class UserManageController extends BaseController{
 	private IObtainUserShortMessageService userShortMessageService;
 	@Autowired
 	private IChannelInfoService channelInfoService;
+	@Autowired
+	private ProductService productService;
 
 	@Autowired
 	private IUserBlackService userBlackService;
@@ -59,6 +61,9 @@ public class UserManageController extends BaseController{
 	@Autowired
 	@Qualifier("riskUserService")
 	private IRiskUserService riskUserService;
+
+	@Resource
+	private IUserDao userDao;
 	
 	/**
 	 * 用户管理 --》用户列表 
@@ -212,6 +217,44 @@ public class UserManageController extends BaseController{
 					bool=true;
 				}
 				SpringUtils.renderDwzResult(response, bool, bool ? "操作成功!" : "操作失败!", DwzResult.CALLBACK_RELOADPAGE);
+			} else if (request.getParameter("option").equals("4")) {
+				int userId = Integer.parseInt(id);
+				String productConfigId = request.getParameter("productConfigId");
+				ProductDetail productDetail = productService.getProductDetail(Integer.parseInt(productConfigId));
+				log.info("修改用户可借产品线，选择的产品：{}", productDetail.toString());
+				//判断用户不存在未完结的订单
+				int count = borrowOrderService.findParamsCount(new HashMap(){{
+					put("statusList", Arrays.asList(BorrowOrder.STATUS_HKZ, BorrowOrder.STATUS_BFHK, BorrowOrder.STATUS_DCS, BorrowOrder.STATUS_CSTG,
+							BorrowOrder.STATUS_YHZ, BorrowOrder.STATUS_KKZ, BorrowOrder.STATUS_YYQ, BorrowOrder.STATUS_KKSB, BorrowOrder.STATUS_FSTG,
+							BorrowOrder.STATUS_FKZ, BorrowOrder.STATUS_FSBHLH));
+					put("userId", id);
+				}});
+				String result = "操作失败";
+
+				int productId = userDao.queryUserQuotaProductId(userId);
+				if (count > 0) {
+					result = "该用户存在未完成的订单，无法执行该操作!";
+				} else if (productId == Integer.parseInt(productConfigId)) {
+					result = "修改的产品与用户当前可借产品一致，无需重复操作!";
+				} else {
+					bool = true;
+
+					HashMap<String, Object> map = new HashMap<>();
+					map.put("userId", id);
+					map.put("newAmountMax", productDetail.getBorrowAmount().intValue());
+					borrowOrderService.changeUserLimit(map);
+
+					int i = userDao.queryCountByUserId(userId);
+					log.info("修改用户可借产品线，用户产品数量：{}", i);
+					if (i > 0) {
+						log.info("userManageProduct updateUserQuota userId:{}, productId", userId, productDetail.getProductId());
+						userDao.updateUserQuota(userId, productDetail.getProductId(), productDetail.getBorrowDay(), productDetail.getBorrowAmount());
+					} else {
+						log.info("userManageProduct addUserQuota userId:{}, productId", userId, productDetail.getProductId());
+						userDao.addUserQuota(userId, productDetail.getProductId(), productDetail.getBorrowAmount(), productDetail.getBorrowDay());
+					}
+				}
+				SpringUtils.renderDwzResult(response, bool, bool ? "操作成功!" : result, DwzResult.CALLBACK_RELOADPAGE);
 			}
 		} catch (Exception e) {
 			log.error("operation error:{}",e);
@@ -231,6 +274,22 @@ public class UserManageController extends BaseController{
 		model.addAttribute("id",user.getId());
 		model.addAttribute("userPhone",user.getUserPhone());
 		return "userInfo/userManageUpdatePhone";
+	}
+
+	/**
+	 * 用户更换借款产品
+	 * @param request req
+	 * @param model model
+	 * @return str
+	 */
+	@RequestMapping("userManageProduct")
+	public String userManageProduct (HttpServletRequest request,Model model){
+		Map<String, String> params =this.getParameters(request);
+		User user=this.userService.searchByUserid(Integer.parseInt(params.get("id")));
+		model.addAttribute("id", user.getId());
+		model.addAttribute("productConfigList", productService.queryAllBorrowProductConfig());
+		model.addAttribute("productId", userDao.queryUserQuotaProductId(Integer.parseInt(user.getId())));
+		return "userInfo/userManageUpdateProduct";
 	}
 	
 	/**

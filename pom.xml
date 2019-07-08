@@ -23,7 +23,7 @@
     <distributionManagement>
         <snapshotRepository>
             <id>snapshots</id>
-            <url>http://47.110.153.34:8081/nexus/content/repositories/apache-snapshots/</url>
+            <url>http://47.110.153.34:8081/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
         <repository>
             <id>releases</id>

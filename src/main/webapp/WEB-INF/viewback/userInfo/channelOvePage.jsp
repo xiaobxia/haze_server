@@ -56,19 +56,19 @@
 					还款日期
 				</th>
 				<th align="center">
-					新用户放款量
+					新用户到期数
 				</th>
 				<th align="center" >
-					新用户已还数量
+					新用户已还数
 				</th>
 				<th align="center" >
 					新用户逾期率
 				</th>
 				<th align="center" >
-					老用户放款数量
+					老用户到期数
 				</th>
 				<th align="center" >
-					老用户已还数量
+					老用户已还数
 				</th>
 				<th align="center">
 					老用户逾期率

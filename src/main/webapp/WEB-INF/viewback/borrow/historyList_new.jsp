@@ -34,6 +34,7 @@
         <th>子类型</th>
         <th>手机号</th>
         <th>状态</th>
+        <th>逾期天数</th>
         <th>审核人员</th>
     </tr>
     <c:forEach var="borrow" items="${userBorrows }" varStatus="status">
@@ -65,6 +66,9 @@
                         ${borrow.statusName }
                     </c:otherwise>
                 </c:choose>
+            </td>
+            <td>
+                ${borrow.lateDay}
             </td>
             <c:if test="${borrow.reviwRiskLabel == null}">
                 <td>${borrow.reBackUserName}</td>
