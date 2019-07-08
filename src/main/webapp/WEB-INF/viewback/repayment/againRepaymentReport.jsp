@@ -16,9 +16,9 @@
 <body>
 	<div class="pageContent">
 		<form method="post" action="repayment/againRepaymentReport?&parentId=${params.parentId }"
-			onsubmit="return validateCallback(this, dialogAjaxDone);"
+			onsubmit="return validateCallbackRraBack(this, dialogAjaxDone);"
 			class="pageForm required-validate">
-			<div class="pageFormContent" layoutH="48">
+			<div class="pageFormContent" layoutH="58">
 				<p>
 					<label>统计时间：</label>
 					<input type="text" name="nowTime" id="nowTime" value="${params.beginTime}" class="date textInput readonly" datefmt="yyyy-MM-dd"  readonly="readonly"/>
@@ -49,6 +49,24 @@
 
 		</form>
 	</div>
+	<script type="text/javascript">
+		function validateCallbackRraBack(ctx, callback) {
+			var lastDo = localStorage.getItem('lastDoRraBack')
+			if (lastDo) {
+				lastDo = parseInt(lastDo)
+				if (Date.now() - lastDo < 1000 * 60 * 5) {
+					var m = parseInt((1000 * 60 * 5 - Date.now() + lastDo)/(1000 * 60))
+					alertMsg && alertMsg.info('请'+(m || 1)+'分钟后再尝试刷新')
+					return false
+				}
+			}
+			function newCallback (json) {
+				localStorage.setItem('lastDoRraBack', Date.now())
+				callback(json)
+			}
+			return validateCallback(ctx, newCallback)
+		}
+	</script>
 	
 </body>
 </html>

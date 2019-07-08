@@ -16,7 +16,7 @@
 <body>
 	<div class="pageContent">
 		<form method="post" action="loanreport/toAgainLoanReport?&parentId=${params.parentId }"
-			onsubmit="return validateCallback(this, dialogAjaxDone);"
+			onsubmit="return validateCallbackLrBack(this, dialogAjaxDone);"
 			class="pageForm required-validate">
 			<div class="pageFormContent" layoutH="60">
 				<p>
@@ -49,6 +49,24 @@
 
 		</form>
 	</div>
+	<script type="text/javascript">
+		function validateCallbackLrBack(ctx, callback) {
+			var lastDo = localStorage.getItem('lastDoLrBack')
+			if (lastDo) {
+				lastDo = parseInt(lastDo)
+				if (Date.now() - lastDo < 1000 * 60 * 5) {
+					var m = parseInt((1000 * 60 * 5 - Date.now() + lastDo)/(1000 * 60))
+					alertMsg && alertMsg.info('请'+(m || 1)+'分钟后再尝试刷新')
+					return false
+				}
+			}
+			function newCallback (json) {
+				localStorage.setItem('lastDoLrBack', Date.now())
+				callback(json)
+			}
+			return validateCallback(ctx, newCallback)
+		}
+	</script>
 	
 </body>
 </html>
