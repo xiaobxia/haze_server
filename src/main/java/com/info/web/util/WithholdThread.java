@@ -83,7 +83,9 @@ public class WithholdThread extends Thread{
 
                 String api_url = PropertiesUtil.get("APP_HOST_API")+ "/"+PropertiesUtil.get("AUTO_WITHDRAW_CHANNEL")+"/auto-withhold?id=" + re.getId();
                 logger.info("自动扣款URL ==:{} ", api_url);
-                String resultStr = HttpUtil.getHttpMess(api_url,"","POST","UTF-8");
+
+                String resultStr = HttpUtil.doGet(api_url, "UTF-8", null);
+                //String resultStr = HttpUtil.getHttpMess(api_url,"","POST","UTF-8");
 
                 if (StringUtils.isBlank(resultStr)) {
                     logger.info("自动扣款结果为空 =:{}", repaymentId);

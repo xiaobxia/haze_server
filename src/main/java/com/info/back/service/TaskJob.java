@@ -611,6 +611,10 @@ public class TaskJob implements ITaskJob {
 
     private void withhold2() {
         try {
+			HashMap<String, Object> paramsM = new HashMap<>();
+			//订单状态：放款中
+			paramsM.put("borrowStatus", BorrowOrder.STATUS_YYQ);
+
 			log.info("withhold start");
 
             String repaymentTime = DateUtil.format_yyyy_MM_dd(Calendar.getInstance().getTime());
@@ -618,12 +622,12 @@ public class TaskJob implements ITaskJob {
             Map<String, Object> params = new HashMap<>();
             params.put("repaymentTime", repaymentTime);
             params.put("statuses", new Integer[]{STATUS_HKZ});
+            params.put("orderIds", borrowOrderService.findOrderIdAndUserIdList(paramsM).stream().mapToInt(BorrowOrder::getId).toArray());
 
             List<Repayment> repayments = repaymentService.findTaskRepayment(params);
             log.info("withhold count:{} ",repayments.size());
 
-
-            List<WithholdThread> list = new ArrayList<>();
+			List<WithholdThread> list = new ArrayList<>();
             for (Repayment repayment : repayments) {
                 WithholdThread task = new WithholdThread(log, repayment.getId(), repaymentTime, DateUtil.yyyy_MM_dd, userService, repaymentService,
                         repaymentDetailService, borrowOrderService, userSendMessageService, jedisCluster);

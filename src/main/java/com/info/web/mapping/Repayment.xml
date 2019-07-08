@@ -462,6 +462,12 @@ remark
                 ${item}
             </foreach>
         </if>
+        <if test="orderIds != null and orderIds != '' and orderIds.length > 0">
+            and a.asset_order_id in
+            <foreach item="item" index="index" collection="orderIds" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
         <if test="repaymentTimeEnd != null and repaymentTimeEnd != ''">
             <![CDATA[    and a.repayment_time < #{repaymentTimeEnd}   ]]>
         </if>
