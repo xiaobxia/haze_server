@@ -378,7 +378,7 @@ public class UserManageController extends BaseController{
 		model.addAttribute("InfoImage", userInfoImage);
 		HashMap<String, Object> paramsM = new HashMap<>();
 		paramsM.put("userId",user.getId());
-		paramsM.put("statusList", new int[]{20,21,22,23,30,-20,-11});
+		//paramsM.put("statusList", new int[]{20,21,22,23,30,-20,-11});
 		PageConfig<BorrowOrder> userBorrows = borrowOrderService.findPage(paramsM);
 		model.addAttribute("userBorrows", userBorrows);
 		model.addAttribute("params", params);

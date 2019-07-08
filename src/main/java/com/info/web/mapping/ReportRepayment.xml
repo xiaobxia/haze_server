@@ -41,6 +41,12 @@
     <result column="overdue_rate_new_amount" property="overdueRateNewAmount" jdbcType="BIGINT" />
     <result column="repay_rate_new_amount" property="repayRateNewAmount" jdbcType="BIGINT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="repay_all_money" property="repayAllMoney" jdbcType="BIGINT" />
+    <result column="repay_new_money" property="repayNewMoney" jdbcType="BIGINT" />
+    <result column="repay_old_money" property="repayOldMoney" jdbcType="BIGINT" />
+    <result column="repay_sjrate" property="repaySjRate" jdbcType="BIGINT" />
+    <result column="repay_new_sjrate" property="repayNewSjRate" jdbcType="BIGINT" />
+    <result column="repay_old_sjrate" property="repayOldSjRate" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, report_date, overdue_rate, repay_rate, overdue_rate_seven, overdue_rate_fourteen,
@@ -92,7 +98,10 @@
     expire_amount_new,overdue_amount_new,overdue_rate_amount,
     repay_rate_amount,overdue_rate_seven_amount,overdue_rate_fourteen_amount,
     overdue_rate_old_amount,repay_rate_old_amount,overdue_rate_new_amount,
-    repay_rate_new_amount
+    repay_rate_new_amount,
+    repay_sjrate,
+    repay_new_sjrate,
+    repay_old_sjrate
     <include refid="selectSql"/>
     order by id desc
   </select>
@@ -306,6 +315,24 @@
       <if test="overdueRateM3Count != null" >
         overdue_rate_m3_count,
       </if>
+      <if test="repayAllMoney != null">
+        repay_all_money,
+      </if>
+      <if test="repayNewMoney != null">
+        repay_new_money,
+      </if>
+      <if test="repayOldMoney != null">
+        repay_old_money,
+       </if>
+      <if test="repaySjRate != null">
+        repay_sjrate,
+      </if>
+      <if test="repayNewSjRate != null">
+        repay_new_sjrate,
+      </if>
+      <if test="repayOldSjRate != null">
+        repay_old_sjrate,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -425,6 +452,24 @@
       <if test="overdueRateM3Count != null" >
         #{overdueRateM3Count,jdbcType=BIGINT},
       </if>
+      <if test="repayAllMoney != null">
+        #{repayAllMoney,jdbcType=BIGINT},
+      </if>
+      <if test="repayNewMoney != null">
+        #{repayNewMoney,jdbcType=BIGINT},
+      </if>
+      <if test="repayOldMoney != null">
+        #{repayOldMoney,jdbcType=BIGINT},
+      </if>
+      <if test="repaySjRate != null">
+        #{repaySjRate,jdbcType=BIGINT},
+      </if>
+      <if test="repayNewSjRate != null">
+        #{repayNewSjRate,jdbcType=BIGINT},
+      </if>
+      <if test="repayOldSjRate != null">
+        #{repayOldSjRate,jdbcType=BIGINT},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.info.web.pojo.ReportRepayment" >
@@ -543,6 +588,24 @@
       </if>
       <if test="overdueRateM3Count != null" >
         overdue_rate_m3_count = #{overdueRateM3Count,jdbcType=BIGINT},
+      </if>
+      <if test="repayAllMoney != null">
+        repay_all_money = #{repayAllMoney,jdbcType=BIGINT},
+      </if>
+      <if test="repayNewMoney != null">
+        repay_new_money = #{repayNewMoney,jdbcType=BIGINT},
+      </if>
+      <if test="repayOldMoney != null">
+        repay_old_money = #{repayOldMoney,jdbcType=BIGINT},
+      </if>
+      <if test="repaySjRate != null">
+        repay_sjrate = #{repaySjRate,jdbcType=BIGINT},
+      </if>
+      <if test="repayNewSjRate != null">
+        repay_new_sjrate =  #{repayNewSjRate,jdbcType=BIGINT},
+      </if>
+      <if test="repayOldSjRate != null">
+        repay_old_sjrate = #{repayOldSjRate,jdbcType=BIGINT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

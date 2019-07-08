@@ -671,24 +671,37 @@ public class TaskJob implements ITaskJob {
 		Long newExpireCount = 0L; // 今日新用户到期数量
 		Long oldExpireAmount = 0L; // 今日老用户到期金额
 		Long oldExpireCount = 0L; // 今日老用户到期数量
+        //新增字段
+        Long repayAllMoney = 0L; //实际还款总金额
+        Long repayNewMoney = 0L; //新用户实际还款总额
+        Long repayOldMoney = 0L; //老用户实际还款总额
 
 		for (Repayment re : repayments) {
 			int moneyAmount = (int) (re.getRepaymentPrincipal() + re.getRepaymentInterest());
+			int repaymentedAmount = re.getRepaymentedAmount().intValue();
 			int status = re.getStatus();
 			String repaymentTime = dateFormat.format(re.getRepaymentTime());
 			String firstRepayment = dateFormat.format(re.getFirstRepaymentTime());
 			if (status == STATUS_YHK || !repaymentTime.equals(firstRepayment)) {
 				// 新增还款金额 还款数量
 				repayAmount += moneyAmount;
+				//实际还款金额
+                repayAllMoney += repaymentedAmount;
 				repayCount++;
 				// 新旧用户已还数量
 				if (User.CUSTOMER_OLD.equals(String.valueOf(re.getCustomerType()))) {
 					oldRepayCount++;
 					oldRepayAmount += moneyAmount;
+					//老用户实际还款金额
+                    repayOldMoney += repaymentedAmount;
 				} else {
 					newRepayCount++;
 					newRepayAmount += moneyAmount;
+					//新用户实际还款金额
+                    repayNewMoney  += repaymentedAmount;
+
 				}
+
 			} else {
 				// 新增逾期金额 逾期数量
 				overdueAmount += moneyAmount;
@@ -742,9 +755,14 @@ public class TaskJob implements ITaskJob {
 				// 新增还款金额 还款数量
 				repayAmount += moneyAmount;
 				repayCount++;
+                //实际还款金额
+                repayAllMoney += moneyAmount;
+
 				// 旧用户已还数量
 				oldRepayCount++;
 				oldRepayAmount += moneyAmount;
+				//老用户展期金额
+                repayOldMoney += moneyAmount;
 			} else {
 				// 新增逾期金额 逾期数量
 				overdueAmount += moneyAmount;
@@ -774,6 +792,7 @@ public class TaskJob implements ITaskJob {
 			// 老用户到期金额
 			oldExpireAmount += moneyAmount;
 			oldExpireCount++;
+
 		}
 
 		ReportRepayment report = new ReportRepayment();
@@ -821,19 +840,24 @@ public class TaskJob implements ITaskJob {
 			}
 
 			report.setExpireAmount(expireAmount);
-
 			report.setExpireAmountOld(oldExpireAmount);
 			report.setExpireAmountNew(newExpireAmount);
-
-			report.setRepayRateAmount(repayAmount * 10000 / expireAmount);
+			report.setRepayAllMoney(repayAllMoney);
+			report.setRepayNewMoney(repayNewMoney);
+			report.setRepayOldMoney(repayOldMoney);
+			if(expireAmount >0){
+                report.setRepayRateAmount(repayAmount * 10000 / expireAmount);
+                report.setRepaySjRate(repayAllMoney * 10000 / expireAmount);
+            }
 			if (oldExpireAmount > 0) {
 				report.setRepayRateOldAmount(oldRepayAmount * 10000 / oldExpireAmount);
+				report.setRepayOldSjRate(oldRepayAmount * 10000 / oldExpireAmount);
 			}
 			if (newExpireAmount > 0) {
 				report.setRepayRateNewAmount(newRepayAmount * 10000 / newExpireAmount);
+				report.setRepayNewSjRate(repayNewMoney * 10000 / newExpireAmount);
 			}
 		}
-
 		params.clear();
 		Integer[] statuses = new Integer[] { STATUS_HKZ, STATUS_BFHK, STATUS_YHZ, STATUS_YYQ, STATUS_YHK, STATUS_YQYHK };
 		params.put("statuses", statuses);
@@ -1677,7 +1701,6 @@ public class TaskJob implements ITaskJob {
      * @throws Exception
      */
     @Override
-	@PostConstruct
 	public void channelOveCensusResult() throws Exception{
 		String  repayTime = null;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

@@ -80,6 +80,13 @@ public class ReportRepayment {
     private Long repayRateNewAmount;
 
     private Date createTime;
+    //新增字段
+    private Long repayAllMoney;
+    private Long repayNewMoney;
+    private Long repayOldMoney;
+    private Long repaySjRate;
+    private Long repayNewSjRate;
+    private Long repayOldSjRate;
 
     public Integer getId() {
         return id;
@@ -391,5 +398,53 @@ public class ReportRepayment {
 
     public void setOverdueRateM3Count(Long overdueRateM3Count) {
         this.overdueRateM3Count = overdueRateM3Count;
+    }
+
+    public Long getRepayAllMoney() {
+        return repayAllMoney;
+    }
+
+    public void setRepayAllMoney(Long repayAllMoney) {
+        this.repayAllMoney = repayAllMoney;
+    }
+
+    public Long getRepayNewMoney() {
+        return repayNewMoney;
+    }
+
+    public void setRepayNewMoney(Long repayNewMoney) {
+        this.repayNewMoney = repayNewMoney;
+    }
+
+    public Long getRepayOldMoney() {
+        return repayOldMoney;
+    }
+
+    public void setRepayOldMoney(Long repayOldMoney) {
+        this.repayOldMoney = repayOldMoney;
+    }
+
+    public Long getRepaySjRate() {
+        return repaySjRate;
+    }
+
+    public void setRepaySjRate(Long repaySjRate) {
+        this.repaySjRate = repaySjRate;
+    }
+
+    public Long getRepayNewSjRate() {
+        return repayNewSjRate;
+    }
+
+    public void setRepayNewSjRate(Long repayNewSjRate) {
+        this.repayNewSjRate = repayNewSjRate;
+    }
+
+    public Long getRepayOldSjRate() {
+        return repayOldSjRate;
+    }
+
+    public void setRepayOldSjRate(Long repayOldSjRate) {
+        this.repayOldSjRate = repayOldSjRate;
     }
 }

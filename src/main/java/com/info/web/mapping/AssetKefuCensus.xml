@@ -118,10 +118,10 @@
 	LEFT JOIN asset_borrow_order bo ON bo.id = ba.borrow_order_id
 	WHERE ba.del_flg= 0
 	<if test="createTime != null">
-		and  DATE_FORMAT( ba.create_time, '%Y%m%d') &lt;= DATE_FORMAT(now(), '%Y%m%d')
+		and  DATE_FORMAT( ba.create_time, '%Y%m%d') &lt;= DATE_FORMAT(#{createTime}, '%Y%m%d')
 	</if>
 	<if test="createTime == null">
-		and  DATE_FORMAT( ba.create_time, '%Y%m%d') = DATE_FORMAT(now(), '%Y%m%d')
+		and  DATE_FORMAT( ba.create_time, '%Y%m%d') = DATE_FORMAT(#{createTime}, '%Y%m%d')
 	</if>
 	<if test=" status != null">
 		AND bo.STATUS in (30,34)
@@ -145,12 +145,12 @@
 			AND ba.job_id = #{jobId}
 		</if>
 		<if test="createTime != null">
-			and  DATE_FORMAT( ba.create_time, '%Y%m%d') &lt;= DATE_FORMAT(now(), '%Y%m%d')
-			 and DATE_FORMAT( rr.old_repayment_time, '%Y%m%d') &lt;= DATE_FORMAT(now(), '%Y%m%d');
+			and  DATE_FORMAT( ba.create_time, '%Y%m%d') &lt;= DATE_FORMAT(#{createTime}, '%Y%m%d')
+			 and DATE_FORMAT( rr.old_repayment_time, '%Y%m%d') &lt;= DATE_FORMAT(#{createTime}, '%Y%m%d');
 		</if>
 		<if test="createTime == null">
-			and  DATE_FORMAT( ba.create_time, '%Y%m%d') = DATE_FORMAT(now(), '%Y%m%d')
-			and DATE_FORMAT(rr.old_repayment_time, '%Y%m%d') = DATE_FORMAT(now(), '%Y%m%d');
+			and  DATE_FORMAT( ba.create_time, '%Y%m%d') = DATE_FORMAT(#{createTime}, '%Y%m%d')
+			and DATE_FORMAT(rr.old_repayment_time, '%Y%m%d') = DATE_FORMAT(#{createTime}, '%Y%m%d');
 		</if>
 
 	</select>

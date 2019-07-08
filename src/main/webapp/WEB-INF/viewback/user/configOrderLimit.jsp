@@ -55,7 +55,7 @@
 					<div class="divider"></div>
 					<p>
 						<label>
-							早班派单上限:
+							每日派单上限:
 						</label>
 						<span>
 
@@ -64,7 +64,7 @@
 						</span>
 					</p>
 					<div class="divider"></div>
-					<p>
+					<%--<p>
 						<label>
 							晚班派单上限:
 						</label>
@@ -74,7 +74,7 @@
 
 						</span>
 					</p>
-					<div class="divider"></div>
+					<div class="divider"></div>--%>
 				</div>
 				<div class="formBar">
 					<ul>

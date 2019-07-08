@@ -478,6 +478,7 @@ remark
         re.first_repayment_time as firstRepaymentTime,
         re.repayment_principal AS repaymentPrincipal,
         re.repayment_interest AS repaymentInterest,
+        re.repaymented_amount AS repaymentedAmount,
         bo.customer_type AS customerType,
         re.`status`,
         re.late_day as lateDay,
