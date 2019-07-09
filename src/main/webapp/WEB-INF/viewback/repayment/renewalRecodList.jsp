@@ -68,7 +68,7 @@
 		<jsp:include page="${BACK_URL}/rightSubList">
 			<jsp:param value="${params.myId}" name="parentId"/>
 		</jsp:include>
-		<div style="font-size:16px; line-height:24px;">数据统计：成功续期${renewalTotal}件；续期费总计${renewalFeeTotal / 100.00}元；服务费总计：${interestTotal / 100.00} 元；续期总额总计：${sumFeeTotal / 100.00}元</div>
+		<div style="font-size:16px; line-height:24px;">数据统计：成功续期${renewalTotal}件；<%--续期费总计${renewalFeeTotal / 100.00}元；服务费总计：${interestTotal / 100.00} 元；--%>续期总额总计：${sumFeeTotal / 100.00}元</div>
 		<table class="table" style="width: 100%; text-an" layoutH="130" nowrapTD="false">
 			<thead>
 				<tr>

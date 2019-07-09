@@ -163,11 +163,11 @@
                 <th align="center" >
                     添加时间
                 </th>
-                <th align="center">
+               <%-- <th align="center">
                     QQ
-                </th>
+                </th>--%>
                 <th align="center">
-                    派单上限
+                    每日派单上限
                 </th>
             </tr>
             </thead>
@@ -200,12 +200,13 @@
                     <td>
                             ${user.createDate}
                     </td>
-                    <td>
+                    <%--<td>
                             ${user.userQq}
-                    </td>
+                    </td>--%>
                     <td>
                         <c:if test="${user.orderLimitFlag ==1}">
-                            早:${user.orderLimitMor}\晚:${user.orderLimitNig}
+                            <%--早:${user.orderLimitMor}\晚:${user.orderLimitNig}--%>
+                            ${user.orderLimitMor}
                         </c:if>
                     </td>
                 </tr>

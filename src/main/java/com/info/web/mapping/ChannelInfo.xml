@@ -410,9 +410,9 @@
 		channel_super_id,
 		operator_name,
 		channel_tel,
-		channel_province,
+		<!--channel_province,
 		channel_city,
-		channel_area,
+		channel_area,-->
 		created_at,
 		updated_at,
 		rate_id,
@@ -429,9 +429,9 @@
 		#{channelSuperId},
 		#{operatorName},
 		#{channelTel,jdbcType=VARCHAR},
-		#{channelProvince},
+		<!--#{channelProvince},
 		#{channelCity},
-		#{channelArea},
+		#{channelArea},-->
 		NOW(),
 		#{updatedAt},
 		#{rateId},

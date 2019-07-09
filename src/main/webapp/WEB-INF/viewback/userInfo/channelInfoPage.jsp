@@ -73,7 +73,7 @@
 					<th align="center" >
 						联系方式
 					</th>
-					<th align="center" >
+					<%--<th align="center" >
 						省份
 					</th>
 					<th align="center" >
@@ -81,7 +81,7 @@
 					</th>
 					<th align="center" >
 						地区
-					</th>
+					</th>--%>
 					<th align="center" >
 						计费方式
 					</th>
@@ -129,7 +129,7 @@
 						<td>
 							${channel.channelTel}
 						</td>
-						<td>
+						<%--<td>
 							${channel.channelProvince}
 						</td>
 						<td>
@@ -137,7 +137,7 @@
 						</td>
 						<td>
 							${channel.channelArea}
-						</td>
+						</td>--%>
 						<td>
 							${channel.channelRateName}
 						</td>

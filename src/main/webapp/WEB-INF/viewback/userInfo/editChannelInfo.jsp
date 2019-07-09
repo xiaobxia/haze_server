@@ -118,14 +118,14 @@
 							</select>
 							<label style="color: red;" class="required-label">*</label>
 						</div>
-						<div class="form-item">
+						<%--<div class="form-item">
 							<label style="width: 100px;">
 								地区:
 							</label>
 							<select name="channelProvince" id="channelProvince" style="width: 180px;"></select>
 							<select name="channelCity" id="channelCity" style="width: 180px;"></select>
 							<select name="channelArea" id="channelArea" style="width: 180px;"></select>
-						</div>
+						</div>--%>
 						<div class="form-item">
 							<label style="width: 100px;">备注:</label>
 							<textarea  name="remark" rows="5" cols="60" maxlength="50">${channelInfo.remark }</textarea>
@@ -158,6 +158,8 @@
 		</div>
 	</body>
 	<script type="text/javascript">
+/*
 	new PCAS("channelProvince","channelCity","channelArea",'${channelInfo.channelProvince}','${channelInfo.channelCity}','${channelInfo.channelArea}');
+*/
 </script>
 </html>
