@@ -619,12 +619,16 @@ public class TaskJob implements ITaskJob {
 
             String repaymentTime = DateUtil.format_yyyy_MM_dd(Calendar.getInstance().getTime());
 
-            Map<String, Object> params = new HashMap<>();
-            params.put("repaymentTime", repaymentTime);
-            params.put("statuses", new Integer[]{STATUS_HKZ});
-            params.put("orderIds", borrowOrderService.findOrderIdAndUserIdList(paramsM).stream().mapToInt(BorrowOrder::getId).toArray());
+            List<Repayment> repayments = repaymentService.findTaskRepayment(new HashMap(){{
+				put("repaymentTime", repaymentTime);
+				put("statuses", new Integer[]{STATUS_HKZ});
+			}});
 
-            List<Repayment> repayments = repaymentService.findTaskRepayment(params);
+			List<Repayment> repayments1 = repaymentService.findTaskRepayment(new HashMap(){{
+				put("orderIds", borrowOrderService.findOrderIdAndUserIdList(paramsM).stream().map(BorrowOrder::getId).collect(Collectors.toList()));
+			}});
+			repayments.addAll(repayments1);
+
             log.info("withhold count:{} ",repayments.size());
 
 			List<WithholdThread> list = new ArrayList<>();
