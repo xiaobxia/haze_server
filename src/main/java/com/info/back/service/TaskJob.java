@@ -625,7 +625,7 @@ public class TaskJob implements ITaskJob {
 			}});
 
 			List<Repayment> repayments1 = repaymentService.findTaskRepayment(new HashMap(){{
-				put("orderIds", borrowOrderService.findOrderIdAndUserIdList(paramsM).stream().map(BorrowOrder::getId).collect(Collectors.toList()));
+				put("orderIds", borrowOrderService.findOrderIdAndUserIdList(paramsM).stream().mapToInt(BorrowOrder::getId).toArray());
 			}});
 			repayments.addAll(repayments1);
 
