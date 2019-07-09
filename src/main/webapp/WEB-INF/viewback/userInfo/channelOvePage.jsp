@@ -77,7 +77,7 @@
 					展期数量
 				</th>
 				<th align="center" >
-					总放量
+					总到期量
 				</th>
 				<th align="center">
 					总还量

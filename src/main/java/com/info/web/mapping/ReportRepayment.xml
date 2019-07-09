@@ -133,7 +133,7 @@
       <![CDATA[  and rr.repayment_time between str_to_date(#{firstRepaymentTime},'%Y-%m-%d') and date_add(#{firstRepaymentTime}, interval 1 day) ]]>
     </if>
     <if test="firstRepaymentTimeEnd != null and firstRepaymentTimeEnd != ''">
-      <![CDATA[  and rr.first_repayment_time <= #{firstRepaymentTimeEnd}   ]]>
+      <![CDATA[  and re.first_repayment_time <= #{firstRepaymentTimeEnd}   ]]>
     </if>
     AND rr.`status` = 1;
   </select>

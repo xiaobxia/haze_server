@@ -129,7 +129,7 @@
 		SELECT
 		IFNULL(sum(sum_fee),0) AS extendMoney,
 			count( id ) AS extendCount,
-		IFNULL(SUM(repayment_principal),0) AS repaymentPrincipal
+		IFNULL(SUM(money_amount),0) AS repaymentPrincipal
 		FROM
 			asset_renewal_record
 		WHERE
