@@ -131,6 +131,12 @@
             </properties>
         </profile>
         <profile>
+            <id>taodou-online</id>
+            <properties>
+                <profiles.active>taodou-online</profiles.active>
+            </properties>
+        </profile>
+        <profile>
             <id>online</id>
             <properties>
                 <profiles.active>online</profiles.active>
