@@ -1464,6 +1464,7 @@ public class CustomServiceController extends BaseController {
        try{
            // 调用贷后一天一次定时任务
            taskJob.BackLoanOveCensus();
+           taskJob.afterLoanCensusNew();
        }catch(Exception e){
            bool = false;
            log.error("贷后统计刷新出现错误"+e.getMessage());

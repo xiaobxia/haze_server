@@ -104,8 +104,10 @@
 						<fmt:formatNumber pattern='###,###,##0.00' value="${report.overdueRateAmount / 100.00}"/>%
 					</td>
 					<td>
-						<%--<fmt:formatNumber pattern='###,###,##0.00' value="${report.repayRateAmount / 100.00}"/>%--%>
+						<fmt:formatNumber pattern='###,###,##0.00' value="${report.repayRateAmount / 100.00}"/>%
+<%--
 						<fmt:formatNumber pattern='###,###,##0.00' value="${report.repaySjRate / 100.00}"/>%
+--%>
 					</td>
 					<td style="display: none;">
 						<fmt:formatNumber pattern='###,###,##0.00' value="${report.overdueRateFourteenAmount / 100.00}"/>%
@@ -120,8 +122,10 @@
 						<fmt:formatNumber pattern='###,###,##0.00' value="${report.overdueRateOldAmount / 100.00}"/>%
 					</td>
 					<td>
-						<%--<fmt:formatNumber pattern='###,###,##0.00' value="${report.repayRateOldAmount / 100.00}"/>%--%>
+						<fmt:formatNumber pattern='###,###,##0.00' value="${report.repayRateOldAmount / 100.00}"/>%
+<%--
 							<fmt:formatNumber pattern='###,###,##0.00' value="${report.repayOldSjRate / 100.00}"/>%
+--%>
 					</td>
 					<td>
 						<fmt:formatNumber pattern='###,###,##0.00' value="${report.expireAmountNew / 100.00}"/>
@@ -133,10 +137,12 @@
 						<fmt:formatNumber pattern='###,###,##0.00' value="${report.overdueRateNewAmount / 100.00}"/>%
 					</td>
 					<td>
-<%--
+
 						<fmt:formatNumber pattern='###,###,##0.00' value="${report.repayRateNewAmount / 100.00}"/>%
---%>
+
+<%--
 						<fmt:formatNumber pattern="###,###,##0.00" value="${report.repayNewSjRate / 100.00}"/>%
+--%>
 					</td>
 				</tr>
 			</c:forEach>

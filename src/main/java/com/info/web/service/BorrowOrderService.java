@@ -2627,15 +2627,16 @@ public class BorrowOrderService implements IBorrowOrderService {
             List<BackUser>   kefu = backUserDao.findKeFuList(params);
             userList.addAll(kefu);
             for(BackUser backUser : userList){
-                //查询出每个客服截至到目前所有的总数量以及总还款数量
-                Integer dayCount = kefuCensusDao.dayPandanCount(null,null,backUser.getId());
-                Integer dayRepayCount = kefuCensusDao.dayPandanCount(null,1,backUser.getId());
+                //客服当日派单数量以及回款数量
+                Integer dayCount = kefuCensusDao.dayPandanCount(createTime,null,backUser.getId(),0);
+                Integer dayRepayCount = kefuCensusDao.dayPandanCount(createTime,1,backUser.getId(),0);
                 //用户展期数量 （展期也算为回款）
-                Integer dayExtendCount = kefuCensusDao.extendCount(null,backUser.getId());
-                Integer allCount = kefuCensusDao.dayPandanCount(createTime,null,backUser.getId());
-                Integer allRepayCount = kefuCensusDao.dayPandanCount(createTime,1,backUser.getId());
+                Integer dayExtendCount = kefuCensusDao.extendCount(createTime,backUser.getId(),0);
+                //查询出每个客服截至到目前所有的总数量以及总还款数量
+                Integer allCount = kefuCensusDao.dayPandanCount(createTime,null,backUser.getId(),1);
+                Integer allRepayCount = kefuCensusDao.dayPandanCount(createTime,1,backUser.getId(),1);
                 //用户总展期数量
-                Integer allExtendCount = kefuCensusDao.extendCount(createTime,backUser.getId());
+                Integer allExtendCount = kefuCensusDao.extendCount(createTime,backUser.getId(),1);
                 KefuCensus kefuCensus = new KefuCensus();
                 kefuCensus.setJobId(backUser.getId());
                 kefuCensus.setDayCount(dayCount);

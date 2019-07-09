@@ -619,12 +619,16 @@ public class TaskJob implements ITaskJob {
 
             String repaymentTime = DateUtil.format_yyyy_MM_dd(Calendar.getInstance().getTime());
 
-            Map<String, Object> params = new HashMap<>();
-            params.put("repaymentTime", repaymentTime);
-            params.put("statuses", new Integer[]{STATUS_HKZ});
-            params.put("orderIds", borrowOrderService.findOrderIdAndUserIdList(paramsM).stream().mapToInt(BorrowOrder::getId).toArray());
+            List<Repayment> repayments = repaymentService.findTaskRepayment(new HashMap(){{
+				put("repaymentTime", repaymentTime);
+				put("statuses", new Integer[]{STATUS_HKZ});
+			}});
 
-            List<Repayment> repayments = repaymentService.findTaskRepayment(params);
+			List<Repayment> repayments1 = repaymentService.findTaskRepayment(new HashMap(){{
+				put("orderIds", borrowOrderService.findOrderIdAndUserIdList(paramsM).stream().map(BorrowOrder::getId).collect(Collectors.toList()));
+			}});
+			repayments.addAll(repayments1);
+
             log.info("withhold count:{} ",repayments.size());
 
 			List<WithholdThread> list = new ArrayList<>();
@@ -682,7 +686,7 @@ public class TaskJob implements ITaskJob {
 
 		for (Repayment re : repayments) {
 			int moneyAmount = (int) (re.getRepaymentPrincipal() + re.getRepaymentInterest());
-			int repaymentedAmount = re.getRepaymentedAmount().intValue();
+			int repaymentedAmount = Integer.valueOf(re.getRepaymentedAmount().toString());
 			int status = re.getStatus();
 			String repaymentTime = dateFormat.format(re.getRepaymentTime());
 			String firstRepayment = dateFormat.format(re.getFirstRepaymentTime());
@@ -746,7 +750,7 @@ public class TaskJob implements ITaskJob {
 				newExpireCount++;
 			}
 		}
-
+        //当日展期金额
 		List<Map<String, Object>> renewals = reportRepaymentService.findRenewalByRepaymentReport(params);
 		expireCount += renewals.size();
 		for (Map<String, Object> renewal : renewals) {
@@ -755,6 +759,7 @@ public class TaskJob implements ITaskJob {
 			int moneyAmount = Integer.parseInt(renewal.get("moneyAmount").toString());
 			int status = Integer.parseInt(renewal.get("status").toString());
 			int loanTerm = Integer.parseInt(renewal.get("loanTerm").toString());
+
 			if (status == STATUS_YHK || !repaymentTime.equals(repaymentTimeRe)) {
 				// 新增还款金额 还款数量
 				repayAmount += moneyAmount;
@@ -767,6 +772,7 @@ public class TaskJob implements ITaskJob {
 				oldRepayAmount += moneyAmount;
 				//老用户展期金额
                 repayOldMoney += moneyAmount;
+
 			} else {
 				// 新增逾期金额 逾期数量
 				overdueAmount += moneyAmount;
@@ -1372,7 +1378,7 @@ public class TaskJob implements ITaskJob {
 
 	}
 
-  /* @PostConstruct
+   /*@PostConstruct
    public void assignOrderOnly(){
 	   log.info("派单开始仅此一次");
 		try{
@@ -1722,6 +1728,7 @@ public class TaskJob implements ITaskJob {
 	 * 客服每日派单及回款统计
 	 */
 	@Override
+	@PostConstruct
     public void kefuCensus(){
 		log.info("客服每日派单及回款统计");
 		String  createTime = null;
