@@ -9,8 +9,8 @@
 <script type="text/javascript" src="${path}/resources/js/productAmount_choose.js"></script>
 
 <form id="pagerForm" onsubmit="return navTabSearch(this);"
-	action="backBorrowOrder/getBorrowPage?bType=${bType}&myId=${params.myId}"
-	method="post">
+	  action="backBorrowOrder/getBorrowPage?bType=${bType}&myId=${params.myId}"
+	  method="post">
 	<div class="pageHeader">
 		<div class="searchBar">
 			<table class="searchContent">
@@ -40,18 +40,6 @@
 						<input type="text" name="startloanTime" id="startloanTime" value="${params.startloanTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
 						到<input type="text" name="endloanTime" id="endloanTime" value="${params.endloanTime}" class="date textInput readonly" datefmt="yyyy-MM-dd" readonly="readonly" />
 					</td>
-					<%--<td>
-						审核员:
-						<select name="reviewUser" id="reviewUser" class="textInput" onchange="">
-							<option value="">全部</option>
-							<option value="all_review" <c:if test="${params.reviewUser eq 'all_review'}">selected="selected"</c:if>>全部信审人员</option>
-							<option value="not_review" <c:if test="${params.reviewUser eq 'not_review'}">selected="selected"</c:if>>非信审人员</option>
-							<c:forEach var="backUser" items="${reviewUserInfos}">
-								<option value="${backUser.telephone}"  <c:if test="${backUser.telephone eq params.reviewUser}">selected="selected"</c:if> >${backUser.userName}</option>
-							</c:forEach>
-						</select>
-					</td>--%>
-
 				</tr>
 				<tr>
 					<td>
@@ -69,17 +57,6 @@
 							<option value="">全部</option>
 						</select>
 					</td>
-					<%--<td>--%>
-						<%--评分卡编号:--%>
-						<%--<select name="scoreCard" id="scoreCard" class="textInput" onchange="">--%>
-							<%--<option value="">全部</option>--%>
-							<%--<option value="all_scorecard" <c:if test="${params.scoreCard eq 'all_scorecard'}">selected="selected"</c:if>>全部评分卡</option>--%>
-							<%--<c:forEach var="code" items="${scoreCards}">--%>
-								<%--<option value="${code}"  <c:if test="${code eq params.scoreCard}">selected="selected"</c:if> >${code}</option>--%>
-							<%--</c:forEach>--%>
-						<%--</select>--%>
-					<%--</td>--%>
-
 					<td>
 						借款金额:
 						<select id = "productAmount" name = "productAmount"></select>
@@ -96,85 +73,72 @@
 			</table>
 		</div>
 	</div>
-	<div class="pageContent">
-
-
+	<div class="pageContent" id="b-l-f-k">
 		<jsp:include page="${BACK_URL}/rightSubList">
 			<jsp:param value="${params.myId}" name="parentId" />
 		</jsp:include>
 		<table class="table" style="width: 100%;" layoutH="190"
-			nowrapTD="false">
+			   nowrapTD="false">
 			<thead>
-				<tr>
+			<tr>
 				<th align="center" width="30">
-							<input type="checkbox" group="idsBorrow" id="checkedAllBorrow" onclick="selectAllMerchant();">
-						</th>
-					<th align="center">序号</th>
-					<th align="left">订单号</th>
-					<th align="left">第三方流水号</th>
-					<th align="center">姓名</th>
-					<th align="center">手机号</th>
-					<th align="center">地域</th>
-					<%--<th align="center">是否是老用户</th>--%>
-					<th align="center">成功还款次数</th>
-					<th align="center">借款金额</th>
-					<th align="center">天数</th>
-					<th align="center">服务费率</th>
-					<th align="center">手续费</th>
-					<th align="center">到账金额</th>
-					<th align="center">下单时间</th>
-
-					<th align="center">放款时间</th>
-					<th align="center">更新时间</th>
-					<th align="center" class="loanStatusTitle">状态</th>
-					<th align="center">放款备注</th>
-					<!-- 						<th align="center"  > -->
-					<!-- 							操作 -->
-					<!-- 						</th> -->
-				</tr>
+					<input type="checkbox" group="idsBorrow" id="checkedAllBorrow" onclick="selectAllMerchant();">
+				</th>
+				<th align="center">序号</th>
+				<th align="left">订单号</th>
+				<th align="left">第三方流水号</th>
+				<th align="center">姓名</th>
+				<th align="center">手机号</th>
+				<th align="center">地域</th>
+				<th align="center">成功还款次数</th>
+				<th align="center">借款金额</th>
+				<th align="center">天数</th>
+				<th align="center">服务费率</th>
+				<th align="center">手续费</th>
+				<th align="center">到账金额</th>
+				<th align="center">下单时间</th>
+				<th align="center">放款时间</th>
+				<th align="center">更新时间</th>
+				<th align="center" class="loanStatusTitle">状态</th>
+				<th align="center">放款备注</th>
+			</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="borrow" items="${pm.items }" varStatus="status">
-				 
-					<tr target="sid_support" rel="${borrow.id }"  onclick="rowClickMerchant(${borrow.id })">
+			<c:forEach var="borrow" items="${pm.items }" varStatus="status">
+
+				<tr target="sid_support" rel="${borrow.id }"  onclick="rowClickMerchant(${borrow.id })">
 					<td>
-								<input name="idsBorrow" id="borrow${borrow.id }" value="${borrow.id }" 	onclick="rowClickMerchant(${borrow.id })" type="checkbox">
-							</td>
-						<td>${status.count}</td>
-						<td>${borrow.yurref}</td>
-						<td>${borrow.outTradeNo}</td>
-						<td>${borrow.realname}</td>
-						<td>${borrow.userPhone }</td>
-						<td>${borrow.area }</td>
-						<%--<td>${borrow.customerTypeName}</td>--%>
-						<td class="loanSuccessCount">${borrow.loanCount}</td>
-						<td><fmt:formatNumber type="number"
-								value="${borrow.moneyAmount/100}" pattern="0.00"
-								maxFractionDigits="2" />元</td>
-						<td>${borrow.loanTerm }</td>
-						<td>${borrow.apr/100 }%</td>
+						<input name="idsBorrow" id="borrow${borrow.id }" value="${borrow.id }" 	onclick="rowClickMerchant(${borrow.id })" type="checkbox">
+					</td>
+					<td>${status.count}</td>
+					<td>${borrow.yurref}</td>
+					<td>${borrow.outTradeNo}</td>
+					<td class="userName">${borrow.realname}</td>
+					<td class="userPhone">${borrow.userPhone }</td>
+					<td>${borrow.area }</td>
+					<td class="loanSuccessCount">${borrow.loanCount}</td>
+					<td><fmt:formatNumber type="number"
+										  value="${borrow.moneyAmount/100}" pattern="0.00"
+										  maxFractionDigits="2" />元</td>
+					<td>${borrow.loanTerm }</td>
+					<td>${borrow.apr/100 }%</td>
+					<td><fmt:formatNumber type="number"
+										  value="${borrow.loanInterests/100}" pattern="0.00"
+										  maxFractionDigits="2" />元</td>
+					<td><fmt:formatNumber type="number"
+										  value="${borrow.intoMoney/100}" pattern="0.00"
+										  maxFractionDigits="2" />元</td>
+					<td><fmt:formatDate value="${borrow.orderTime }"
+										pattern="yyyy-MM-dd HH:mm:ss" /></td>
 
-
-						<td><fmt:formatNumber type="number"
-								value="${borrow.loanInterests/100}" pattern="0.00"
-								maxFractionDigits="2" />元</td>
-						<td><fmt:formatNumber type="number"
-								value="${borrow.intoMoney/100}" pattern="0.00"
-								maxFractionDigits="2" />元</td>
-						<td><fmt:formatDate value="${borrow.orderTime }"
-								pattern="yyyy-MM-dd HH:mm:ss" /></td>
-
-						<td><fmt:formatDate value="${borrow.loanTime }"
-								pattern="yyyy-MM-dd" /></td>
-						<td><fmt:formatDate value="${borrow.updatedAt }"
-								pattern="yyyy-MM-dd HH:mm:ss" /></td>
-						<td class="loanStatusName">${borrow.statusName }</td>
-						<td>${borrow.payRemark }</td>
-						<!-- 									<td> -->
-						<%--  	<a href="backBorrowOrder/getBorrowDetailById?selectId=${borrow.id }&parentId=${params.myId}"  target="dialog"  width="810" height="550" >查看</a> --%>
-						<!-- 							</td> -->
-					</tr>
-				</c:forEach>
+					<td class="time"><fmt:formatDate value="${borrow.loanTime }"
+													 pattern="yyyy-MM-dd" /></td>
+					<td><fmt:formatDate value="${borrow.updatedAt }"
+										pattern="yyyy-MM-dd HH:mm:ss" /></td>
+					<td class="loanStatusName">${borrow.statusName }</td>
+					<td>${borrow.payRemark }</td>
+				</tr>
+			</c:forEach>
 			</tbody>
 		</table>
 		<c:set var="page" value="${pm }"></c:set>
@@ -184,13 +148,14 @@
 </form>
 
 <script type="text/javascript">
-    showOptions();
+	DWZ.renderK()
+	showOptions();
 
 	if("${message}"){
 		alertMsg.error(${message});
 	}
-	
-	
+
+
 	function selectAllMerchant(){
 		var isAll = $("#checkedAllBorrow").attr("checked");
 		$("input[name=idsBorrow]:not(:disabled)").each(function(){
@@ -202,7 +167,7 @@
 		});
 	}
 	function rowClickMerchant(id){
-	
+
 		if($("#borrow"+id).attr("disabled")!="disabled"){
 			var cked = $("#borrow"+id).attr("checked");
 			if(cked == "checked"){
@@ -212,7 +177,7 @@
 			}
 		}
 	}
-	
+
 
 	function changeFkExcel(obj){
 		var href=$(obj).attr("href");
@@ -227,65 +192,65 @@
 		$(obj).attr("href",toHref);
 	}
 
-    function queryCitys(provinceId) {
-        if(null==provinceId||''==provinceId){
-            return;
-        }
-        console.log(provinceId);
-        $("#cityfk").empty();
-        $("#cityfk").append("<option value=''>全部</option>");
-        $.ajax({
-            global:false,
-            type : "POST",
-            url : "backBorrowOrder/queryCity?provinceId="+provinceId,
-            dataType: "json",
-            success : function(data) {
-                var obj = data;
-                if(0 == obj.code){
-                    var citys = obj.data;
-                    for(var i in citys){
-                        $("#cityfk").append("<option value='"+citys[i].cityId+"'>"+citys[i].city+"</option>");
-                    }
-                }else{
-                    alert(obj.message);
-                }
-            },
-            error : function() {
-                alert("加载失败！");
-            }
-        });
+	function queryCitys(provinceId) {
+		if(null==provinceId||''==provinceId){
+			return;
+		}
+		console.log(provinceId);
+		$("#cityfk").empty();
+		$("#cityfk").append("<option value=''>全部</option>");
+		$.ajax({
+			global:false,
+			type : "POST",
+			url : "backBorrowOrder/queryCity?provinceId="+provinceId,
+			dataType: "json",
+			success : function(data) {
+				var obj = data;
+				if(0 == obj.code){
+					var citys = obj.data;
+					for(var i in citys){
+						$("#cityfk").append("<option value='"+citys[i].cityId+"'>"+citys[i].city+"</option>");
+					}
+				}else{
+					alert(obj.message);
+				}
+			},
+			error : function() {
+				alert("加载失败！");
+			}
+		});
 
-    }
+	}
 
-    function showOptions(){
-        var provinceId = '${params.provinceId}';
-        if (null != provinceId && '' != provinceId) {
-            $.ajax({
-                type: "POST",
-                url: "backBorrowOrder/queryCity?provinceId=" + provinceId,
-                dataType: "json",
-                success: function (data) {
-                    var obj = data;
-                    if (0 == obj.code) {
-                        var citys = obj.data;
-                        for (var i in citys) {
-                            if ('${params.cityId}' == citys[i].cityId) {
-                                $("#cityfk").append("<option selected='selected' value='" + citys[i].cityId + "'>" + citys[i].city + "</option>");
-                            } else {
-                                $("#cityfk").append("<option value='" + citys[i].cityId + "'>" + citys[i].city + "</option>");
-                            }
+	function showOptions(){
+		var provinceId = '${params.provinceId}';
+		if (null != provinceId && '' != provinceId) {
+			$.ajax({
+				type: "POST",
+				url: "backBorrowOrder/queryCity?provinceId=" + provinceId,
+				dataType: "json",
+				success: function (data) {
+					var obj = data;
+					if (0 == obj.code) {
+						var citys = obj.data;
+						for (var i in citys) {
+							if ('${params.cityId}' == citys[i].cityId) {
+								$("#cityfk").append("<option selected='selected' value='" + citys[i].cityId + "'>" + citys[i].city + "</option>");
+							} else {
+								$("#cityfk").append("<option value='" + citys[i].cityId + "'>" + citys[i].city + "</option>");
+							}
 
-                        }
-                    } else {
-                        alert(obj.message);
-                    }
-                },
-                error: function () {
-                    alert("加载失败！");
-                }
-            });
-        }
-    }
+						}
+					} else {
+						alert(obj.message);
+					}
+				},
+				error: function () {
+					alert("加载失败！");
+				}
+			});
+		}
+	}
 
 	if (renderLoanStatusName) {
 		renderLoanStatusName()

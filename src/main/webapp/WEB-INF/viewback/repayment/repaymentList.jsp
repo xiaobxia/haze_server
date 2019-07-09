@@ -63,7 +63,6 @@
 							<option <c:if test="${'M1-M2' == params.overdueStatus}"> selected </c:if> value="M1-M2">M1-M2</option>
 						</select>
 					</td>
-
 					<td>
 						借款金额:
 						<select id = "productAmount" name = "productAmount"></select>
@@ -83,100 +82,92 @@
 			</table>
 		</div>
 	</div>
-	<div class="pageContent">
+	<div class="pageContent" id="r-l-r">
 		<jsp:include page="${BACK_URL}/rightSubList">
 			<jsp:param value="${params.myId}" name="parentId"/>
 		</jsp:include>
 		<table class="table" style="width: 100%;" layoutH="155" nowrapTD="false">
 			<thead>
-				<tr>
-					<th align="center"  >
-						序号
-					</th>
-					<th align="center"  >
-						姓名
-					</th>
-					<th align="center" >
-						手机号
-					</th>
-					<%--<th align="center"  >
-						是否是老用户
-					</th>--%>
-					<th align="center">
-						成功还款次数
-					</th>
-					<th align="center" >
-						借款到账金额
-					</th>
-					<th align="center" >
-						服务费
-					</th>
-					<th align="center" >
-						总需要还款金额
-					</th>
-					<th align="center" >
-						已还金额
-					</th>
-
-					<th align="center" >
-						放款时间
-					</th>
-					<th align="center" >
-						预期还款时间
-					</th>
-					<th align="center" >
-						逾期天数
-					</th>
-					<th align="center" class="loanStatusTitle">
-						状态
-					</th>
-				</tr>
+			<tr>
+				<th align="center"  >
+					序号
+				</th>
+				<th align="center"  >
+					姓名
+				</th>
+				<th align="center" >
+					手机号
+				</th>
+				<th align="center">
+					成功还款次数
+				</th>
+				<th align="center" >
+					借款到账金额
+				</th>
+				<th align="center" >
+					服务费
+				</th>
+				<th align="center" >
+					总需要还款金额
+				</th>
+				<th align="center" >
+					已还金额
+				</th>
+				<th align="center" >
+					放款时间
+				</th>
+				<th align="center" >
+					预期还款时间
+				</th>
+				<th align="center" >
+					逾期天数
+				</th>
+				<th align="center" class="loanStatusTitle">
+					状态
+				</th>
+			</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="repayment" items="${pm.items }" varStatus="status">
-					<tr target="repaymentId" rel="${repayment.id }">
-						<td>
+			<c:forEach var="repayment" items="${pm.items }" varStatus="status">
+				<tr target="repaymentId" rel="${repayment.id }">
+					<td>
 							${status.count}
-						</td>
-						<td>
+					</td>
+					<td class="userName">
 							${repayment.realname}
-						</td>
-						<td>
+					</td>
+					<td class="userPhone">
 							${repayment.userPhone }
-						</td>
-						<%--<td>
-							<c:if test="${repayment.customerType == '0'}">新用户</c:if>
-							<c:if test="${repayment.customerType == '1'}">老用户</c:if>
-						</td>--%>
-						<td class="loanSuccessCount">
+					</td>
+					<td class="loanSuccessCount">
 							${repayment.loanCount}
-						</td>
-						<td>
-							<fmt:formatNumber pattern='###,###,##0.00' value="${repayment.repaymentPrincipal / 100.00}"/>
-						</td>
-						<td>
-							<fmt:formatNumber pattern='###,###,##0.00' value="${repayment.repaymentInterest / 100.00}"/>
-						</td>
-						<td>
-							<fmt:formatNumber pattern='###,###,##0.00' value="${repayment.repaymentAmount / 100.00}"/>
-						</td>
-						<td>
-							<fmt:formatNumber pattern='###,###,##0.00' value="${repayment.repaymentedAmount / 100.00}"/>
-						</td>
-						<td>
-							<fmt:formatDate value="${repayment.creditRepaymentTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
-						</td>
-						<td>
-							<fmt:formatDate value="${repayment.repaymentTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
-						</td>
-						<td>
+					</td>
+					<td>
+						<fmt:formatNumber pattern='###,###,##0.00' value="${repayment.repaymentPrincipal / 100.00}"/>
+					</td>
+					<td>
+						<fmt:formatNumber pattern='###,###,##0.00' value="${repayment.repaymentInterest / 100.00}"/>
+					</td>
+					<td>
+						<fmt:formatNumber pattern='###,###,##0.00' value="${repayment.repaymentAmount / 100.00}"/>
+					</td>
+					<td>
+						<fmt:formatNumber pattern='###,###,##0.00' value="${repayment.repaymentedAmount / 100.00}"/>
+					</td>
+					<td class="time">
+						<fmt:formatDate value="${repayment.creditRepaymentTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
+					</td>
+					<td>
+						<fmt:formatDate value="${repayment.repaymentTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
+					</td>
+					<td>
 							${repayment.lateDay }
-						</td>
-						<td class="loanStatusName">
+					</td>
+					<td class="loanStatusName">
 							${BORROW_STATUS_ALL[repayment.status]}
-						</td>
-					</tr>
-				</c:forEach>
+					</td>
+				</tr>
+			</c:forEach>
 			</tbody>
 		</table>
 		<c:set var="page" value="${pm }"></c:set>
@@ -185,6 +176,7 @@
 </form>
 
 <script type="text/javascript">
+	DWZ.renderR()
 	$(function(){
 		var $statuses = $("#statuses");
 		$statuses.bind("change", function(){
@@ -201,7 +193,7 @@
 	function changeDHExcel(obj){
 		var statuses = "";
 		<c:forEach items="${params.statuses}" var="status">
-			statuses += "&statuses=" + ${status};
+		statuses += "&statuses=" + ${status};
 		</c:forEach>
 		var href=$(obj).attr("href");
 		var userAccountLike=$("#userAccountLike").val();
