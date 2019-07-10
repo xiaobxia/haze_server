@@ -372,6 +372,8 @@ public class BorrowOrder {
 
 	public static final List<Integer> borrowStatusMap_kefangkuan = new ArrayList<>();
 
+	public static final List<Integer> borrowStatusMap_rengyaofangkuan = new ArrayList<>();
+
 //	
 	static {
 //	    //审核中
@@ -403,6 +405,9 @@ public class BorrowOrder {
 		borrowStatusMap_kefangkuan.add(BorrowOrder.STATUS_BFHK);
 		borrowStatusMap_kefangkuan.add(BorrowOrder.STATUS_YQYHK);
 		borrowStatusMap_kefangkuan.add(BorrowOrder.STATUS_YYQ);
+
+		borrowStatusMap_rengyaofangkuan.add(BorrowOrder.STATUS_HKZ);
+		borrowStatusMap_rengyaofangkuan.add(BorrowOrder.STATUS_FKZ);
 	}
 
 	/**

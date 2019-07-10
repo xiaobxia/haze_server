@@ -71,6 +71,7 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -444,6 +445,11 @@ public class BorrowOrderController extends BaseController {
                 if (BorrowOrder.borrowStatusMap_kefangkuan.contains(borrow.getStatus())) {
                     return "此状态不可操作放款";
                 }
+                List<Integer> collect = borrowOrderService.findByUserId(borrow.getUserId()).stream().map(BorrowOrder::getStatus).collect(Collectors.toList());
+                if (BorrowOrder.borrowStatusMap_rengyaofangkuan.containsAll(collect)) {
+                    return "该用户存在未完成的订单，不可操作放款";
+                }
+
                 User user = userService.searchByUserid(borrow.getUserId());
                 if (user.getStatus().equals(User.USER_STATUS_THREE)) {
                     return "此用户已经被注销，不可操作放款";
