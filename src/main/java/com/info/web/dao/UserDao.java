@@ -188,7 +188,7 @@ public class UserDao extends BaseDao implements IUserDao {
 	}
 
 	@Override
-	public int updateUserQuota(int userId, int productId, int borrowDay, BigDecimal nowLimit) {
+	public Integer updateUserQuota(int userId, int productId, int borrowDay, BigDecimal nowLimit) {
 		Map<String, Object> params = new HashMap();
 		params.put("userId", userId);
 		params.put("productId", productId);
@@ -198,7 +198,7 @@ public class UserDao extends BaseDao implements IUserDao {
 	}
 
 	@Override
-	public int addUserQuota(int userId, int productId, BigDecimal nowLimit, int borrowDay) {
+	public Integer addUserQuota(int userId, int productId, BigDecimal nowLimit, int borrowDay) {
 		Map<String, Object> params = new HashMap();
 		params.put("userId", userId);
 		params.put("productId", productId);
@@ -208,12 +208,12 @@ public class UserDao extends BaseDao implements IUserDao {
 	}
 
 	@Override
-	public int queryCountByUserId(int userId) {
+	public Integer queryCountByUserId(int userId) {
 		return this.getSqlSessionTemplate().selectOne("queryCountByUserId", userId);
 	}
 
 	@Override
-	public int queryUserQuotaProductId(int userId) {
+	public Integer queryUserQuotaProductId(int userId) {
 		return this.getSqlSessionTemplate().selectOne("queryUserQuotaProductId", userId);
 	}
 }
