@@ -250,8 +250,10 @@
                         ${borrow.loanTerm }
                     </td>
                     <td>
-
+                        <fmt:formatNumber pattern='###,###,##0.00' value="${borrow.apr / 100.00}"/>%
+<%--
                         <fmt:formatNumber type="number" value="${borrow.apr/100}" pattern="0.00" maxFractionDigits="0"/>%
+--%>
                     </td>
                     <td>
                         <fmt:formatNumber type="number" value="${borrow.loanInterests/100}" pattern="0.00"
