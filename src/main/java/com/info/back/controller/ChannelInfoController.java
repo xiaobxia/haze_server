@@ -1003,7 +1003,15 @@ public class ChannelInfoController extends BaseController {
                 if(idList.size()>0){
                     //放款笔数
                     int loanCount =channelInfoService.findLoanCount(report.getReportDate(),idList);
-                    report.setLoanCount(loanCount);
+                    //续借放款人数 （当天放款人中 哪些人是续借放款类型 即 当天放款人中哪些是老用户）
+                    int xujieLoanCount = channelInfoService.xujieSucCount(idList,report.getReportDate());
+                    //当日新用户放款笔数（当日所有放款数-续借放款人数）
+                    if(loanCount < xujieLoanCount){
+                        report.setLoanCount(0);
+                    }else{
+                        int dayLoanCount = loanCount-xujieLoanCount;
+                        report.setLoanCount(dayLoanCount);
+                    }
                 }
                 /*
                  * 当天实时查询
