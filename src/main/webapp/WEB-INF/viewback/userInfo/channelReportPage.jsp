@@ -97,6 +97,8 @@
 					申请成功率
 				</th>
 				<th align="center">放款笔数(首单)</th>
+				<th align="center">续借笔数</th>
+				<th align="center">总放款笔数</th>
 				<th align="center">放款率</th>
 				<%--<th align="center" >--%>
 					<%--借款率%--%>
@@ -446,6 +448,28 @@
 								0
 							</c:otherwise>
 							</c:choose>
+					</td>
+					<td>
+						<!--续借笔数-->
+						<c:choose>
+							<c:when test="${channel.borrowSucCount gt 0}">
+										${channel.borrowSucCount - channel.loanCount}
+							</c:when>
+							<c:otherwise>
+								0
+							</c:otherwise>
+						</c:choose>
+					</td>
+					<td>
+						<!--总放款笔数-->
+						<c:choose>
+							<c:when test ="${channel.borrowSucCount gt 0 }">
+								${channel.borrowSucCount}
+							</c:when>
+							<c:otherwise>
+								0
+							</c:otherwise>
+						</c:choose>
 					</td>
 					<td>
 						<%--<c:choose>
