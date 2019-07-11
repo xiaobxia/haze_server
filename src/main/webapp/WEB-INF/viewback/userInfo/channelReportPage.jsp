@@ -452,8 +452,8 @@
 					<td>
 						<!--续借笔数-->
 						<c:choose>
-							<c:when test="${channel.borrowSucCount gt 0}">
-										${channel.borrowSucCount - channel.loanCount}
+							<c:when test="${channel.allLoanCount gt 0}">
+										${channel.allLoanCount - channel.loanCount}
 							</c:when>
 							<c:otherwise>
 								0
@@ -463,8 +463,8 @@
 					<td>
 						<!--总放款笔数-->
 						<c:choose>
-							<c:when test ="${channel.borrowSucCount gt 0 }">
-								${channel.borrowSucCount}
+							<c:when test ="${channel.allLoanCount gt 0 }">
+								${channel.allLoanCount}
 							</c:when>
 							<c:otherwise>
 								0
