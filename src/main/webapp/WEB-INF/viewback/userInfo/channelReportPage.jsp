@@ -99,7 +99,7 @@
 				<th align="center">放款笔数(首单)</th>
 				<th align="center">续借笔数</th>
 				<th align="center">总放款笔数</th>
-				<th align="center">放款率</th>
+				<th align="center">放款率(首单)</th>
 				<%--<th align="center" >--%>
 					<%--借款率%--%>
 				<%--</th>--%>
