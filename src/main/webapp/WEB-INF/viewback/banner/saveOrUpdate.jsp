@@ -2,10 +2,10 @@
 	pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <style type="text/css">
-img {
-	width: 700px;
-	height: 320px;
-}
+	.banner-u-w img{
+		width: 700px;
+		height: 320px;
+	}
 
 /* #preview {
 	border: 1px solid #000;
@@ -25,7 +25,7 @@ img {
 		}
 	}
 </script>
-<div class="pageContent">
+<div class="pageContent" class="banner-u-w">
 	<form method="post"
 		action="${pageContext.request.contextPath }/back/banner/saveOrUpdateBanner"
 		enctype="multipart/form-data" class="pageForm required-validate"
