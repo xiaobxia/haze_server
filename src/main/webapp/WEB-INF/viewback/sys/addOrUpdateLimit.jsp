@@ -42,7 +42,8 @@
                 <select class="required" name="l-beforeLimitProductId" class="textInput">
                     <option value="">---请选择---</option>
                     <c:forEach var="productInfo" items="${list}">
-                        <option value="${productInfo.productId}">${productInfo.productName}</option>
+                        <option value="${productInfo.productId}"
+                                <c:if test="${productInfo.limitId eq backLimit.id}">selected="selected"</c:if> >${productInfo.productId}---${productInfo.productName}</option>
                     </c:forEach>
                 </select>
                 <label style="color: red;" class="required-label">*</label>
@@ -53,7 +54,7 @@
                     <option value="">---请选择---</option>
                     <c:forEach var="productInfo" items="${list}">
                         <option value="${productInfo.productId}"
-                                <c:if test="${productInfo.productId eq backLimit.limitProductId}">selected="selected"</c:if> >${productInfo.productName}</option>
+                                <c:if test="${productInfo.productId eq backLimit.limitProductId}">selected="selected"</c:if> >${productInfo.productId}---${productInfo.productName}</option>
                     </c:forEach>
                 </select>
                 <label style="color: red;" class="required-label">*</label>
@@ -79,7 +80,7 @@
                 <select class="required" name="l-beforeLimitProductId" class="textInput">
                     <option value="">---请选择---</option>
                     <c:forEach var="productInfo" items="${list}">
-                        <option value="${productInfo.productId}">${productInfo.productName}</option>
+                        <option value="${productInfo.productId}">${productInfo.productId}---${productInfo.productName}</option>
                     </c:forEach>
                 </select>
                 <label style="color: red;" class="required-label">*</label>
@@ -89,7 +90,7 @@
                 <select class="required" name="l-limitProductId" class="textInput">
                     <option value="">---请选择---</option>
                     <c:forEach var="productInfo" items="${list}">
-                        <option value="${productInfo.productId}">${productInfo.productName}</option>
+                        <option value="${productInfo.productId}">${productInfo.productId}---${productInfo.productName}</option>
                     </c:forEach>
                 </select>
                 <label style="color: red;" class="required-label">*</label>
