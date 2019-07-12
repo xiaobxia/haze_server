@@ -31,9 +31,9 @@ public interface IProductService{
 	//查询页面用 提额
 	List<BackLimit> findLimitList(HashMap<String, Object> params);
 	//添加提额
-	void addLimit(BackLimit backLimit);
+	void addLimit(BackLimit backLimit, Integer beforeLimitProductId);
 	//修改提额
-	void updateLimit(BackLimit backLimit);
+	void updateLimit(BackLimit backLimit, Integer beforeLimitProductId);
 	//添加续期
 	void addExtend(BackExtend backExtend);
 	//修改续期

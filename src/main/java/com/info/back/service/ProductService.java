@@ -98,16 +98,28 @@ public class ProductService implements  IProductService {
     }
 
     @Override
-    public void addLimit(BackLimit backLimit) {
+    public void addLimit(BackLimit backLimit, Integer beforeLimitProductId) {
         backLimit.setCreateDate(new Date());
         backLimit.setLimitStatus(0);
         borrowProductConfigDao.addLimit(backLimit);
+
+        BorrowProductConfig borrowProductConfig = new BorrowProductConfig();
+        borrowProductConfig.setId(beforeLimitProductId);
+        borrowProductConfig.setLimitId(backLimit.getId());
+        borrowProductConfig.setUpdateTime(new Date());
+        borrowProductConfigDao.updateByPrimaryKeySelective(borrowProductConfig);
     }
 
     @Override
-    public void updateLimit(BackLimit backLimit) {
+    public void updateLimit(BackLimit backLimit, Integer beforeLimitProductId) {
         backLimit.setUpdateDate(new Date());
         borrowProductConfigDao.updateLimit(backLimit);
+
+        BorrowProductConfig borrowProductConfig = new BorrowProductConfig();
+        borrowProductConfig.setId(beforeLimitProductId);
+        borrowProductConfig.setLimitId(backLimit.getId());
+        borrowProductConfig.setUpdateTime(new Date());
+        borrowProductConfigDao.updateByPrimaryKeySelective(borrowProductConfig);
     }
 
     @Override

@@ -38,9 +38,19 @@
                 <input type="text" name="l-limitRemark" id="limitRemark" value="${backLimit.limitRemark}"/>
             </div>
             <div class="form-item">
+                <span class="label">提额前产品：</span>
+                <select class="required" name="l-beforeLimitProductId" class="textInput">
+                    <option value="">---请选择---</option>
+                    <c:forEach var="productInfo" items="${list}">
+                        <option value="${productInfo.productId}">${productInfo.productName}</option>
+                    </c:forEach>
+                </select>
+                <label style="color: red;" class="required-label">*</label>
+            </div>
+            <div class="form-item">
                 <span class="label">提额至产品：</span>
                 <select class="required" name="l-limitProductId" class="textInput">
-                    <option value="">全部</option>
+                    <option value="">---请选择---</option>
                     <c:forEach var="productInfo" items="${list}">
                         <option value="${productInfo.productId}"
                                 <c:if test="${productInfo.productId eq backLimit.limitProductId}">selected="selected"</c:if> >${productInfo.productName}</option>
@@ -65,9 +75,19 @@
                 <input type="text" name="l-limitRemark" id="limitRemark"/>
             </div>
             <div class="form-item">
+                <span class="label">提额前产品：</span>
+                <select class="required" name="l-beforeLimitProductId" class="textInput">
+                    <option value="">---请选择---</option>
+                    <c:forEach var="productInfo" items="${list}">
+                        <option value="${productInfo.productId}">${productInfo.productName}</option>
+                    </c:forEach>
+                </select>
+                <label style="color: red;" class="required-label">*</label>
+            </div>
+            <div class="form-item">
                 <span class="label">提额至产品：</span>
                 <select class="required" name="l-limitProductId" class="textInput">
-                    <option value="">全部</option>
+                    <option value="">---请选择---</option>
                     <c:forEach var="productInfo" items="${list}">
                         <option value="${productInfo.productId}">${productInfo.productName}</option>
                     </c:forEach>
@@ -112,7 +132,8 @@
                 "limitName":$("[name='l-limitName']").val(),
                 "limitCount":$("[name='l-limitCount']").val(),
                 "limitRemark":$("[name='l-limitRemark']").val(),
-                "limitProductId": $("[name='l-limitProductId']").val()
+                "limitProductId": $("[name='l-limitProductId']").val(),
+                "beforeLimitProductId": $("[name='l-beforeLimitProductId']").val()
             },
             url : postUrl,
             success : function(ret) {

@@ -408,6 +408,7 @@ public class BorrowOrder {
 
 		borrowStatusMap_rengyaofangkuan.add(BorrowOrder.STATUS_HKZ);
 		borrowStatusMap_rengyaofangkuan.add(BorrowOrder.STATUS_FKZ);
+		borrowStatusMap_rengyaofangkuan.add(BorrowOrder.STATUS_YYQ);
 	}
 
 	/**

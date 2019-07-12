@@ -1728,7 +1728,7 @@ public class TaskJob implements ITaskJob {
 	 * 客服每日派单及回款统计
 	 */
 	@Override
-	@PostConstruct
+	//@PostConstruct
     public void kefuCensus(){
 		log.info("客服每日派单及回款统计");
 		String  createTime = null;
