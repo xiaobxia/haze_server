@@ -52,7 +52,7 @@
                 <input class="required"  type="text" name="p-borrowDay" id="borrowDay" value="${productDetail.borrowDay}"/>
                 <label style="color: red;" class="required-label">*</label>
             </div>
-            <div class="form-item">
+            <%--<div class="form-item">
                 <span class="label">提额：</span>
                 <select name="p-limitId" class="textInput required">
                     <option value="">全部</option>
@@ -62,7 +62,7 @@
                     </c:forEach>
                 </select>
                 <label style="color: red;" class="required-label">*</label>
-            </div>
+            </div>--%>
             <div class="form-item">
                 <span class="label">展期：</span>
                 <select name="p-extendId" class="textInput required">
@@ -101,7 +101,7 @@
                 <input class="required" type="text" name="p-borrowDay" id="borrowDay"/>
                 <label style="color: red;" class="required-label">*</label>
             </div>
-            <div class="form-item">
+            <%--<div class="form-item">
                 <span class="label">提额：</span>
                 <select name="p-limitId" class="textInput required">
                     <option value="">全部</option>
@@ -110,7 +110,7 @@
                     </c:forEach>
                 </select>
                 <label style="color: red;" class="required-label">*</label>
-            </div>
+            </div>--%>
             <div class="form-item">
                 <span class="label">展期：</span>
                 <select name="p-extendId" class="textInput required">

@@ -114,7 +114,7 @@ public interface BorrowProductConfigDao {
 
     Integer getLimitListCount(HashMap<String,Object> params);
 
-    void addLimit(BackLimit backLimit);
+    int addLimit(BackLimit backLimit);
 
     void updateLimit(BackLimit backLimit);
 

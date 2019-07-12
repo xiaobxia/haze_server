@@ -576,17 +576,15 @@
       and limit_count = #{limitCount}
     </if>
   </select>
-  <insert id="addLimit" parameterType="com.info.web.pojo.BackLimit">
+  <insert id="addLimit" parameterType="com.info.web.pojo.BackLimit" useGeneratedKeys="true" keyProperty="id">
     insert into back_limit
-    (id,
-    limit_name,
+    (limit_name,
     limit_count,
     limit_product_id,
     limit_status,
     create_date,
     limit_remark)
     values (
-    #{id},
     #{limitName},
     #{limitCount},
     #{limitProductId},

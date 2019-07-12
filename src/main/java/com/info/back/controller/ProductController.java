@@ -11,7 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import redis.clients.jedis.JedisCluster;
 
@@ -156,9 +158,9 @@ public class ProductController extends BaseController {
      */
     @RequestMapping(value="addBackLimit")
     @ResponseBody
-    public Result addBackLimit(BackLimit backLimit){
+    public Result addBackLimit(@ModelAttribute BackLimit backLimit, @RequestParam Integer beforeLimitProductId){
         try{
-            iProductService.addLimit(backLimit);
+            iProductService.addLimit(backLimit, beforeLimitProductId);
             return Result.success();
         }catch (Exception e){
             log.error("添加失败"+e);
@@ -172,9 +174,9 @@ public class ProductController extends BaseController {
      */
     @RequestMapping(value="updateBackLimit")
     @ResponseBody
-    public Result updateBackLimit(BackLimit backLimit){
+    public Result updateBackLimit(@ModelAttribute BackLimit backLimit, @RequestParam Integer beforeLimitProductId){
         try{
-            iProductService.updateLimit(backLimit);
+            iProductService.updateLimit(backLimit, beforeLimitProductId);
             return Result.success();
         }catch(Exception e){
             log.error("修改失败"+e);
