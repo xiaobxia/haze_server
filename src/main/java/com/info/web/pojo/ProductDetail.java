@@ -18,7 +18,7 @@ public class ProductDetail {
 	private String limitName;//提额类型
 	private Integer limitCount;//还款几次可以提额
 	private Integer limitProductId;//提额到那个产品
-	private Integer limiitProductName;//提额产品的金额
+	private String limiitProductName;//提额产品的金额
 	private Integer limitStatus;//提额状态 0 开启 1 关闭
 	private String  limitRemark;//提额备注
 	private Integer extendCount;//可续期次数
@@ -116,11 +116,11 @@ public class ProductDetail {
 		this.limitProductId = limitProductId;
 	}
 
-	public Integer getLimiitProductName() {
+	public String getLimiitProductName() {
 		return limiitProductName;
 	}
 
-	public void setLimiitProductName(Integer limiitProductName) {
+	public void setLimiitProductName(String limiitProductName) {
 		this.limiitProductName = limiitProductName;
 	}
 
