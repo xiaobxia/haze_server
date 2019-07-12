@@ -446,7 +446,7 @@ public class BorrowOrderController extends BaseController {
                     return "此状态不可操作放款";
                 }
                 List<Integer> collect = borrowOrderService.findByUserId(borrow.getUserId()).stream().map(BorrowOrder::getStatus).collect(Collectors.toList());
-                if (BorrowOrder.borrowStatusMap_rengyaofangkuan.containsAll(collect)) {
+                if (BorrowOrder.borrowStatusMap_rengyaofangkuan.stream().filter(item -> collect.contains(item)).count() > 0) {
                     return "该用户存在未完成的订单，不可操作放款";
                 }
 
