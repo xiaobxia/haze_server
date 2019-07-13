@@ -16,7 +16,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class ThreadPoolShuntUtil {
 
     public static <T extends Runnable> void shunt(List<T> list) {
-        shunt(16, 128, list);
+        shunt(16, 512, list);
     }
 
     /**
