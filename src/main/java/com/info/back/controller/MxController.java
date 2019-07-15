@@ -45,8 +45,14 @@ public class MxController extends BaseController {
 			contactSqlMap.put("userId", userId);
 			List<UserContacts> userContactsList = userContactsService.selectUserContacts(contactSqlMap);
 
-			Map<String, String> userContactsMap = userContactsList.stream().collect(Collectors.toMap(UserContacts::getContactPhone, UserContacts::getContactName));
-
+			Map<String, String> userContactsMap = new HashMap();
+			try {
+				userContactsMap = userContactsList.stream().collect(Collectors.toMap(UserContacts::getContactPhone, UserContacts::getContactName));
+			} catch (NullPointerException e) {
+				for (UserContacts userContacts : userContactsList) {
+					userContactsMap.put(userContacts.getContactPhone(), userContacts.getContactName());
+				}
+			}
 			//String Authorization = "token c98ee41f2cdf43c3be8318748545a3de";
 			String Authorization = "token " + PropertiesUtil.get("mxToken");
 			String host = userService.selectReportDataHtml(Integer.parseInt(userId));

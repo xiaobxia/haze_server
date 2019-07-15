@@ -175,7 +175,10 @@
                     当日派单数
                 </th>
                 <th align="center">
-                    当日回款数
+                    当日派单回款数
+                </th>
+                <th align="center">
+                    当日总回款数
                 </th>
                 <th align="center">
                     当前总派单数
@@ -202,6 +205,9 @@
                     </td>
                     <td>
                            ${item.dayRepayCount}
+                    </td>
+                    <td>
+                        ${item.realDayRepay}
                     </td>
                     <td>
                            ${item.allCount}

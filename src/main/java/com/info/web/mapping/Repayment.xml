@@ -1328,7 +1328,7 @@ remark
         LEFT JOIN user_info ui ON ui.id = ar.user_id
         LEFT JOIN back_user bu ON bu.id = ba.job_id
         WHERE 1=1 and ba.del_flg = 0
-        <if test="paiDanTime != null">
+       <!-- <if test="paiDanTime != null">
             and ba.create_time = #{paiDanTime}
         </if>
         <if test="kefuName != NULL">
@@ -1339,6 +1339,28 @@ remark
         </if>
         <if test="customerType != null">
             AND ui.customer_type = #{customerType}
+        </if>-->
+        <if test="beginTime != null and endTime != null">
+            and ba.create_time &gt;= beginTime
+            and ba.create_time &lt;= endTime
+        </if>
+        <if test="kefuName != NULL">
+            AND bu.user_name = #{kefuName}
+        </if>
+        <if test="status != null">
+            AND bo.STATUS = #{status}
+        </if>
+        <if test="customerType != null">
+            AND ui.customer_type = #{customerType}
+        </if>
+        <if test="kefuId != null">
+            and ba.job_id = #{kefuId}
+        </if>
+        <if test="moneyAmount != null">
+            and bo.money_amount = #{moneyAmount}
+        </if>
+        <if test="userPhone != null">
+            and ui.user_phone = #{userPhone}
         </if>
         order by ar.repayment_time DESC ,bo.STATUS ASC
     </select>

@@ -2630,8 +2630,10 @@ public class BorrowOrderService implements IBorrowOrderService {
                 //客服当日派单数量以及回款数量
                 Integer dayCount = kefuCensusDao.dayPandanCount(createTime,null,backUser.getId(),0);
                 Integer dayRepayCount = kefuCensusDao.dayPandanCount(createTime,1,backUser.getId(),0);
+                Integer realDayRepay = kefuCensusDao.dayPandanCount(createTime,1,backUser.getId(),2);
                 //用户展期数量 （展期也算为回款）
                 Integer dayExtendCount = kefuCensusDao.extendCount(createTime,backUser.getId(),0);
+                Integer realDayExtend = kefuCensusDao.extendCount(createTime,backUser.getId(),2);
                 //查询出每个客服截至到目前所有的总数量以及总还款数量
                 Integer allCount = kefuCensusDao.dayPandanCount(createTime,null,backUser.getId(),1);
                 Integer allRepayCount = kefuCensusDao.dayPandanCount(createTime,1,backUser.getId(),1);
@@ -2641,6 +2643,7 @@ public class BorrowOrderService implements IBorrowOrderService {
                 kefuCensus.setJobId(backUser.getId());
                 kefuCensus.setDayCount(dayCount);
                 kefuCensus.setDayRepayCount(dayRepayCount + dayExtendCount);
+                kefuCensus.setRealDayRepay(realDayRepay + realDayExtend);
                 kefuCensus.setAllCount(allCount);
                 kefuCensus.setAllRepayCount(allRepayCount + allExtendCount);
                 kefuCensus.setCreateTime(createTime);
