@@ -231,10 +231,10 @@ public class UserManageController extends BaseController{
 				}});
 				String result = "操作失败";
 
-				int productId = userDao.queryUserQuotaProductId(userId);
+				Integer productId = userDao.queryUserQuotaProductId(userId);
 				if (count > 0) {
 					result = "该用户存在未完成的订单，无法执行该操作!";
-				} else if (productId == Integer.parseInt(productConfigId)) {
+				} else if (productId != null && productId == Integer.parseInt(productConfigId)) {
 					result = "修改的产品与用户当前可借产品一致，无需重复操作!";
 				} else {
 					bool = true;
