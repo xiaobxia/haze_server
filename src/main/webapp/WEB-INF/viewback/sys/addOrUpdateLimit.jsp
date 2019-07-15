@@ -56,6 +56,7 @@
                         <option value="${productInfo.productId}"
                                 <c:if test="${productInfo.productId eq backLimit.limitProductId}">selected="selected"</c:if> >${productInfo.productId}---${productInfo.productName}</option>
                     </c:forEach>
+
                 </select>
                 <label style="color: red;" class="required-label">*</label>
             </div>

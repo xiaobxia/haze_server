@@ -114,12 +114,13 @@ public class ProductService implements  IProductService {
     public void updateLimit(BackLimit backLimit, Integer beforeLimitProductId) {
         backLimit.setUpdateDate(new Date());
         borrowProductConfigDao.updateLimit(backLimit);
-
-        BorrowProductConfig borrowProductConfig = new BorrowProductConfig();
-        borrowProductConfig.setId(beforeLimitProductId);
-        borrowProductConfig.setLimitId(backLimit.getId());
-        borrowProductConfig.setUpdateTime(new Date());
-        borrowProductConfigDao.updateByPrimaryKeySelective(borrowProductConfig);
+        if(beforeLimitProductId != null){
+            BorrowProductConfig borrowProductConfig = new BorrowProductConfig();
+            borrowProductConfig.setId(beforeLimitProductId);
+            borrowProductConfig.setLimitId(backLimit.getId());
+            borrowProductConfig.setUpdateTime(new Date());
+            borrowProductConfigDao.updateByPrimaryKeySelective(borrowProductConfig);
+        }
     }
 
     @Override

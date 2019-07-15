@@ -174,7 +174,7 @@ public class ProductController extends BaseController {
      */
     @RequestMapping(value="updateBackLimit")
     @ResponseBody
-    public Result updateBackLimit(@ModelAttribute BackLimit backLimit, @RequestParam Integer beforeLimitProductId){
+    public Result updateBackLimit(@ModelAttribute BackLimit backLimit, @RequestParam(required = false, value = "beforeLimitProductId") Integer beforeLimitProductId){
         try{
             iProductService.updateLimit(backLimit, beforeLimitProductId);
             return Result.success();
