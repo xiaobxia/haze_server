@@ -79,7 +79,7 @@
 			</table>
 		</div>
 	</div>
-	<div class="pageContent">
+	<div class="pageContent" id="u-m-l-t">
 		<jsp:include page="${BACK_URL}/rightSubList">
 			<jsp:param value="${searchParams.myId}" name="parentId"/>
 		</jsp:include>
@@ -110,9 +110,9 @@
 						<td align="center">${user.id }</td>
 						<td align="center">${user.channelSuperName}</td>
 						<td align="center">${user.channelName}</td>
-						<td align="center">${user.realname}</td>
+						<td class="userName" align="center">${user.realname}</td>
 						<%--<td align="center">${user.company_name }</td>--%>
-						<td align="center">${user.user_phone }</td>
+						<td class="userPhone" align="center">${user.user_phone }</td>
 						<%--<td align="center">
 							<c:choose>
 								<c:when test="${user.id_number!=null && user.id_number!=''}">${fn:substring(user.id_number, 6, 10)}年${fn:substring(user.id_number, 10, 12)}月${fn:substring(user.id_number, 12, 14)}日</c:when>
@@ -179,7 +179,7 @@
 							</c:if>
 						</td>--%>
 
-						<td align="center">
+						<td class="time" align="center">
 						<fmt:formatDate value="${user.create_time }" pattern="yyyy-MM-dd HH:mm" />
 							${ALL_ORIGIN_TYPE[user.originType] }
 						</td>
@@ -192,6 +192,6 @@
 		<%@ include file="../page.jsp"%>
 	</div>
 	<script type="text/javascript">
-		
+		DWZ.renderRM && DWZ.renderRM()
 	</script>
 </form>
