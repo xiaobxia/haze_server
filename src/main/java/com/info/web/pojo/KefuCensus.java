@@ -9,6 +9,7 @@ public class KefuCensus {
     private String createTime;
     private Integer jobId;
     private String userName;
+    private Integer realDayRepay;
 
     public Integer getId() {
         return id;
@@ -72,5 +73,13 @@ public class KefuCensus {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public Integer getRealDayRepay() {
+        return realDayRepay;
+    }
+
+    public void setRealDayRepay(Integer realDayRepay) {
+        this.realDayRepay = realDayRepay;
     }
 }

@@ -9,6 +9,7 @@
 		<result column="all_count" property="allCount" jdbcType="INTEGER" />
 		<result column="all_repay_count" property="allRepayCount" jdbcType="INTEGER" />
 		<result column="create_time" property="createTime" jdbcType="VARCHAR" />
+		<result column="real_day_repay" property="realDayRepay" jdbcType="INTEGER"/>
 	</resultMap>
 	<select id = "kefuCensusResult" resultMap="BaseResultMap" >
      select
@@ -18,7 +19,8 @@
       day_repay_count as dayRepayCount,
       all_count as allCount,
       all_repay_count as allRepayCount,
-      create_time as createTime
+      create_time as createTime,
+	  real_day_repay as realDayRepay
       from asset_kefu_census
       where 1=1
       <if test="createTime != null">
@@ -49,6 +51,9 @@
 		<if test="createTime != null">
 			create_time = #{createTime},
 		</if>
+		<if test="realDayRepay != null">
+			real_day_repay = #{realDayRepay},
+		</if>
 		</set>
 		where
 		create_time = #{createTime}
@@ -62,14 +67,16 @@
 	  day_repay_count,
 	  all_count,
 	  all_repay_count,
-	  create_time
+	  create_time,
+	  real_day_repay
      ) values (
       #{jobId},
       #{dayCount},
       #{dayRepayCount},
       #{allCount},
       #{allRepayCount},
-      #{createTime}
+      #{createTime},
+      #{realDayRepay}
      )
 	</insert>
 	<select id ="findKefuCensus" resultType="hashmap" parameterType="hashmap">
@@ -81,7 +88,8 @@
 		kc.all_repay_count as allRepayCount,
 		kc.day_count as dayCount,
 		kc.day_repay_count as dayRepayCount,
-		kc.create_time as createTime
+		kc.create_time as createTime,
+		kc.real_day_repay as realDayRepay
      from  asset_kefu_census kc
      left join back_user bu on bu.id = kc.job_id
      where 1=1
@@ -116,12 +124,16 @@
 	FROM
 	asset_borrow_assign ba
 	LEFT JOIN asset_borrow_order bo ON bo.id = ba.borrow_order_id
+	left join asset_repayment ar on bo.id = ar.asset_order_id
 	WHERE ba.del_flg= 0
 	<if test="type == 1">
 		and  DATE_FORMAT( ba.create_time, '%Y%m%d') &lt;= DATE_FORMAT(#{createTime}, '%Y%m%d')
 	</if>
 	<if test="type == 0">
 		and  DATE_FORMAT( ba.create_time, '%Y%m%d') = DATE_FORMAT(#{createTime}, '%Y%m%d')
+	</if>
+	<if test="type == 2">
+		and DATE_FORMAT( ar.repayment_real_time, '%Y%m%d') = DATE_FORMAT(#{createTime}, '%Y%m%d')
 	</if>
 	<if test=" status != null">
 		AND bo.STATUS in (30,34)
@@ -151,6 +163,9 @@
 		<if test="type == 0">
 			and  DATE_FORMAT( ba.create_time, '%Y%m%d') = DATE_FORMAT(#{createTime}, '%Y%m%d')
 			and DATE_FORMAT(rr.old_repayment_time, '%Y%m%d') = DATE_FORMAT(#{createTime}, '%Y%m%d');
+		</if>
+		<if test="type == 2">
+		    and DATE_FORMAT( rr.created_at, '%Y%m%d') = DATE_FORMAT(#{createTime}, '%Y%m%d')
 		</if>
 
 	</select>
