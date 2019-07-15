@@ -1004,6 +1004,8 @@ public class BorrowOrderController extends BaseController {
                                         borrowOrder.setRemark("重新放款：" + borrowOrder.getRemark() + ";上次招行订单号：" + borrowOrderR.getYurref() + ";上次订单号：" + borrowOrderR.getSerialNo() + ";上次代付流水号：" + borrowOrderR.getOutTradeNo());
                                         borrowOrder.setVerifyLoanTime(new Date());
                                         borrowOrder.setVerifyLoanRemark("重新放款：" + borrowOrder.getRemark() + borrowOrder.getVerifyLoanRemark());
+
+                                        jedisCluster.del("WITHDRAW_KEY_" + borrowOrder.getId());//重新放款的时候，删掉订单ID放款标识缓存
                                     } else {
                                         SpringUtils.renderDwzResult(response, false, "操作失败,原因：该订单不能被进行重新放款操作，如有疑问请联系技术人员！",
                                                 DwzResult.CALLBACK_CLOSECURRENT, params.get("parentId").toString());
