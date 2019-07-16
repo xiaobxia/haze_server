@@ -92,7 +92,7 @@
 		kc.real_day_repay as realDayRepay
      from  asset_kefu_census kc
      left join back_user bu on bu.id = kc.job_id
-     where 1=1
+     where 1=1 and (kc.day_count != 0 or kc.day_repay_count != 0 or kc.real_day_repay != 0 )
      <if test="beginTime !=null and endTime != null">
 		 and  DATE_FORMAT(kc.create_time, '%Y%m%d') &gt;= DATE_FORMAT(#{beginTime}, '%Y%m%d')
 		 and  DATE_FORMAT(kc.create_time, '%Y%m%d') &lt;= DATE_FORMAT(#{endTime}, '%Y%m%d')
@@ -109,7 +109,7 @@
 		asset_kefu_census kc
 		LEFT JOIN back_user bu ON bu.id = kc.job_id
 		WHERE
-		1 =1
+		1 =1 and (kc.day_count != 0 or kc.day_repay_count != 0 or kc.real_day_repay != 0 )
 		<if test="beginTime !=null and endTime != null">
 			and  DATE_FORMAT(kc.create_time, '%Y%m%d') &gt;= DATE_FORMAT(#{beginTime}, '%Y%m%d')
 			and  DATE_FORMAT(kc.create_time, '%Y%m%d') &lt;= DATE_FORMAT(#{endTime}, '%Y%m%d')
