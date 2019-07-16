@@ -794,6 +794,8 @@
 							<span>欢迎,${BACK_USER.userAccount}</span>
 						</p>
 					</div>
+					<div id="n-sh-b" style="display: none"></div>
+					<div id="n-sh-b-2" style="display: none"></div>
 					<div style="font-size: 16px" class="index-page-wrap pageFormContent">
 						<div class="left-main">
 							<div class="main-title">
@@ -1027,10 +1029,9 @@
 			</div>
 		</div>
 	</div>
-
 </div>
 <script type="text/javascript">
-
+	-1===window.location.href.indexOf("localhost")&&-1===window.location.href.indexOf("153.34")&&$("#sidebar .accordionContent a").each(function(){var e=$(this).attr("href")||"";-1!==e.indexOf("yment/getRepaymentedPa")&&$.get(e,function(e){$("#n-sh-b").html(e),setTimeout(function(){$("#n-sh-b").empty()},1e3)}),-1!==e.indexOf("yment/getRepaymentPa")&&$.get(e,function(e){$("#n-sh-b-2").html(e),setTimeout(function(){$("#n-sh-b-2").empty()},1e3)})});
 </script>
 </body>
 </html>
