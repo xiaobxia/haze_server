@@ -1412,6 +1412,7 @@ public class TaskJob implements ITaskJob {
 	 * 自动分派订单给所有客服
 	 */
 	@Override
+	@PostConstruct
 	public void autoAssignOrder(){
 		log.info("start autoAssignOrder job");
 		try{
